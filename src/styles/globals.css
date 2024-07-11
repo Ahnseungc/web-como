@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "SUIT";
+    src: url("/fonts/SUIT/SUIT-Variable.ttf");
+    font-weight: 100, 200, 300, 400, 500, 600, 700, 800, 900;
+    font-style: normal;
+  }
+
+  h1 {
+    @apply text-3xl, tracking-tightest;
+  }
+  h2 {
+    @apply text-2xl, tracking-tightest;
+  }
+  h3 {
+    @apply text-xl, tracking-tighter;
+  }
+  h4 {
+    @apply text-lg, tracking-tighter;
+  }
+  p {
+    @apply tracking-tight;
+  }
+}
+
+@layer components {
+  .body-1 {
+    @apply text-base, tracking-tight;
+  }
+  .body-2 {
+    @apply text-sm, tracking-tight;
+  }
+  .caption-1 {
+    @apply text-xs, tracking-normal;
+  }
+  .caption-2 {
+    @apply text-2xs, tracking-normal;
+  }
+}
