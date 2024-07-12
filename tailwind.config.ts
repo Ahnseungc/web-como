@@ -2,10 +2,7 @@ import type { Config } from "tailwindcss";
 import { borderRadius, fontFamily, fontSize } from "tailwindcss/defaultTheme";
 
 const config: Config = {
-  content: [
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     screens: {
       sm: "360px",
