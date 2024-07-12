@@ -13,7 +13,7 @@ export default function Input(props: Props) {
       name={props.name}
       id={props.name}
       placeholder={props.placeholder}
-      className="w-full h-[60px] py-[18px] px-3 rounded-md outline-none h4 font-medium placeholder:text-gray-400 text-gray-900 bg-gray-100"
+      className="w-full h-[60px] py-4 px-3 rounded-md outline-none border border-gray-100 focus-visible:border-gray-900 h4 font-medium placeholder:text-gray-400 text-gray-900 bg-gray-100 focus-visible:bg-gray-50 transition duration-300"
     />
   );
 }
