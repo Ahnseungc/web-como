@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Button from "@/components/ui/common/Button";
-import RadioSelect from "@/components/ui/login/molecules/RadioSelect";
+import Button from "@/components/common/Button";
+import RadioSelect from "@/components/login/molecules/RadioSelect";
 import BrandImage from "@/assets/images/brand_login.svg";
 import LogoImage from "@/assets/logos/como_logo.svg";
 

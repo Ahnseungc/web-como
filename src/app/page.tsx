@@ -1,5 +1,5 @@
-import Button from "@/components/ui/common/Button";
-import LoginForm from "@/components/ui/login/LoginForm";
+import Button from "@/components/common/Button";
+import LoginForm from "@/components/login/organisms/LoginForm";
 
 export default function Home() {
   return (
