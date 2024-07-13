@@ -8,7 +8,7 @@ export default function LoginLayout({
   return (
     <>
       <Header />
-      {children}
+      <main className="flex justify-center mt-24 py-[150px]">{children}</main>
     </>
   );
 }
