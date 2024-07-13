@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "@/components/common/Button";
@@ -8,17 +9,24 @@ import RadioSelect from "@/components/login/molecules/RadioSelect";
 import BrandImage from "@/assets/images/brand_login.svg";
 import LogoImage from "@/assets/logos/como_logo.svg";
 
-interface Props {
-  formAction?: (formData: FormData) => void;
+interface UserLoginDto {
+  id: string;
+  password: string;
+  role: string;
 }
 
-export default function LoginForm({ formAction }: Props) {
+export default function LoginForm() {
+  const [formData, setFormData] = useState<UserLoginDto>();
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
     <div className="flex justify-between w-[1200px] p-8 rounded-4xl shadow bg-gray-0">
       <Image src={BrandImage} alt="OMO" width={530} height={530} priority />
       <form
-        action={formAction}
-        onSubmit={(e) => e.preventDefault()}
+        onSubmit={handleLogin}
         className="flex flex-col justify-between w-[530px] h-[530px] py-6"
       >
         <Image
@@ -39,7 +47,7 @@ export default function LoginForm({ formAction }: Props) {
             {"비밀번호가 기억이 나지 않나요?"}
           </span>
           <span className="h-[15px] border-l border-gray-300" />
-          <Link href={"/"}>
+          <Link href={"/login/identify"}>
             <span className="body-1 font-semibold text-gray-900">
               {"비밀번호 재설정"}
             </span>

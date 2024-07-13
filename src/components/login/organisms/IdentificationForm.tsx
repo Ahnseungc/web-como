@@ -2,11 +2,19 @@
 
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
+import { useRouter } from "next/navigation";
 
 export default function IdentificationForm() {
+  const { replace } = useRouter();
+
+  const handleIdentify = (e: React.FormEvent) => {
+    e.preventDefault();
+    replace("/login/reset");
+  };
+
   return (
     <div className="p-8 rounded-4xl shadow bg-gray-0">
-      <form action="" className="space-y-[38px] w-[530px] py-6">
+      <form onSubmit={handleIdentify} className="space-y-[38px] w-[530px] py-6">
         <h2 className="h1 text-center font-bold text-gray-1000">
           {"본인확인"}
         </h2>
