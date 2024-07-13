@@ -1,5 +1,6 @@
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
+import LoginHeader from "@/components/header/LoginHeader";
 import IdentificationForm from "@/components/login/organisms/IdentificationForm";
 import LoginForm from "@/components/login/organisms/LoginForm";
 import ResetPasswordForm from "@/components/login/organisms/ResetPasswordForm";
@@ -12,6 +13,7 @@ export default function Home() {
       <LoginForm />
       <IdentificationForm />
       <ResetPasswordForm />
+      <LoginHeader />
     </main>
   );
 }
