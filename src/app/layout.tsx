@@ -1,6 +1,8 @@
-import type { Metadata } from "next";
-import Providers from "@/lib/providers";
 import "@/styles/globals.css";
+import type { Metadata } from "next";
+import Favicon from "../../public/favicon/favicon.ico";
+import Providers from "@/lib/providers";
+import Footer from "@/components/footer/Footer";
 
 export const metadata: Metadata = {
   title: "오늘뭐해, omo",
@@ -14,8 +16,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className="font-suit">
-        <Providers>{children}</Providers>
+      <link rel="icon" href={Favicon.src} type="image/x-icon" />
+      <body className="font-suit w-dvw overflow-x-hidden">
+        <Providers>
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

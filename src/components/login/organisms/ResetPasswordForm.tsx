@@ -4,9 +4,16 @@ import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 
 export default function ResetPasswordForm() {
+  const handleResetPassword = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
     <div className="p-8 rounded-4xl shadow bg-gray-0">
-      <form action="" className="space-y-[38px] w-[530px] py-6">
+      <form
+        onSubmit={handleResetPassword}
+        className="space-y-[38px] w-[530px] py-6"
+      >
         <h2 className="h1 text-center font-bold text-gray-1000">
           {"비밀번호 재설정"}
         </h2>
