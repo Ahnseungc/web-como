@@ -8,12 +8,17 @@ import RadioSelect from "@/components/login/molecules/RadioSelect";
 import BrandImage from "@/assets/images/brand_login.svg";
 import LogoImage from "@/assets/logos/como_logo.svg";
 
-export default function LoginForm() {
+interface Props {
+  formAction?: (formData: FormData) => void;
+}
+
+export default function LoginForm({ formAction }: Props) {
   return (
     <div className="flex justify-between w-[1200px] p-8 rounded-4xl shadow bg-gray-0">
       <Image src={BrandImage} alt="OMO" width={530} height={530} priority />
       <form
-        action=""
+        action={formAction}
+        onSubmit={(e) => e.preventDefault()}
         className="flex flex-col justify-between w-[530px] h-[530px] py-6"
       >
         <Image
