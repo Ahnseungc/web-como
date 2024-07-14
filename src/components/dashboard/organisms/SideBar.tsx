@@ -46,6 +46,7 @@ const menuList: MenuItem[] = [
     subMenuList: [
       { name: "동호회 콘텐츠 예약", link: "/dashboard/reservation" },
       { name: "예약한 콘텐츠 관리", link: "/dashboard/reservation/manage" },
+      { name: "1:1 문의", link: "/dashboard/reservation/inquiry" },
     ],
   },
   {
@@ -61,7 +62,7 @@ const menuList: MenuItem[] = [
     name: "공지 및 문의",
     key: ClubDashboardMenu.ANNOUNCEMENT,
     subMenuList: [
-      { name: "omo 공지사항", link: "/dashboard/announcement" },
+      { name: "공지사항", link: "/dashboard/announcement" },
       { name: "FAQ & 문의", link: "/dashboard/announcement/faq" },
     ],
   },
