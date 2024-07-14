@@ -9,7 +9,7 @@ export default function DashboardLayout({
   return (
     <>
       <Header isDashboard isLoggedIn title="동호회 관리센터" />
-      <main className="min-h-[1280px] mt-24 bg-gray-200">
+      <main className="flex min-h-[1280px] mt-24 bg-gray-200">
         <SideBar />
         {children}
       </main>

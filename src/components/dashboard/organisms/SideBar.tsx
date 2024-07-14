@@ -33,7 +33,7 @@ const menuList: MenuItem[] = [
     key: ClubDashboardMenu.MANAGE,
     subMenuList: [
       { name: "내 동호회 관리", link: "/dashboard/manage" },
-      { name: "동호회 회원관리", link: "/dashboard/manage/members" },
+      { name: "동호회 회원관리", link: "/dashboard/manage/member" },
       { name: "동호회 활동 캘린더", link: "/dashboard/manage/calendar" },
       { name: "자동 보고서 작성", link: "/dashboard/manage/report" },
       { name: "동호회 취소 및 해체", link: "/dashboard/manage/remove" },
@@ -82,6 +82,12 @@ export default function SideBar() {
     document.documentElement.scrollIntoView();
 
     const pathList = pathname.split("/");
+
+    if (pathname.endsWith("dashboard")) {
+      setSelectedMenu(undefined);
+      setSelectedSubMenu(undefined);
+    }
+
     for (const index in ClubDashboardMenu) {
       const menu = ClubDashboardMenu[index as keyof typeof ClubDashboardMenu];
       if (pathList[2] === menu) {
@@ -105,7 +111,7 @@ export default function SideBar() {
   };
 
   return (
-    <nav className="relative w-[248px] min-h-[1280px] py-8 border-r border-gray-300 bg-gray-0">
+    <nav className="relative min-w-[248px] min-h-[1280px] py-8 border-r border-gray-300 bg-gray-0">
       <ul>
         {menuList.map((menu) => (
           <li
@@ -115,7 +121,7 @@ export default function SideBar() {
           >
             <span
               className={cn(
-                "flex items-center justify-between mb-6 py-3 px-6 h3 font-bold",
+                "flex items-center justify-between mb-6 py-3 px-6 h3 font-bold transition-all duration-200",
                 menu.key === selectedMenu
                   ? "text-gray-0 bg-gray-900"
                   : "text-gray-800"
