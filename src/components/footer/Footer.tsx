@@ -10,7 +10,7 @@ const footerNav = [
 
 export default function Footer() {
   return (
-    <footer className="w-dvw bg-gray-100">
+    <footer className="relative z-10 w-full bg-gray-100">
       <div className="flex flex-col justify-between gap-12 w-full max-w-[1320px] mx-auto py-[60px] px-8">
         <ul className="flex gap-8">
           {footerNav.map((item) => (
