@@ -3,5 +3,9 @@ export default function ClubManageLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <section className="gap-3 w-full p-[38px]">{children}</section>;
+  return (
+    <section className="flex flex-col gap-3 w-full p-[38px]">
+      {children}
+    </section>
+  );
 }
