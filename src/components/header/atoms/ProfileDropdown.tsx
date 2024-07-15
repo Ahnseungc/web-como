@@ -4,7 +4,7 @@ import Image from "next/image";
 import { openModal } from "@/lib/utils";
 import Avatar from "@/components/common/Avatar";
 import ProfileDropdownModal from "@/components/header/organisms/ProfileDropdownModal";
-import ChevronDown from "@/assets/icons/chevron_down.svg";
+import ChevronDown from "@/assets/icons/header/chevron_down.svg";
 
 interface Props {
   profileImage?: string | null;

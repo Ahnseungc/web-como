@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { closeModal } from "@/lib/utils";
+import { deleteRefreshToken } from "@/lib/token";
 import Avatar from "@/components/common/Avatar";
 import Backdrop from "@/components/common/Backdrop";
-import CloseIcon from "@/assets/icons/close.svg";
-import { deleteRefreshToken } from "@/lib/token";
-import { useRouter } from "next/navigation";
+import CloseIcon from "@/assets/icons/header/close.svg";
 
 interface Props {
   profileImage?: string | null;

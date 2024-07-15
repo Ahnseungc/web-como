@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import ChevronDown from "@/assets/icons/chevron_down_sm.svg";
+import ChevronDown from "@/assets/icons/sidebar/chevron_down_sm.svg";
 
 const clubDashboardMenus = [
   "manage",

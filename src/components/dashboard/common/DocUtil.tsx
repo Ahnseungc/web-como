@@ -1,6 +1,6 @@
 import Image from "next/image";
-import PrintIcon from "@/assets/icons/print.svg";
-import DocIcon from "@/assets/icons/document.svg";
+import PrintIcon from "@/assets/icons/utilButton/print.svg";
+import DocIcon from "@/assets/icons/utilButton/document.svg";
 
 export default function DocUtilButtons() {
   return (
