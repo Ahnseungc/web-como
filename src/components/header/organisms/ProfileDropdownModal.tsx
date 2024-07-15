@@ -6,13 +6,20 @@ import { closeModal } from "@/lib/utils";
 import Avatar from "@/components/common/Avatar";
 import Backdrop from "@/components/common/Backdrop";
 import CloseIcon from "@/assets/icons/close.svg";
+import { deleteRefreshToken } from "@/lib/token";
+import { useRouter } from "next/navigation";
 
 interface Props {
   profileImage?: string | null;
 }
 
 export default function ProfileDropdownModal({ profileImage }: Props) {
-  const handleLogout = () => {};
+  const { refresh } = useRouter();
+
+  const handleLogout = () => {
+    deleteRefreshToken();
+    refresh();
+  };
 
   return (
     <div className="fixed modal hidden" id="profile-dropdown">
