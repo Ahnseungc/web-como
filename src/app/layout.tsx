@@ -17,12 +17,12 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <link rel="icon" href={Favicon.src} type="image/x-icon" />
-      <body className="font-suit w-dvw overflow-x-hidden">
-        <Providers>
+      <Providers>
+        <body className="min-h-screen font-suit antialiased bg-gray-50">
           {children}
           <Footer />
-        </Providers>
-      </body>
+        </body>
+      </Providers>
     </html>
   );
 }

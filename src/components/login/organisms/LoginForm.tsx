@@ -8,6 +8,8 @@ import Input from "@/components/common/Input";
 import RadioSelect from "@/components/login/molecules/RadioSelect";
 import BrandImage from "@/assets/images/brand_login.svg";
 import LogoImage from "@/assets/logos/como_logo.svg";
+import { saveRefreshToken } from "@/lib/token";
+import { useRouter } from "next/navigation";
 
 interface UserLoginDto {
   id: string;
@@ -16,10 +18,13 @@ interface UserLoginDto {
 }
 
 export default function LoginForm() {
+  const { refresh } = useRouter();
   const [formData, setFormData] = useState<UserLoginDto>();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    saveRefreshToken("token");
+    refresh();
   };
 
   return (
