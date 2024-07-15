@@ -13,7 +13,7 @@ interface Props {
 
 export default function Header(props: Props) {
   return (
-    <header className="fixed top-0 inset-x-0 z-20 flex items-center justify-center h-24 border-b border-gray-300 bg-gray-0">
+    <header className="fixed top-0 inset-x-0 z-20 flex items-center justify-center h-24 border-b border-gray-300 bg-gray-0 select-none">
       <div
         className={cn(
           "flex items-center justify-between h-9 px-8",
@@ -22,7 +22,7 @@ export default function Header(props: Props) {
       >
         <Link href={"/"}>
           <h1 className="flex gap-3 font-bold text-gray-900">
-            {props.isDashboard ? (
+            {props.isLoggedIn ? (
               <Image src={Logo} alt="OMO" width={36} height={36} />
             ) : (
               <Image src={ComoLogo} alt="c'omo for business" width={186} />
@@ -31,7 +31,7 @@ export default function Header(props: Props) {
           </h1>
         </Link>
         <div className="flex items-center gap-[60px]">
-          <Link href={"/"}>
+          <Link href={"/dashboard/announcement"}>
             <span className="h4 font-normal text-gray-700">{"공지사항"}</span>
           </Link>
           <Link href={"/"}>

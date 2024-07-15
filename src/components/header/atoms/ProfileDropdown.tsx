@@ -1,4 +1,9 @@
+"use client";
+
 import Image from "next/image";
+import { openModal } from "@/lib/utils";
+import Avatar from "@/components/common/Avatar";
+import ProfileDropdownModal from "@/components/header/organisms/ProfileDropdownModal";
 import ChevronDown from "@/assets/icons/chevron_down.svg";
 
 interface Props {
@@ -7,17 +12,15 @@ interface Props {
 
 export default function ProfileDropdown({ profileImage }: Props) {
   return (
-    <div className="flex items-center gap-2">
-      {profileImage ? (
-        <Image
-          src={profileImage}
-          alt="프로필"
-          className="w-8 h-8 rounded-full"
-        />
-      ) : (
-        <div className="w-8 h-8 rounded-full bg-gray-400" />
-      )}
-      <Image src={ChevronDown} alt="▼" width={24} height={24} />
-    </div>
+    <>
+      <div
+        className="flex items-center gap-2 cursor-pointer"
+        onClick={() => openModal("profile-dropdown")}
+      >
+        <Avatar src={profileImage} />
+        <Image src={ChevronDown} alt="▼" width={24} height={24} />
+      </div>
+      <ProfileDropdownModal profileImage={profileImage} />
+    </>
   );
 }
