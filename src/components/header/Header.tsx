@@ -13,7 +13,7 @@ interface Props {
 
 export default function Header(props: Props) {
   return (
-    <header className="fixed top-0 inset-x-0 z-20 flex items-center justify-center h-24 border-b border-gray-300 bg-gray-0 select-none">
+    <header className="fixed top-0 inset-x-0 z-20 flex items-center justify-center h-24 border-b border-gray-300 bg-gray-0">
       <div
         className={cn(
           "flex items-center justify-between h-9 px-8",
