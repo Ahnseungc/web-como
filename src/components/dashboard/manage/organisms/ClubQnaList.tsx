@@ -4,6 +4,7 @@ import { useState } from "react";
 import DateFilter from "@/components/dashboard/common/DateFilter";
 import DocUtilButtons from "@/components/dashboard/common/DocUtil";
 import Pagination from "@/components/dashboard/common/Pagination";
+import ClubQnaTable from "@/components/dashboard/manage/molecules/ClubQnaTable";
 
 export default function ClubQnaList() {
   const [currentFilter, setCurrentFilter] = useState<string>();
@@ -31,7 +32,7 @@ export default function ClubQnaList() {
         <DocUtilButtons />
       </div>
       <div className="space-y-10">
-        <div></div>
+        <ClubQnaTable />
         <Pagination
           currentPage={currentPage}
           maxPage={8}
