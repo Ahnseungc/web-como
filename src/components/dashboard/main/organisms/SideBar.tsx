@@ -113,8 +113,8 @@ export default function SideBar() {
   };
 
   return (
-    <nav className="relative min-w-[248px] min-h-[1280px] py-8 border-r border-gray-300 bg-gray-0">
-      <ul>
+    <nav className="relative min-w-[248px] min-h-[1280px] border-r border-gray-300 bg-gray-0">
+      <ul className="sticky top-24 py-8">
         {menuList.map((menu) => (
           <li
             key={menu.key}
