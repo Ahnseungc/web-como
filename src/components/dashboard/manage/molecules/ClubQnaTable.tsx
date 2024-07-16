@@ -101,7 +101,7 @@ export default function ClubQnaTable() {
           <span
             key={heading}
             className={cn(
-              "py-3 px-6 body-1 font-bold text-gray-900",
+              "p-3 body-1 font-bold text-gray-900",
               i === 0 ? "w-[76px]" : "flex-1",
               i === 3 ? "" : "text-center max-w-60",
               i === 1
