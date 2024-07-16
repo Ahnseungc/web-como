@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ClubMenuTabs from "@/components/dashboard/manage/molecules/ClubMenuTabs";
 import ClubInfoTab from "@/components/dashboard/manage/templates/ClubInfo";
 import ClubPictureTab from "@/components/dashboard/manage/templates/ClubPicture";
@@ -39,10 +39,12 @@ const renderCurrentTabPage = (currentTab: ClubMenu) => {
 };
 
 export default function ClubManagePage() {
-  const [currentTab, setCurrentTab] = useState<ClubMenu>("info");
+  const { push } = useRouter();
+  const pathname = usePathname();
+  const currentTab = (useSearchParams().get("tab") || "info") as ClubMenu;
 
   const handleTabChange = (value: ClubMenu) => {
-    setCurrentTab(value);
+    push(`${pathname}?tab=${value}`);
   };
 
   return (
