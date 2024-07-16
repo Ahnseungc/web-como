@@ -27,6 +27,7 @@
   }
 
   button,
+  img,
   nav,
   header {
     @apply select-none;

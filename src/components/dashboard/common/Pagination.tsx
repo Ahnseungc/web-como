@@ -13,7 +13,7 @@ interface Props {
 
 export default function Pagination(props: Props) {
   return (
-    <div className="flex gap-4 w-fit mx-auto">
+    <div className="flex gap-4 w-fit mx-auto select-none">
       <div className="flex gap-2.5">
         <button
           className="cursor-pointer"

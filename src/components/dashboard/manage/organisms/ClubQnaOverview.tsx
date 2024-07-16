@@ -1,6 +1,6 @@
 export default function ClubQnaOverview() {
   return (
-    <div className="space-y-4 p-[38px] rounded-xl bg-gray-0">
+    <div className="space-y-4 p-[38px] rounded-xl bg-gray-0 select-none">
       <h2 className="h1 font-bold text-gray-900">{"주요 알림"}</h2>
       <div className="flex">
         <div className="flex items-center gap-4">

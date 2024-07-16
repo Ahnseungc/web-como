@@ -31,19 +31,19 @@ export default function DateFilter(props: Props) {
       <div className="flex-1 flex items-center space-x-3">
         <span className="h4 font-medium text-gray-600">{"기간"}</span>
         <div className="flex-1 flex gap-2">
-          <div className="flex-1 flex items-center justify-between max-w-[390px] h-[38px] px-3 rounded-md border border-gray-400 bg-gray-50">
+          <button className="flex-1 flex items-center justify-between max-w-[390px] h-[38px] px-3 rounded-md border border-gray-400 bg-gray-50">
             <span className="body-1 font-semibold text-gray-900">
               {"2024.07.10 (수)"}
             </span>
             <Image src={ChevronDownIcon} alt="▼" width={20} height={24} />
-          </div>
+          </button>
           <hr className="w-3.5 my-auto border-gray-400" />
-          <div className="flex-1 flex items-center justify-between max-w-[390px] h-[38px] px-3 rounded-md border border-gray-400 bg-gray-50">
+          <button className="flex-1 flex items-center justify-between max-w-[390px] h-[38px] px-3 rounded-md border border-gray-400 bg-gray-50">
             <span className="body-1 font-semibold text-gray-900">
               {"2024.07.10 (수)"}
             </span>
             <Image src={ChevronDownIcon} alt="▼" width={20} height={24} />
-          </div>
+          </button>
         </div>
       </div>
     </div>

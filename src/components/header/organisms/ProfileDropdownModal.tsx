@@ -49,7 +49,7 @@ export default function ProfileDropdownModal({ profileImage }: Props) {
             </div>
             <Link href={"/support"}>
               <div className="w-full p-3 h4 font-medium text-gray-700">
-                {"내 프로필"}
+                {"고객센터"}
               </div>
             </Link>
             <Link href={"/support"}>

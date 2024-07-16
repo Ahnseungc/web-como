@@ -8,7 +8,7 @@ export default function ClubPolicyTab() {
         <h2 className="font-semibold text-gray-900">{"동호회 상세 규정"}</h2>
         <PrintButton />
       </div>
-      <p className="overflow-y-scroll h-[680px] body-1 font-medium text-gray-700 whitespace-pre-line">
+      <p className="overflow-y-scroll h-[680px] body-1 font-medium text-gray-700">
         <span className="h3 font-bold">{POLICY_TITLE}</span>
         {POLICY}
       </p>
