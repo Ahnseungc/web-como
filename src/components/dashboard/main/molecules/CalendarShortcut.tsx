@@ -6,7 +6,7 @@ export default function DashboardCalendarShortcut() {
   return (
     <Link
       href={"/dashboard/manage/calendar"}
-      className="flex justify-between p-8 rounded-xl bg-gray-0"
+      className="flex justify-between p-8 rounded-xl bg-gray-0 select-none"
     >
       <h3 className="h1 font-bold text-brand-black truncate">
         {"캘린더 바로가기"}

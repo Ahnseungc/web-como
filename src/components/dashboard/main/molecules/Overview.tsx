@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function DashboardOverview() {
   return (
-    <div className="col-span-4 flex flex-col gap-6 h-fit p-8 rounded-xl bg-gray-800">
+    <div className="col-span-4 flex flex-col gap-6 h-fit p-8 rounded-xl bg-gray-800 select-none">
       <h3 className="h1 font-bold text-gray-0">{"동호회 이름 주요 알림"}</h3>
       <div className="flex gap-8">
         <div className="flex-1 flex flex-col gap-4 py-3 px-2">

@@ -24,23 +24,14 @@ export default function Footer() {
             <span className="body-1 font-bold text-gray-900">
               {"(주) 핀데브"}
             </span>
-            <p
-              className="body-1 font-medium text-gray-700"
-              dangerouslySetInnerHTML={{ __html: INFO }}
-            />
+            <p className="body-1 font-medium text-gray-700">{INFO}</p>
           </div>
           <div className="space-y-2">
             <span className="body-1 font-bold text-gray-900">{"고객센터"}</span>
-            <p
-              className="body-1 font-medium text-gray-700"
-              dangerouslySetInnerHTML={{ __html: INQUIRY }}
-            />
+            <p className="body-1 font-medium text-gray-700">{INQUIRY}</p>
           </div>
         </div>
-        <p
-          className="body-1 font-medium text-gray-500"
-          dangerouslySetInnerHTML={{ __html: RESPONSIBILITY }}
-        />
+        <p className="body-1 font-medium text-gray-500">{RESPONSIBILITY}</p>
       </div>
     </footer>
   );

@@ -5,15 +5,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import ChevronDown from "@/assets/icons/chevron_down_sm.svg";
+import ChevronDown from "@/assets/icons/sidebar/chevron_down_sm.svg";
 
-enum ClubDashboardMenu {
-  MANAGE = "manage",
-  RESERVATION = "reservation",
-  EXPANSE = "expanse",
-  ANNOUNCEMENT = "announcement",
-  COMMUNITY = "community",
-}
+const clubDashboardMenus = [
+  "manage",
+  "reservation",
+  "expanse",
+  "announcement",
+  "community",
+] as const;
+
+type ClubDashboardMenu = (typeof clubDashboardMenus)[number];
 
 interface SubMenuItem {
   name: string;
@@ -30,7 +32,7 @@ interface MenuItem {
 const menuList: MenuItem[] = [
   {
     name: "동호회 관리",
-    key: ClubDashboardMenu.MANAGE,
+    key: "manage",
     subMenuList: [
       { name: "내 동호회 관리", link: "/dashboard/manage" },
       { name: "동호회 회원관리", link: "/dashboard/manage/member" },
@@ -42,7 +44,7 @@ const menuList: MenuItem[] = [
   },
   {
     name: "omo 예약 관리",
-    key: ClubDashboardMenu.RESERVATION,
+    key: "reservation",
     subMenuList: [
       { name: "동호회 콘텐츠 예약", link: "/dashboard/reservation" },
       { name: "예약한 콘텐츠 관리", link: "/dashboard/reservation/manage" },
@@ -51,7 +53,7 @@ const menuList: MenuItem[] = [
   },
   {
     name: "활동비 관리",
-    key: ClubDashboardMenu.EXPANSE,
+    key: "expanse",
     subMenuList: [
       { name: "활동비", link: "/dashboard/expanse" },
       { name: "비품", link: "/dashboard/expanse/supply" },
@@ -60,7 +62,7 @@ const menuList: MenuItem[] = [
   },
   {
     name: "공지 및 문의",
-    key: ClubDashboardMenu.ANNOUNCEMENT,
+    key: "announcement",
     subMenuList: [
       { name: "공지사항", link: "/dashboard/announcement" },
       { name: "FAQ & 문의", link: "/dashboard/announcement/faq" },
@@ -68,7 +70,7 @@ const menuList: MenuItem[] = [
   },
   {
     name: "커뮤니티",
-    key: ClubDashboardMenu.COMMUNITY,
+    key: "community",
     link: "/dashboard/community",
   },
 ];
@@ -89,8 +91,7 @@ export default function SideBar() {
       setSelectedSubMenu(undefined);
     }
 
-    for (const index in ClubDashboardMenu) {
-      const menu = ClubDashboardMenu[index as keyof typeof ClubDashboardMenu];
+    for (const menu of clubDashboardMenus) {
       if (pathList[2] === menu) {
         setSelectedMenu(menu);
         setSelectedSubMenu(pathname);
@@ -112,8 +113,8 @@ export default function SideBar() {
   };
 
   return (
-    <nav className="relative min-w-[248px] min-h-[1280px] py-8 border-r border-gray-300 bg-gray-0">
-      <ul>
+    <nav className="relative min-w-[248px] min-h-[1280px] border-r border-gray-300 bg-gray-0">
+      <ul className="sticky top-24 py-8">
         {menuList.map((menu) => (
           <li
             key={menu.key}

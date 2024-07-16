@@ -17,3 +17,14 @@ export const closeModal = () => {
   const inputs = document.querySelectorAll(".modal .modal-input");
   inputs.forEach((input) => ((input as HTMLInputElement).value = ""));
 };
+
+export function getPageRange(num: number) {
+  const start = Math.floor((num - 1) / 5) * 5 + 1;
+
+  const range = [];
+  for (let i = 0; i < 5; i++) {
+    range.push(start + i);
+  }
+
+  return range;
+}
