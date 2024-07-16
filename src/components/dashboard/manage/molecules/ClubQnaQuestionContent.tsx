@@ -25,9 +25,7 @@ export default function ClubQnaQuestionContent() {
           </span>
         </div>
       </div>
-      <p className="h3 font-medium text-gray-900 whitespace-pre-line">
-        {content}
-      </p>
+      <p className="h3 font-medium text-gray-900">{content}</p>
     </div>
   );
 }

@@ -23,7 +23,13 @@
     @apply text-lg tracking-tighter;
   }
   p {
-    @apply tracking-tight;
+    @apply tracking-tight whitespace-pre-line;
+  }
+
+  button,
+  nav,
+  header {
+    @apply select-none;
   }
 }
 
