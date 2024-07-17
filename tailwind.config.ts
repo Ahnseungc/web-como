@@ -65,6 +65,7 @@ const config: Config = {
         blue: "#337AF0",
         green: "#1DB714",
       },
+      transparent: "rgba(0,0,0,0)",
     },
     fontFamily: { suit: ["SUIT", ...fontFamily.sans] },
     fontSize: {
