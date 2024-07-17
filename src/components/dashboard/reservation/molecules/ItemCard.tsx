@@ -16,7 +16,7 @@ interface Props {
   pricePerPerson: number;
 }
 
-export default function ContentsItemCard(props: Props) {
+export default function ItemCard(props: Props) {
   return (
     <div className="flex-1 min-w-[390px] max-w-[480px] rounded-xl bg-gray-0">
       <div className="relative min-w-[390px] max-w-[480px] h-[390px] rounded-t-xl bg-orange-100">

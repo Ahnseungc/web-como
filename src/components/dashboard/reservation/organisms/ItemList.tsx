@@ -1,4 +1,4 @@
-import ContentsItemCard from "@/components/dashboard/reservation/molecules/ItemCard";
+import ItemCard from "@/components/dashboard/reservation/molecules/ItemCard";
 
 const itemList = [
   {
@@ -95,7 +95,7 @@ export default function ItemList() {
   return (
     <div className="flex flex-wrap gap-3">
       {itemList.map((item) => (
-        <ContentsItemCard key={item.id} {...item} />
+        <ItemCard key={item.id} {...item} />
       ))}
     </div>
   );
