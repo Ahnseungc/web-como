@@ -7,7 +7,7 @@ import DashboardRanking from "@/components/dashboard/main/molecules/Ranking";
 
 export default function DashboardPage() {
   return (
-    <section className="grid grid-cols-[minmax(0,_1fr)_minmax(0,_1fr)_minmax(0,_1fr)_minmax(0,_390px)] auto-rows-min gap-3 w-full p-[38px]">
+    <section className="grid grid-cols-[minmax(0,_1fr)_minmax(0,_1fr)_minmax(0,_1fr)_minmax(0,_390px)] auto-rows-min gap-3 w-full p-8">
       <DashboardOverview />
       <div className="col-span-3 flex flex-col gap-3">
         <DashboardTransaction />

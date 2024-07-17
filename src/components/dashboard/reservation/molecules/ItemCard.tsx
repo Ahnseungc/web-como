@@ -1,0 +1,66 @@
+import Link from "next/link";
+import Image from "next/image";
+import Chip from "@/components/common/Chip";
+import MarkerIcon from "@/assets/icons/marker.svg";
+import PeopleIcon from "@/assets/icons/people.svg";
+import CalendarIcon from "@/assets/icons/calendar.svg";
+
+interface Props {
+  image?: string;
+  id: number;
+  location: string;
+  name: string;
+  category: string;
+  description: string;
+  maxPeople: number;
+  timePerWeek: number;
+  pricePerPerson: number;
+}
+
+export default function ItemCard(props: Props) {
+  return (
+    <Link
+      href={`/dashboard/reservation/item/${props.id}`}
+      className="flex-1 min-w-[390px] max-w-[480px] rounded-xl bg-gray-0"
+    >
+      <div className="relative min-w-[390px] max-w-[480px] h-[390px] rounded-t-xl bg-orange-100">
+        {props.image && (
+          <Image
+            src={props.image}
+            alt="상품 이미지"
+            fill
+            sizes="30vw"
+            className="rounded-t-xl"
+          />
+        )}
+      </div>
+      <div className="space-y-6 p-5">
+        <div className="space-y-2">
+          <div className="flex items-center gap-0.5 body-1 font-medium text-gray-500">
+            <Image src={MarkerIcon} alt="장소" width={18} height={18} />
+            {props.location}
+          </div>
+          <h4 className="h2 font-bold text-gray-900">{props.name}</h4>
+          <Chip content={props.category} primary />
+          <p className="body-1 font-medium text-gray-700 line-clamp-2">
+            {props.description}
+          </p>
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
+              <Image src={PeopleIcon} alt="인원" width={20} height={20} />
+              {`최대 ${props.maxPeople}명`}
+            </div>
+            <div className="flex items-center gap-1">
+              <Image src={CalendarIcon} alt="횟수" width={18} height={18} />
+              {`주 ${props.timePerWeek}회`}
+            </div>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="h2 font-bold text-gray-900">{`${props.pricePerPerson.toLocaleString()}원~`}</span>
+          <span className="h3 font-normal text-gray-500">{"/인"}</span>
+        </div>
+      </div>
+    </Link>
+  );
+}

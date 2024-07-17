@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import ChevronDownIcon from "@/assets/icons/dateFilter/chevron_down.svg";
+import ChevronDownIcon from "@/assets/icons/chevron_down_filled.svg";
 
 const filterButtons = ["오늘", "어제", "1주", "1달", "3달", "1년"];
 
