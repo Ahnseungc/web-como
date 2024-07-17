@@ -21,11 +21,16 @@ export default function Header(props: Props) {
         )}
       >
         <Link href={"/"}>
-          <h1 className="flex gap-3 font-bold text-gray-900">
+          <h1 className="flex items-center gap-3 font-bold text-gray-900">
             {props.isLoggedIn ? (
-              <Image src={Logo} alt="OMO" width={36} height={36} />
+              <Image src={Logo} alt="OMO" width={36} height={36} priority />
             ) : (
-              <Image src={ComoLogo} alt="c'omo for business" width={186} />
+              <Image
+                src={ComoLogo}
+                alt="c'omo for business"
+                width={186}
+                priority
+              />
             )}
             {props.title && props.title}
           </h1>
