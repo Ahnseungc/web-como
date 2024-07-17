@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 import Chip from "@/components/common/Chip";
 import MarkerIcon from "@/assets/icons/marker.svg";
@@ -18,7 +19,10 @@ interface Props {
 
 export default function ItemCard(props: Props) {
   return (
-    <div className="flex-1 min-w-[390px] max-w-[480px] rounded-xl bg-gray-0">
+    <Link
+      href={`/dashboard/reservation/item/${props.id}`}
+      className="flex-1 min-w-[390px] max-w-[480px] rounded-xl bg-gray-0"
+    >
       <div className="relative min-w-[390px] max-w-[480px] h-[390px] rounded-t-xl bg-orange-100">
         {props.image && (
           <Image
@@ -57,6 +61,6 @@ export default function ItemCard(props: Props) {
           <span className="h3 font-normal text-gray-500">{"/인"}</span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
