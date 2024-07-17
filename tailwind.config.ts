@@ -8,6 +8,7 @@ const config: Config = {
       sm: "360px",
       md: "580px",
       lg: "1200px",
+      xl: "1800px",
     },
     borderRadius: {
       ...borderRadius,
