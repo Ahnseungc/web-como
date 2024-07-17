@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import Map from "@/components/dashboard/common/Map";
 import CopyButton from "@/components/dashboard/common/CopyButton";
 import ChevronDownIcon from "@/assets/icons/chevron_down.svg";
 
@@ -55,7 +56,9 @@ export default function ItemDetail() {
       <div className="flex flex-col gap-3">
         <h4 className="font-bold text-gray-900">{"진행하는 장소"}</h4>
         <div className="rounded-xl border border-gray-400 bg-gray-0">
-          {/* map (h-60) */}
+          <div className="w-full h-60">
+            <Map style="rounded-t-xl" query={address} />
+          </div>
           <div className="flex flex-col gap-2 p-8">
             <span className="body-1 font-bold text-gray-900">{"장소이름"}</span>
             <span className="body-1 font-medium text-gray-600">{address}</span>
