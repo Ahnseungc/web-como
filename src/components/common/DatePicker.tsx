@@ -1,5 +1,5 @@
 import Image from "next/image";
-import ChevronDownIcon from "@/assets/icons/dateFilter/chevron_down.svg";
+import ChevronDownIcon from "@/assets/icons/chevron_down_filled.svg";
 import { cn } from "@/lib/utils";
 
 interface Props {
