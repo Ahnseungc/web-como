@@ -1,15 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { pdfjs, Document, Page } from "react-pdf";
 import type { PDFDocumentProxy } from "pdfjs-dist";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
-
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.mjs",
-  import.meta.url
-).toString();
 
 const options = {
   cMapUrl: "/cmaps/",
@@ -22,8 +17,50 @@ interface Props {
 }
 
 export default function PdfViewer({ file = "../../sample.pdf" }: Props) {
+  const [isMounted, setIsMounted] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
+
+  useEffect(() => {
+    if (typeof Promise.withResolvers === "undefined") {
+      if (window) {
+        // @ts-expect-error This does not exist outside of polyfill which this is doing
+        window.Promise.withResolvers = function () {
+          let resolve, reject;
+          const promise = new Promise((res, rej) => {
+            resolve = res;
+            reject = rej;
+          });
+          return { promise, resolve, reject };
+        };
+      } else {
+        // @ts-expect-error This does not exist outside of polyfill which this is doing
+        global.Promise.withResolvers = function () {
+          let resolve, reject;
+          const promise = new Promise((res, rej) => {
+            resolve = res;
+            reject = rej;
+          });
+          return { promise, resolve, reject };
+        };
+      }
+    }
+    if (window) {
+      pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+        "pdfjs-dist/legacy/build/pdf.worker.min.mjs",
+        import.meta.url
+      ).toString();
+      setIsMounted(true);
+    }
+  }, []);
+  //   pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  //     "pdfjs-dist/build/pdf.worker.min.mjs",
+  //     import.meta.url
+  //   ).toString();
+
+  if (!isMounted) {
+    return;
+  }
 
   const onDocumentLoadSuccess = ({ numPages }: PDFDocumentProxy) => {
     setCurrentPage(1);
