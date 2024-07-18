@@ -13,9 +13,10 @@ const options = {
 };
 
 if (typeof Promise.withResolvers === "undefined") {
-  Promise.withResolvers = function () {
-    let resolve, reject;
-    const promise = new Promise((res, rej) => {
+  Promise.withResolvers = function <T>(): PromiseWithResolvers<T> {
+    let resolve!: (value: T | PromiseLike<T>) => void;
+    let reject!: (reason?: any) => void;
+    const promise = new Promise<T>((res, rej) => {
       resolve = res;
       reject = rej;
     });
