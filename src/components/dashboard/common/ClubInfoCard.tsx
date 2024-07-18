@@ -5,7 +5,7 @@ import CalendarIcon from "@/assets/icons/calendar.svg";
 export default function ClubInfoCard() {
   const image = null;
   return (
-    <div className="p-5 rounded-xl bg-gray-0">
+    <div className="h-fit p-5 rounded-xl bg-gray-0">
       <div className="relative w-[350px] h-[350px] mb-6 rounded-lg object-cover bg-gray-300">
         {image && (
           <Image
