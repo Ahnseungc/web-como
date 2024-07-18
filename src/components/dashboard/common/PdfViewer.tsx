@@ -12,23 +12,6 @@ const options = {
   standardFontDataUrl: "/standard_fonts/",
 };
 
-if (typeof Promise.withResolvers === "undefined") {
-  Promise.withResolvers = function <T>(): PromiseWithResolvers<T> {
-    let resolve!: (value: T | PromiseLike<T>) => void;
-    let reject!: (reason?: any) => void;
-    const promise = new Promise<T>((res, rej) => {
-      resolve = res;
-      reject = rej;
-    });
-    return { promise, resolve, reject };
-  };
-}
-
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.mjs",
-  import.meta.url
-).toString();
-
 interface Props {
   file?: string | File | null;
 }
@@ -36,6 +19,37 @@ interface Props {
 export default function PdfViewer({ file = "../../sample.pdf" }: Props) {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
+
+  useEffect(() => {
+    if (typeof Promise.withResolvers !== "function") {
+      if (window) {
+        window.Promise.withResolvers = function <T>(): PromiseWithResolvers<T> {
+          let resolve!: (value: T | PromiseLike<T>) => void;
+          let reject!: (reason?: any) => void;
+          const promise = new Promise<T>((res, rej) => {
+            resolve = res;
+            reject = rej;
+          });
+          return { promise, resolve, reject };
+        };
+      } else {
+        global.Promise.withResolvers = function <T>(): PromiseWithResolvers<T> {
+          let resolve!: (value: T | PromiseLike<T>) => void;
+          let reject!: (reason?: any) => void;
+          const promise = new Promise<T>((res, rej) => {
+            resolve = res;
+            reject = rej;
+          });
+          return { promise, resolve, reject };
+        };
+      }
+    }
+
+    pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+      "pdfjs-dist/build/pdf.worker.min.mjs",
+      import.meta.url
+    ).toString();
+  }, []);
 
   const onDocumentLoadSuccess = ({ numPages }: PDFDocumentProxy) => {
     setCurrentPage(1);
@@ -68,7 +82,6 @@ export default function PdfViewer({ file = "../../sample.pdf" }: Props) {
       <Document
         file={file}
         onLoadSuccess={onDocumentLoadSuccess}
-        options={options}
         renderMode="canvas"
         className={"flex justify-around"}
       >
