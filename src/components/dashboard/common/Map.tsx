@@ -21,6 +21,12 @@ export default function Map({ query, style }: Props) {
       const lng = parseFloat(address.x);
       const latLng = new naver.maps.LatLng(lat, lng);
       mapRef.current!.setCenter(latLng);
+
+      const markerOptions: naver.maps.MarkerOptions = {
+        position: latLng,
+        map: mapRef.current!,
+      };
+      const marker = new naver.maps.Marker(markerOptions);
     }
   }, [geocodeData]);
 

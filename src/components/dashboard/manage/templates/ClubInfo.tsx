@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { usePlaceSearch } from "@/app/api/map/hook";
+import { useGeocode } from "@/app/api/map/hook";
 import { cn } from "@/lib/utils";
 import Input from "@/components/common/Input";
 import NaverMap from "@/components/dashboard/common/Map";
@@ -16,12 +17,51 @@ export default function ClubInfoTab() {
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [selectedPlace, setSelectedPlace] = useState<{
     roadAddress: string;
-    name: string;
+    title?: string;
   }>();
 
+  const [searchResult, setSearchResult] = useState<
+    {
+      roadAddress: string;
+      title?: string;
+    }[]
+  >();
   const [closeSearchResult, setCloseSearchResult] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>();
-  const { data: searchData } = usePlaceSearch(searchTerm);
+  const [query, setQuery] = useState<string>();
+  const { data: placeData } = usePlaceSearch(searchTerm);
+  const { data: geocodeData } = useGeocode(query);
+
+  useEffect(() => {
+    if (placeData) {
+      //   console.log(placeData);
+      if (placeData.items.length < 1) {
+        setQuery(searchTerm);
+      }
+    }
+  }, [placeData, searchTerm]);
+
+  useEffect(() => {
+    if (placeData) {
+      if (placeData.items.length > 0) {
+        return setSearchResult(
+          placeData.items.map((item) => {
+            return { roadAddress: item.roadAddress, title: item.title };
+          })
+        );
+      }
+    }
+    if (geocodeData) {
+      console.log(geocodeData);
+      if (geocodeData.meta.totalCount > 0) {
+        return setSearchResult(
+          geocodeData.addresses.map((item) => {
+            return { roadAddress: item.roadAddress };
+          })
+        );
+      }
+    }
+  }, [placeData, geocodeData]);
 
   return (
     <form className="flex gap-3">
@@ -114,8 +154,8 @@ export default function ClubInfoTab() {
                   <Image src={SearchIcon} alt="검색" width={20} height={20} />
                   <input
                     type="text"
-                    name="term"
-                    id="term"
+                    name="roadAddress"
+                    id="roadAddress"
                     placeholder="활동 장소를 검색해주세요"
                     className="peer w-full h4 font-medium outline-none placeholder:text-gray-400 text-gray-900 bg-transparent transition duration-300"
                     value={searchTerm}
@@ -124,7 +164,7 @@ export default function ClubInfoTab() {
                       setCloseSearchResult(false);
                     }}
                   />
-                  {selectedPlace && (
+                  {selectedPlace?.roadAddress && (
                     <Image
                       src={RemoveIcon}
                       alt="삭제"
@@ -132,37 +172,52 @@ export default function ClubInfoTab() {
                       height={20}
                       className="cursor-pointer select-none"
                       onClick={() => {
-                        setSelectedPlace(undefined);
+                        setSelectedPlace({ roadAddress: "", title: "" });
                         setSearchTerm("");
                       }}
                     />
                   )}
                 </div>
-                <div
-                  className="w-2/5 h-[60px] py-4 px-3 rounded-md h4 font-medium text-gray-900 border border-gray-100 bg-gray-100"
-                  dangerouslySetInnerHTML={{
-                    __html: selectedPlace?.name || "",
-                  }}
-                />
+                <div className="flex items-center w-2/5 h-[60px] px-3 rounded-md border border-gray-100 has-[:focus-visible]:border-gray-900 bg-gray-100 has-[:focus-visible]:bg-gray-50 transition duration-300">
+                  <input
+                    type="text"
+                    name="detailAddress"
+                    id="detailAddress"
+                    className="peer w-full h4 font-medium outline-none placeholder:text-gray-400 text-gray-900 bg-transparent transition duration-300"
+                    value={selectedPlace?.title}
+                    onChange={(e) => {
+                      if (selectedPlace?.roadAddress) {
+                        setSelectedPlace((prev) => {
+                          return {
+                            title: e.target.value,
+                            roadAddress: prev!.roadAddress,
+                          };
+                        });
+                      }
+                    }}
+                  />
+                </div>
               </div>
-              {searchData && (
+              {searchResult && (
                 <div
                   className={cn(
                     "absolute z-20 flex flex-col gap-3 w-3/5 mt-1 p-6 rounded-xl bg-gray-50 shadow",
                     closeSearchResult ? "hidden" : "block"
                   )}
                 >
-                  {searchData.items.map((item, i) => (
+                  {searchResult.map((item, i) => (
                     <div
-                      key={item.mapx + item.mapy}
+                      key={item.roadAddress + item.title}
                       className={cn(
                         "flex flex-col gap-0.5 border-gray-200 cursor-pointer select-none",
-                        i === searchData.items.length - 1 ? "" : "pb-3 border-b"
+                        i === searchResult.length - 1 ? "" : "pb-3 border-b"
                       )}
                       onClick={() => {
                         setSelectedPlace({
                           roadAddress: item.roadAddress,
-                          name: item.title,
+                          title: item.title
+                            ?.replaceAll("<b>", "")
+                            .replaceAll("</b>", ""),
                         });
                         setCloseSearchResult(true);
                         setSearchTerm(item.roadAddress);
@@ -170,11 +225,15 @@ export default function ClubInfoTab() {
                     >
                       <p
                         className="body-1 font-semibold text-brand-orange"
-                        dangerouslySetInnerHTML={{ __html: item.title }}
+                        dangerouslySetInnerHTML={{
+                          __html: item.title || item.roadAddress,
+                        }}
                       />
-                      <span className="body-2 font-medium text-gray-500">
-                        {item.roadAddress}
-                      </span>
+                      {item.title && (
+                        <span className="body-2 font-medium text-gray-500">
+                          {item.roadAddress}
+                        </span>
+                      )}
                     </div>
                   ))}
                 </div>
