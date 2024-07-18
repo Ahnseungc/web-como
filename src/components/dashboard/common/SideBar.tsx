@@ -55,9 +55,9 @@ const menuList: MenuItem[] = [
     name: "활동비 관리",
     key: "expanse",
     subMenuList: [
-      { name: "활동비", link: "/dashboard/expanse" },
-      { name: "비품", link: "/dashboard/expanse/supply" },
-      { name: "영수증", link: "/dashboard/expanse/receipt" },
+      { name: "활동비 사용내역", link: "/dashboard/expanse" },
+      { name: "영수증 관리", link: "/dashboard/expanse/receipt" },
+      { name: "비품 관리", link: "/dashboard/expanse/supply" },
     ],
   },
   {
@@ -113,15 +113,12 @@ export default function SideBar() {
   };
 
   return (
-    <nav className="relative min-w-[248px] min-h-[1280px] border-r border-gray-300 bg-gray-0">
+    <nav className="relative min-w-[248px] min-h-[1280px] border-r border-gray-300 bg-gray-0 !cursor-pointer">
       <ul className="sticky top-24 py-8">
         {menuList.map((menu) => (
-          <li
-            key={menu.key}
-            onClick={() => handleMenuClick(menu)}
-            className="cursor-pointer select-none"
-          >
-            <span
+          <li key={menu.key} onClick={() => handleMenuClick(menu)}>
+            <div
+              style={{ cursor: "pointer" }}
               className={cn(
                 "flex items-center justify-between mb-6 py-3 px-6 h3 font-bold transition-all duration-200",
                 menu.key === selectedMenu
@@ -133,7 +130,7 @@ export default function SideBar() {
               {menu.subMenuList && (
                 <Image src={ChevronDown} alt="▼" width={10} />
               )}
-            </span>
+            </div>
             {menu.subMenuList && (
               <ul
                 className={cn(

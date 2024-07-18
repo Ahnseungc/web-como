@@ -21,9 +21,9 @@ export default function ItemCard(props: Props) {
   return (
     <Link
       href={`/dashboard/reservation/item/${props.id}`}
-      className="flex-1 min-w-[390px] max-w-[480px] rounded-xl bg-gray-0"
+      className="flex-1 min-w-[340px] max-w-[420px] rounded-xl bg-gray-0"
     >
-      <div className="relative min-w-[390px] max-w-[480px] h-[390px] rounded-t-xl bg-orange-100">
+      <div className="relative min-w-[340px] max-w-[420px] aspect-[4/3] rounded-t-xl bg-orange-100">
         {props.image && (
           <Image
             src={props.image}

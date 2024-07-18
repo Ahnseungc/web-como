@@ -23,18 +23,18 @@ export default function ItemSearch() {
   return (
     <form className="flex flex-col gap-6 p-8 rounded-2xl bg-gray-0">
       <h3 className="h2 font-semibold text-gray-900">{"검색 필터"}</h3>
-      <div className="flex gap-6">
-        <div className="flex gap-3 w-[342px] h-[60px] py-4 px-3 rounded-md border border-gray-100 has-[:focus-visible]:border-gray-900 bg-gray-100 has-[:focus-visible]:bg-gray-50 transition duration-300">
+      <div className="flex gap-3">
+        <div className="flex gap-3 w-[420px] h-[60px] py-4 px-3 rounded-md border border-gray-100 has-[:focus-visible]:border-gray-900 bg-gray-100 has-[:focus-visible]:bg-gray-50 transition duration-300">
           <Image src={SearchIcon} alt="검색" width={20} height={20} />
           <input
             type="text"
             name="term"
             id="term"
-            placeholder="상품검색"
+            placeholder="상품을 검색해 주세요"
             className="peer w-full h4 font-medium outline-none placeholder:text-gray-400 text-gray-900 bg-transparent transition duration-300"
           />
         </div>
-        <button className="w-[237px] h-[60px] py-4 rounded text-center h3 font-semibold text-gray-50 bg-brand-orange">
+        <button className="w-60 h-[60px] py-4 rounded text-center h3 font-semibold text-gray-50 bg-brand-orange">
           {"검색"}
         </button>
       </div>
