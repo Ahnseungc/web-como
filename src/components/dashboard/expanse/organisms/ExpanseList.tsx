@@ -6,8 +6,11 @@ import DateFilter from "@/components/dashboard/common/DateFilter";
 import Pagination from "@/components/dashboard/common/Pagination";
 import ExpanseTable from "@/components/dashboard/expanse/molecules/ExpanseTable";
 import PlusIcon from "@/assets/icons/plus.svg";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function ExpanseList() {
+  const { push } = useRouter();
+  const pathname = usePathname();
   const [currentFilter, setCurrentFilter] = useState<string>();
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -29,7 +32,10 @@ export default function ExpanseList() {
         <h3 className="h2 font-semibold text-gray-900">
           {"활동비 지급 내역 조회"}
         </h3>
-        <button className="flex gap-[3px] py-1 px-3 rounded body-1 font-medium text-gray-50 bg-gray-900">
+        <button
+          className="flex items-center gap-[3px] py-1 px-3 rounded body-1 font-medium text-gray-50 bg-gray-900 cursor-pointer"
+          onClick={() => push(`${pathname}/new`)}
+        >
           {"지급신청서 작성"}
           <Image src={PlusIcon} alt="+" width={20} height={20} />
         </button>
