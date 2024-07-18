@@ -1,3 +1,31 @@
+// "use client";
+
+// import { useEffect, useState } from "react";
+// import { usePDFSlick } from "@pdfslick/react";
+// import PdfNavigation from "./PdfNavigation";
+// import "@pdfslick/react/dist/pdf_viewer.css";
+
+// interface Props {
+//   file?: string;
+// }
+
+// export default function PdfViewer({ file = "../../sample.pdf" }: Props) {
+//   const [isMounted, setIsMounted] = useState(false);
+//   const { viewerRef, usePDFSlickStore, PDFSlickViewer } = usePDFSlick(file, {
+//     singlePageViewer: true,
+//     scaleValue: "page-fit",
+//   });
+
+//   return (
+//     <div className="absolute inset-0 bg-slate-200/70 pdfSlick">
+//       <div className="flex-1 relative h-full">
+//         <PDFSlickViewer {...{ viewerRef, usePDFSlickStore }} />
+//         <PdfNavigation {...{ usePDFSlickStore }} />
+//       </div>
+//     </div>
+//   );
+// }
+
 "use client";
 
 import { useEffect, useState } from "react";
