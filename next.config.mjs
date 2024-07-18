@@ -1,7 +1,20 @@
+import TerserPlugin from 'terser-webpack-plugin';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   webpack: (config) => {
-    config.optimization.minimize = false;
+    config.optimization.minimize = true;
+    config.optimization.minimizer = [
+      new TerserPlugin({
+        terserOptions: {
+          compress: {
+            drop_console: true,
+          },
+          mangle: true,
+        },
+        exclude: /node_modules\/react-pdf/,
+      }),
+    ];
     return config;
   },
 };
