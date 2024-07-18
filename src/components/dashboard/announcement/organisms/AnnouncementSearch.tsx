@@ -19,7 +19,7 @@ const cochin = localFont({
 
 const filterList = [
   { name: "전체 보기", value: "all" },
-  { name: "주무부서 공지", value: "dept" },
+  { name: "주무부서 공지", value: "company" },
   {
     name: (
       <>
