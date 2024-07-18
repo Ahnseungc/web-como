@@ -1,15 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { pdfjs, Document, Page } from "react-pdf";
 import type { PDFDocumentProxy } from "pdfjs-dist";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
-
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.mjs",
-  import.meta.url
-).toString();
 
 const options = {
   cMapUrl: "/cmaps/",
@@ -24,6 +19,17 @@ interface Props {
 export default function PdfViewer({ file = "../../sample.pdf" }: Props) {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
+
+  useEffect(() => {
+    pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+      "pdfjs-dist/legacy/build/pdf.worker.min.mjs",
+      import.meta.url
+    ).toString();
+  }, []);
+  //   pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  //     "pdfjs-dist/build/pdf.worker.min.mjs",
+  //     import.meta.url
+  //   ).toString();
 
   const onDocumentLoadSuccess = ({ numPages }: PDFDocumentProxy) => {
     setCurrentPage(1);
