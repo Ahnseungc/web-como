@@ -1,5 +1,6 @@
 import BackButton from "@/components/dashboard/common/BackButton";
-import ClubInfoCard from "@/components/dashboard/expanse/molecules/ClubInfoCard";
+import ClubInfoCard from "@/components/dashboard/common/ClubInfoCard";
+import NewExpanseReportForm from "@/components/dashboard/expanse/organisms/NewExpanseForm";
 
 export default function NewExpanseReportPage() {
   return (
@@ -10,6 +11,7 @@ export default function NewExpanseReportPage() {
       </div>
       <div className="flex gap-3">
         <ClubInfoCard />
+        <NewExpanseReportForm />
       </div>
     </>
   );

@@ -15,6 +15,7 @@ interface Props {
   required?: boolean;
   value?: string;
   maxChar?: number;
+  inputStyle?: string;
 }
 
 interface InputProps extends Props {
@@ -33,6 +34,7 @@ const InputElement = (props: InputProps) => {
           htmlFor={props.name}
           className={cn(
             inputStyle,
+            props.inputStyle,
             "flex-1 flex items-center justify-between text-gray-400 cursor-pointer select-none"
           )}
         >
@@ -51,7 +53,11 @@ const InputElement = (props: InputProps) => {
         disabled={props.readonly}
         value={props.currentValue}
         onChange={props.handleInputChange}
-        className={cn(inputStyle, props.type === "file" ? "hidden" : "block")}
+        className={cn(
+          inputStyle,
+          props.inputStyle,
+          props.type === "file" ? "hidden" : "block"
+        )}
       />
     </>
   );
