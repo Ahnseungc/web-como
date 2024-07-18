@@ -37,16 +37,16 @@ export default function Header(props: Props) {
         </Link>
         <div className="flex items-center gap-[60px]">
           <Link href={"/dashboard/announcement"}>
-            <span className="h4 font-normal text-gray-700">{"공지사항"}</span>
+            <span className="h4 font-medium text-gray-800">{"공지사항"}</span>
           </Link>
           <Link href={"/"}>
-            <span className="h4 font-normal text-gray-700">{"고객센터"}</span>
+            <span className="h4 font-medium text-gray-800">{"고객센터"}</span>
           </Link>
           {props.isLoggedIn ? (
             <ProfileDropdown />
           ) : (
             <Link href={"/login"}>
-              <span className="h4 font-normal text-gray-700">{"로그인"}</span>
+              <span className="h4 font-medium text-gray-800">{"로그인"}</span>
             </Link>
           )}
         </div>
