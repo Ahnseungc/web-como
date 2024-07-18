@@ -17,19 +17,50 @@ interface Props {
 }
 
 export default function PdfViewer({ file = "../../sample.pdf" }: Props) {
+  const [isMounted, setIsMounted] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
 
   useEffect(() => {
-    pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-      "pdfjs-dist/legacy/build/pdf.worker.min.mjs",
-      import.meta.url
-    ).toString();
+    if (typeof Promise.withResolvers === "undefined") {
+      if (window) {
+        // @ts-expect-error This does not exist outside of polyfill which this is doing
+        window.Promise.withResolvers = function () {
+          let resolve, reject;
+          const promise = new Promise((res, rej) => {
+            resolve = res;
+            reject = rej;
+          });
+          return { promise, resolve, reject };
+        };
+      } else {
+        // @ts-expect-error This does not exist outside of polyfill which this is doing
+        global.Promise.withResolvers = function () {
+          let resolve, reject;
+          const promise = new Promise((res, rej) => {
+            resolve = res;
+            reject = rej;
+          });
+          return { promise, resolve, reject };
+        };
+      }
+    }
+    if (window) {
+      pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+        "pdfjs-dist/legacy/build/pdf.worker.min.mjs",
+        import.meta.url
+      ).toString();
+      setIsMounted(true);
+    }
   }, []);
   //   pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   //     "pdfjs-dist/build/pdf.worker.min.mjs",
   //     import.meta.url
   //   ).toString();
+
+  if (!isMounted) {
+    return;
+  }
 
   const onDocumentLoadSuccess = ({ numPages }: PDFDocumentProxy) => {
     setCurrentPage(1);
