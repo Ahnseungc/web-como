@@ -1,3 +1,11 @@
-export default function FaqPage() {
-  return <div></div>;
+import FAQList from "@/components/dashboard/announcement/organisms/FAQList";
+import FAQSearch from "@/components/dashboard/announcement/organisms/FAQSearch";
+
+export default function FAQPage() {
+  return (
+    <>
+      <FAQSearch />
+      <FAQList />
+    </>
+  );
 }
