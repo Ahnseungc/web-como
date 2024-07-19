@@ -11,16 +11,16 @@
   }
 
   h1 {
-    @apply text-3xl tracking-tightest;
+    @apply text-2xl xl:text-3xl tracking-tightest;
   }
   h2 {
-    @apply text-2xl tracking-tightest;
+    @apply text-xl xl:text-2xl tracking-tightest;
   }
   h3 {
-    @apply text-xl tracking-tighter;
+    @apply text-lg xl:text-xl tracking-tighter;
   }
   h4 {
-    @apply text-lg tracking-tighter;
+    @apply text-base xl:text-lg tracking-tight xl:tracking-tighter;
   }
   p {
     @apply tracking-tight whitespace-pre-line;
@@ -37,25 +37,25 @@
 
 @layer components {
   .h1 {
-    @apply text-3xl tracking-tightest;
+    @apply text-2xl xl:text-3xl tracking-tightest;
   }
   .h2 {
-    @apply text-2xl tracking-tightest;
+    @apply text-xl xl:text-2xl tracking-tightest;
   }
   .h3 {
-    @apply text-xl tracking-tighter;
+    @apply text-lg xl:text-xl tracking-tighter;
   }
   .h4 {
-    @apply text-lg tracking-tighter;
+    @apply text-base xl:text-lg tracking-tight xl:tracking-tighter;
   }
   .body-1 {
-    @apply text-base tracking-tight;
+    @apply text-sm xl:text-base tracking-tight;
   }
   .body-2 {
-    @apply text-sm tracking-tight;
+    @apply text-xs xl:text-sm tracking-normal xl:tracking-tight;
   }
   .caption-1 {
-    @apply text-xs tracking-normal;
+    @apply text-2xs xl:text-xs tracking-normal;
   }
   .caption-2 {
     @apply text-2xs tracking-normal;
