@@ -163,11 +163,11 @@ export default function ExpanseTable({ statusFilter }: Props) {
                 ? "underline cursor-pointer"
                 : "",
               data === "canceled"
-                ? "text-gray-500"
+                ? "text-point-red"
                 : data === "completed"
-                  ? "text-point-blue"
+                  ? "text-gray-500"
                   : data === "pending"
-                    ? "text-point-red"
+                    ? "text-point-blue"
                     : "text-gray-800"
             )}
             onClick={() => {
