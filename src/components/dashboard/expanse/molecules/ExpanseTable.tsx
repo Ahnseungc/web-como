@@ -6,7 +6,6 @@ import type { ExpanseSearchFilter } from "@/components/dashboard/expanse/organis
 
 const tableHeadings = [
   "순번",
-  "동호회명",
   "신청자",
   "담당자",
   "품의서 상세",
@@ -20,7 +19,6 @@ type ExpanseApplicationStatus = "pending" | "completed" | "canceled";
 
 interface ExpanseApplicationEntry {
   order: number;
-  name: string;
   applicant: string;
   personInCharge: string;
   expanseReport: string;
@@ -32,7 +30,6 @@ interface ExpanseApplicationEntry {
 const entries: ExpanseApplicationEntry[] = [
   {
     order: 1,
-    name: "동호회명",
     applicant: "김오모",
     personInCharge: "박오모",
     expanseReport: "0001-2024-07-016",
@@ -41,7 +38,6 @@ const entries: ExpanseApplicationEntry[] = [
   },
   {
     order: 2,
-    name: "동호회명",
     applicant: "김오모",
     personInCharge: "김오모",
     expanseReport: "0001-2024-07-016",
@@ -50,7 +46,6 @@ const entries: ExpanseApplicationEntry[] = [
   },
   {
     order: 3,
-    name: "동호회명",
     applicant: "김오모",
     personInCharge: "서오모",
     expanseReport: "0001-2024-07-016",
@@ -60,7 +55,6 @@ const entries: ExpanseApplicationEntry[] = [
   },
   {
     order: 4,
-    name: "동호회명",
     applicant: "김오모",
     personInCharge: "김오모",
     expanseReport: "0001-2024-07-016",
@@ -70,7 +64,6 @@ const entries: ExpanseApplicationEntry[] = [
   },
   {
     order: 5,
-    name: "동호회명",
     applicant: "김오모",
     personInCharge: "김오모",
     expanseReport: "0001-2024-07-016",
@@ -80,7 +73,6 @@ const entries: ExpanseApplicationEntry[] = [
   },
   {
     order: 6,
-    name: "동호회명",
     applicant: "김오모",
     personInCharge: "김오모",
     expanseReport: "0001-2024-07-016",
@@ -90,7 +82,6 @@ const entries: ExpanseApplicationEntry[] = [
   },
   {
     order: 7,
-    name: "동호회명",
     applicant: "김오모",
     personInCharge: "김오모",
     expanseReport: "0001-2024-07-016",
@@ -100,7 +91,6 @@ const entries: ExpanseApplicationEntry[] = [
   },
   {
     order: 8,
-    name: "동호회명",
     applicant: "김오모",
     personInCharge: "김오모",
     expanseReport: "0001-2024-07-016",
@@ -110,7 +100,6 @@ const entries: ExpanseApplicationEntry[] = [
   },
   {
     order: 9,
-    name: "동호회명",
     applicant: "김오모",
     personInCharge: "김오모",
     expanseReport: "0001-2024-07-016",
@@ -119,7 +108,6 @@ const entries: ExpanseApplicationEntry[] = [
   },
   {
     order: 10,
-    name: "동호회명",
     applicant: "김오모",
     personInCharge: "김오모",
     expanseReport: "0001-2024-07-016",
@@ -141,7 +129,6 @@ export default function ExpanseTable({ statusFilter }: Props) {
       <li className="flex border-b border-gray-400 bg-gray-0">
         {[
           entry.order,
-          entry.name,
           entry.applicant,
           entry.personInCharge,
           entry.expanseReport,
@@ -150,16 +137,15 @@ export default function ExpanseTable({ statusFilter }: Props) {
           entry.receipt,
           entry.status === "canceled",
         ].map((data, i) => (
-          <span
+          <div
             key={data?.toString()}
             className={cn(
-              "p-3 body-1 font-medium underline-offset-2 truncate",
+              "py-3 px-6 body-1 font-medium underline-offset-2 truncate text-center",
               i === 0 ? "w-[76px]" : "flex-1",
-              i === 1 ? "" : "text-center max-w-56",
-              i === 2 || i === 3 ? "max-w-24" : "",
-              i === 4 || i === 5 ? "max-w-56" : "",
-              i === 6 ? "max-w-28" : i === 8 ? "max-w-32" : "",
-              data && (i === 4 || i === 7 || i === 8)
+              i === 1 || i === 2 ? "max-w-24" : "",
+              i === 4 ? "max-w-56" : "",
+              i === 5 ? "max-w-28" : i === 7 ? "max-w-32" : "",
+              data && (i === 3 || i === 6 || i === 7)
                 ? "underline cursor-pointer"
                 : "",
               data === "canceled"
@@ -171,9 +157,9 @@ export default function ExpanseTable({ statusFilter }: Props) {
                     : "text-gray-800"
             )}
             onClick={() => {
-              if (i === 4) {
+              if (i === 3) {
                 push(`${pathname}/detail/report/${entry.expanseReport}`);
-              } else if (i === 7 && entry.receipt) {
+              } else if (i === 6 && entry.receipt) {
                 push(`${pathname}/detail/receipt/${entry.receipt}`);
               }
             }}
@@ -186,10 +172,10 @@ export default function ExpanseTable({ statusFilter }: Props) {
                   ? "지급 대기"
                   : !data
                     ? "-"
-                    : i === 8
+                    : i === 7
                       ? "상세보기"
                       : data}
-          </span>
+          </div>
         ))}
       </li>
     );
@@ -202,12 +188,11 @@ export default function ExpanseTable({ statusFilter }: Props) {
           <span
             key={heading}
             className={cn(
-              "p-3 body-1 font-bold text-gray-900",
+              "py-3 px-6 body-1 font-bold text-gray-900 text-center",
               i === 0 ? "w-[76px]" : "flex-1",
-              i === 1 ? "" : "text-center max-w-56",
-              i === 2 || i === 3 ? "max-w-24" : "",
-              i === 4 || i === 5 ? "max-w-56" : "",
-              i === 6 ? "max-w-28" : i === 8 ? "max-w-32" : ""
+              i === 1 || i === 2 ? "max-w-24" : "",
+              i === 4 ? "max-w-56" : "",
+              i === 5 ? "max-w-28" : i === 7 ? "max-w-32" : ""
             )}
           >
             {heading}
