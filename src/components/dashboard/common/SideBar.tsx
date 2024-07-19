@@ -65,7 +65,7 @@ const menuList: MenuItem[] = [
     key: "announcement",
     subMenuList: [
       { name: "공지사항", link: "/dashboard/announcement" },
-      { name: "FAQ & 문의", link: "/dashboard/announcement/faq" },
+      { name: "자주 묻는 질문", link: "/dashboard/announcement/faq" },
     ],
   },
   {
