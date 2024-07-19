@@ -180,7 +180,7 @@ export default function SideBar() {
   };
 
   return (
-    <nav className="relative min-w-[228px] xl:min-w-[248px] min-h-[1280px] border-r border-gray-300 bg-gray-0 !cursor-pointer">
+    <nav className="relative min-w-[228px] xl:min-w-[248px] min-h-[1080px] border-r border-gray-300 bg-gray-0 !cursor-pointer">
       <ul className="sticky py-8" style={{ top: HEADER_HEIGHT }}>
         {menuList.map((menu) => (
           <li key={menu.key} onClick={() => handleMenuClick(menu)}>

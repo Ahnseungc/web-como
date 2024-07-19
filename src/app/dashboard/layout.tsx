@@ -10,7 +10,7 @@ export default function DashboardLayout({
     <>
       <Header isDashboard isLoggedIn title="동호회 관리센터" />
       <main
-        className="flex min-w-[1186px] min-h-[1280px] bg-gray-200"
+        className="flex min-w-[1186px] min-h-[1080px] bg-gray-200"
         style={{ marginTop: HEADER_HEIGHT }}
       >
         <SideBar />
