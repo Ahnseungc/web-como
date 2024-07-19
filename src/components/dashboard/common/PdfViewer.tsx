@@ -4,6 +4,10 @@ const NoSSR = dynamic(() => import("./PDFViewerBase"), {
   ssr: false,
 });
 
-export default function PDFViewer() {
-  return <NoSSR />;
+interface Props {
+  file?: string | File | null;
+}
+
+export default function PDFViewer({ file }: Props) {
+  return <NoSSR file={file} />;
 }
