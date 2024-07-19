@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Chip from "@/components/common/Chip";
 import SearchIcon from "@/assets/icons/search.svg";
@@ -8,17 +7,22 @@ import ChevronDownIcon from "@/assets/icons/chevron_down_filled.svg";
 
 const filterList = [
   { name: "전체 보기", value: "all" },
-  { name: "지급 완료", value: "culture" },
-  { name: "지급 대기", value: "activity" },
-  { name: "반려", value: "study" },
+  { name: "지급 완료", value: "completed" },
+  { name: "지급 대기", value: "pending" },
+  { name: "반려", value: "canceled" },
 ] as const;
 
-type ExpanseSearchFilter = (typeof filterList)[number]["value"];
+export type ExpanseSearchFilter = (typeof filterList)[number]["value"];
 
-export default function ExpanseSearch() {
-  const [currentFilter, setCurrentFilter] =
-    useState<ExpanseSearchFilter>("all");
+interface Props {
+  currentFilter: ExpanseSearchFilter;
+  handleChangeFilter: (filter: ExpanseSearchFilter) => void;
+}
 
+export default function ExpanseSearch({
+  currentFilter,
+  handleChangeFilter,
+}: Props) {
   return (
     <form className="flex flex-col gap-6 p-8 rounded-2xl bg-gray-0">
       <h3 className="h2 font-semibold text-gray-900">{"검색 필터"}</h3>
@@ -54,7 +58,7 @@ export default function ExpanseSearch() {
             content={filter.name}
             primary={filter.value === currentFilter}
             padding="py-3 px-4"
-            onClick={() => setCurrentFilter(filter.value)}
+            onClick={() => handleChangeFilter(filter.value)}
           />
         ))}
       </div>
