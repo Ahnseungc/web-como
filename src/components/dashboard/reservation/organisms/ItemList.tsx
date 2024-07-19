@@ -115,7 +115,7 @@ const itemList = [
 
 export default function ItemList() {
   return (
-    <div className="flex flex-wrap justify-center gap-4">
+    <div className="grid grid-cols-4 gap-3 xl:gap-5">
       {itemList.map((item) => (
         <ItemCard key={item.id} {...item} />
       ))}
