@@ -22,12 +22,14 @@ export default function ReportList() {
   };
 
   return (
-    <div className="flex flex-col gap-4 p-8 rounded-2xl bg-gray-0">
-      <DateFilter
-        currentFilter={currentFilter}
-        handleFilterChange={handleFilterChange}
-      />
-      <ReportListTable />
+    <div className="space-y-10 p-8 rounded-2xl bg-gray-0">
+      <div className="space-y-4">
+        <DateFilter
+          currentFilter={currentFilter}
+          handleFilterChange={handleFilterChange}
+        />
+        <ReportListTable />
+      </div>
       <Pagination
         currentPage={currentPage}
         handlePageChange={handlePageChange}
