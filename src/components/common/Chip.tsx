@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 
 interface Props {
-  content: string;
+  content: string | React.ReactNode;
   primary?: boolean;
   padding?: string;
   onClick?: () => void;
