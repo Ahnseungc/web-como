@@ -4,10 +4,10 @@ import ItemSearch from "@/components/dashboard/reservation/organisms/ItemSearch"
 
 export default function ReservationPage() {
   return (
-    <>
+    <div className="flex flex-col gap-5">
       <AdBanners />
       <ItemSearch />
       <ItemList />
-    </>
+    </div>
   );
 }

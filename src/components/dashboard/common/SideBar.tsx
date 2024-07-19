@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import ChevronDown from "@/assets/icons/sidebar/chevron_down_sm.svg";
+import { HEADER_HEIGHT } from "@/components/header/Header";
 
 const clubDashboardMenus = [
   "manage",
@@ -179,8 +180,8 @@ export default function SideBar() {
   };
 
   return (
-    <nav className="relative min-w-[248px] min-h-[1280px] border-r border-gray-300 bg-gray-0 !cursor-pointer">
-      <ul className="sticky top-24 py-8">
+    <nav className="relative min-w-[228px] xl:min-w-[248px] min-h-[1080px] border-r border-gray-300 bg-gray-0 !cursor-pointer">
+      <ul className="sticky py-8" style={{ top: HEADER_HEIGHT }}>
         {menuList.map((menu) => (
           <li key={menu.key} onClick={() => handleMenuClick(menu)}>
             <div

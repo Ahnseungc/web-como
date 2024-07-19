@@ -24,7 +24,7 @@ const reports = [
   },
   {
     order: 2,
-    status: "2024-08-05",
+    status: "재요청",
     activity: "2024_05_26 어푸어푸 수영 모임 (2)",
     date: "20240704 12:33:57",
     place: "동대문구 수영장",
@@ -111,7 +111,13 @@ export default function ReportListTable() {
               "py-3 px-6 body-1 font-bold text-gray-900",
               i === 0 ? "w-[76px]" : "flex-1",
               i === 2 ? "" : "text-center max-w-56",
-              i === 5 ? "max-w-40" : ""
+              i === 5
+                ? "max-w-40"
+                : i === 3
+                  ? "max-w-44"
+                  : i === 1
+                    ? "max-w-40"
+                    : ""
             )}
           >
             {heading}
@@ -134,17 +140,25 @@ export default function ReportListTable() {
             <span
               key={data}
               className={cn(
-                "p-3 body-1 font-medium underline-offset-2 underline decoration-gray-0 truncate transition duration-300",
+                "py-3 px-6 body-1 font-medium underline-offset-2 underline decoration-gray-0 truncate transition duration-300",
                 i === 0 ? "w-[76px]" : "flex-1",
                 i === 2
                   ? "hover:decoration-gray-800 cursor-pointer"
                   : "text-center max-w-56",
-                i === 5 ? "flex justify-center max-w-40" : "",
+                i === 5
+                  ? "flex items-center justify-center py-0 max-w-40"
+                  : i === 3
+                    ? "max-w-44"
+                    : i === 1
+                      ? "max-w-40"
+                      : "",
                 data === "작성대기"
                   ? "text-point-blue"
-                  : i === 1
-                    ? "text-gray-500"
-                    : "text-gray-800"
+                  : data === "재요청"
+                    ? "text-point-red"
+                    : i === 1
+                      ? "text-gray-500"
+                      : "text-gray-800"
               )}
               onClick={() => {
                 if (i === 2) {
@@ -156,7 +170,15 @@ export default function ReportListTable() {
                 }
               }}
             >
-              {i === 5 ? <DocUtilButtons /> : data}
+              {i === 5 ? (
+                report.status === "재요청" || report.status === "작성대기" ? (
+                  "-"
+                ) : (
+                  <DocUtilButtons />
+                )
+              ) : (
+                data
+              )}
             </span>
           ))}
         </li>

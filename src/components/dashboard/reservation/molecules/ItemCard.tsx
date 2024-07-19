@@ -21,9 +21,9 @@ export default function ItemCard(props: Props) {
   return (
     <Link
       href={`/dashboard/reservation/item/${props.id}`}
-      className="flex-1 min-w-[340px] max-w-[420px] rounded-xl bg-gray-0"
+      className="rounded-xl bg-gray-0"
     >
-      <div className="relative min-w-[340px] max-w-[420px] aspect-[4/3] rounded-t-xl bg-orange-100">
+      <div className="relative w-full aspect-square rounded-t-xl bg-orange-100">
         {props.image && (
           <Image
             src={props.image}
@@ -34,7 +34,7 @@ export default function ItemCard(props: Props) {
           />
         )}
       </div>
-      <div className="space-y-6 p-5">
+      <div className="space-y-6 py-7 px-6">
         <div className="space-y-2">
           <div className="flex items-center gap-0.5 body-1 font-medium text-gray-500">
             <Image src={MarkerIcon} alt="장소" width={18} height={18} />
@@ -45,7 +45,7 @@ export default function ItemCard(props: Props) {
           <p className="body-1 font-medium text-gray-700 line-clamp-2">
             {props.description}
           </p>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 body-1 font-medium text-gray-500">
             <div className="flex items-center gap-1">
               <Image src={PeopleIcon} alt="인원" width={20} height={20} />
               {`최대 ${props.maxPeople}명`}

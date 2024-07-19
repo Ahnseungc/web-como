@@ -1,4 +1,4 @@
-import Header from "@/components/header/Header";
+import Header, { HEADER_HEIGHT } from "@/components/header/Header";
 
 export default function SupportLayout({
   children,
@@ -8,7 +8,12 @@ export default function SupportLayout({
   return (
     <>
       <Header isLoggedIn title="동호회 관리센터" />
-      <main className="flex justify-center mt-24 py-[150px]">{children}</main>
+      <main
+        className="flex justify-center py-[150px]"
+        style={{ marginTop: HEADER_HEIGHT }}
+      >
+        {children}
+      </main>
     </>
   );
 }
