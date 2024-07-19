@@ -99,6 +99,7 @@ const menuList: MenuItem[] = [
           "/dashboard/expanse",
           "/dashboard/expanse/new",
           "/dashboard/expanse/detail",
+          "/dashboard/expanse/transaction",
         ],
       },
       {
