@@ -8,7 +8,7 @@ const tableHeadings = ["결제일자", "입출금", "금액", "입출처", "비�
 const transactions = [
   {
     id: 1,
-    date: "2024-07-08-12:00",
+    date: "20240708 12:00:37",
     type: "입금",
     amount: "100,000,000원",
     from: "인사팀",
@@ -16,7 +16,7 @@ const transactions = [
   },
   {
     id: 2,
-    date: "2024-07-08-12:00",
+    date: "20240708 12:00:37",
     type: "입금",
     amount: "00,000원",
     from: "인사팀",
@@ -24,7 +24,7 @@ const transactions = [
   },
   {
     id: 3,
-    date: "2024-07-08-12:00",
+    date: "20240708 12:00:37",
     type: "출금",
     amount: "-00,000원",
     from: "인사팀",
@@ -32,7 +32,7 @@ const transactions = [
   },
   {
     id: 4,
-    date: "2024-07-08-12:00",
+    date: "20240708 12:00:37",
     type: "입금",
     amount: "00,000원",
     from: "인사팀",
@@ -40,7 +40,7 @@ const transactions = [
   },
   {
     id: 5,
-    date: "2024-07-08-12:00",
+    date: "20240708 12:00:37",
     type: "입금",
     amount: "00,000원",
     from: "인사팀",
@@ -64,14 +64,14 @@ export default function DashboardTransaction() {
           <span className="h1 font-extrabold text-brand-orange">{`${(10000000).toLocaleString()}원`}</span>
         </div>
         <ul className="flex flex-col gap-1">
-          <li className="flex gap-8 py-2 px-4 rounded bg-gray-100">
+          <li className="flex rounded bg-gray-100">
             {tableHeadings.map((heading, i) => (
               <span
                 key={heading}
                 className={cn(
-                  "body-1 font-bold text-gray-500",
-                  i === 1 || i === 3 ? "" : "flex-1",
-                  i === 2 ? "max-w-40" : i === 0 ? "max-w-[148px]" : ""
+                  "py-2 px-4 body-2 font-bold text-gray-500",
+                  i === 1 || i === 3 ? "w-20 text-center" : "flex-1",
+                  i === 2 ? "max-w-80" : i === 0 ? "max-w-40" : ""
                 )}
               >
                 {heading}
@@ -79,7 +79,7 @@ export default function DashboardTransaction() {
             ))}
           </li>
           {transactions.map((transaction) => (
-            <li key={transaction.id} className="flex gap-[34px] py-2.5 px-4">
+            <li key={transaction.id} className="flex">
               {[
                 transaction.date,
                 transaction.type,
@@ -90,15 +90,17 @@ export default function DashboardTransaction() {
                 <span
                   key={data}
                   className={cn(
-                    "truncate",
-                    i === 1 || i === 3 ? "" : "flex-1",
+                    "py-2.5 px-4 truncate",
+                    i === 1 || i === 3 ? "w-20 text-center" : "flex-1",
                     i === 2
-                      ? "max-w-40 h3 font-bold text-gray-900"
+                      ? "max-w-80 body-1 font-bold text-gray-900"
                       : i === 0
-                        ? "max-w-[148px] body-1 font-bold text-gray-600"
+                        ? "max-w-40 body-2 font-bold text-gray-600"
                         : i === 1
-                          ? "h3 font-bold"
-                          : "body-1 font-medium text-gray-700",
+                          ? "body-1 font-bold"
+                          : i === 3
+                            ? "body-2 font-medium text-gray-700"
+                            : "body-1 font-medium text-gray-700",
                     data === "입금" ? "text-point-blue" : "",
                     data === "출금" ? "text-point-red" : "",
                     i === 4 ? "truncate" : ""
