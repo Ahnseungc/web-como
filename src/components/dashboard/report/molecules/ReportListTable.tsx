@@ -162,11 +162,7 @@ export default function ReportListTable() {
               )}
               onClick={() => {
                 if (i === 2) {
-                  if (searchParams.size > 0) {
-                    push(`${pathname}?${searchParams}&report=${report.order}`);
-                  } else {
-                    push(`${pathname}?report=${report.order}`);
-                  }
+                  push(`${pathname}/${report.order}?status=${report.status}`);
                 }
               }}
             >
