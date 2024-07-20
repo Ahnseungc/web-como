@@ -13,11 +13,9 @@ export default function ClubReportDetailPage() {
 
   return (
     <>
+      <BackButton />
       {hasReport ? (
-        <>
-          <BackButton />
-          <ReportViewer />
-        </>
+        <ReportViewer />
       ) : (
         <>
           <ReportTitle />
