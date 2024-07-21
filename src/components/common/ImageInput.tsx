@@ -9,6 +9,7 @@ interface Props {
   name: string;
   label?: string;
   required?: boolean;
+  caption?: string;
 }
 
 export default function ImageInput(props: Props) {
@@ -55,7 +56,6 @@ export default function ImageInput(props: Props) {
             accept="image/*"
             name={props.name}
             id={props.name}
-            required={props.required}
             onChange={(e) => {
               const fileList = e.target.files;
               if (fileList && fileList.length > 0) {
@@ -67,6 +67,7 @@ export default function ImageInput(props: Props) {
           />
         </label>
       </div>
+      <p className="body-1 font-medium text-gray-500">{props.caption}</p>
     </div>
   );
 }

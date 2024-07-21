@@ -25,7 +25,7 @@ interface InputProps extends Props {
 
 const InputElement = (props: InputProps) => {
   const inputStyle =
-    "w-full min-h-[60px] py-4 px-3 rounded-md outline-none border border-gray-100 focus-visible:border-gray-900 h4 font-medium placeholder:text-gray-400 text-gray-900 bg-gray-100 focus-visible:bg-gray-50 transition duration-300";
+    "w-full min-h-[60px] py-4 px-3 rounded-md outline-none border border-gray-100 focus-visible:border-gray-900 truncate h4 font-medium placeholder:text-gray-400 text-gray-900 bg-gray-100 focus-visible:bg-gray-50 transition duration-300";
 
   return (
     <>
@@ -48,7 +48,6 @@ const InputElement = (props: InputProps) => {
         name={props.name}
         id={props.name}
         placeholder={props.placeholder}
-        required={props.required}
         readOnly={props.readonly}
         disabled={props.readonly}
         value={props.currentValue}
