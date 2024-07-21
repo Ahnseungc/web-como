@@ -38,7 +38,7 @@ const InputElement = (props: InputProps) => {
             "flex-1 flex items-center justify-between text-gray-400 cursor-pointer select-none"
           )}
         >
-          {props.placeholder}
+          <span className="truncate">{props.placeholder}</span>
           <Image src={FileIcon} alt="파일 선택" width={20} height={22} />
         </label>
       )}
