@@ -22,7 +22,7 @@ export default function DatePicker({
   return (
     <div className={cn("flex-1 relative", size)}>
       <button
-        className="flex items-center justify-between w-full h-full px-3 rounded-md border border-gray-400 bg-gray-50"
+        className={cn("flex items-center justify-between px-3 rounded-md border border-gray-400 bg-gray-50", size)}
         onClick={() => openModal(props.id!)}
       >
         <span className="body-1 font-semibold text-gray-900">
