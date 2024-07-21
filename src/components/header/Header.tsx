@@ -1,9 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { cn, openModal } from "@/lib/utils";
 import ProfileDropdown from "@/components/header/atoms/ProfileDropdown";
+import CustomerCenter from "@/components/header/molecules/CustomerCenter";
 import Logo from "@/assets/logos/logo.svg";
-import ComoLogo from "@/assets/logos/como_logo.svg";
 import ComoWhiteLogo from "@/assets/logos/como_logo_white.svg";
 
 export const HEADER_HEIGHT = "60px";
@@ -42,9 +44,12 @@ export default function Header(props: Props) {
           <Link href={"/dashboard/announcement"}>
             <span className="h4 font-normal text-gray-100">{"공지사항"}</span>
           </Link>
-          <Link href={"/"}>
-            <span className="h4 font-normal text-gray-100">{"고객센터"}</span>
-          </Link>
+          <span
+            className="h4 font-normal text-gray-100 cursor-pointer"
+            onClick={() => openModal("customer-center")}
+          >
+            {"고객센터"}
+          </span>
           {props.isLoggedIn ? (
             <ProfileDropdown />
           ) : (
@@ -54,49 +59,7 @@ export default function Header(props: Props) {
           )}
         </div>
       </div>
+      <CustomerCenter />
     </header>
   );
 }
-// export default function Header(props: Props) {
-//   return (
-//     <header className="fixed top-0 inset-x-0 z-20 flex items-center justify-center h-24 border-b border-gray-300 bg-gray-0">
-//       <div
-//         className={cn(
-//           "flex items-center justify-between h-9 px-8",
-//           props.isDashboard ? "w-full" : "w-[1204px]"
-//         )}
-//       >
-//         <Link href={"/"}>
-//           <h1 className="flex items-center gap-3 font-bold text-gray-900">
-//             {props.isLoggedIn ? (
-//               <Image src={Logo} alt="OMO" width={36} height={36} priority />
-//             ) : (
-//               <Image
-//                 src={ComoLogo}
-//                 alt="c'omo for business"
-//                 width={186}
-//                 priority
-//               />
-//             )}
-//             {props.title && props.title}
-//           </h1>
-//         </Link>
-//         <div className="flex items-center gap-[60px]">
-//           <Link href={"/dashboard/announcement"}>
-//             <span className="h4 font-medium text-gray-800">{"공지사항"}</span>
-//           </Link>
-//           <Link href={"/"}>
-//             <span className="h4 font-medium text-gray-800">{"고객센터"}</span>
-//           </Link>
-//           {props.isLoggedIn ? (
-//             <ProfileDropdown />
-//           ) : (
-//             <Link href={"/login"}>
-//               <span className="h4 font-medium text-gray-800">{"로그인"}</span>
-//             </Link>
-//           )}
-//         </div>
-//       </div>
-//     </header>
-//   );
-// }
