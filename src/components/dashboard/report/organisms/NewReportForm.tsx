@@ -5,12 +5,13 @@ import Button from "@/components/common/Button";
 import DatePicker from "@/components/common/DatePicker";
 import Input from "@/components/common/Input";
 import RadioButton from "@/components/common/RadioButton";
+import ImageInput from "@/components/common/ImageInput";
 
 export default function NewReportForm() {
   const [isChecked, setIsChecked] = useState<boolean>(false);
-  const [date, setDate] = useState<Date>();
+  const [date, setDate] = useState<Date | undefined>();
 
-  const handleDateChange = (date: Date) => {
+  const handleDateChange = (date: Date | undefined) => {
     setDate(date);
   };
 
@@ -56,13 +57,11 @@ export default function NewReportForm() {
           maxChar={300}
           placeholder="내용을 입력해주세요."
         />
-        <Input
+        <ImageInput
           required
           name="image"
           label="활동 사진"
-          type="file"
-          accept="image/*"
-          placeholder="파일을 첨부해주세요."
+          caption="활동사진 첨부 필수사항입니다."
         />
         <Input
           name="note"
@@ -79,7 +78,10 @@ export default function NewReportForm() {
         <div className="flex flex-col gap-2">
           <span className="h3 font-semibold text-gray-900">{"전표 일자"}</span>
           <DatePicker
+            id="receipt-date"
             size="w-[350px] min-h-[60px]"
+            textStyle="h4 font-medium"
+            currentDate={date}
             handleDateChange={handleDateChange}
           />
         </div>
@@ -110,13 +112,11 @@ export default function NewReportForm() {
             placeholder="파일을 첨부해주세요."
           />
         </div>
-        <Input
+        <ImageInput
           required
           name="expense-image"
           label="지출 증빙용 활동 사진 첨부"
-          type="file"
-          accept="image/*"
-          placeholder="파일을 첨부해주세요."
+          caption="활동사진 첨부 필수사항입니다."
         />
       </div>
       <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">
