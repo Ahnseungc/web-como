@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import Button from "@/components/common/Button";
-import DatePicker from "@/components/common/DatePicker";
 import Input from "@/components/common/Input";
 import RadioButton from "@/components/common/RadioButton";
+import ImageInput from "@/components/common/ImageInput";
+import DropdownSelect from "@/components/common/DropdownSelect";
 
 export default function NewExpanseReportForm() {
   const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -26,26 +27,25 @@ export default function NewExpanseReportForm() {
           readonly
         />
         <div className="flex flex-col gap-2">
+          <span className="h3 font-semibold text-gray-900">{"작성자"}</span>
+          <Input name="dept" type="text" value="소속 : 경영지원팀" readonly />
+          <Input name="grade" type="text" value="직급 : 대리" readonly />
+          <Input name="name" type="text" value="성명 : 송지은" readonly />
+          <Input name="role" type="text" value="동호회 직책 : 총무" readonly />
+        </div>
+        <div className="flex flex-col gap-2">
           <span className="h3 font-semibold text-gray-900">
-            {"동호회 임원"}
+            {"지원금 종류"}
           </span>
-          <Input
-            name="clubAdmin1"
-            type="text"
-            value="동호회 회장 : 송지은 (경영기획팀)"
-            readonly
-          />
-          <Input
-            name="clubAdmin2"
-            type="text"
-            value="동호회 부회장 : 송지은 (경영기획팀)"
-            readonly
-          />
-          <Input
-            name="clubAdmin3"
-            type="text"
-            value="총무 : 송지은 (경영기획팀)"
-            readonly
+          <DropdownSelect
+            id="type"
+            placeholder="목록 중 선택"
+            options={[
+              "사내 동호회 활동비 지원금",
+              "물품 구매 지원금",
+              "우수 동호회 상금",
+              "기타",
+            ]}
           />
         </div>
         <Input
@@ -64,13 +64,11 @@ export default function NewExpanseReportForm() {
           placeholder="금액을 적어주세요"
           inputStyle="max-w-96"
         />
-        <Input
+        <ImageInput
           required
-          name="image"
+          name="estimate-image"
           label="예상 비용 견적서 첨부"
-          type="file"
-          accept="image/*"
-          placeholder="해당 관련 견적서 및 금액을 증빙 할 수 있는 캡쳐본을 첨부해주세요."
+          caption="해당 관련 견적서 및 금액을 증빙 할 수 있는 캡쳐본을 첨부해주세요."
         />
         <Input
           name="note"
@@ -88,13 +86,11 @@ export default function NewExpanseReportForm() {
           type="text"
           placeholder="통장 사본과 동일한 계좌번호를 입력해주세요."
         />
-        <Input
+        <ImageInput
           required
-          name="image"
+          name="bank-image"
           label="통장 사본 첨부"
-          type="file"
-          accept="image/*"
-          placeholder="통장 사본을 첨부해주세요."
+          caption="통장 사본을 첨부해주세요."
         />
       </div>
       <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">

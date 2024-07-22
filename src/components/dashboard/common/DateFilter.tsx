@@ -1,49 +1,130 @@
-import Image from "next/image";
+"use client";
+
+import {
+  addDays,
+  addMonths,
+  addYears,
+  isSameDay,
+  startOfToday,
+  startOfYesterday,
+} from "date-fns";
 import { cn } from "@/lib/utils";
-import ChevronDownIcon from "@/assets/icons/chevron_down_filled.svg";
+import DatePicker from "@/components/common/DatePicker";
 
-const filterButtons = ["오늘", "어제", "1주", "1달", "3달", "1년"];
-
-interface Props {
-  currentFilter: string | undefined;
-  handleFilterChange: (filter: string | undefined) => void;
+export interface DateRange {
+  startDate: Date | undefined;
+  endDate: Date | undefined;
 }
 
-export default function DateFilter(props: Props) {
+interface Props {
+  currentDateRange: DateRange;
+  handleDateRangeChange: (dateRange: DateRange) => void;
+}
+
+export default function DateFilter({
+  currentDateRange,
+  handleDateRangeChange,
+}: Props) {
+  const filterButtons: { name: string; dateRange: DateRange }[] = [
+    {
+      name: "오늘",
+      dateRange: { startDate: startOfToday(), endDate: startOfToday() },
+    },
+    {
+      name: "어제",
+      dateRange: { startDate: startOfYesterday(), endDate: startOfYesterday() },
+    },
+    {
+      name: "1주",
+      dateRange: {
+        startDate: addDays(startOfToday(), -7),
+        endDate: startOfToday(),
+      },
+    },
+    {
+      name: "1달",
+      dateRange: {
+        startDate: addMonths(startOfToday(), -1),
+        endDate: startOfToday(),
+      },
+    },
+    {
+      name: "3달",
+      dateRange: {
+        startDate: addMonths(startOfToday(), -3),
+        endDate: startOfToday(),
+      },
+    },
+    {
+      name: "6달",
+      dateRange: {
+        startDate: addMonths(startOfToday(), -6),
+        endDate: startOfToday(),
+      },
+    },
+    {
+      name: "1년",
+      dateRange: {
+        startDate: addYears(startOfToday(), -1),
+        endDate: startOfToday(),
+      },
+    },
+  ];
+
   return (
     <div className="flex-1 flex gap-6 h-[38px]">
       <div className="flex gap-2 h-full">
         {filterButtons.map((filter) => (
           <button
-            key={filter}
+            key={filter.name}
             className={cn(
               "flex items-center justify-center w-[60px] h-full rounded-md body-1 font-semibold",
-              filter === props.currentFilter
+              isSameDay(
+                filter.dateRange.startDate!,
+                currentDateRange.startDate!
+              ) &&
+                isSameDay(filter.dateRange.endDate!, currentDateRange.endDate!)
                 ? "text-brand-orange bg-orange-50"
                 : "text-gray-700 bg-gray-200"
             )}
-            onClick={() => props.handleFilterChange(filter)}
+            onClick={() => handleDateRangeChange(filter.dateRange)}
           >
-            {filter}
+            {filter.name}
           </button>
         ))}
       </div>
       <div className="flex-1 flex items-center space-x-3">
         <span className="h4 font-medium text-gray-600">{"기간"}</span>
         <div className="flex-1 flex gap-2">
-          <button className="flex-1 flex items-center justify-between max-w-[390px] h-[38px] px-3 rounded-md border border-gray-400 bg-gray-50">
-            <span className="body-1 font-semibold text-gray-900">
-              {"2024.07.10 (수)"}
-            </span>
-            <Image src={ChevronDownIcon} alt="▼" width={20} height={24} />
-          </button>
+          <DatePicker
+            id="date-picker-start-date"
+            currentDate={currentDateRange?.startDate}
+            handleDateChange={(date: Date | undefined) =>
+              handleDateRangeChange({
+                startDate: date,
+                endDate: currentDateRange.endDate,
+              })
+            }
+            disabled={
+              currentDateRange.endDate && { after: currentDateRange.endDate }
+            }
+          />
           <hr className="w-3.5 my-auto border-gray-400" />
-          <button className="flex-1 flex items-center justify-between max-w-[390px] h-[38px] px-3 rounded-md border border-gray-400 bg-gray-50">
-            <span className="body-1 font-semibold text-gray-900">
-              {"2024.07.10 (수)"}
-            </span>
-            <Image src={ChevronDownIcon} alt="▼" width={20} height={24} />
-          </button>
+          <DatePicker
+            id="date-picker-end-date"
+            currentDate={currentDateRange?.endDate}
+            handleDateChange={(date: Date | undefined) =>
+              handleDateRangeChange({
+                startDate: currentDateRange.startDate,
+                endDate: date,
+              })
+            }
+            disabled={
+              currentDateRange.startDate && {
+                before: currentDateRange.startDate,
+              }
+            }
+          />
         </div>
       </div>
     </div>

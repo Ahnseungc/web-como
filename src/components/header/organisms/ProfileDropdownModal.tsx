@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { closeModal } from "@/lib/utils";
+import { closeModal, openModal } from "@/lib/utils";
 import { deleteRefreshToken } from "@/lib/token";
 import Avatar from "@/components/common/Avatar";
 import Backdrop from "@/components/common/Backdrop";
@@ -47,11 +47,12 @@ export default function ProfileDropdownModal({ profileImage }: Props) {
                 {"으쌰으쌰 산악회"}
               </div>
             </div>
-            <Link href={"/support"}>
-              <div className="w-full p-3 h4 font-medium text-gray-700">
-                {"고객센터"}
-              </div>
-            </Link>
+            <div
+              className="w-full p-3 h4 font-medium text-gray-700 cursor-pointer"
+              onClick={() => openModal("customer-center")}
+            >
+              {"고객센터"}
+            </div>
             <Link href={"/support"}>
               <div className="w-full p-3 h4 font-medium text-gray-700">
                 {"문의 및 기술지원"}

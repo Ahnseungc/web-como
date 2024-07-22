@@ -44,15 +44,6 @@ export default function PDFViewerBase({ file = "../../sample.pdf" }: Props) {
 
   return (
     <>
-      <div className="flex items-center justify-center gap-6">
-        <button disabled={currentPage === 1} onClick={handlePrevPage}>
-          {"이전"}
-        </button>
-        <span>{`${currentPage} / ${totalPages}`}</span>
-        <button disabled={currentPage === totalPages} onClick={handleNextPage}>
-          {"다음"}
-        </button>
-      </div>
       <Document
         file={file}
         onLoadSuccess={onDocumentLoadSuccess}
@@ -66,6 +57,25 @@ export default function PDFViewerBase({ file = "../../sample.pdf" }: Props) {
           className={"hidden xl:block"}
         />
       </Document>
+      <div className="mt-6 mx-auto">
+        <div className="flex items-center gap-5 p-1 rounded-full bg-gray-100">
+          <button
+            className="py-1.5 px-4 rounded-full body-1 font-bold text-gray-900 bg-gray-0 shadow"
+            disabled={currentPage === 1}
+            onClick={handlePrevPage}
+          >
+            {"이전"}
+          </button>
+          <span className="body-1 font-medium text-gray-800">{`${currentPage} / ${totalPages}`}</span>
+          <button
+            className="py-1.5 px-4 rounded-full body-1 font-bold text-gray-0 bg-gray-900 shadow"
+            disabled={currentPage === totalPages}
+            onClick={handleNextPage}
+          >
+            {"다음"}
+          </button>
+        </div>
+      </div>
     </>
   );
 }

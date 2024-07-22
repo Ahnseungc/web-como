@@ -4,17 +4,24 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { usePlaceSearch } from "@/app/api/map/hook";
 import { useGeocode } from "@/app/api/map/hook";
-import { cn } from "@/lib/utils";
+import { closeModal, cn, openModal } from "@/lib/utils";
+import Backdrop from "@/components/common/Backdrop";
 import Input from "@/components/common/Input";
 import NaverMap from "@/components/dashboard/common/Map";
 import EditIcon from "@/assets/icons/edit.svg";
+import DateIcon from "@/assets/icons/input/date.svg";
+import CloseIcon from "@/assets/icons/input/close.svg";
 import SearchIcon from "@/assets/icons/search.svg";
 import RemoveIcon from "@/assets/icons/remove.svg";
 
 const image = null;
 
 export default function ClubInfoTab() {
-  const [selectedDate, setSelectedDate] = useState<Date>();
+  const [selectedSchedule, setSelectedSchedule] = useState<{
+    dayOfWeek?: string[];
+    iteration?: string;
+    time: string;
+  }>({ time: "19:00" });
   const [selectedPlace, setSelectedPlace] = useState<{
     roadAddress: string;
     title?: string;
@@ -130,19 +137,98 @@ export default function ClubInfoTab() {
         </div>
         <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">
           <h3 className="h2 font-bold text-gray-900">{"활동 정보"}</h3>
-          <div className="flex flex-col gap-2">
-            <span className="h3 font-semibold text-gray-900">
+          <div>
+            <div className="mb-2 h3 font-semibold text-gray-900">
               {"활동 일정"}
-            </span>
+            </div>
             <button
               type="button"
               className={cn(
-                "flex gap-3 w-1/2 h-[60px] py-4 px-3 rounded-md border border-gray-100 h4 font-medium bg-gray-100",
-                selectedDate ? "text-gray-900" : "text-gray-400"
+                "flex items-center justify-between w-1/2 h-[60px] py-4 px-3 rounded-md border border-gray-100 h4 font-medium bg-gray-100",
+                selectedSchedule.dayOfWeek &&
+                  selectedSchedule.iteration &&
+                  selectedSchedule.time
+                  ? "text-gray-900"
+                  : "text-gray-400"
               )}
+              onClick={() => openModal("schedule-select")}
             >
               {"활동 일정을 선택해주세요"}
+              <Image src={DateIcon} alt="선택" width={20} height={20} />
             </button>
+            <div id="schedule-select" className="hidden modal">
+              <Backdrop invisible />
+              <div className="absolute z-40 space-y-10 w-[390px] py-7 px-5 rounded-xl bg-gray-50 shadow">
+                <div className="flex items-center justify-between">
+                  <span className="h3 font-bold text-gray-900">
+                    {"활동 일정을 선택해주세요."}
+                  </span>
+                  <button onClick={closeModal}>
+                    <Image src={CloseIcon} alt="X" width={24} height={24} />
+                  </button>
+                </div>
+                <div>
+                  <span className="h2 font-bold text-gray-900">{"요일"}</span>
+                  <div className="flex items-center justify-between mt-4">
+                    {["월", "화", "수", "목", "금", "토", "일"].map((day) => (
+                      <label
+                        key={day}
+                        className="flex items-center justify-center w-[34px] h-[34px] rounded-full border border-gray-300 has-[:checked]:border-brand-orange body-2 font-medium text-gray-800 has-[:checked]:text-gray-50 bg-gray-50 has-[:checked]:bg-brand-orange"
+                      >
+                        <input
+                          type="checkbox"
+                          name="dayOfWeek"
+                          value={day}
+                          multiple
+                          hidden
+                        />
+                        {day}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <span className="h2 font-bold text-gray-900">{"횟수"}</span>
+                  <div className="flex items-center gap-2 mt-4">
+                    {["주 1회", "주 2회", "월 1회", "월 2회"].map((option) => (
+                      <label
+                        key={option}
+                        className="flex items-center justify-center w-[62px] h-[34px] rounded-full border border-gray-300 has-[:checked]:border-brand-orange body-2 font-medium text-gray-800 has-[:checked]:text-gray-50 bg-gray-50 has-[:checked]:bg-brand-orange"
+                      >
+                        <input
+                          type="radio"
+                          name="iteration"
+                          value={option}
+                          multiple
+                          hidden
+                        />
+                        {option}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <span className="h2 font-bold text-gray-900">
+                    {"활동 시간"}
+                  </span>
+                  <div className="text-center mt-4">
+                    <input
+                      type="time"
+                      name="time"
+                      id="time"
+                      value={selectedSchedule.time}
+                      onChange={(e) =>
+                        setSelectedSchedule({
+                          ...selectedSchedule,
+                          time: e.target.value,
+                        })
+                      }
+                      className="h-[34px] px-10 rounded-full outline-none border border-gray-300 focus:border-gray-800 body-2 font-medium text-gray-800 bg-gray-100 focus:bg-gray-50 transition duration-300"
+					/>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="flex flex-col gap-2">
             <span className="h3 font-semibold text-gray-900">

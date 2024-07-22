@@ -4,7 +4,9 @@ import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import type { ExpanseSearchFilter } from "@/components/dashboard/expanse/organisms/ExpanseSearch";
-import DateFilter from "@/components/dashboard/common/DateFilter";
+import DateFilter, {
+  type DateRange,
+} from "@/components/dashboard/common/DateFilter";
 import Pagination from "@/components/dashboard/common/Pagination";
 import ExpanseTable from "@/components/dashboard/expanse/molecules/ExpanseTable";
 import PlusIcon from "@/assets/icons/plus.svg";
@@ -16,13 +18,14 @@ interface Props {
 export default function ExpanseList({ currentFilter }: Props) {
   const { push } = useRouter();
   const pathname = usePathname();
-  const [currentDateFilter, setCurrentDateFilter] = useState<string>();
+  const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
+    startDate: undefined,
+    endDate: undefined,
+  });
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const handleDateFilterChange = (filter: string | undefined) => {
-    if (filter !== currentDateFilter) {
-      setCurrentDateFilter(filter);
-    }
+  const handleDateRangeChange = (dateRange: DateRange) => {
+    setCurrentDateRange(dateRange);
   };
 
   const handlePageChange = (page: number) => {
@@ -47,8 +50,8 @@ export default function ExpanseList({ currentFilter }: Props) {
       </div>
       <div className="space-y-4">
         <DateFilter
-          currentFilter={currentDateFilter}
-          handleFilterChange={handleDateFilterChange}
+          currentDateRange={currentDateRange}
+          handleDateRangeChange={handleDateRangeChange}
         />
         <div className="space-y-10">
           <ExpanseTable statusFilter={currentFilter} />

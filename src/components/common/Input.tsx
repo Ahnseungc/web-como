@@ -20,12 +20,12 @@ interface Props {
 
 interface InputProps extends Props {
   currentValue: string;
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleInputChange: (e: React.ChangeEvent<any>) => void;
 }
 
 const InputElement = (props: InputProps) => {
   const inputStyle =
-    "w-full min-h-[60px] py-4 px-3 rounded-md outline-none border border-gray-100 focus-visible:border-gray-900 h4 font-medium placeholder:text-gray-400 text-gray-900 bg-gray-100 focus-visible:bg-gray-50 transition duration-300";
+    "w-full min-h-[60px] py-4 px-3 rounded-md outline-none border border-gray-100 focus-visible:border-gray-900 truncate h4 font-medium placeholder:text-gray-400 text-gray-900 bg-gray-100 focus-visible:bg-gray-50 transition duration-300";
 
   return (
     <>
@@ -38,27 +38,44 @@ const InputElement = (props: InputProps) => {
             "flex-1 flex items-center justify-between text-gray-400 cursor-pointer select-none"
           )}
         >
-          {props.placeholder}
+          <span className="truncate">{props.placeholder}</span>
           <Image src={FileIcon} alt="파일 선택" width={20} height={22} />
         </label>
       )}
-      <input
-        type={props.type}
-        accept={props.accept}
-        name={props.name}
-        id={props.name}
-        placeholder={props.placeholder}
-        required={props.required}
-        readOnly={props.readonly}
-        disabled={props.readonly}
-        value={props.currentValue}
-        onChange={props.handleInputChange}
-        className={cn(
-          inputStyle,
-          props.inputStyle,
-          props.type === "file" ? "hidden" : "block"
-        )}
-      />
+      {props.maxChar && props.maxChar > 30 ? (
+        <textarea
+          rows={2}
+          name={props.name}
+          id={props.name}
+          placeholder={props.placeholder}
+          readOnly={props.readonly}
+          disabled={props.readonly}
+          value={props.currentValue}
+          onChange={props.handleInputChange}
+          className={cn(
+            inputStyle,
+            props.inputStyle,
+            props.type === "file" ? "hidden" : "block"
+          )}
+        />
+      ) : (
+        <input
+          type={props.type}
+          accept={props.accept}
+          name={props.name}
+          id={props.name}
+          placeholder={props.placeholder}
+          readOnly={props.readonly}
+          disabled={props.readonly}
+          value={props.currentValue}
+          onChange={props.handleInputChange}
+          className={cn(
+            inputStyle,
+            props.inputStyle,
+            props.type === "file" ? "hidden" : "block"
+          )}
+        />
+      )}
     </>
   );
 };
@@ -67,7 +84,9 @@ export default function Input(props: Props) {
   const [currentValue, setCurrentValue] = useState<string>(props.value || "");
   const titleStyle = "h3 font-semibold text-gray-900";
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setCurrentValue(e.target.value);
   };
 
