@@ -1,6 +1,5 @@
 import Image from "next/image";
-import PeopleIcon from "@/assets/icons/people.svg";
-import CalendarIcon from "@/assets/icons/calendar.svg";
+import ClubProfileInfo from "@/components/dashboard/common/ClubProfileInfo";
 
 export default function ClubInfoCard() {
   const image = null;
@@ -30,17 +29,7 @@ export default function ClubInfoCard() {
         </div>
         <hr />
         <div className="body-1 font-medium text-gray-500">
-          <div className="flex items-center gap-2">
-            <span>{"개설일자 2024.05.03"}</span>
-            <div className="flex items-center gap-0.5">
-              <Image src={PeopleIcon} alt="인원" width={20} height={20} />
-              {"23"}
-            </div>
-            <div className="flex items-center gap-0.5">
-              <Image src={CalendarIcon} alt="횟수" width={18} height={18} />
-              {"주 1회"}
-            </div>
-          </div>
+          <ClubProfileInfo />
           <span>{"회장_김오모 / 부회장_박오모 / 총무_문오모 "}</span>
         </div>
       </div>

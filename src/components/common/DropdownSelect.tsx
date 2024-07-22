@@ -1,10 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { closeModal, cn, openModal } from "@/lib/utils";
 import Backdrop from "@/components/common/Backdrop";
-import ChevronDownIcon from "@/assets/icons/chevron_down_filled.svg";
+import { ChevronDownFilled } from "@/assets/icons/chevron";
 
 interface Props {
   id: string;
@@ -37,7 +36,7 @@ export default function DropdownSelect({
           readOnly
           value={currentValue}
         />
-        <Image src={ChevronDownIcon} alt="▼" width={20} height={24} />
+        <ChevronDownFilled className="w-5 h-6 text-gray-500" />
       </button>
       <div id={props.id} className="hidden modal">
         <Backdrop invisible />

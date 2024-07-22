@@ -1,10 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { INFO, INFO_TOOLTIP } from "@/lib/message/expanse";
 import { openModal } from "@/lib/utils";
 import Backdrop from "@/components/common/Backdrop";
-import InfoIcon from "@/assets/icons/info.svg";
+import { Info } from "@/assets/icons/info";
 
 export default function ApplicationGuide() {
   return (
@@ -12,7 +11,7 @@ export default function ApplicationGuide() {
       <div className="relative flex items-center gap-2">
         <h2 className="h1 font-bold text-gray-900">{"활동비 신청 안내"}</h2>
         <button onClick={() => openModal("expanse-application-info")}>
-          <Image src={InfoIcon} alt="알림" width={24} height={24} />
+          <Info className="w-6 h-6 text-gray-400" />
         </button>
         <div
           id="expanse-application-info"
@@ -29,7 +28,7 @@ export default function ApplicationGuide() {
       </div>
       <div className="flex items-end justify-between">
         <p className="h4 font-medium text-gray-900">{INFO}</p>
-        <button className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-brand-orange">
+        <button className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-gray-900">
           {"활동비 규정 안내서 다운받기"}
         </button>
       </div>

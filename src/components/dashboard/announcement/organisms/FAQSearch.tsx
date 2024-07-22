@@ -1,12 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { Poppins } from "next/font/google";
 import localFont from "next/font/local";
 import { cn } from "@/lib/utils";
 import Chip from "@/components/common/Chip";
-import SearchIcon from "@/assets/icons/search.svg";
+import { Search } from "@/assets/icons/util";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700", "800"],
@@ -46,7 +45,7 @@ export default function FAQSearch() {
       <h2 className="font-semibold text-gray-900">{"자주 묻는 질문"}</h2>
       <div className="flex gap-3">
         <div className="flex gap-3 w-[420px] h-[60px] py-4 px-3 rounded-md border border-gray-100 has-[:focus-visible]:border-gray-900 bg-gray-100 has-[:focus-visible]:bg-gray-50 transition duration-300">
-          <Image src={SearchIcon} alt="검색" width={20} height={20} />
+          <Search className="w-5 h-5 text-gray-500" />
           <input
             type="text"
             name="term"

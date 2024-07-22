@@ -1,12 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import ChevronDown from "@/assets/icons/sidebar/chevron_down_sm.svg";
 import { HEADER_HEIGHT } from "@/components/header/Header";
+import { ChevronDown } from "@/assets/icons/chevron";
 
 const clubDashboardMenus = [
   "manage",
@@ -195,7 +194,7 @@ export default function SideBar() {
             >
               {menu.name}
               {menu.subMenuList && (
-                <Image src={ChevronDown} alt="▼" width={10} />
+                <ChevronDown className="w-5 h-5 text-gray-400" />
               )}
             </div>
             {menu.subMenuList && (

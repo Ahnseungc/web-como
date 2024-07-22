@@ -8,11 +8,9 @@ import { closeModal, cn, openModal } from "@/lib/utils";
 import Backdrop from "@/components/common/Backdrop";
 import Input from "@/components/common/Input";
 import NaverMap from "@/components/dashboard/common/Map";
-import EditIcon from "@/assets/icons/edit.svg";
-import DateIcon from "@/assets/icons/input/date.svg";
-import CloseIcon from "@/assets/icons/input/close.svg";
-import SearchIcon from "@/assets/icons/search.svg";
-import RemoveIcon from "@/assets/icons/remove.svg";
+import { Edit, Search } from "@/assets/icons/util";
+import { Calendar } from "@/assets/icons/info";
+import { Close, Remove } from "@/assets/icons/action";
 
 const image = null;
 
@@ -76,13 +74,7 @@ export default function ClubInfoTab() {
         <div className="space-y-6 p-5 rounded-xl bg-gray-0">
           <div className="flex items-center justify-between">
             <h3 className="h2 font-bold text-gray-900">{"대표 이미지"}</h3>
-            <Image
-              src={EditIcon}
-              alt="편집"
-              width={24}
-              height={24}
-              className="cursor-pointer"
-            />
+            <Edit className="w-6 h-6 text-gray-900 cursor-pointer" />
           </div>
           <div className="w-[350px] h-[342px] rounded-lg bg-gray-300">
             {image && (
@@ -154,7 +146,7 @@ export default function ClubInfoTab() {
               onClick={() => openModal("schedule-select")}
             >
               {"활동 일정을 선택해주세요"}
-              <Image src={DateIcon} alt="선택" width={20} height={20} />
+              <Calendar className="w-5 h-5 text-gray-500" />
             </button>
             <div id="schedule-select" className="hidden modal">
               <Backdrop invisible />
@@ -164,7 +156,7 @@ export default function ClubInfoTab() {
                     {"활동 일정을 선택해주세요."}
                   </span>
                   <button onClick={closeModal}>
-                    <Image src={CloseIcon} alt="X" width={24} height={24} />
+                    <Close className="w-6 h-6 text-gray-900" />
                   </button>
                 </div>
                 <div>
@@ -224,7 +216,7 @@ export default function ClubInfoTab() {
                         })
                       }
                       className="h-[34px] px-10 rounded-full outline-none border border-gray-300 focus:border-gray-800 body-2 font-medium text-gray-800 bg-gray-100 focus:bg-gray-50 transition duration-300"
-					/>
+                    />
                   </div>
                 </div>
               </div>
@@ -237,7 +229,7 @@ export default function ClubInfoTab() {
             <div className="relative">
               <div className="flex gap-3">
                 <div className="flex items-center gap-3 w-3/5 h-[60px] px-3 rounded-md border border-gray-100 has-[:focus-visible]:border-gray-900 bg-gray-100 has-[:focus-visible]:bg-gray-50 transition duration-300">
-                  <Image src={SearchIcon} alt="검색" width={20} height={20} />
+                  <Search className="w-5 h-5 text-gray-500" />
                   <input
                     type="text"
                     name="roadAddress"
@@ -251,17 +243,15 @@ export default function ClubInfoTab() {
                     }}
                   />
                   {selectedPlace?.roadAddress && (
-                    <Image
-                      src={RemoveIcon}
-                      alt="삭제"
-                      width={20}
-                      height={20}
-                      className="cursor-pointer select-none"
+                    <button
+                      type="button"
                       onClick={() => {
                         setSelectedPlace({ roadAddress: "", title: "" });
                         setSearchTerm("");
                       }}
-                    />
+                    >
+                      <Remove className="w-5 h-5 text-gray-500 cursor-pointer select-none" />
+                    </button>
                   )}
                 </div>
                 <div className="flex items-center w-2/5 h-[60px] px-3 rounded-md border border-gray-100 has-[:focus-visible]:border-gray-900 bg-gray-100 has-[:focus-visible]:bg-gray-50 transition duration-300">

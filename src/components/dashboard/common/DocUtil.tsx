@@ -1,11 +1,9 @@
-import Image from "next/image";
-import PrintIcon from "@/assets/icons/utilButton/print.svg";
-import DocIcon from "@/assets/icons/utilButton/document.svg";
+import { Document, Print } from "@/assets/icons/util";
 
 export const PrintButton = () => {
   return (
     <button className="p-1 rounded bg-gray-900">
-      <Image src={PrintIcon} alt="출력" width={24} height={24} />
+      <Print className="w-6 h-6 text-gray-0" />
     </button>
   );
 };
@@ -13,7 +11,7 @@ export const PrintButton = () => {
 export const SaveButton = () => {
   return (
     <button className="p-1 rounded bg-point-green">
-      <Image src={DocIcon} alt="저장" width={24} height={24} />
+      <Document className="w-6 h-6 text-gray-0" />
     </button>
   );
 };

@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, type HTMLInputTypeAttribute } from "react";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
-import FileIcon from "@/assets/icons/input/file.svg";
+import { File } from "@/assets/icons/info";
 
 interface Props {
   name: string;
@@ -39,7 +38,7 @@ const InputElement = (props: InputProps) => {
           )}
         >
           <span className="truncate">{props.placeholder}</span>
-          <Image src={FileIcon} alt="파일 선택" width={20} height={22} />
+          <File className="w-5 h-[22px] text-gray-500" />
         </label>
       )}
       {props.maxChar && props.maxChar > 30 ? (
