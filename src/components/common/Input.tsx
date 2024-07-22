@@ -20,7 +20,7 @@ interface Props {
 
 interface InputProps extends Props {
   currentValue: string;
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleInputChange: (e: React.ChangeEvent<any>) => void;
 }
 
 const InputElement = (props: InputProps) => {
@@ -42,22 +42,40 @@ const InputElement = (props: InputProps) => {
           <Image src={FileIcon} alt="파일 선택" width={20} height={22} />
         </label>
       )}
-      <input
-        type={props.type}
-        accept={props.accept}
-        name={props.name}
-        id={props.name}
-        placeholder={props.placeholder}
-        readOnly={props.readonly}
-        disabled={props.readonly}
-        value={props.currentValue}
-        onChange={props.handleInputChange}
-        className={cn(
-          inputStyle,
-          props.inputStyle,
-          props.type === "file" ? "hidden" : "block"
-        )}
-      />
+      {props.maxChar && props.maxChar > 30 ? (
+        <textarea
+          rows={2}
+          name={props.name}
+          id={props.name}
+          placeholder={props.placeholder}
+          readOnly={props.readonly}
+          disabled={props.readonly}
+          value={props.currentValue}
+          onChange={props.handleInputChange}
+          className={cn(
+            inputStyle,
+            props.inputStyle,
+            props.type === "file" ? "hidden" : "block"
+          )}
+        />
+      ) : (
+        <input
+          type={props.type}
+          accept={props.accept}
+          name={props.name}
+          id={props.name}
+          placeholder={props.placeholder}
+          readOnly={props.readonly}
+          disabled={props.readonly}
+          value={props.currentValue}
+          onChange={props.handleInputChange}
+          className={cn(
+            inputStyle,
+            props.inputStyle,
+            props.type === "file" ? "hidden" : "block"
+          )}
+        />
+      )}
     </>
   );
 };
@@ -66,7 +84,9 @@ export default function Input(props: Props) {
   const [currentValue, setCurrentValue] = useState<string>(props.value || "");
   const titleStyle = "h3 font-semibold text-gray-900";
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setCurrentValue(e.target.value);
   };
 
