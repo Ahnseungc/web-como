@@ -26,7 +26,7 @@ export default function NewMemberDetailModal() {
   return (
     <div id="new-member-detail" className="hidden modal">
       <Backdrop />
-      <div className="absolute bottom-1/2 right-1/2 translate-y-1/2 translate-x-1/2 z-40 space-y-8 w-full max-w-[594px] p-8 rounded-xl bg-gray-0 shadow">
+      <div className="fixed bottom-1/2 right-1/2 translate-y-1/2 translate-x-1/2 z-40 space-y-8 w-full max-w-[594px] p-8 rounded-xl bg-gray-0 shadow">
         <div className="flex items-start justify-between">
           <div className="flex space-x-7">
             <div className="relative object-cover w-[200px] h-[200px] rounded-xl bg-brand-black">
