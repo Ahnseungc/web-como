@@ -3,6 +3,7 @@
 import { useState } from "react";
 import DocUtilButtons from "@/components/dashboard/common/DocUtil";
 import Pagination from "@/components/dashboard/common/Pagination";
+import MemberTable from "@/components/dashboard/member/molecules/MemberTable";
 
 export default function MemberList() {
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -20,6 +21,7 @@ export default function MemberList() {
           <h3 className="h2 font-semibold text-gray-900">{"동호회원 전체"}</h3>
           <DocUtilButtons />
         </div>
+        <MemberTable />
       </div>
       <Pagination
         currentPage={currentPage}
