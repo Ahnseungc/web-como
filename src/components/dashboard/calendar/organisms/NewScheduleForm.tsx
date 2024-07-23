@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Poppins } from "next/font/google";
 import { closeModal, cn } from "@/lib/utils";
 import Backdrop from "@/components/common/Backdrop";
+import Button from "@/components/common/Button";
 import Chip from "@/components/common/Chip";
 import Input from "@/components/common/Input";
 import ClubProfileInfo from "@/components/dashboard/common/ClubProfileInfo";
@@ -108,6 +109,7 @@ export default function NewScheduleForm() {
                 </div>
               </div>
               <MapPlaceSearch />
+              <Button content="등록하기" orange disabled />
             </form>
           </div>
         </div>
