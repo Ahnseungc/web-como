@@ -8,13 +8,16 @@ interface Props {
   name: string;
   type?: HTMLInputTypeAttribute;
   accept?: string;
+  autocomplete?: string;
   placeholder?: string;
   label?: string;
   readonly?: boolean;
   required?: boolean;
-  value?: string;
   maxChar?: number;
   inputStyle?: string;
+  value?: string;
+  currentValue?: string;
+  handleInputChange?: (e: React.ChangeEvent<any>) => void;
 }
 
 interface InputProps extends Props {
@@ -47,6 +50,7 @@ const InputElement = (props: InputProps) => {
           name={props.name}
           id={props.name}
           placeholder={props.placeholder}
+          autoComplete={props.autocomplete}
           readOnly={props.readonly}
           disabled={props.readonly}
           value={props.currentValue}
@@ -61,6 +65,7 @@ const InputElement = (props: InputProps) => {
         <input
           type={props.type}
           accept={props.accept}
+          autoComplete={props.autocomplete}
           name={props.name}
           id={props.name}
           placeholder={props.placeholder}
@@ -113,21 +118,21 @@ export default function Input(props: Props) {
                 )}
               </span>
               {props.maxChar && (
-                <span className="h4 font-medium text-gray-600">{`${currentValue.length}자/${props.maxChar}자`}</span>
+                <span className="h4 font-medium text-gray-600">{`${(props.currentValue || currentValue).length}자/${props.maxChar}자`}</span>
               )}
             </label>
           )}
           <InputElement
             {...props}
-            currentValue={currentValue}
-            handleInputChange={handleInputChange}
+            currentValue={props.currentValue || currentValue}
+            handleInputChange={props.handleInputChange || handleInputChange}
           />
         </div>
       ) : (
         <InputElement
           {...props}
-          currentValue={currentValue}
-          handleInputChange={handleInputChange}
+          currentValue={props.currentValue || currentValue}
+          handleInputChange={props.handleInputChange || handleInputChange}
         />
       )}
     </>
