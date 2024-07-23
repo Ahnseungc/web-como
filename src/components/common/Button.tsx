@@ -7,6 +7,7 @@ interface Props {
   primary?: boolean;
   orange?: boolean;
   disabled?: boolean;
+  type?: "submit" | "reset" | "button" | undefined;
   className?: string;
   onClick?: () => void;
 }
@@ -26,6 +27,7 @@ export default function Button(props: Props) {
         props.className
       )}
       onClick={props.onClick}
+      type={props.type}
       disabled={props.disabled}
     >
       <span
