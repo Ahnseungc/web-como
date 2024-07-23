@@ -27,6 +27,41 @@ export const Close = ({ className }: Props) => {
   );
 };
 
+export const CountPlus = ({ className }: Props) => {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M7 5V0H5V5H0V7H5V12H7V7H12V5H7Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
+
+export const CountMinus = ({ className }: Props) => {
+  return (
+    <svg
+      width="12"
+      height="2"
+      viewBox="0 0 12 2"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <rect width="12" height="2" fill="currentColor" />
+    </svg>
+  );
+};
+
 export const Plus = ({ className }: Props) => {
   return (
     <svg
