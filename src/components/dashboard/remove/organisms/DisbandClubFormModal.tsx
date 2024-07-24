@@ -6,8 +6,8 @@ import Backdrop from "@/components/common/Backdrop";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import InputTracer from "@/components/common/InputTracer";
+import Checkbox from "@/components/common/Checkbox";
 import { ChevronDown } from "@/assets/icons/chevron";
-import { Checked, Unchecked } from "@/assets/icons/checkbox";
 
 const DEFAULT_TEXT = "해체 신청에 동의합니다";
 
@@ -108,26 +108,15 @@ export default function DisbandClubFormModal() {
               correctValue={inputValues.correct}
               handleChange={handleInputChange}
             />
-            <label
-              htmlFor="check"
-              className="flex gap-4 h4 font-medium text-gray-900 cursor-pointer select-none"
-            >
-              <input
-                id="check"
-                name="check"
-                type="checkbox"
-                className="peer hidden"
-                checked={isAgree.check}
-                onChange={(e) =>
-                  setIsAgree((prev) => {
-                    return { ...prev, check: e.target.checked };
-                  })
-                }
-              />
-              <Checked className="hidden peer-checked:block" />
-              <Unchecked className="block peer-checked:hidden" />
-              {"동호회 해체 신청에 동의합니다"}
-            </label>
+            <Checkbox
+              text="동호회 해체 신청에 동의합니다"
+              checked={isAgree.check}
+              onChange={(e) =>
+                setIsAgree((prev) => {
+                  return { ...prev, check: e.target.checked };
+                })
+              }
+            />
           </div>
         </div>
         <Button
