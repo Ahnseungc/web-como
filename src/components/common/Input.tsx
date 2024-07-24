@@ -14,6 +14,7 @@ interface Props {
   readonly?: boolean;
   required?: boolean;
   maxChar?: number;
+  rows?: number;
   inputStyle?: string;
   value?: string;
   currentValue?: string;
@@ -46,7 +47,7 @@ const InputElement = (props: InputProps) => {
       )}
       {props.maxChar && props.maxChar > 30 ? (
         <textarea
-          rows={2}
+          rows={props.rows || 2}
           name={props.name}
           id={props.name}
           placeholder={props.placeholder}
