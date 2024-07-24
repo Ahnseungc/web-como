@@ -174,3 +174,34 @@ export const Profile = ({ className }: Props) => {
     </svg>
   );
 };
+
+export const Pin = () => {
+  return (
+    <svg
+      width="20"
+      height="21"
+      viewBox="0 0 20 21"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clipPath="url(#clip0_3408_42373)">
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M13.3332 7.86263V3.69596H14.9998V2.0293H4.99984V3.69596H6.6665V7.86263C6.6665 9.24596 5.54984 10.3626 4.1665 10.3626V12.0293H9.1415V17.8626L9.97484 18.696L10.8082 17.8626V12.0293H15.8332V10.3626C14.4498 10.3626 13.3332 9.24596 13.3332 7.86263Z"
+          fill="#FF3D00"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_3408_42373">
+          <rect
+            width="20"
+            height="20"
+            fill="white"
+            transform="translate(0 0.363281)"
+          />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
