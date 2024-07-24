@@ -5,18 +5,52 @@ import { closeModal } from "@/lib/utils";
 import Backdrop from "@/components/common/Backdrop";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
+import InputTracer from "@/components/common/InputTracer";
 import { ChevronDown } from "@/assets/icons/chevron";
 import { Checked, Unchecked } from "@/assets/icons/checkbox";
 
+const DEFAULT_TEXT = "해체 신청에 동의합니다";
+
 export default function DisbandClubFormModal() {
-  const [agreementValue, setAgreementValue] = useState<string>("");
-  const [isChecked, setIsChecked] = useState<boolean>(false);
+  const [isAgree, setIsAgree] = useState<{
+    sentence: boolean;
+    check: boolean;
+  }>({ sentence: false, check: false });
+  const [inputValues, setInputValues] = useState<{
+    current: string;
+    correct: string;
+  }>({ current: "", correct: "" });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setInputValues((prev) => {
+      return { ...prev, current: value };
+    });
+
+    if (DEFAULT_TEXT.startsWith(value)) {
+      setInputValues((prev) => {
+        return { ...prev, correct: value };
+      });
+    }
+
+    if (value === DEFAULT_TEXT) {
+      setIsAgree((prev) => {
+        return { ...prev, sentence: true };
+      });
+    } else {
+      setIsAgree((prev) => {
+        return { ...prev, sentence: false };
+      });
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     closeModal();
-    setAgreementValue("");
-    setIsChecked(false);
+
+    setInputValues({ current: "", correct: "" });
+    setIsAgree({ sentence: false, check: false });
+
     alert(
       "해체 신청을 완료 하였습니다. 담당 주무부서팀에게 정보가 전달됩니다."
     );
@@ -60,16 +94,19 @@ export default function DisbandClubFormModal() {
             value="서울에 위치한 수영장에서의 운동"
           />
           <Input readonly name="people" label="동호회 인원" value="20명" />
-          <div className="space-y-2">
-            <Input
-              autocomplete="off"
-              name="agree"
-              label="해체 신청 동의"
-              placeholder="해체 신청에 동의합니다"
-              currentValue={agreementValue}
-              handleInputChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setAgreementValue(e.target.value)
-              }
+          <div className="relative space-y-2">
+            <label
+              htmlFor="agreement"
+              className="h3 font-semibold text-gray-900"
+            >
+              {"해체 신청 동의"}
+            </label>
+            <InputTracer
+              name="agreement"
+              defaultText="해체 신청에 동의합니다"
+              currentValue={inputValues.current}
+              correctValue={inputValues.correct}
+              handleChange={handleInputChange}
             />
             <label
               htmlFor="check"
@@ -80,8 +117,12 @@ export default function DisbandClubFormModal() {
                 name="check"
                 type="checkbox"
                 className="peer hidden"
-                checked={isChecked}
-                onChange={(e) => setIsChecked(e.target.checked)}
+                checked={isAgree.check}
+                onChange={(e) =>
+                  setIsAgree((prev) => {
+                    return { ...prev, check: e.target.checked };
+                  })
+                }
               />
               <Checked className="hidden peer-checked:block" />
               <Unchecked className="block peer-checked:hidden" />
@@ -93,7 +134,7 @@ export default function DisbandClubFormModal() {
           content="해체하기"
           primary
           type="submit"
-          disabled={agreementValue !== "해체 신청에 동의합니다" || !isChecked}
+          disabled={!isAgree.sentence || !isAgree.check}
         />
       </form>
     </div>
