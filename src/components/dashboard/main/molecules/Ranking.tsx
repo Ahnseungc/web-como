@@ -12,7 +12,7 @@ const ranking = [
   { rank: 8, count: 48, name: "동호회8" },
 ];
 
-const myClubRank = 4;
+const myClubRank = 8;
 const maxHeight = ranking[0].count;
 
 export default function DashboardRanking() {
@@ -23,7 +23,7 @@ export default function DashboardRanking() {
         <h3 className="h1 font-bold text-brand-black">{"사내동호회 순위"}</h3>
         <div className="flex flex-col">
           <span className="body-2 font-bold text-gray-500">{`총 ${23}개 중`}</span>
-          <span className="h1 font-extrabold text-gray-800">{`${8}위`}</span>
+          <span className="h1 font-extrabold text-gray-800">{`${myClubRank}위`}</span>
         </div>
       </div>
       <div className="flex items-end gap-2.5">
