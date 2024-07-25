@@ -90,7 +90,7 @@ const config: Config = {
         },
       },
       animation: {
-        "loading-progress": "progress-ltr 3s ease-out infinite",
+        "loading-progress": "progress-ltr 1s ease-in-out infinite alternate",
       },
     },
   },
