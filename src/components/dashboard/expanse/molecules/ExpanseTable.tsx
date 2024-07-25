@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import type { ExpanseSearchFilter } from "@/components/dashboard/expanse/organisms/ExpanseSearch";
+import type { ExpanseSearchFilter } from "@/components/dashboard/expanse/molecules/ExpanseSearch";
 
 const tableHeadings = [
   "순번",

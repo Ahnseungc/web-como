@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { ChevronRight } from "@/assets/icons/chevron";
 
 export default function ExpanseOverview() {

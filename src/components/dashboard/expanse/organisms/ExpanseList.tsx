@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import type { ExpanseSearchFilter } from "@/components/dashboard/expanse/organisms/ExpanseSearch";
+import type { ExpanseSearchFilter } from "@/components/dashboard/expanse/molecules/ExpanseSearch";
 import DateFilter, {
   type DateRange,
 } from "@/components/dashboard/common/DateFilter";
