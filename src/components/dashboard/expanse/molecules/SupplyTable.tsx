@@ -5,11 +5,11 @@ import { cn } from "@/lib/utils";
 
 const tableHeadings = [
   "순번",
-  "신청자",
-  "담당자",
-  "품의서 상세",
   "작성일",
+  "신청자",
+  "품의서 상세",
   "구분",
+  "담당자",
   "수령증",
   "반려사유",
 ];
@@ -123,11 +123,11 @@ export default function SupplyTable() {
       <li className="flex border-b border-gray-400 bg-gray-0">
         {[
           entry.order,
-          entry.applicant,
-          entry.personInCharge,
-          entry.expanseReport,
           entry.createdDate,
+          entry.applicant,
+          entry.expanseReport,
           entry.status,
+          entry.personInCharge,
           entry.receipt,
           entry.status === "canceled",
         ].map((data, i) => (
@@ -136,9 +136,7 @@ export default function SupplyTable() {
             className={cn(
               "py-3 px-6 body-1 font-medium underline-offset-2 truncate text-center",
               i === 0 ? "w-[76px]" : "flex-1",
-              i === 1 || i === 2 ? "max-w-24" : "",
-              i === 4 ? "max-w-56" : "",
-              i === 5 ? "max-w-28" : i === 7 ? "max-w-32" : "",
+              i === 2 || i === 4 || i === 5 ? "max-w-40" : "",
               data && (i === 3 || i === 6 || i === 7)
                 ? "underline cursor-pointer"
                 : "",
@@ -184,9 +182,7 @@ export default function SupplyTable() {
             className={cn(
               "py-3 px-6 body-1 font-bold text-gray-900 text-center",
               i === 0 ? "w-[76px]" : "flex-1",
-              i === 1 || i === 2 ? "max-w-24" : "",
-              i === 4 ? "max-w-56" : "",
-              i === 5 ? "max-w-28" : i === 7 ? "max-w-32" : ""
+              i === 2 || i === 4 || i === 5 ? "max-w-40" : ""
             )}
           >
             {heading}
