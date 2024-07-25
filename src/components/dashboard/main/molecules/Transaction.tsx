@@ -89,7 +89,7 @@ export default function DashboardTransaction() {
                 <span
                   key={data}
                   className={cn(
-                    "py-2.5 px-4 truncate",
+                    "py-2 px-4 truncate",
                     i === 1 || i === 3 ? "w-20 text-center" : "flex-1",
                     i === 2
                       ? "max-w-80 body-1 font-bold text-gray-900"
@@ -98,11 +98,10 @@ export default function DashboardTransaction() {
                         : i === 1
                           ? "body-1 font-bold"
                           : i === 3
-                            ? "body-2 font-medium text-gray-700"
+                            ? "body-2 font-medium text-gray-900"
                             : "body-1 font-medium text-gray-700",
                     data === "입금" ? "text-point-blue" : "",
-                    data === "출금" ? "text-point-red" : "",
-                    i === 4 ? "truncate" : ""
+                    data === "출금" ? "text-point-red" : ""
                   )}
                 >
                   {data}
