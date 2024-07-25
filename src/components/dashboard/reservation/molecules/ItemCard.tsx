@@ -1,9 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import Chip from "@/components/common/Chip";
-import MarkerIcon from "@/assets/icons/marker.svg";
-import PeopleIcon from "@/assets/icons/people.svg";
-import CalendarIcon from "@/assets/icons/calendar.svg";
+import { Calendar, Marker, People } from "@/assets/icons/info";
 
 interface Props {
   image?: string;
@@ -37,7 +35,7 @@ export default function ItemCard(props: Props) {
       <div className="space-y-6 py-7 px-6">
         <div className="space-y-2">
           <div className="flex items-center gap-0.5 body-1 font-medium text-gray-500">
-            <Image src={MarkerIcon} alt="장소" width={18} height={18} />
+            <Marker className="w-[18px] h-[18px]" />
             {props.location}
           </div>
           <h4 className="h2 font-bold text-gray-900">{props.name}</h4>
@@ -47,11 +45,11 @@ export default function ItemCard(props: Props) {
           </p>
           <div className="flex items-center gap-2 body-1 font-medium text-gray-500">
             <div className="flex items-center gap-1">
-              <Image src={PeopleIcon} alt="인원" width={20} height={20} />
+              <People className="w-5 h-5" />
               {`최대 ${props.maxPeople}명`}
             </div>
             <div className="flex items-center gap-1">
-              <Image src={CalendarIcon} alt="횟수" width={18} height={18} />
+              <Calendar className="w-[18px] h-[18px]" />
               {`주 ${props.timePerWeek}회`}
             </div>
           </div>

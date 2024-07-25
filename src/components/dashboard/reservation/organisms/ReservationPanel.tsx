@@ -1,11 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 import OptionItem from "@/components/dashboard/reservation/molecules/OptionItem";
-import DateIcon from "@/assets/icons/date.svg";
-import ChevronDownIcon from "@/assets/icons/chevron_down_filled.svg";
+import { Calendar } from "@/assets/icons/info";
+import { ChevronDown } from "@/assets/icons/chevron";
 
 export default function ReservationPanel() {
   const [isDateSelectMode, setIsDateSelectMode] = useState<boolean>(false);
@@ -17,7 +16,7 @@ export default function ReservationPanel() {
       <div className="flex flex-col gap-6 w-full py-8 px-5 rounded-xl bg-gray-0 shadow">
         <div className="space-y-3">
           <div className="flex gap-2 h4 font-bold text-gray-900">
-            <Image src={DateIcon} alt="일시" width={24} height={24} />
+            <Calendar className="w-6 h-6" />
             {"날짜와 시간을 선택해 주세요"}
           </div>
           <div
@@ -38,13 +37,9 @@ export default function ReservationPanel() {
               className="w-full min-h-[60px] py-4 px-3 rounded-md outline-none border border-gray-400 h4 font-medium placeholder:text-gray-400 text-gray-900 bg-gray-50 cursor-pointer"
               value={selectedTime}
             />
-            <Image
-              src={ChevronDownIcon}
-              alt="▼"
-              width={20}
-              height={20}
+            <ChevronDown
               className={cn(
-                "transition-all duration-300",
+                "w-5 h-5 text-gray-500 transition-all duration-300",
                 isDateSelectMode ? "rotate-180" : ""
               )}
             />

@@ -1,6 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
-import ChevronRightIcon from "@/assets/icons/chevron_right_white.svg";
+import { ChevronRight } from "@/assets/icons/chevron";
 
 export default function ExpanseOverview() {
   return (
@@ -9,7 +8,7 @@ export default function ExpanseOverview() {
         <div className="flex items-center justify-between">
           <h3 className="h1 font-bold text-gray-0">{"입출금 내역"}</h3>
           <Link href={"/dashboard/expanse/transaction"}>
-            <Image src={ChevronRightIcon} alt="▶︎" width={36} height={36} />
+            <ChevronRight className="w-6 h-6 text-gray-0" />
           </Link>
         </div>
         <div className="flex items-center justify-between mt-8">

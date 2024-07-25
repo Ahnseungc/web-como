@@ -1,18 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import { usePlaceSearch } from "@/app/api/map/hook";
-import { useGeocode } from "@/app/api/map/hook";
 import { closeModal, cn, openModal } from "@/lib/utils";
 import Backdrop from "@/components/common/Backdrop";
 import Input from "@/components/common/Input";
-import NaverMap from "@/components/dashboard/common/Map";
-import EditIcon from "@/assets/icons/edit.svg";
-import DateIcon from "@/assets/icons/input/date.svg";
-import CloseIcon from "@/assets/icons/input/close.svg";
-import SearchIcon from "@/assets/icons/search.svg";
-import RemoveIcon from "@/assets/icons/remove.svg";
+import { Edit } from "@/assets/icons/util";
+import { Calendar } from "@/assets/icons/info";
+import { Close } from "@/assets/icons/action";
+import MapPlaceSearch from "../organisms/MapPlaceSearch";
 
 const image = null;
 
@@ -22,53 +18,6 @@ export default function ClubInfoTab() {
     iteration?: string;
     time: string;
   }>({ time: "19:00" });
-  const [selectedPlace, setSelectedPlace] = useState<{
-    roadAddress: string;
-    title?: string;
-  }>();
-
-  const [searchResult, setSearchResult] = useState<
-    {
-      roadAddress: string;
-      title?: string;
-    }[]
-  >();
-  const [closeSearchResult, setCloseSearchResult] = useState<boolean>(false);
-  const [searchTerm, setSearchTerm] = useState<string>();
-  const [query, setQuery] = useState<string>();
-  const { data: placeData } = usePlaceSearch(searchTerm);
-  const { data: geocodeData } = useGeocode(query);
-
-  useEffect(() => {
-    if (placeData) {
-      //   console.log(placeData);
-      if (placeData.items.length < 1) {
-        setQuery(searchTerm);
-      }
-    }
-  }, [placeData, searchTerm]);
-
-  useEffect(() => {
-    if (placeData) {
-      if (placeData.items.length > 0) {
-        return setSearchResult(
-          placeData.items.map((item) => {
-            return { roadAddress: item.roadAddress, title: item.title };
-          })
-        );
-      }
-    }
-    if (geocodeData) {
-      console.log(geocodeData);
-      if (geocodeData.meta.totalCount > 0) {
-        return setSearchResult(
-          geocodeData.addresses.map((item) => {
-            return { roadAddress: item.roadAddress };
-          })
-        );
-      }
-    }
-  }, [placeData, geocodeData]);
 
   return (
     <form className="flex gap-3">
@@ -76,13 +25,7 @@ export default function ClubInfoTab() {
         <div className="space-y-6 p-5 rounded-xl bg-gray-0">
           <div className="flex items-center justify-between">
             <h3 className="h2 font-bold text-gray-900">{"대표 이미지"}</h3>
-            <Image
-              src={EditIcon}
-              alt="편집"
-              width={24}
-              height={24}
-              className="cursor-pointer"
-            />
+            <Edit className="w-6 h-6 text-gray-900 cursor-pointer" />
           </div>
           <div className="w-[350px] h-[342px] rounded-lg bg-gray-300">
             {image && (
@@ -154,7 +97,7 @@ export default function ClubInfoTab() {
               onClick={() => openModal("schedule-select")}
             >
               {"활동 일정을 선택해주세요"}
-              <Image src={DateIcon} alt="선택" width={20} height={20} />
+              <Calendar className="w-5 h-5 text-gray-500" />
             </button>
             <div id="schedule-select" className="hidden modal">
               <Backdrop invisible />
@@ -164,7 +107,7 @@ export default function ClubInfoTab() {
                     {"활동 일정을 선택해주세요."}
                   </span>
                   <button onClick={closeModal}>
-                    <Image src={CloseIcon} alt="X" width={24} height={24} />
+                    <Close className="w-6 h-6 text-gray-900" />
                   </button>
                 </div>
                 <div>
@@ -224,111 +167,13 @@ export default function ClubInfoTab() {
                         })
                       }
                       className="h-[34px] px-10 rounded-full outline-none border border-gray-300 focus:border-gray-800 body-2 font-medium text-gray-800 bg-gray-100 focus:bg-gray-50 transition duration-300"
-					/>
+                    />
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-2">
-            <span className="h3 font-semibold text-gray-900">
-              {"활동 장소"}
-            </span>
-            <div className="relative">
-              <div className="flex gap-3">
-                <div className="flex items-center gap-3 w-3/5 h-[60px] px-3 rounded-md border border-gray-100 has-[:focus-visible]:border-gray-900 bg-gray-100 has-[:focus-visible]:bg-gray-50 transition duration-300">
-                  <Image src={SearchIcon} alt="검색" width={20} height={20} />
-                  <input
-                    type="text"
-                    name="roadAddress"
-                    id="roadAddress"
-                    placeholder="활동 장소를 검색해주세요"
-                    className="peer w-full h4 font-medium outline-none placeholder:text-gray-400 text-gray-900 bg-transparent transition duration-300"
-                    value={searchTerm}
-                    onChange={(e) => {
-                      setSearchTerm(e.target.value);
-                      setCloseSearchResult(false);
-                    }}
-                  />
-                  {selectedPlace?.roadAddress && (
-                    <Image
-                      src={RemoveIcon}
-                      alt="삭제"
-                      width={20}
-                      height={20}
-                      className="cursor-pointer select-none"
-                      onClick={() => {
-                        setSelectedPlace({ roadAddress: "", title: "" });
-                        setSearchTerm("");
-                      }}
-                    />
-                  )}
-                </div>
-                <div className="flex items-center w-2/5 h-[60px] px-3 rounded-md border border-gray-100 has-[:focus-visible]:border-gray-900 bg-gray-100 has-[:focus-visible]:bg-gray-50 transition duration-300">
-                  <input
-                    type="text"
-                    name="detailAddress"
-                    id="detailAddress"
-                    className="peer w-full h4 font-medium outline-none placeholder:text-gray-400 text-gray-900 bg-transparent transition duration-300"
-                    value={selectedPlace?.title}
-                    onChange={(e) => {
-                      if (selectedPlace?.roadAddress) {
-                        setSelectedPlace((prev) => {
-                          return {
-                            title: e.target.value,
-                            roadAddress: prev!.roadAddress,
-                          };
-                        });
-                      }
-                    }}
-                  />
-                </div>
-              </div>
-              {searchResult && (
-                <div
-                  className={cn(
-                    "absolute z-20 flex flex-col gap-3 w-3/5 mt-1 p-6 rounded-xl bg-gray-50 shadow",
-                    closeSearchResult ? "hidden" : "block"
-                  )}
-                >
-                  {searchResult.map((item, i) => (
-                    <div
-                      key={item.roadAddress + item.title}
-                      className={cn(
-                        "flex flex-col gap-0.5 border-gray-200 cursor-pointer select-none",
-                        i === searchResult.length - 1 ? "" : "pb-3 border-b"
-                      )}
-                      onClick={() => {
-                        setSelectedPlace({
-                          roadAddress: item.roadAddress,
-                          title: item.title
-                            ?.replaceAll("<b>", "")
-                            .replaceAll("</b>", ""),
-                        });
-                        setCloseSearchResult(true);
-                        setSearchTerm(item.roadAddress);
-                      }}
-                    >
-                      <p
-                        className="body-1 font-semibold text-brand-orange"
-                        dangerouslySetInnerHTML={{
-                          __html: item.title || item.roadAddress,
-                        }}
-                      />
-                      {item.title && (
-                        <span className="body-2 font-medium text-gray-500">
-                          {item.roadAddress}
-                        </span>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-            <div className="w-full h-[70vh]">
-              <NaverMap query={selectedPlace?.roadAddress} />
-            </div>
-          </div>
+          <MapPlaceSearch />
         </div>
       </div>
     </form>

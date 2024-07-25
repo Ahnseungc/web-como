@@ -4,8 +4,8 @@ import Image from "next/image";
 import { Poppins } from "next/font/google";
 import { closeModal } from "@/lib/utils";
 import Backdrop from "@/components/common/Backdrop";
-import CloseIcon from "@/assets/icons/close.svg";
 import KakaoButton from "@/assets/images/kakaotalk_sharing_btn_medium.svg";
+import { Close } from "@/assets/icons/action";
 
 const poppins = Poppins({ weight: "700", subsets: ["latin"] });
 
@@ -17,14 +17,12 @@ export default function CustomerCenter() {
         <div className="space-y-8 w-full max-w-[452px] p-8 rounded-xl bg-gray-0 shadow">
           <div className="relative flex items-center justify-center h-9">
             <h1 className="font-bold text-gray-900">{"고객센터 문의"}</h1>
-            <Image
-              src={CloseIcon}
-              alt="X"
-              width={36}
-              height={36}
+            <div
               className="absolute top-0 right-0 cursor-pointer"
               onClick={closeModal}
-            />
+            >
+              <Close className="w-6 h-6 text-gray-900" />
+            </div>
           </div>
           <div className="text-center">
             <button className="mx-auto" onClick={closeModal}>

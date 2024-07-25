@@ -1,7 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
-import ChevronRight from "@/assets/icons/chevron_right.svg";
 import { cn } from "@/lib/utils";
+import { ChevronRight } from "@/assets/icons/chevron";
 
 const tableHeadings = ["결제일자", "입출금", "금액", "입출처", "비목"];
 
@@ -54,7 +53,7 @@ export default function DashboardTransaction() {
       <div className="flex justify-between">
         <h3 className="h1 font-bold text-brand-black">{"입출금 내역"}</h3>
         <Link href={"/dashboard/expanse"}>
-          <Image src={ChevronRight} alt="▶︎" width={36} height={36} />
+          <ChevronRight className="w-9 h-9 text-brand-black" />
         </Link>
       </div>
       <hr className="w-full border-gray-300" />
@@ -90,7 +89,7 @@ export default function DashboardTransaction() {
                 <span
                   key={data}
                   className={cn(
-                    "py-2.5 px-4 truncate",
+                    "py-2 px-4 truncate",
                     i === 1 || i === 3 ? "w-20 text-center" : "flex-1",
                     i === 2
                       ? "max-w-80 body-1 font-bold text-gray-900"
@@ -99,11 +98,10 @@ export default function DashboardTransaction() {
                         : i === 1
                           ? "body-1 font-bold"
                           : i === 3
-                            ? "body-2 font-medium text-gray-700"
+                            ? "body-2 font-medium text-gray-900"
                             : "body-1 font-medium text-gray-700",
                     data === "입금" ? "text-point-blue" : "",
-                    data === "출금" ? "text-point-red" : "",
-                    i === 4 ? "truncate" : ""
+                    data === "출금" ? "text-point-red" : ""
                   )}
                 >
                   {data}

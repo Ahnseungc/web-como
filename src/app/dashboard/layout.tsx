@@ -1,5 +1,7 @@
+import { Suspense } from "react";
 import Header, { HEADER_HEIGHT } from "@/components/header/Header";
 import SideBar from "@/components/dashboard/common/SideBar";
+import Loading from "@/app/dashboard/loading";
 
 export default function DashboardLayout({
   children,
@@ -14,7 +16,7 @@ export default function DashboardLayout({
         style={{ marginTop: HEADER_HEIGHT }}
       >
         <SideBar />
-        {children}
+        <Suspense fallback={<Loading />}>{children}</Suspense>
       </main>
     </>
   );

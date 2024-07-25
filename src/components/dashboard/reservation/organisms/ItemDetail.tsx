@@ -5,7 +5,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import Map from "@/components/dashboard/common/Map";
 import CopyButton from "@/components/dashboard/common/CopyButton";
-import ChevronDownIcon from "@/assets/icons/chevron_down.svg";
+import { ChevronDown } from "@/assets/icons/chevron";
 
 export default function ItemDetail() {
   const [isInfoExpanded, setIsInfoExpanded] = useState<boolean>(false);
@@ -33,13 +33,9 @@ export default function ItemDetail() {
             onClick={() => setIsInfoExpanded((prev) => !prev)}
           >
             {isInfoExpanded ? "상세정보 접기" : "상세정보 더보기"}
-            <Image
-              src={ChevronDownIcon}
-              alt="▼"
-              width={24}
-              height={24}
+            <ChevronDown
               className={cn(
-                "transition-all duration-300",
+                "w-6 h-6 transition-all duration-300",
                 isInfoExpanded ? "rotate-180" : ""
               )}
             />

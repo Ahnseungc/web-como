@@ -1,11 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { closeModal, cn, openModal } from "@/lib/utils";
 import type { Matcher } from "react-day-picker";
 import Calendar from "@/components/common/Calendar";
 import Backdrop from "@/components/common/Backdrop";
-import ChevronDownIcon from "@/assets/icons/chevron_down_filled.svg";
+import { ChevronDownFilled } from "@/assets/icons/chevron";
 
 interface Props {
   size?: string;
@@ -38,7 +37,7 @@ export default function DatePicker({
         >
           {props.currentDate?.toLocaleDateString("ko") || "일자선택"}
         </span>
-        <Image src={ChevronDownIcon} alt="▼" width={20} height={24} />
+        <ChevronDownFilled className="w-5 h-6 text-gray-500" />
       </button>
       <div id={props.id} className="hidden modal">
         <Backdrop invisible />

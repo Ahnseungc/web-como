@@ -90,13 +90,13 @@ export default function DashboardSchedule() {
                   "py-2 px-4 truncate",
                   i === 1 || i === 3 ? "min-w-20 text-center" : "flex-1",
                   i === 2
-                    ? "max-w-80 h3 font-medium text-gray-900"
+                    ? "max-w-80 body-1 font-bold text-gray-900"
                     : i === 0
                       ? "max-w-40 body-2 font-bold text-gray-600"
                       : i === 1
-                        ? "h4 font-normal text-gray-900"
+                        ? "body-1 font-normal text-gray-900"
                         : i === 3
-                          ? "body-1 font-medium text-gray-900"
+                          ? "body-2 font-medium text-gray-900"
                           : "body-1 font-medium text-gray-600"
                 )}
               >

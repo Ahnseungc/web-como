@@ -1,21 +1,24 @@
 "use client";
 
 import { useState, type HTMLInputTypeAttribute } from "react";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
-import FileIcon from "@/assets/icons/input/file.svg";
+import { File } from "@/assets/icons/info";
 
 interface Props {
   name: string;
   type?: HTMLInputTypeAttribute;
   accept?: string;
+  autocomplete?: string;
   placeholder?: string;
   label?: string;
   readonly?: boolean;
   required?: boolean;
-  value?: string;
   maxChar?: number;
+  rows?: number;
   inputStyle?: string;
+  value?: string;
+  currentValue?: string;
+  handleInputChange?: (e: React.ChangeEvent<any>) => void;
 }
 
 interface InputProps extends Props {
@@ -39,15 +42,16 @@ const InputElement = (props: InputProps) => {
           )}
         >
           <span className="truncate">{props.placeholder}</span>
-          <Image src={FileIcon} alt="파일 선택" width={20} height={22} />
+          <File className="w-5 h-[22px] text-gray-500" />
         </label>
       )}
       {props.maxChar && props.maxChar > 30 ? (
         <textarea
-          rows={2}
+          rows={props.rows || 2}
           name={props.name}
           id={props.name}
           placeholder={props.placeholder}
+          autoComplete={props.autocomplete}
           readOnly={props.readonly}
           disabled={props.readonly}
           value={props.currentValue}
@@ -62,6 +66,7 @@ const InputElement = (props: InputProps) => {
         <input
           type={props.type}
           accept={props.accept}
+          autoComplete={props.autocomplete}
           name={props.name}
           id={props.name}
           placeholder={props.placeholder}
@@ -114,21 +119,21 @@ export default function Input(props: Props) {
                 )}
               </span>
               {props.maxChar && (
-                <span className="h4 font-medium text-gray-600">{`${currentValue.length}자/${props.maxChar}자`}</span>
+                <span className="h4 font-medium text-gray-600">{`${(props.currentValue || currentValue).length}자/${props.maxChar}자`}</span>
               )}
             </label>
           )}
           <InputElement
             {...props}
-            currentValue={currentValue}
-            handleInputChange={handleInputChange}
+            currentValue={props.currentValue || currentValue}
+            handleInputChange={props.handleInputChange || handleInputChange}
           />
         </div>
       ) : (
         <InputElement
           {...props}
-          currentValue={currentValue}
-          handleInputChange={handleInputChange}
+          currentValue={props.currentValue || currentValue}
+          handleInputChange={props.handleInputChange || handleInputChange}
         />
       )}
     </>

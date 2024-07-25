@@ -1,3 +1,13 @@
+import ClubList from "@/components/dashboard/remove/organisms/ClubList";
+import DisbandClubFormModal from "@/components/dashboard/remove/organisms/DisbandClubFormModal";
+import DisbandClubModal from "@/components/dashboard/remove/organisms/DisbandClubModal";
+
 export default function ClubRemovePage() {
-  return <div></div>;
+  return (
+    <>
+      <ClubList />
+      <DisbandClubModal />
+      <DisbandClubFormModal />
+    </>
+  );
 }

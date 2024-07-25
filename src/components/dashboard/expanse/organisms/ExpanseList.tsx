@@ -2,14 +2,13 @@
 
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import Image from "next/image";
-import type { ExpanseSearchFilter } from "@/components/dashboard/expanse/organisms/ExpanseSearch";
+import type { ExpanseSearchFilter } from "@/components/dashboard/expanse/molecules/ExpanseSearch";
 import DateFilter, {
   type DateRange,
 } from "@/components/dashboard/common/DateFilter";
 import Pagination from "@/components/dashboard/common/Pagination";
 import ExpanseTable from "@/components/dashboard/expanse/molecules/ExpanseTable";
-import PlusIcon from "@/assets/icons/plus.svg";
+import { Plus } from "@/assets/icons/action";
 
 interface Props {
   currentFilter: ExpanseSearchFilter;
@@ -41,11 +40,11 @@ export default function ExpanseList({ currentFilter }: Props) {
           {"활동비 지급 내역 조회"}
         </h3>
         <button
-          className="flex items-center gap-[3px] py-1 px-3 rounded body-1 font-medium text-gray-50 bg-gray-900 cursor-pointer"
+          className="flex items-center gap-[3px] py-1 px-3 rounded body-1 font-medium text-gray-50 bg-brand-orange cursor-pointer"
           onClick={() => push(`${pathname}/new`)}
         >
           {"지급신청서 작성"}
-          <Image src={PlusIcon} alt="+" width={20} height={20} />
+          <Plus className="w-5 h-5 text-gray-50" />
         </button>
       </div>
       <div className="space-y-4">

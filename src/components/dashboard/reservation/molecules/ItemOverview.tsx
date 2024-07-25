@@ -1,13 +1,14 @@
 import Image from "next/image";
 import Avatar from "@/components/common/Avatar";
 import Chip from "@/components/common/Chip";
-import ProfileIcon from "@/assets/icons/itemOverview/profile.svg";
-import CalendarIcon from "@/assets/icons/itemOverview/calendar.svg";
-import MarkerIcon from "@/assets/icons/itemOverview/marker.svg";
-import PeopleIcon from "@/assets/icons/itemOverview/people.svg";
-import CategoryIcon from "@/assets/icons/itemOverview/category.svg";
-import RoleIcon from "@/assets/icons/itemOverview/role.svg";
-import ChevronRightIcon from "@/assets/icons/itemOverview/chevron_right.svg";
+import {
+  Calendar,
+  Category,
+  Marker,
+  People,
+  Profile,
+} from "@/assets/icons/info";
+import { ChevronRight } from "@/assets/icons/chevron";
 
 export default function ItemDetailOverview() {
   const image = null;
@@ -28,24 +29,24 @@ export default function ItemDetailOverview() {
             <span className="h2 font-extrabold text-gray-900">{`${(30000).toLocaleString()}원~`}</span>
             <span className="h3 font-normal text-gray-500">{"/인"}</span>
           </div>
-          <div className="flex gap-10 mt-8">
+          <div className="flex gap-10 mt-8 body-2 font-medium text-gray-700">
             <div className="space-y-1">
               <div className="flex gap-1">
-                <Image src={ProfileIcon} alt="날짜" width={16} height={16} />
+                <Profile className="w-4 h-4" />
                 {"OMO전용 호스트"}
               </div>
               <div className="flex gap-1">
-                <Image src={CalendarIcon} alt="날짜" width={16} height={16} />
+                <Calendar className="w-4 h-4" />
                 {"5/1부터"}
               </div>
             </div>
             <div className="space-y-1">
               <div className="flex gap-1">
-                <Image src={MarkerIcon} alt="위치" width={16} height={16} />
+                <Marker className="w-4 h-4" />
                 {"서울시 구로구"}
               </div>
               <div className="flex gap-1">
-                <Image src={PeopleIcon} alt="인원" width={16} height={16} />
+                <People className="w-4 h-4" />
                 {"최대 30명"}
               </div>
             </div>
@@ -60,27 +61,11 @@ export default function ItemDetailOverview() {
             <div>
               <div className="flex h4 font-bold text-gray-900">
                 {"호스트명"}
-                <Image
-                  src={ChevronRightIcon}
-                  alt="▶︎"
-                  width={24}
-                  height={24}
-                />
+                <ChevronRight className="w-6 h-6" />
               </div>
-              <div className="flex gap-1 mt-[3px] caption-1 font-medium text-gray-500">
-                <div className="flex">
-                  <Image
-                    src={CategoryIcon}
-                    alt="카테고리"
-                    width={14}
-                    height={14}
-                  />
-                  {"카테고리"}
-                </div>
-                <div className="flex">
-                  <Image src={RoleIcon} alt="역할" width={14} height={14} />
-                  {"역할"}
-                </div>
+              <div className="flex mt-[3px] caption-1 font-medium text-gray-500">
+                <Category className="w-3.5 h-3.5" />
+                {"카테고리"}
               </div>
             </div>
           </div>

@@ -1,12 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import ChevronDown from "@/assets/icons/sidebar/chevron_down_sm.svg";
 import { HEADER_HEIGHT } from "@/components/header/Header";
+import { ChevronDown } from "@/assets/icons/chevron";
 
 const clubDashboardMenus = [
   "manage",
@@ -62,9 +61,14 @@ const menuList: MenuItem[] = [
         routes: ["/dashboard/manage/remove"],
       },
       {
-        name: "공지사항",
+        name: "공지사항 관리",
         link: "/dashboard/manage/announcement",
         routes: ["/dashboard/manage/announcement"],
+      },
+      {
+        name: "서류 양식 다운로드",
+        link: "/dashboard/manage/template",
+        routes: ["/dashboard/manage/template"],
       },
     ],
   },
@@ -100,18 +104,17 @@ const menuList: MenuItem[] = [
           "/dashboard/expanse",
           "/dashboard/expanse/new",
           "/dashboard/expanse/detail",
-          "/dashboard/expanse/transaction",
         ],
-      },
-      {
-        name: "영수증 관리",
-        link: "/dashboard/expanse/receipt",
-        routes: ["/dashboard/expanse/receipt"],
       },
       {
         name: "비품 관리",
         link: "/dashboard/expanse/supply",
         routes: ["/dashboard/expanse/supply"],
+      },
+      {
+        name: "입출금 내역",
+        link: "/dashboard/expanse/transaction",
+        routes: ["/dashboard/expanse/transaction"],
       },
     ],
   },
@@ -195,7 +198,7 @@ export default function SideBar() {
             >
               {menu.name}
               {menu.subMenuList && (
-                <Image src={ChevronDown} alt="▼" width={10} />
+                <ChevronDown className="w-5 h-5 text-gray-400" />
               )}
             </div>
             {menu.subMenuList && (

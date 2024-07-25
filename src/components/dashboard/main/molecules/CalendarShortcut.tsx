@@ -1,6 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
-import ChevronRight from "@/assets/icons/chevron_right.svg";
+import { ChevronRight } from "@/assets/icons/chevron";
 
 export default function DashboardCalendarShortcut() {
   return (
@@ -11,7 +10,7 @@ export default function DashboardCalendarShortcut() {
       <h3 className="h1 font-bold text-brand-black truncate">
         {"캘린더 바로가기"}
       </h3>
-      <Image src={ChevronRight} alt="▶︎" width={36} height={36} />
+      <ChevronRight className="w-9 h-9 text-brand-black" />
     </Link>
   );
 }
