@@ -1,10 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import Chip from "@/components/common/Chip";
 import SearchBar from "@/components/dashboard/common/SearchBar";
+
+const filterList = [
+  { name: "전체 보기", value: "all" },
+  { name: "입금", value: "deposit" },
+  { name: "출금", value: "withdrawal" },
+] as const;
+
+export type TransactionSearchFilter = (typeof filterList)[number]["value"];
 
 export default function TransactionSearch() {
   const [currentSearchTerm, setCurrentSearchTerm] = useState<string>("");
+  const [currentFilter, setCurrentFilter] = useState<string>("");
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,6 +29,17 @@ export default function TransactionSearch() {
         handleChange={(e) => setCurrentSearchTerm(e.target.value)}
         handleSubmit={handleSearch}
       />
+      <div className="flex gap-3">
+        {filterList.map((filter) => (
+          <Chip
+            key={filter.value}
+            content={filter.name}
+            primary={filter.value === currentFilter}
+            padding="py-3 px-4"
+            onClick={() => setCurrentFilter(filter.value)}
+          />
+        ))}
+      </div>
     </div>
   );
 }
