@@ -1,13 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { closeModal, openModal } from "@/lib/utils";
 import { deleteRefreshToken } from "@/lib/token";
 import Avatar from "@/components/common/Avatar";
 import Backdrop from "@/components/common/Backdrop";
-import CloseIcon from "@/assets/icons/header/close.svg";
+import { Close } from "@/assets/icons/action";
 
 interface Props {
   profileImage?: string | null;
@@ -35,7 +34,7 @@ export default function ProfileDropdownModal({ profileImage }: Props) {
               className="flex items-center justify-end w-8 h-8 cursor-pointer"
               onClick={closeModal}
             >
-              <Image src={CloseIcon} alt="닫기" width={24} height={24} />
+              <Close className="w-6 h-6 text-gray-900" />
             </div>
           </div>
           <div>

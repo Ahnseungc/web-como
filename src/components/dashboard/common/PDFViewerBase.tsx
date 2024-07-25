@@ -5,6 +5,8 @@ import { pdfjs, Document, Page } from "react-pdf";
 import type { PDFDocumentProxy } from "pdfjs-dist";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
+import Skeleton from "@/components/common/Skeleton";
+import { cn } from "@/lib/utils";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.mjs",
@@ -22,10 +24,12 @@ interface Props {
 }
 
 export default function PDFViewerBase({ file = "../../sample.pdf" }: Props) {
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
 
   const onDocumentLoadSuccess = ({ numPages }: PDFDocumentProxy) => {
+    setIsLoaded(true);
     setCurrentPage(1);
     setTotalPages(numPages);
   };
@@ -44,9 +48,11 @@ export default function PDFViewerBase({ file = "../../sample.pdf" }: Props) {
 
   return (
     <>
+      {!isLoaded && <Skeleton big size="max-w-[700px] max-h-[900px]" />}
       <Document
         file={file}
         onLoadSuccess={onDocumentLoadSuccess}
+        loading={<></>}
         renderMode="canvas"
         className={"flex justify-around"}
       >
@@ -57,7 +63,7 @@ export default function PDFViewerBase({ file = "../../sample.pdf" }: Props) {
           className={"hidden xl:block"}
         />
       </Document>
-      <div className="mt-6 mx-auto">
+      <div className={cn("w-fit mt-6 mx-auto", isLoaded ? "block" : "hidden")}>
         <div className="flex items-center gap-5 p-1 rounded-full bg-gray-100">
           <button
             className="py-1.5 px-4 rounded-full body-1 font-bold text-gray-900 bg-gray-0 shadow"

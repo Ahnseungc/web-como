@@ -1,7 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import CopyIcon from "@/assets/icons/copy.svg";
+import { Copy } from "@/assets/icons/util";
 
 interface Props {
   text: string;
@@ -17,7 +16,7 @@ export default function CopyButton({ text }: Props) {
       className="flex items-center gap-0.5 body-2 font-bold text-brand-orange"
       onClick={handleCopyAddress}
     >
-      <Image src={CopyIcon} alt="복사" width={20} height={20} />
+      <Copy className="w-5 h-6 text-brand-orange" />
       <span>{"주소 복사"}</span>
     </button>
   );

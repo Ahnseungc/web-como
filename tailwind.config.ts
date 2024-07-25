@@ -82,6 +82,17 @@ const config: Config = {
       tight: "-.0025em",
       normal: "0",
     },
+    extend: {
+      keyframes: {
+        "progress-ltr": {
+          from: { width: "0" },
+          to: { width: "100%" },
+        },
+      },
+      animation: {
+        "loading-progress": "progress-ltr 3s ease-out infinite",
+      },
+    },
   },
   plugins: [],
 };

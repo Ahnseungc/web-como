@@ -9,5 +9,9 @@ interface Props {
 }
 
 export default function PDFViewer({ file }: Props) {
-  return <NoSSR file={file} />;
+  return (
+    <div className="min-w-[700px] min-h-[970px]">
+      <NoSSR file={file} />
+    </div>
+  );
 }

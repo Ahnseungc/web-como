@@ -1,9 +1,10 @@
-import Image from "next/image";
-import FirstPageIcon from "@/assets/icons/pagination/chevron_double_left.svg";
-import PrevPageIcon from "@/assets/icons/pagination/chevron_left.svg";
-import NextPageIcon from "@/assets/icons/pagination/chevron_right.svg";
-import LastPageIcon from "@/assets/icons/pagination/chevron_double_right.svg";
 import { cn, getPageRange } from "@/lib/utils";
+import {
+  ChevronDoubleLeft,
+  ChevronDoubleRight,
+  ChevronLeft,
+  ChevronRight,
+} from "@/assets/icons/pagination";
 
 interface Props {
   currentPage: number;
@@ -19,13 +20,13 @@ export default function Pagination(props: Props) {
           className="cursor-pointer"
           onClick={() => props.handlePageChange(1)}
         >
-          <Image src={FirstPageIcon} alt="맨앞" width={36} height={36} />
+          <ChevronDoubleLeft />
         </button>
         <button
           className="cursor-pointer"
           onClick={() => props.handlePageChange(props.currentPage - 1)}
         >
-          <Image src={PrevPageIcon} alt="이전" width={36} height={36} />
+          <ChevronLeft />
         </button>
       </div>
       <div className="flex gap-2.5">
@@ -50,13 +51,13 @@ export default function Pagination(props: Props) {
           className="cursor-pointer"
           onClick={() => props.handlePageChange(props.currentPage + 1)}
         >
-          <Image src={NextPageIcon} alt="다음" width={36} height={36} />
+          <ChevronRight />
         </button>
         <button
           className="cursor-pointer"
           onClick={() => props.handlePageChange(props.maxPage)}
         >
-          <Image src={LastPageIcon} alt="맨뒤" width={36} height={36} />
+          <ChevronDoubleRight />
         </button>
       </div>
     </div>

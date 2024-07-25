@@ -1,32 +1,38 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { closeModal, cn, openModal } from "@/lib/utils";
 import Backdrop from "@/components/common/Backdrop";
-import ChevronDownIcon from "@/assets/icons/chevron_down_filled.svg";
+import { ChevronDownFilled } from "@/assets/icons/chevron";
 
 interface Props {
   id: string;
   options: string[];
-  size?: string;
+  value?: string;
+  width?: string;
+  height?: string;
   textStyle?: string;
   placeholder?: string;
 }
 
 export default function DropdownSelect({
-  size = "w-[350px] h-[60px]",
+  width = "w-[350px]",
+  height = "h-[60px]",
   textStyle = "h4 font-medium",
   ...props
 }: Props) {
-  const [currentValue, setCurrentValue] = useState<string | undefined>();
+  const [currentValue, setCurrentValue] = useState<string | undefined>(
+    props.value
+  );
 
   return (
     <div>
       <button
+        type="button"
         className={cn(
           "flex items-center justify-between w-full h-full px-3 rounded-md border border-gray-400 placeholder:text-gray-400 text-gray-900 bg-gray-50",
-          size,
+          width,
+          height,
           textStyle
         )}
       >
@@ -37,11 +43,16 @@ export default function DropdownSelect({
           readOnly
           value={currentValue}
         />
-        <Image src={ChevronDownIcon} alt="▼" width={20} height={24} />
+        <ChevronDownFilled className="w-5 h-6 text-gray-500" />
       </button>
       <div id={props.id} className="hidden modal">
         <Backdrop invisible />
-        <div className="absolute z-40 min-w-[350px] py-8 px-6 rounded-xl bg-gray-0 shadow">
+        <div
+          className={cn(
+            "absolute z-40 py-8 px-6 rounded-xl bg-gray-0 shadow",
+            width
+          )}
+        >
           <ul>
             {props.options.map((option) => (
               <li
@@ -53,8 +64,13 @@ export default function DropdownSelect({
                     : "text-gray-900"
                 )}
                 onClick={() => {
-                  setCurrentValue(option);
-                  closeModal();
+                  if (option === currentValue) {
+                    setCurrentValue("");
+                    closeModal();
+                  } else {
+                    setCurrentValue(option);
+                    closeModal();
+                  }
                 }}
               >
                 {option}

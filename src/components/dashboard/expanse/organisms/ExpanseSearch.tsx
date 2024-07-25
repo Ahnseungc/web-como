@@ -1,9 +1,8 @@
 "use client";
 
-import Image from "next/image";
+import { useState } from "react";
 import Chip from "@/components/common/Chip";
-import SearchIcon from "@/assets/icons/search.svg";
-import ChevronDownIcon from "@/assets/icons/chevron_down_filled.svg";
+import SearchBar from "@/components/dashboard/common/SearchBar";
 
 const filterList = [
   { name: "전체 보기", value: "all" },
@@ -23,34 +22,21 @@ export default function ExpanseSearch({
   currentFilter,
   handleChangeFilter,
 }: Props) {
+  const [currentSearchTerm, setCurrentSearchTerm] = useState<string>("");
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
-    <form className="flex flex-col gap-6 p-8 rounded-2xl bg-gray-0">
+    <div className="flex flex-col gap-6 p-8 rounded-2xl bg-gray-0">
       <h3 className="h2 font-semibold text-gray-900">{"검색 필터"}</h3>
-      <div className="flex gap-3">
-        <div className="flex gap-3 w-[200px] h-[60px] py-4 px-3 rounded-md border border-gray-400 bg-gray-50">
-          <input
-            type="text"
-            name="term"
-            id="term"
-            placeholder="동호회명"
-            className="w-full h4 font-medium outline-none text-gray-900 bg-transparent"
-          />
-          <Image src={ChevronDownIcon} alt="▼" width={20} height={20} />
-        </div>
-        <div className="flex gap-3 w-[360px] h-[60px] py-4 px-3 rounded-md border border-gray-100 has-[:focus-visible]:border-gray-900 bg-gray-100 has-[:focus-visible]:bg-gray-50 transition duration-300">
-          <Image src={SearchIcon} alt="검색" width={20} height={20} />
-          <input
-            type="text"
-            name="term"
-            id="term"
-            placeholder="검색어를 입력해주세요"
-            className="peer w-full h4 font-medium outline-none placeholder:text-gray-400 text-gray-900 bg-transparent transition duration-300"
-          />
-        </div>
-        <button className="w-60 h-[60px] py-4 rounded text-center h3 font-semibold text-gray-50 bg-brand-orange">
-          {"검색"}
-        </button>
-      </div>
+      <SearchBar
+        placeholder="검색어를 입력하세요."
+        currentValue={currentSearchTerm}
+        handleChange={(e) => setCurrentSearchTerm(e.target.value)}
+        handleSubmit={handleSearch}
+      />
       <div className="flex gap-3">
         {filterList.map((filter) => (
           <Chip
@@ -62,6 +48,6 @@ export default function ExpanseSearch({
           />
         ))}
       </div>
-    </form>
+    </div>
   );
 }

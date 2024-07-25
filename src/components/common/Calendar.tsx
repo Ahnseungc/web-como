@@ -1,10 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { DayPicker, type Matcher } from "react-day-picker";
 import { ko } from "date-fns/locale";
-import ChevronLeftIcon from "@/assets/icons/calendar/chevron_left.svg";
-import ChevronRightIcon from "@/assets/icons/calendar/chevron_right.svg";
+import { ChevronLeft, ChevronRight } from "@/assets/icons/chevron";
 
 interface Props {
   selected: Date | undefined;
@@ -39,9 +37,9 @@ export default function Calendar({ selected, onSelect, disabled }: Props) {
         components={{
           Chevron: ({ orientation }) => {
             if (orientation === "left") {
-              return <Image src={ChevronLeftIcon} alt="<" />;
+              return <ChevronLeft className="w-6 h-6 text-gray-900" />;
             } else if (orientation === "right") {
-              return <Image src={ChevronRightIcon} alt=">" />;
+              return <ChevronRight className="w-6 h-6 text-gray-900" />;
             } else {
               return <></>;
             }

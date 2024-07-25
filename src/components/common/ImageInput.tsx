@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import AddIcon from "@/assets/icons/input/add.svg";
-import DeleteImageIcon from "@/assets/icons/input/delete_image.svg";
+import { Plus, Remove } from "@/assets/icons/action";
 
 interface Props {
   name: string;
@@ -42,7 +41,7 @@ export default function ImageInput(props: Props) {
                   )
                 }
               >
-                <Image src={DeleteImageIcon} alt="X" width={18} height={18} />
+                <Remove className="w-[18px] h-[18px] text-gray-900" />
               </button>
             </div>
           ))}
@@ -50,7 +49,7 @@ export default function ImageInput(props: Props) {
           htmlFor={props.name}
           className="flex items-center justify-center w-[100px] h-[100px] rounded-lg bg-gray-1000 cursor-pointer"
         >
-          <Image src={AddIcon} alt="+" width={32} height={32} />
+          <Plus className="w-8 h-8 text-gray-50" />
           <input
             type="file"
             accept="image/*"
