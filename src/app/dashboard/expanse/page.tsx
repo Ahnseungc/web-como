@@ -6,7 +6,7 @@ import ExpanseList from "@/components/dashboard/expanse/organisms/ExpanseList";
 import ExpanseOverview from "@/components/dashboard/expanse/organisms/ExpanseOverview";
 import ExpanseSearch, {
   type ExpanseSearchFilter,
-} from "@/components/dashboard/expanse/organisms/ExpanseSearch";
+} from "@/components/dashboard/expanse/molecules/ExpanseSearch";
 
 export default function ExpansePage() {
   const [currentFilter, setCurrentFilter] =

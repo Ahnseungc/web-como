@@ -23,7 +23,7 @@ export default function ProfileDropdownModal({ profileImage }: Props) {
   return (
     <div className="fixed modal hidden" id="profile-dropdown">
       <Backdrop invisible />
-      <div className="fixed top-20 right-[38px] z-50 w-[390px] rounded-xl border border-gray-400">
+      <div className="fixed top-16 right-[30px] z-50 w-[390px] rounded-xl border border-gray-400">
         <div className="space-y-[28px] p-8 rounded-t-xl bg-gray-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">

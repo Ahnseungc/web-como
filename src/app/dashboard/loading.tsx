@@ -3,7 +3,7 @@ import Skeleton from "@/components/common/Skeleton";
 export default function Loading() {
   return (
     <div className="w-full h-full">
-      <div className="animate-loading-progress h-1 bg-brand-orange" />
+      <div className="animate-loading-progress h-1 bg-gradient-to-r from-brand-orange/0 to-brand-orange" />
       <section className="flex flex-col gap-3 w-full p-8">
         <div className="space-y-3 p-4 rounded-xl bg-gray-50">
           <Skeleton />
