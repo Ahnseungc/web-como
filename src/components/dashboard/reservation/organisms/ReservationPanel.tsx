@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { cn, formatDate } from "@/lib/utils";
 import Calendar from "@/components/common/Calendar";
 import OptionItem from "@/components/dashboard/reservation/molecules/OptionItem";
@@ -37,6 +38,9 @@ interface Total {
 const availableTime = ["8:00", "10:00", "12:00", "17:00", "20:00", "22:00"];
 
 export default function ReservationPanel() {
+  const pathname = usePathname();
+  const { push } = useRouter();
+
   const [isDateSelectMode, setIsDateSelectMode] = useState<boolean>(false);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(true);
   const [selectedDateTime, setSelectedDateTime] = useState<DateTime>({
@@ -220,6 +224,7 @@ export default function ReservationPanel() {
               <button
                 disabled={isSubmitDisabled}
                 className="w-full py-3.5 rounded-md h4 font-semibold disabled:text-gray-400 text-gray-50 disabled:bg-gray-200 bg-gray-900"
+                onClick={() => push(`${pathname}/purchase`)}
               >
                 {"예약하기"}
               </button>
