@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn, openModal } from "@/lib/utils";
 
 type Status = "completed" | "confirmed" | "pending" | "canceled";
 
@@ -19,7 +19,7 @@ const reservations = [
     name: "상품명",
     price: 250000,
     reservationDate: "20240704 12:33:57",
-    status: "completed",
+    status: "confirmed",
   },
   {
     id: 2,
@@ -27,7 +27,7 @@ const reservations = [
     name: "상품명",
     price: 250000,
     reservationDate: "20240704 12:33:57",
-    status: "completed",
+    status: "confirmed",
   },
   {
     id: 3,
@@ -51,7 +51,7 @@ const reservations = [
     name: "상품명",
     price: 250000,
     reservationDate: "20240704 12:33:57",
-    status: "completed",
+    status: "canceled",
   },
   {
     id: 6,
@@ -67,7 +67,7 @@ const reservations = [
     name: "상품명",
     price: 250000,
     reservationDate: "20240704 12:33:57",
-    status: "completed",
+    status: "canceled",
   },
   {
     id: 8,
@@ -104,7 +104,11 @@ export default function ReservationTable() {
             key={heading}
             className={cn(
               "flex-1 py-3 px-6 text-center body-1 font-bold text-gray-900",
-              i === 1 ? "" : "max-w-52"
+              i === 1
+                ? ""
+                : i === 4
+                  ? "flex items-center justify-center gap-2 p-0 min-w-52 max-w-60"
+                  : "max-w-60"
             )}
           >
             {heading}
@@ -126,21 +130,37 @@ export default function ReservationTable() {
             <span
               key={data}
               className={cn(
-                "flex-1 py-3 px-6 text-center body-1 font-medium underline-offset-2 underline decoration-gray-0 truncate transition duration-300",
+                "flex-1 py-3 px-6 text-center body-1 font-medium underline-offset-2 underline decoration-transparent truncate transition duration-300",
                 i === 1
                   ? "hover:decoration-gray-800 cursor-pointer"
-                  : "max-w-52",
+                  : i === 4
+                    ? "flex items-center justify-center gap-2 p-0 min-w-52 max-w-60"
+                    : "max-w-60",
                 i === 2 ? "font-bold" : "",
                 data === "canceled" ? "text-gray-500" : "text-gray-800"
               )}
             >
-              {i === 2
-                ? `${data.toLocaleString()}원`
-                : data === "completed"
-                  ? "참여 완료"
-                  : data === "canceled"
-                    ? "예약 취소"
-                    : data}
+              {i === 2 ? (
+                `${data.toLocaleString()}원`
+              ) : data === "completed" ? (
+                "참여 완료"
+              ) : data === "canceled" ? (
+                "예약 취소"
+              ) : data === "confirmed" ? (
+                <>
+                  <button className="py-1 px-4 rounded border border-gray-900 body-1 font-medium text-gray-50 bg-gray-900">
+                    {"예약 변경"}
+                  </button>
+                  <button
+                    className="py-1 px-4 rounded border border-gray-900 body-1 font-medium text-gray-900 bg-gray-50"
+                    onClick={() => openModal("reservation-cancel")}
+                  >
+                    {"예약 취소"}
+                  </button>
+                </>
+              ) : (
+                data
+              )}
             </span>
           ))}
         </li>
