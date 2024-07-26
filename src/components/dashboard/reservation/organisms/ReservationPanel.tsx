@@ -1,26 +1,84 @@
 "use client";
 
-import { useState } from "react";
-import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
+import { cn, formatDate } from "@/lib/utils";
+import Calendar from "@/components/common/Calendar";
 import OptionItem from "@/components/dashboard/reservation/molecules/OptionItem";
-import { Calendar } from "@/assets/icons/info";
-import { ChevronDown } from "@/assets/icons/chevron";
+import { Calendar as CalendarIcon } from "@/assets/icons/info";
+import { ChevronDownFilled } from "@/assets/icons/chevron";
+
+export interface Option {
+  id: number;
+  name: string;
+  price: number;
+  availableQty: number;
+  selectedQty: number;
+}
+
+const options = [
+  { id: 1, name: "옵션1", price: 50000, availableQty: 49, selectedQty: 0 },
+  { id: 2, name: "옵션2", price: 40000, availableQty: 4, selectedQty: 0 },
+  { id: 3, name: "옵션3", price: 25000, availableQty: 15, selectedQty: 0 },
+  { id: 4, name: "옵션4", price: 74000, availableQty: 26, selectedQty: 0 },
+  { id: 5, name: "옵션5", price: 60000, availableQty: 100, selectedQty: 0 },
+];
+
+interface DateTime {
+  date: Date | undefined;
+  time: string;
+}
+
+interface Total {
+  qty: number;
+  price: number;
+}
 
 export default function ReservationPanel() {
   const [isDateSelectMode, setIsDateSelectMode] = useState<boolean>(false);
-  const [selectedDate, setSelectedDate] = useState();
-  const [selectedTime, setSelectedTime] = useState();
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(true);
+  const [selectedDateTime, setSelectedDateTime] = useState<DateTime>({
+    date: undefined,
+    time: "",
+  });
+  const [selectedOptions, setSelectedOptions] = useState<Option[]>(options);
+  const [selectedTotal, setSelectedTotal] = useState<Total>({
+    qty: 0,
+    price: 0,
+  });
+
+  useEffect(() => {
+    const totalQty = selectedOptions
+      .map((item) => item.selectedQty)
+      .reduce((acc, cur) => acc + cur);
+    const totalPrice = selectedOptions
+      .map((item) => item.selectedQty * item.price)
+      .reduce((acc, cur) => acc + cur);
+
+    setSelectedTotal({ qty: totalQty, price: totalPrice });
+  }, [selectedOptions]);
+
+  useEffect(() => {
+    if (
+      !selectedDateTime.date ||
+      !selectedDateTime.time ||
+      selectedTotal.qty < 1
+    ) {
+      setIsSubmitDisabled(true);
+    } else {
+      setIsSubmitDisabled(false);
+    }
+  }, [selectedDateTime, selectedTotal]);
 
   return (
-    <div className="sticky top-28 inset-x-0 flex justify-end w-[490px] h-full max-h-[860px]">
+    <div className="sticky top-[72px] inset-x-0 flex justify-end w-[490px] h-full max-h-[860px]">
       <div className="flex flex-col gap-6 w-full py-8 px-5 rounded-xl bg-gray-0 shadow">
         <div className="space-y-3">
           <div className="flex gap-2 h4 font-bold text-gray-900">
-            <Calendar className="w-6 h-6" />
+            <CalendarIcon className="w-6 h-6" />
             {"날짜와 시간을 선택해 주세요"}
           </div>
           <div
-            className="flex gap-3 cursor-pointer select-none"
+            className="flex items-center gap-3 cursor-pointer select-none"
             onClick={() => setIsDateSelectMode((prev) => !prev)}
           >
             <input
@@ -28,25 +86,37 @@ export default function ReservationPanel() {
               name="date"
               placeholder="날짜선택"
               className="w-full min-h-[60px] py-4 px-3 rounded-md outline-none border border-gray-400 h4 font-medium placeholder:text-gray-400 text-gray-900 bg-gray-50 cursor-pointer"
-              value={selectedDate}
+              value={formatDate(selectedDateTime.date)}
             />
             <input
               readOnly
               name="time"
               placeholder="시간선택"
               className="w-full min-h-[60px] py-4 px-3 rounded-md outline-none border border-gray-400 h4 font-medium placeholder:text-gray-400 text-gray-900 bg-gray-50 cursor-pointer"
-              value={selectedTime}
+              value={selectedDateTime.time}
             />
-            <ChevronDown
+            <ChevronDownFilled
               className={cn(
-                "w-5 h-5 text-gray-500 transition-all duration-300",
+                "min-w-5 min-h-5 text-gray-500 transition-all duration-300",
                 isDateSelectMode ? "rotate-180" : ""
               )}
             />
           </div>
         </div>
         {isDateSelectMode ? (
-          <div></div>
+          <div className="space-y-3">
+            <Calendar
+              wrapperStyle="flex justify-center"
+              selected={selectedDateTime.date}
+              onSelect={(date: Date | undefined) =>
+                setSelectedDateTime((prev) => {
+                  return { ...prev, date };
+                })
+              }
+            />
+            <hr className="border-gray-400" />
+            <div></div>
+          </div>
         ) : (
           <>
             <div className="space-y-3">
@@ -54,22 +124,34 @@ export default function ReservationPanel() {
                 {"옵션선택"}
               </div>
               <div className="flex flex-col gap-2 h-[482px] overflow-y-auto">
-                <OptionItem />
-                <OptionItem />
-                <OptionItem />
-                <OptionItem />
-                <OptionItem />
+                {selectedOptions.map((option) => (
+                  <OptionItem
+                    key={option.id}
+                    option={option}
+                    handleChangeQty={(newQty: number) =>
+                      setSelectedOptions((prev) =>
+                        prev.map((item) => {
+                          if (item.id === option.id) {
+                            return { ...item, selectedQty: newQty };
+                          } else {
+                            return item;
+                          }
+                        })
+                      )
+                    }
+                  />
+                ))}
               </div>
             </div>
             <div className="pt-6 border-t border-gray-400">
               <div className="flex justify-between mb-6 h2">
-                <span className="font-bold text-gray-900">{"총 0개"}</span>
+                <span className="font-bold text-gray-900">{`총 ${selectedTotal.qty.toLocaleString()}개`}</span>
                 <span className="font-extrabold text-brand-orange">
-                  {"0원"}
+                  {`${selectedTotal.price.toLocaleString()}원`}
                 </span>
               </div>
               <button
-                disabled={true}
+                disabled={isSubmitDisabled}
                 className="w-full py-3.5 rounded-md h4 font-semibold disabled:text-gray-400 text-gray-50 disabled:bg-gray-200 bg-gray-900"
               >
                 {"예약하기"}
