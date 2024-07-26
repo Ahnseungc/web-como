@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { cn, formatDate } from "@/lib/utils";
 import Calendar from "@/components/common/Calendar";
 import OptionItem from "@/components/dashboard/reservation/molecules/OptionItem";
+import TimeSelectButton from "@/components/dashboard/reservation/molecules/TimeSelectButton";
 import { Calendar as CalendarIcon } from "@/assets/icons/info";
 import { ChevronDownFilled } from "@/assets/icons/chevron";
 
@@ -33,6 +34,8 @@ interface Total {
   price: number;
 }
 
+const availableTime = ["8:00", "10:00", "12:00", "17:00", "20:00", "22:00"];
+
 export default function ReservationPanel() {
   const [isDateSelectMode, setIsDateSelectMode] = useState<boolean>(false);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(true);
@@ -45,6 +48,13 @@ export default function ReservationPanel() {
     qty: 0,
     price: 0,
   });
+
+  const availableTimeBeforeNoon = availableTime.filter(
+    (time) => parseInt(time.slice(0, 2)) < 12
+  );
+  const availableTimeAfterNoon = availableTime.filter(
+    (time) => parseInt(time.slice(0, 2)) >= 12
+  );
 
   useEffect(() => {
     const totalQty = selectedOptions
@@ -85,14 +95,14 @@ export default function ReservationPanel() {
               readOnly
               name="date"
               placeholder="날짜선택"
-              className="w-full min-h-[60px] py-4 px-3 rounded-md outline-none border border-gray-400 h4 font-medium placeholder:text-gray-400 text-gray-900 bg-gray-50 cursor-pointer"
+              className="w-full min-h-[60px] py-4 px-3 rounded-md outline-none border border-gray-400 h4 font-medium placeholder:text-gray-400 text-gray-900 bg-gray-50 cursor-pointer select-none"
               value={formatDate(selectedDateTime.date)}
             />
             <input
               readOnly
               name="time"
               placeholder="시간선택"
-              className="w-full min-h-[60px] py-4 px-3 rounded-md outline-none border border-gray-400 h4 font-medium placeholder:text-gray-400 text-gray-900 bg-gray-50 cursor-pointer"
+              className="w-full min-h-[60px] py-4 px-3 rounded-md outline-none border border-gray-400 h4 font-medium placeholder:text-gray-400 text-gray-900 bg-gray-50 cursor-pointer select-none"
               value={selectedDateTime.time}
             />
             <ChevronDownFilled
@@ -115,35 +125,92 @@ export default function ReservationPanel() {
               }
             />
             <hr className="border-gray-400" />
-            <div></div>
+            {availableTimeBeforeNoon && (
+              <div className="space-y-2">
+                <span className="body-1 font-medium text-gray-500">
+                  {"오전"}
+                </span>
+                <div className="flex gap-2">
+                  {availableTimeBeforeNoon.map((time) => (
+                    <TimeSelectButton
+                      key={time}
+                      value={time}
+                      isSelected={time === selectedDateTime.time}
+                      handleClick={() =>
+                        setSelectedDateTime((prev) => {
+                          if (prev.time === time) {
+                            return { ...prev, time: "" };
+                          }
+                          return { ...prev, time };
+                        })
+                      }
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+            {availableTimeAfterNoon && (
+              <div className="space-y-2">
+                <span className="body-1 font-medium text-gray-500">
+                  {"오후"}
+                </span>
+                <div className="flex gap-2">
+                  {availableTimeAfterNoon.map((time) => (
+                    <TimeSelectButton
+                      key={time}
+                      value={time}
+                      isSelected={time === selectedDateTime.time}
+                      handleClick={() =>
+                        setSelectedDateTime((prev) => {
+                          if (prev.time === time) {
+                            return { ...prev, time: "" };
+                          }
+                          return { ...prev, time };
+                        })
+                      }
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         ) : (
-          <>
-            <div className="space-y-3">
-              <div className="flex gap-2 h4 font-bold text-gray-900">
-                {"옵션선택"}
-              </div>
-              <div className="flex flex-col gap-2 h-[482px] overflow-y-auto">
-                {selectedOptions.map((option) => (
-                  <OptionItem
-                    key={option.id}
-                    option={option}
-                    handleChangeQty={(newQty: number) =>
-                      setSelectedOptions((prev) =>
-                        prev.map((item) => {
-                          if (item.id === option.id) {
-                            return { ...item, selectedQty: newQty };
-                          } else {
-                            return item;
-                          }
-                        })
-                      )
-                    }
-                  />
-                ))}
-              </div>
+          <div className="space-y-3">
+            <div className="flex gap-2 h4 font-bold text-gray-900">
+              {"옵션선택"}
             </div>
-            <div className="pt-6 border-t border-gray-400">
+            <div className="flex flex-col gap-2 h-[482px] overflow-y-auto">
+              {selectedOptions.map((option) => (
+                <OptionItem
+                  key={option.id}
+                  option={option}
+                  handleChangeQty={(newQty: number) =>
+                    setSelectedOptions((prev) =>
+                      prev.map((item) => {
+                        if (item.id === option.id) {
+                          return { ...item, selectedQty: newQty };
+                        } else {
+                          return item;
+                        }
+                      })
+                    )
+                  }
+                />
+              ))}
+            </div>
+          </div>
+        )}
+        <div className="pt-6 border-t border-gray-400">
+          {isDateSelectMode ? (
+            <button
+              disabled={!selectedDateTime.date || !selectedDateTime.time}
+              className="w-full py-3.5 rounded-md h4 font-semibold disabled:text-gray-400 text-gray-50 disabled:bg-gray-200 bg-gray-900"
+              onClick={() => setIsDateSelectMode(false)}
+            >
+              {"옵션 선택하기"}
+            </button>
+          ) : (
+            <>
               <div className="flex justify-between mb-6 h2">
                 <span className="font-bold text-gray-900">{`총 ${selectedTotal.qty.toLocaleString()}개`}</span>
                 <span className="font-extrabold text-brand-orange">
@@ -156,9 +223,9 @@ export default function ReservationPanel() {
               >
                 {"예약하기"}
               </button>
-            </div>
-          </>
-        )}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
