@@ -37,7 +37,7 @@ export default function NewClubAnnouncementPage() {
             label="사진첨부"
             caption="첨부파일은 최대 2개까지 등록 가능합니다."
           />
-          <Checkbox text="공지사항 상단 고정하기" />
+          <Checkbox name="pin" content="공지사항 상단 고정하기" />
         </div>
         <div className="text-center">
           <Button content="등록하기" className="max-w-[350px]" primary />
