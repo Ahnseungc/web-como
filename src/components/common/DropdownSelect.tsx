@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { closeModal, cn, openModal } from "@/lib/utils";
 import Backdrop from "@/components/common/Backdrop";
 import { ChevronDownFilled } from "@/assets/icons/chevron";
@@ -8,7 +7,8 @@ import { ChevronDownFilled } from "@/assets/icons/chevron";
 interface Props {
   id: string;
   options: string[];
-  value?: string;
+  currentValue: string;
+  handleChange: (newValue: string) => void;
   width?: string;
   height?: string;
   textStyle?: string;
@@ -21,10 +21,6 @@ export default function DropdownSelect({
   textStyle = "h4 font-medium",
   ...props
 }: Props) {
-  const [currentValue, setCurrentValue] = useState<string | undefined>(
-    props.value
-  );
-
   return (
     <div>
       <button
@@ -41,7 +37,7 @@ export default function DropdownSelect({
           onClick={() => openModal(props.id)}
           placeholder={props.placeholder}
           readOnly
-          value={currentValue}
+          value={props.currentValue}
         />
         <ChevronDownFilled className="w-5 h-6 text-gray-500" />
       </button>
@@ -59,16 +55,16 @@ export default function DropdownSelect({
                 key={option}
                 className={cn(
                   "py-3.5 first:pt-0 last:pb-0 border-b border-gray-200 last:border-0 h4 font-medium cursor-pointer",
-                  option === currentValue
+                  option === props.currentValue
                     ? "text-brand-orange"
                     : "text-gray-900"
                 )}
                 onClick={() => {
-                  if (option === currentValue) {
-                    setCurrentValue("");
+                  if (option === props.currentValue) {
+                    props.handleChange("");
                     closeModal();
                   } else {
-                    setCurrentValue(option);
+                    props.handleChange(option);
                     closeModal();
                   }
                 }}

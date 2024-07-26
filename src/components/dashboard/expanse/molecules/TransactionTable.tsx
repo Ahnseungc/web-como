@@ -110,7 +110,7 @@ export default function TransactionTable() {
               "flex-1 py-3 px-6 body-1 font-bold text-gray-900 even:text-center",
               i === 1 ? "max-w-24" : "",
               i === 2 ? "max-w-52" : "",
-              i === 0 || i === 3 || i === 5 ? "max-w-52" : ""
+              i === 0 || i === 3 || i === 5 ? "max-w-52 xl:max-w-80" : ""
             )}
           >
             {heading}
@@ -136,7 +136,7 @@ export default function TransactionTable() {
                 "flex-1 py-3 px-6 body-1 font-medium even:text-center underline-offset-2 underline decoration-transparent truncate transition duration-300",
                 i === 1 ? "max-w-24" : "",
                 i === 2 ? "max-w-52 font-bold" : "",
-                i === 0 || i === 3 || i === 5 ? "max-w-52" : "",
+                i === 0 || i === 3 || i === 5 ? "max-w-52 xl:max-w-80" : "",
                 i === 5 && transaction.receipt
                   ? "decoration-gray-800 cursor-pointer"
                   : "",

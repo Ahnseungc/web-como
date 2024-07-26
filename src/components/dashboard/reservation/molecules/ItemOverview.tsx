@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 import Avatar from "@/components/common/Avatar";
 import Chip from "@/components/common/Chip";
@@ -31,21 +32,21 @@ export default function ItemDetailOverview() {
           </div>
           <div className="flex gap-10 mt-8 body-2 font-medium text-gray-700">
             <div className="space-y-1">
-              <div className="flex gap-1">
+              <div className="flex items-center gap-1">
                 <Profile className="w-4 h-4" />
                 {"OMO전용 호스트"}
               </div>
-              <div className="flex gap-1">
+              <div className="flex items-center gap-1">
                 <Calendar className="w-4 h-4" />
                 {"5/1부터"}
               </div>
             </div>
             <div className="space-y-1">
-              <div className="flex gap-1">
+              <div className="flex items-center gap-1">
                 <Marker className="w-4 h-4" />
                 {"서울시 구로구"}
               </div>
-              <div className="flex gap-1">
+              <div className="flex items-center gap-1">
                 <People className="w-4 h-4" />
                 {"최대 30명"}
               </div>
@@ -56,19 +57,21 @@ export default function ItemDetailOverview() {
           <div className="w-full pb-2 border-b border-gray-200 h4 font-bold text-gray-900">
             {"호스트의 다른 상품 보기"}
           </div>
-          <div className="flex items-center gap-2 w-fit py-8 pr-4 cursor-pointer select-none">
-            <Avatar size="w-[56px] h-[56px]" />
-            <div>
-              <div className="flex h4 font-bold text-gray-900">
-                {"호스트명"}
-                <ChevronRight className="w-6 h-6" />
-              </div>
-              <div className="flex mt-[3px] caption-1 font-medium text-gray-500">
-                <Category className="w-3.5 h-3.5" />
-                {"카테고리"}
+          <Link href={`/dashboard/reservation/host/${1}`}>
+            <div className="flex items-center gap-2 w-fit py-8 pr-4 cursor-pointer select-none">
+              <Avatar size="w-[56px] h-[56px]" />
+              <div>
+                <div className="flex items-center h4 font-bold text-gray-900">
+                  {"호스트명"}
+                  <ChevronRight className="w-4 h-4 xl:w-6 xl:h-6" />
+                </div>
+                <div className="flex items-center mt-[3px] caption-1 font-medium text-gray-500">
+                  <Category className="w-3.5 h-3.5" />
+                  {"카테고리"}
+                </div>
               </div>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     </div>

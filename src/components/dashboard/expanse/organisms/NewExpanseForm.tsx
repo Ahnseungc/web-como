@@ -10,6 +10,7 @@ import DropdownSelect from "@/components/common/DropdownSelect";
 export default function NewExpanseReportForm() {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [date, setDate] = useState<Date>();
+  const [formValues, setFormValues] = useState({ type: "" });
 
   const handleDateChange = (date: Date) => {
     setDate(date);
@@ -39,13 +40,19 @@ export default function NewExpanseReportForm() {
           </span>
           <DropdownSelect
             id="type"
-            placeholder="목록 중 선택"
+            placeholder="선택해 주세요"
             options={[
               "사내 동호회 활동비 지원금",
               "물품 구매 지원금",
               "우수 동호회 상금",
               "기타",
             ]}
+            currentValue={formValues.type}
+            handleChange={(newValue) =>
+              setFormValues((prev) => {
+                return { ...prev, type: newValue };
+              })
+            }
           />
         </div>
         <Input
