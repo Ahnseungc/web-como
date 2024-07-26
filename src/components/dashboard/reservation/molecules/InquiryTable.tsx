@@ -104,7 +104,6 @@ export default function InquiryTable() {
               "py-3 px-6 body-1 font-bold text-gray-900",
               i === 0 ? "w-[76px]" : "flex-1",
               i === 2 ? "" : "text-center max-w-56"
-              //   i === 3 ? "max-w-32" : ""
             )}
           >
             {heading}
@@ -131,7 +130,6 @@ export default function InquiryTable() {
                 i === 2
                   ? "hover:decoration-gray-800 cursor-pointer"
                   : "text-center max-w-56",
-                // i === 3 ? "max-w-32" : "",
                 data === "pending"
                   ? "text-point-blue"
                   : data === "completed"
