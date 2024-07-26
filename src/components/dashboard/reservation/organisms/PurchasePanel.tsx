@@ -20,7 +20,7 @@ export default function PurchasePanel() {
   }, [isChecked]);
 
   return (
-    <div className="sticky top-[72px] inset-x-0 flex justify-end w-[490px] h-full max-h-[860px]">
+    <div className="sticky top-[72px] inset-x-0 flex justify-end w-[490px] h-fit max-h-[860px]">
       <div className="flex flex-col gap-6 w-full py-8 px-5 rounded-xl bg-gray-0 shadow">
         <h4 className="font-bold text-gray-900">{"결제금액"}</h4>
         <hr className="border-gray-400" />

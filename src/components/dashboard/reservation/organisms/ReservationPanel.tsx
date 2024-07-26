@@ -84,7 +84,7 @@ export default function ReservationPanel() {
   }, [selectedDateTime, selectedTotal]);
 
   return (
-    <div className="sticky top-[72px] inset-x-0 flex justify-end w-[490px] h-full max-h-[860px]">
+    <div className="sticky top-[72px] inset-x-0 flex justify-end w-[490px] h-fit max-h-[860px]">
       <div className="flex flex-col gap-6 w-full py-8 px-5 rounded-xl bg-gray-0 shadow">
         <div className="space-y-3">
           <div className="flex gap-2 h4 font-bold text-gray-900">
