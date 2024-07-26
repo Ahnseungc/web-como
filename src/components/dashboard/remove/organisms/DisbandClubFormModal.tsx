@@ -109,7 +109,8 @@ export default function DisbandClubFormModal() {
               handleChange={handleInputChange}
             />
             <Checkbox
-              text="동호회 해체 신청에 동의합니다"
+              name="check"
+              content="동호회 해체 신청에 동의합니다"
               checked={isAgree.check}
               onChange={(e) =>
                 setIsAgree((prev) => {

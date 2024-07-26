@@ -14,8 +14,11 @@ const filterList = [
 type MemberSearchFilter = (typeof filterList)[number]["value"];
 
 export default function MemberSearch() {
-  const [currentFilter, setCurrentFilter] = useState<MemberSearchFilter>("all");
+  const [currentSearchFilter, setCurrentSearchFilter] = useState<
+    "부서" | "이름"
+  >("부서");
   const [currentSearchTerm, setCurrentSearchTerm] = useState<string>("");
+  const [currentFilter, setCurrentFilter] = useState<MemberSearchFilter>("all");
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,8 +31,13 @@ export default function MemberSearch() {
         <DropdownSelect
           id="dept"
           width="w-[188px]"
-          value="부서"
           options={["부서", "이름"]}
+          currentValue={currentSearchFilter}
+          handleChange={(newValue) => {
+            if (newValue === "부서" || newValue === "이름") {
+              setCurrentSearchFilter(newValue);
+            }
+          }}
         />
         <SearchBar
           placeholder="검색어를 입력하세요."

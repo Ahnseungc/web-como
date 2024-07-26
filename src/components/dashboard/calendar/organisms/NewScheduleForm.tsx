@@ -2,17 +2,15 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Poppins } from "next/font/google";
-import { closeModal, cn } from "@/lib/utils";
+import { closeModal } from "@/lib/utils";
 import Backdrop from "@/components/common/Backdrop";
 import Button from "@/components/common/Button";
 import Chip from "@/components/common/Chip";
+import Counter from "@/components/common/Counter";
 import Input from "@/components/common/Input";
 import ClubProfileInfo from "@/components/dashboard/common/ClubProfileInfo";
 import MapPlaceSearch from "@/components/dashboard/manage/organisms/MapPlaceSearch";
-import { Close, CountMinus, CountPlus } from "@/assets/icons/action";
-
-const poppins = Poppins({ weight: "500", subsets: ["latin"] });
+import { Close } from "@/assets/icons/action";
 
 const image = null;
 const MIN_PEOPLE = 1;
@@ -74,39 +72,12 @@ export default function NewScheduleForm() {
                 <label htmlFor="max" className="h3 font-semibold text-gray-900">
                   {"최대 인원수"}
                 </label>
-                <div
-                  className={cn(
-                    "flex items-center w-fit h-9 rounded-lg border border-gray-300 bg-gray-50",
-                    poppins.className
-                  )}
-                >
-                  <button
-                    type="button"
-                    className="flex items-center justify-center w-9 h-9 rounded-s-lg border-r border-gray-300 text-gray-900 disabled:text-gray-300 disabled:bg-gray-200"
-                    onClick={() => setMaxPeople((prev) => prev - 1)}
-                    disabled={maxPeople === MIN_PEOPLE}
-                  >
-                    <CountMinus />
-                  </button>
-                  <input
-                    id="max"
-                    name="max"
-                    type="number"
-                    value={maxPeople}
-                    onChange={(e) => setMaxPeople(parseInt(e.target.value))}
-                    min={MIN_PEOPLE}
-                    max={MAX_PEOPLE}
-                    className="w-14 h-full outline-none text-center body-1 font-medium text-gray-900"
-                  />
-                  <button
-                    type="button"
-                    className="flex items-center justify-center w-9 h-9 rounded-e-lg border-l border-gray-300 text-gray-900 disabled:text-gray-300 disabled:bg-gray-200"
-                    onClick={() => setMaxPeople((prev) => prev + 1)}
-                    disabled={maxPeople === MAX_PEOPLE}
-                  >
-                    <CountPlus />
-                  </button>
-                </div>
+                <Counter
+                  minValue={MIN_PEOPLE}
+                  maxValue={MAX_PEOPLE}
+                  currentValue={maxPeople}
+                  handleChange={(newValue: number) => setMaxPeople(newValue)}
+                />
               </div>
               <MapPlaceSearch />
               <Button content="등록하기" orange disabled />

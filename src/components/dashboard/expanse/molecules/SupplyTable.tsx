@@ -136,10 +136,9 @@ export default function SupplyTable() {
             className={cn(
               "py-3 px-6 body-1 font-medium underline-offset-2 truncate text-center",
               i === 0 ? "w-[76px]" : "flex-1",
-              i === 2 || i === 4 || i === 5 ? "max-w-40" : "",
-              data && (i === 3 || i === 6 || i === 7)
-                ? "underline cursor-pointer"
-                : "",
+              [1, 3, 6].includes(i) ? "min-w-44" : "",
+              [2, 4, 5].includes(i) ? "max-w-40" : i === 7 ? "max-w-60" : "",
+              data && [3, 6, 7].includes(i) ? "underline cursor-pointer" : "",
               data === "canceled"
                 ? "text-point-red"
                 : data === "completed"
@@ -182,7 +181,8 @@ export default function SupplyTable() {
             className={cn(
               "py-3 px-6 body-1 font-bold text-gray-900 text-center",
               i === 0 ? "w-[76px]" : "flex-1",
-              i === 2 || i === 4 || i === 5 ? "max-w-40" : ""
+              [1, 3, 6].includes(i) ? "min-w-44" : "",
+              [2, 4, 5].includes(i) ? "max-w-40" : i === 7 ? "max-w-60" : ""
             )}
           >
             {heading}

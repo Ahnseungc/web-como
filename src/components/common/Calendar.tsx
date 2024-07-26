@@ -3,16 +3,29 @@
 import { DayPicker, type Matcher } from "react-day-picker";
 import { ko } from "date-fns/locale";
 import { ChevronLeft, ChevronRight } from "@/assets/icons/chevron";
+import { cn } from "@/lib/utils";
 
 interface Props {
   selected: Date | undefined;
   onSelect: (selected: Date | undefined) => void;
   disabled?: Matcher;
+  wrapperStyle?: string;
 }
 
-export default function Calendar({ selected, onSelect, disabled }: Props) {
+export default function Calendar({
+  selected,
+  onSelect,
+  disabled,
+  wrapperStyle,
+}: Props) {
   return (
-    <div className="w-fit h-fit py-9 px-5 rounded-xl bg-gray-50 shadow">
+    <div
+      className={cn(
+        wrapperStyle
+          ? wrapperStyle
+          : "w-fit h-fit py-9 px-5 rounded-xl bg-gray-50 shadow"
+      )}
+    >
       <DayPicker
         mode="single"
         locale={ko}
