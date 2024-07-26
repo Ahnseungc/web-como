@@ -2,6 +2,7 @@ import ReservationTitle from "@/components/dashboard/reservation/molecules/Reser
 import ReservationOverview from "@/components/dashboard/reservation/organisms/ReservationOverview";
 import ReservationSearch from "@/components/dashboard/reservation/molecules/ReservationSearch";
 import ReservationList from "@/components/dashboard/reservation/organisms/ReservationList";
+import ReservationCancelModal from "@/components/dashboard/reservation/organisms/ReservationCancelModal";
 
 export default function ReservationManagementPage() {
   return (
@@ -10,6 +11,7 @@ export default function ReservationManagementPage() {
       <ReservationOverview />
       <ReservationSearch />
       <ReservationList />
+      <ReservationCancelModal />
     </>
   );
 }
