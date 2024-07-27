@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { openModal } from "@/lib/utils";
 import Checkbox from "@/components/common/Checkbox";
 
 export default function PurchasePanel() {
@@ -135,7 +136,7 @@ export default function PurchasePanel() {
           <button
             disabled={isSubmitDisabled}
             className="w-full py-3.5 rounded-md h4 font-semibold disabled:text-gray-400 text-gray-50 disabled:bg-gray-200 bg-gray-900"
-            onClick={() => alert("예약이 완료되었습니다.")}
+            onClick={() => openModal('purchase-success')}
           >
             {"예약하기"}
           </button>

@@ -148,7 +148,10 @@ export default function ReservationTable() {
                 "예약 취소"
               ) : data === "confirmed" ? (
                 <>
-                  <button className="py-1 px-4 rounded border border-gray-900 body-1 font-medium text-gray-50 bg-gray-900">
+                  <button
+                    className="py-1 px-4 rounded border border-gray-900 body-1 font-medium text-gray-50 bg-gray-900"
+                    onClick={() => openModal("reservation-change")}
+                  >
                     {"예약 변경"}
                   </button>
                   <button
