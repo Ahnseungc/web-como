@@ -102,18 +102,22 @@ export default function MemberTable() {
     <ul className="flex flex-col gap-1">
       <li className="flex border-y border-gray-400 bg-gray-200">
         {tableHeadings.map((heading, i) => (
-          <span
+          <div
             key={heading}
             className={cn(
-              "py-3 px-6 body-1 font-bold text-gray-900",
-              i === 0 ? "w-[76px]" : "flex-1",
-              i === 1 || i === 2 ? "max-w-[120px]" : "",
+              "my-3 mx-6 body-1 font-bold text-gray-900",
+              i === 0 ? "w-8" : "flex-1",
+              [1, 2].includes(i)
+                ? "max-w-24"
+                : [4, 5].includes(i)
+                  ? "max-w-48"
+                  : "",
               i === 3 ? "" : "text-center",
-              i === 4 || i === 5 ? "max-w-48" : ""
+              i === 5 ? "flex items-center justify-center m-0" : ""
             )}
           >
             {heading}
-          </span>
+          </div>
         ))}
       </li>
       {members.map((member, idx) => (
@@ -126,17 +130,20 @@ export default function MemberTable() {
             member.date,
             member.status,
           ].map((data, i) => (
-            <span
+            <div
               key={data}
               className={cn(
-                "py-3 px-6 body-1 font-medium underline-offset-2 underline decoration-transparent truncate transition duration-300",
-                i === 0 ? "w-[76px]" : "flex-1",
-                i === 1 || i === 2 ? "max-w-[120px]" : "",
+                "my-3 mx-6 body-1 font-medium underline-offset-2 underline decoration-transparent line-clamp-1 transition duration-300",
+                i === 0 ? "w-8" : "flex-1",
+                [1, 2].includes(i)
+                  ? "max-w-24"
+                  : [4, 5].includes(i)
+                    ? "max-w-48"
+                    : "",
                 i === 3
                   ? "hover:decoration-gray-800 cursor-pointer"
                   : "text-center",
-                i === 4 || i === 5 ? "max-w-48" : "",
-                i === 5 ? "flex items-center justify-center p-0" : "",
+                i === 5 ? "flex items-center justify-center gap-2 m-0" : "",
                 data === "leave"
                   ? "text-gray-500"
                   : data === "revert"
@@ -169,7 +176,7 @@ export default function MemberTable() {
                   {"반려 취소"}
                 </button>
               ) : data === "new" ? (
-                <div className="flex gap-2">
+                <>
                   <button className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-point-blue">
                     {"승인"}
                   </button>
@@ -179,11 +186,11 @@ export default function MemberTable() {
                   >
                     {"반려"}
                   </button>
-                </div>
+                </>
               ) : (
                 ""
               )}
-            </span>
+            </div>
           ))}
         </li>
       ))}

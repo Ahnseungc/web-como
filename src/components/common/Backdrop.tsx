@@ -4,13 +4,17 @@ import { closeModal, cn } from "@/lib/utils";
 
 interface Props {
   invisible?: boolean;
+  handleClose?: () => void;
 }
 
-export default function Backdrop({ invisible }: Props) {
+export default function Backdrop({ invisible, handleClose }: Props) {
   return (
     <div
       className={cn("fixed inset-0 z-30", invisible ? "" : "bg-gray-1000/30")}
-      onClick={closeModal}
+      onClick={() => {
+        handleClose?.();
+        closeModal();
+      }}
     />
   );
 }

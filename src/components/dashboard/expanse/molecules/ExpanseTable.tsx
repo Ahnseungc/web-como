@@ -121,8 +121,8 @@ interface Props {
 }
 
 export default function ExpanseTable({ statusFilter }: Props) {
-  const { push } = useRouter();
   const pathname = usePathname();
+  const { push } = useRouter();
 
   const EntryListItem = ({ entry }: { entry: ExpanseApplicationEntry }) => {
     return (
@@ -140,10 +140,10 @@ export default function ExpanseTable({ statusFilter }: Props) {
           <div
             key={i}
             className={cn(
-              "py-3 px-6 body-1 font-medium underline-offset-2 truncate text-center",
-              i === 0 ? "w-[76px]" : "flex-1",
-              [1, 3, 6].includes(i) ? "min-w-44" : "",
-              [2, 4, 5].includes(i) ? "max-w-40" : i === 7 ? "max-w-60" : "",
+              "my-3 mx-6 body-1 font-medium underline-offset-2 line-clamp-1 text-center",
+              i === 0 ? "w-8" : "flex-1",
+              [1, 3, 6].includes(i) ? "min-w-32" : "",
+              [2, 4, 5, 7].includes(i) ? "min-w-16 max-w-36" : "",
               data && [3, 6, 7].includes(i) ? "underline cursor-pointer" : "",
               data === "canceled"
                 ? "text-point-red"
@@ -182,17 +182,17 @@ export default function ExpanseTable({ statusFilter }: Props) {
     <ul className="flex flex-col gap-1">
       <li className="flex border-y border-gray-400 bg-gray-200">
         {tableHeadings.map((heading, i) => (
-          <span
+          <div
             key={heading}
             className={cn(
-              "py-3 px-6 body-1 font-bold text-gray-900 text-center",
-              i === 0 ? "w-[76px]" : "flex-1",
-              [1, 3, 6].includes(i) ? "min-w-44" : "",
-              [2, 4, 5].includes(i) ? "max-w-40" : i === 7 ? "max-w-60" : ""
+              "my-3 mx-6 body-1 font-bold text-gray-900 text-center",
+              i === 0 ? "w-8" : "flex-1",
+              [1, 3, 6].includes(i) ? "min-w-32" : "",
+              [2, 4, 5, 7].includes(i) ? "min-w-16 max-w-36" : ""
             )}
           >
             {heading}
-          </span>
+          </div>
         ))}
       </li>
       {statusFilter === "all"

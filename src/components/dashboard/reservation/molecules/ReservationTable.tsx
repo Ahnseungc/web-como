@@ -100,19 +100,19 @@ export default function ReservationTable() {
     <ul className="flex flex-col gap-1">
       <li className="flex border-y border-gray-400 bg-gray-200">
         {tableHeadings.map((heading, i) => (
-          <span
+          <div
             key={heading}
             className={cn(
-              "flex-1 py-3 px-6 text-center body-1 font-bold text-gray-900",
+              "flex-1 my-3 mx-6 text-center body-1 font-bold text-gray-900",
               i === 1
                 ? ""
                 : i === 4
-                  ? "flex items-center justify-center gap-2 p-0 min-w-52 max-w-60"
+                  ? "flex items-center justify-center gap-2 m-0 min-w-52 max-w-60"
                   : "max-w-60"
             )}
           >
             {heading}
-          </span>
+          </div>
         ))}
       </li>
       {reservations.map((reservation, idx) => (
@@ -127,14 +127,14 @@ export default function ReservationTable() {
             reservation.reservationDate,
             reservation.status,
           ].map((data, i) => (
-            <span
+            <div
               key={data}
               className={cn(
-                "flex-1 py-3 px-6 text-center body-1 font-medium underline-offset-2 underline decoration-transparent truncate transition duration-300",
+                "flex-1 my-3 mx-6 text-center body-1 font-medium underline-offset-2 underline decoration-transparent line-clamp-1 transition duration-300",
                 i === 1
                   ? "hover:decoration-gray-800 cursor-pointer"
                   : i === 4
-                    ? "flex items-center justify-center gap-2 p-0 min-w-52 max-w-60"
+                    ? "flex items-center justify-center gap-2 m-0 min-w-52 max-w-60"
                     : "max-w-60",
                 i === 2 ? "font-bold" : "",
                 data === "canceled" ? "text-gray-500" : "text-gray-800"
@@ -148,7 +148,10 @@ export default function ReservationTable() {
                 "예약 취소"
               ) : data === "confirmed" ? (
                 <>
-                  <button className="py-1 px-4 rounded border border-gray-900 body-1 font-medium text-gray-50 bg-gray-900">
+                  <button
+                    className="py-1 px-4 rounded border border-gray-900 body-1 font-medium text-gray-50 bg-gray-900"
+                    onClick={() => openModal("reservation-change")}
+                  >
                     {"예약 변경"}
                   </button>
                   <button
@@ -161,7 +164,7 @@ export default function ReservationTable() {
               ) : (
                 data
               )}
-            </span>
+            </div>
           ))}
         </li>
       ))}

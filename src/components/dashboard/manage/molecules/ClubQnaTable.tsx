@@ -92,33 +92,31 @@ const questions = [
 ];
 
 export default function ClubQnaTable() {
-  const { push } = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const { push } = useRouter();
 
   return (
     <ul className="flex flex-col gap-1">
       <li className="flex border-y border-gray-400 bg-gray-200">
         {tableHeadings.map((heading, i) => (
-          <span
+          <div
             key={heading}
             className={cn(
-              "py-3 px-6 body-1 font-bold text-gray-900",
-              i === 0 ? "w-[76px]" : "flex-1",
+              "my-3 mx-6 body-1 font-bold text-gray-900",
+              i === 0 ? "w-8" : "flex-1",
               i === 3 ? "" : "text-center max-w-60",
               i === 1
-                ? "max-w-28"
+                ? "max-w-20"
                 : i === 2
-                  ? "max-w-44"
-                  : i === 4
-                    ? "max-w-48"
-                    : i === 5
-                      ? "max-w-40"
-                      : ""
+                  ? "max-w-32"
+                  : [4, 5].includes(i)
+                    ? "max-w-40"
+                    : ""
             )}
           >
             {heading}
-          </span>
+          </div>
         ))}
       </li>
       {questions.map((question) => (
@@ -134,23 +132,21 @@ export default function ClubQnaTable() {
             question.date,
             question.status,
           ].map((data, i) => (
-            <span
+            <div
               key={data}
               className={cn(
-                "py-3 px-6 body-1 font-medium underline-offset-2 underline decoration-gray-0 truncate transition duration-300",
-                i === 0 ? "w-[76px]" : "flex-1",
+                "my-3 mx-6 body-1 font-medium underline-offset-2 underline decoration-transparent line-clamp-1 transition duration-300",
+                i === 0 ? "w-8" : "flex-1",
                 i === 3
                   ? "hover:decoration-gray-800 cursor-pointer"
-                  : "text-center max-w-60",
+                  : "text-center",
                 i === 1
-                  ? "max-w-28"
+                  ? "max-w-20"
                   : i === 2
-                    ? "max-w-44"
-                    : i === 4
-                      ? "max-w-48"
-                      : i === 5
-                        ? "max-w-40"
-                        : "",
+                    ? "max-w-32"
+                    : [4, 5].includes(i)
+                      ? "max-w-40"
+                      : "",
                 data === "pending"
                   ? "text-point-blue"
                   : data === "completed"
@@ -169,7 +165,7 @@ export default function ClubQnaTable() {
                 : data === "completed"
                   ? "답변 완료"
                   : data}
-            </span>
+            </div>
           ))}
         </li>
       ))}

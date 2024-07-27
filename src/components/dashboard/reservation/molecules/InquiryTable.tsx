@@ -98,16 +98,16 @@ export default function InquiryTable() {
     <ul className="flex flex-col gap-1">
       <li className="flex border-y border-gray-400 bg-gray-200">
         {tableHeadings.map((heading, i) => (
-          <span
+          <div
             key={heading}
             className={cn(
-              "py-3 px-6 body-1 font-bold text-gray-900",
-              i === 0 ? "w-[76px]" : "flex-1",
-              i === 2 ? "" : "text-center max-w-56"
+              "my-3 mx-6 body-1 font-bold text-gray-900",
+              i === 0 ? "w-8" : "flex-1",
+              i === 2 ? "" : "text-center max-w-52"
             )}
           >
             {heading}
-          </span>
+          </div>
         ))}
       </li>
       {inquiries.map((inquiry, idx) => (
@@ -122,14 +122,14 @@ export default function InquiryTable() {
             inquiry.date,
             inquiry.status,
           ].map((data, i) => (
-            <span
+            <div
               key={data}
               className={cn(
-                "py-3 px-6 body-1 font-medium underline-offset-2 underline decoration-gray-0 truncate transition duration-300",
-                i === 0 ? "w-[76px]" : "flex-1",
+                "my-3 mx-6 body-1 font-medium underline-offset-2 underline decoration-transparent line-clamp-1 transition duration-300",
+                i === 0 ? "w-8" : "flex-1",
                 i === 2
                   ? "hover:decoration-gray-800 cursor-pointer"
-                  : "text-center max-w-56",
+                  : "text-center max-w-52",
                 data === "pending"
                   ? "text-point-blue"
                   : data === "completed"
@@ -149,7 +149,7 @@ export default function InquiryTable() {
                   : data === "completed"
                     ? "응답 완료"
                     : data}
-            </span>
+            </div>
           ))}
         </li>
       ))}
