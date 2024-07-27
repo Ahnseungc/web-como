@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import DocUtilButtons from "@/components/dashboard/common/DocUtil";
 
@@ -97,22 +97,21 @@ const reports = [
 ];
 
 export default function ReportListTable() {
-  const { push } = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const { push } = useRouter();
 
   return (
     <ul className="flex flex-col gap-1">
       <li className="flex border-y border-gray-400 bg-gray-200">
         {tableHeadings.map((heading, i) => (
-          <span
+          <div
             key={heading}
             className={cn(
-              "py-3 px-6 body-1 font-bold text-gray-900",
-              i === 0 ? "w-[76px]" : "flex-1",
+              "my-3 mx-6 body-1 font-bold text-gray-900",
+              i === 0 ? "w-8" : "flex-1",
               i === 2 ? "" : "text-center max-w-56",
               i === 5
-                ? "max-w-40"
+                ? "flex items-center justify-center m-0 max-w-40"
                 : i === 3
                   ? "max-w-44"
                   : i === 1
@@ -121,7 +120,7 @@ export default function ReportListTable() {
             )}
           >
             {heading}
-          </span>
+          </div>
         ))}
       </li>
       {reports.map((report) => (
@@ -137,16 +136,16 @@ export default function ReportListTable() {
             report.place,
             report.storage,
           ].map((data, i) => (
-            <span
+            <div
               key={data}
               className={cn(
-                "py-3 px-6 body-1 font-medium underline-offset-2 underline decoration-gray-0 truncate transition duration-300",
-                i === 0 ? "w-[76px]" : "flex-1",
+                "my-3 mx-6 body-1 font-medium underline-offset-2 underline decoration-transparent line-clamp-1 transition duration-300",
+                i === 0 ? "w-8" : "flex-1",
                 i === 2
                   ? "hover:decoration-gray-800 cursor-pointer"
                   : "text-center max-w-56",
                 i === 5
-                  ? "flex items-center justify-center py-0 max-w-40"
+                  ? "flex items-center justify-center m-0 max-w-40"
                   : i === 3
                     ? "max-w-44"
                     : i === 1
@@ -175,7 +174,7 @@ export default function ReportListTable() {
               ) : (
                 data
               )}
-            </span>
+            </div>
           ))}
         </li>
       ))}

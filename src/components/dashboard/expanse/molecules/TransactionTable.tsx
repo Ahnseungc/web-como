@@ -104,17 +104,18 @@ export default function TransactionTable() {
     <ul className="flex flex-col gap-1">
       <li className="flex border-y border-gray-400 bg-gray-200">
         {tableHeadings.map((heading, i) => (
-          <span
+          <div
             key={heading}
             className={cn(
-              "flex-1 py-3 px-6 body-1 font-bold text-gray-900 even:text-center",
+              "flex-1 my-3 mx-6 body-1 font-bold text-gray-900 even:text-center",
               i === 1 ? "max-w-24" : "",
-              i === 2 ? "max-w-52" : "",
-              i === 0 || i === 3 || i === 5 ? "max-w-52 xl:max-w-80" : ""
+              i === 2 ? "max-w-40" : "",
+              [0, 3, 5].includes(i) ? "max-w-40 xl:max-w-60" : "",
+              i === 5 ? "min-w-32" : ""
             )}
           >
             {heading}
-          </span>
+          </div>
         ))}
       </li>
       {transactions.map((transaction) => (
@@ -130,13 +131,14 @@ export default function TransactionTable() {
             transaction.note,
             transaction.id,
           ].map((data, i) => (
-            <span
+            <div
               key={data}
               className={cn(
-                "flex-1 py-3 px-6 body-1 font-medium even:text-center underline-offset-2 underline decoration-transparent truncate transition duration-300",
+                "flex-1 my-3 mx-6 body-1 font-medium even:text-center underline-offset-2 underline decoration-transparent truncate transition duration-300",
                 i === 1 ? "max-w-24" : "",
-                i === 2 ? "max-w-52 font-bold" : "",
-                i === 0 || i === 3 || i === 5 ? "max-w-52 xl:max-w-80" : "",
+                i === 2 ? "max-w-40 font-bold" : "",
+                [0, 3, 5].includes(i) ? "max-w-40 xl:max-w-60" : "",
+                i === 5 ? "min-w-32" : "",
                 i === 5 && transaction.receipt
                   ? "decoration-gray-800 cursor-pointer"
                   : "",
@@ -163,7 +165,7 @@ export default function TransactionTable() {
                     : i === 5
                       ? transaction.receipt || "-"
                       : `${transaction.type === "withdrawal" ? "-" : ""}${data.toLocaleString()}원`}
-            </span>
+            </div>
           ))}
         </li>
       ))}

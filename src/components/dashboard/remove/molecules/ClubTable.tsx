@@ -112,19 +112,19 @@ export default function ClubTable() {
     <ul className="flex flex-col gap-1">
       <li className="flex border-y border-gray-400 bg-gray-200">
         {tableHeadings.map((heading, i) => (
-          <span
+          <div
             key={heading}
             className={cn(
-              "py-3 px-6 body-1 font-bold text-gray-900",
-              i === 0 ? "w-[76px]" : "flex-1",
+              "my-3 mx-6 body-1 font-bold text-gray-900",
+              i === 0 ? "w-8" : "flex-1",
               i === 1 ? "max-w-52" : "",
-              i === 2 || i === 3 || i === 5 ? "max-w-[120px]" : "",
-              i === 1 || i === 4 ? "" : "text-center",
-              i === 6 ? "max-w-48" : ""
+              [2, 5].includes(i) ? "max-w-20" : i === 3 ? "max-w-32" : "",
+              [1, 4].includes(i) ? "" : "text-center",
+              i === 6 ? "flex items-center justify-center max-w-48 m-0" : ""
             )}
           >
             {heading}
-          </span>
+          </div>
         ))}
       </li>
       {clubs.map((club, idx) => (
@@ -138,15 +138,15 @@ export default function ClubTable() {
             club.status,
             club.id,
           ].map((data, i) => (
-            <span
+            <div
               key={data}
               className={cn(
-                "py-3 px-6 body-1 font-medium underline-offset-2 underline decoration-transparent truncate transition duration-300",
-                i === 0 ? "w-[76px]" : "flex-1",
+                "my-3 mx-6 body-1 font-medium underline-offset-2 underline decoration-transparent line-clamp-1 transition duration-300",
+                i === 0 ? "w-8" : "flex-1",
                 i === 1 ? "max-w-52" : "",
-                i === 2 || i === 3 || i === 5 ? "max-w-[120px]" : "",
-                i === 1 || i === 4 ? "" : "text-center",
-                i === 6 ? "flex items-center justify-center max-w-48 p-0" : "",
+                [2, 5].includes(i) ? "max-w-20" : i === 3 ? "max-w-32" : "",
+                [1, 4].includes(i) ? "" : "text-center",
+                i === 6 ? "flex items-center justify-center max-w-48 m-0" : "",
                 data === "disband"
                   ? "text-gray-500"
                   : data === "disbanding"
@@ -176,7 +176,7 @@ export default function ClubTable() {
               ) : (
                 ""
               )}
-            </span>
+            </div>
           ))}
         </li>
       ))}
