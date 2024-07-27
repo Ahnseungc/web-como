@@ -30,6 +30,7 @@ export default function ReservationCancelModal() {
         <div className="flex gap-3">
           <Button content="닫기" onClick={closeModal} />
           <Button
+            primary
             content="예약 취소"
             onClick={() => {
               closeModal();
