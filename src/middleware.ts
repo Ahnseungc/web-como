@@ -6,7 +6,7 @@ export function middleware(req: NextRequest) {
 
   if (req.nextUrl.pathname === "/") {
     if (refreshToken) {
-      return NextResponse.redirect(new URL("/dashboard", req.url));
+      return NextResponse.redirect(new URL("/dashboard/club", req.url));
     } else {
       return NextResponse.redirect(new URL("/login", req.url));
     }
@@ -17,7 +17,7 @@ export function middleware(req: NextRequest) {
   }
 
   if (req.nextUrl.pathname.startsWith("/login") && refreshToken) {
-    return NextResponse.redirect(new URL("/dashboard", req.url));
+    return NextResponse.redirect(new URL("/dashboard/club", req.url));
   }
 
   return NextResponse.next();

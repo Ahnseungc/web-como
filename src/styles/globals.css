@@ -9,6 +9,18 @@
     font-weight: 100, 200, 300, 400, 500, 600, 700, 800, 900;
     font-style: normal;
   }
+  @font-face {
+    font-family: "Poppins";
+    src: url("/fonts/Poppins/Poppins.ttf");
+    font-weight: 100, 200, 300, 400, 500, 600, 700, 800, 900;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Cochin";
+    src: url("/fonts/Cochin/Cochin.ttf");
+    font-weight: 100, 200, 300, 400, 500, 600, 700, 800, 900;
+    font-style: normal;
+  }
 
   h1 {
     @apply text-2xl xl:text-3xl tracking-tightest;
