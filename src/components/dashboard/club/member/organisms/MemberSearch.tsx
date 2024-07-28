@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Chip from "@/components/common/Chip";
 import DropdownSelect from "@/components/common/DropdownSelect";
-import SearchBar from "@/components/dashboard/club/common/SearchBar";
+import SearchBar from "@/components/dashboard/common/SearchBar";
 
 const filterList = [
   { name: "전체 보기", value: "all" },

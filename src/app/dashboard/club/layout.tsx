@@ -1,6 +1,7 @@
 import { Suspense } from "react";
+import { HEADER_HEIGHT } from "@/lib/constants";
 import Loading from "@/app/dashboard/club/loading";
-import Header, { HEADER_HEIGHT } from "@/components/header/Header";
+import Header from "@/components/header/Header";
 import SideBar from "@/components/dashboard/club/common/SideBar";
 
 export default function DashboardLayout({

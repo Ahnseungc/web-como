@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import SearchBar from "@/components/dashboard/club/common/SearchBar";
+import SearchBar from "@/components/dashboard/common/SearchBar";
 
 export default function AnnouncementSearch() {
   const [currentSearchTerm, setCurrentSearchTerm] = useState<string>("");

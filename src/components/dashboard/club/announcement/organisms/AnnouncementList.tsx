@@ -3,8 +3,8 @@
 import { useState } from "react";
 import DateFilter, {
   type DateRange,
-} from "@/components/dashboard/club/common/DateFilter";
-import Pagination from "@/components/dashboard/club/common/Pagination";
+} from "@/components/dashboard/common/DateFilter";
+import Pagination from "@/components/dashboard/common/Pagination";
 import AnnouncementTable from "@/components/dashboard/club/announcement/molecules/AnnouncementTable";
 
 export default function AnnouncementList() {

@@ -3,9 +3,9 @@
 import { useState } from "react";
 import DateFilter, {
   type DateRange,
-} from "@/components/dashboard/club/common/DateFilter";
+} from "@/components/dashboard/common/DateFilter";
 import ReportTable from "@/components/dashboard/club/report/molecules/ReportTable";
-import Pagination from "@/components/dashboard/club/common/Pagination";
+import Pagination from "@/components/dashboard/common/Pagination";
 
 export default function ReportList() {
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({

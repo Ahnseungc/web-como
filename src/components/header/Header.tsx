@@ -9,8 +9,6 @@ import CustomerCenter from "@/components/header/molecules/CustomerCenter";
 import Logo from "@/assets/logos/logo.svg";
 import ComoWhiteLogo from "@/assets/logos/como_logo_white.svg";
 
-export const HEADER_HEIGHT = "60px";
-
 interface Props {
   isDashboard?: boolean;
   isLoggedIn?: boolean;

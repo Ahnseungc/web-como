@@ -1,4 +1,4 @@
-import { PrintButton } from "@/components/dashboard/club/common/DocUtil";
+import { PrintButton } from "@/components/dashboard/common/DocUtil";
 import { POLICY, POLICY_TITLE } from "@/lib/message/policy";
 
 export default function ClubPolicyTab() {

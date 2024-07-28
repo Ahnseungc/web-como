@@ -2,7 +2,7 @@ import Button from "@/components/common/Button";
 import Checkbox from "@/components/common/Checkbox";
 import ImageInput from "@/components/common/ImageInput";
 import Input from "@/components/common/Input";
-import BackButton from "@/components/dashboard/club/common/BackButton";
+import BackButton from "@/components/dashboard/common/BackButton";
 
 export default function NewClubAnnouncementPage() {
   return (

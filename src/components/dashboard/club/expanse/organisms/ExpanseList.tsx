@@ -5,8 +5,8 @@ import { usePathname, useRouter } from "next/navigation";
 import type { ExpanseSearchFilter } from "@/components/dashboard/club/expanse/molecules/ExpanseSearch";
 import DateFilter, {
   type DateRange,
-} from "@/components/dashboard/club/common/DateFilter";
-import Pagination from "@/components/dashboard/club/common/Pagination";
+} from "@/components/dashboard/common/DateFilter";
+import Pagination from "@/components/dashboard/common/Pagination";
 import ExpanseTable from "@/components/dashboard/club/expanse/molecules/ExpanseTable";
 import { Plus } from "@/assets/icons/action";
 

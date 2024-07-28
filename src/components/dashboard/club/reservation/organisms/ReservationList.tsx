@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Pagination from "@/components/dashboard/club/common/Pagination";
+import Pagination from "@/components/dashboard/common/Pagination";
 import ReservationTable from "@/components/dashboard/club/reservation/molecules/ReservationTable";
 
 export default function ReservationList() {

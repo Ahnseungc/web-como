@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import BackButton from "@/components/dashboard/club/common/BackButton";
+import BackButton from "@/components/dashboard/common/BackButton";
 import { Pin } from "@/assets/icons/info";
 
 const announcement = [

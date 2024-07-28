@@ -1,5 +1,5 @@
-import BackButton from "@/components/dashboard/club/common/BackButton";
-import DocUtilButtons from "@/components/dashboard/club/common/DocUtil";
+import BackButton from "@/components/dashboard/common/BackButton";
+import DocUtilButtons from "@/components/dashboard/common/DocUtil";
 import PDFViewer from "@/components/dashboard/club/common/PDFViewer";
 
 export default function ExpanseReportDetailPage() {

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import DocUtilButtons from "@/components/dashboard/club/common/DocUtil";
-import Pagination from "@/components/dashboard/club/common/Pagination";
+import DocUtilButtons from "@/components/dashboard/common/DocUtil";
+import Pagination from "@/components/dashboard/common/Pagination";
 import MemberTable from "@/components/dashboard/club/member/molecules/MemberTable";
 
 export default function MemberList() {

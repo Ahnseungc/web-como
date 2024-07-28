@@ -1,4 +1,4 @@
-import BackButton from "@/components/dashboard/club/common/BackButton";
+import BackButton from "@/components/dashboard/common/BackButton";
 import InquiryForm from "@/components/dashboard/club/reservation/organisms/InquiryForm";
 import InquirySuccessModal from "@/components/dashboard/club/reservation/organisms/InquirySuccessModal";
 

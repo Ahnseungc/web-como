@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import BackButton from "@/components/dashboard/club/common/BackButton";
+import BackButton from "@/components/dashboard/common/BackButton";
 import ReportViewer from "@/components/dashboard/club/report/organisms/ReportViewer";
 import ReportTitle from "@/components/dashboard/club/report/molecules/ReportTitle";
 import ClubInfoCard from "@/components/dashboard/club/common/ClubInfoCard";
