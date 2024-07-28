@@ -4,10 +4,9 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 import { HEADER_HEIGHT } from "@/components/header/Header";
 import { ChevronDown } from "@/assets/icons/chevron";
-
-const CLUB_DASHBOARD_ENDPOINT = "/dashboard/club";
 
 const clubDashboardMenus = [
   "manage",

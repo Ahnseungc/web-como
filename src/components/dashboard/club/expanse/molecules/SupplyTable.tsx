@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 
 const tableHeadings = [
   "순번",
@@ -149,9 +150,13 @@ export default function SupplyTable() {
             )}
             onClick={() => {
               if (i === 3) {
-                push(`/dashboard/expanse/detail/report/${entry.expanseReport}`);
+                push(
+                  `${CLUB_DASHBOARD_ENDPOINT}/expanse/detail/report/${entry.expanseReport}`
+                );
               } else if (i === 6 && entry.receipt) {
-                push(`/dashboard/expanse/detail/receipt/${entry.receipt}`);
+                push(
+                  `${CLUB_DASHBOARD_ENDPOINT}/expanse/detail/receipt/${entry.receipt}`
+                );
               }
             }}
           >

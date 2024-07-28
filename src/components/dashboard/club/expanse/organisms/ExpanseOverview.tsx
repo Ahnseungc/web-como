@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 import { ChevronRight } from "@/assets/icons/chevron";
 
 export default function ExpanseOverview() {
@@ -7,7 +8,7 @@ export default function ExpanseOverview() {
       <div className="flex-1 p-8 rounded-xl bg-gray-800">
         <div className="flex items-center justify-between">
           <h3 className="h1 font-bold text-gray-0">{"입출금 내역"}</h3>
-          <Link href={"/dashboard/expanse/transaction"}>
+          <Link href={`${CLUB_DASHBOARD_ENDPOINT}/expanse/transaction`}>
             <ChevronRight className="w-6 h-6 text-gray-0" />
           </Link>
         </div>

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { closeModal, cn, formatDate } from "@/lib/utils";
+import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 import Calendar from "@/components/common/Calendar";
 import OptionItem from "@/components/dashboard/club/reservation/molecules/OptionItem";
 import TimeSelectButton from "@/components/dashboard/club/reservation/molecules/TimeSelectButton";
@@ -239,7 +240,7 @@ export default function ReservationPanel(props: Props) {
                     className="w-full py-3.5 rounded-md h4 font-semibold disabled:text-gray-400 text-gray-50 disabled:bg-gray-200 bg-gray-900"
                     onClick={() =>
                       push(
-                        `/dashboard/reservation/item/${props.productId}/purchase`
+                        `${CLUB_DASHBOARD_ENDPOINT}/reservation/item/${props.productId}/purchase`
                       )
                     }
                   >

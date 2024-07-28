@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 
 const tableHeadings = ["일자", "입출금", "금액", "입출처", "비목", "수령증"];
 
@@ -151,7 +152,7 @@ export default function TransactionTable() {
               onClick={() => {
                 if (i === 5) {
                   push(
-                    `/dashboard/expanse/detail/receipt/${transaction.receipt}`
+                    `${CLUB_DASHBOARD_ENDPOINT}/expanse/detail/receipt/${transaction.receipt}`
                   );
                 }
               }}

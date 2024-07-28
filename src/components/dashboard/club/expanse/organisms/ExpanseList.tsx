@@ -15,8 +15,8 @@ interface Props {
 }
 
 export default function ExpanseList({ currentFilter }: Props) {
-  const { push } = useRouter();
   const pathname = usePathname();
+  const { push } = useRouter();
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
     startDate: undefined,
     endDate: undefined,

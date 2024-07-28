@@ -1,7 +1,7 @@
 "use client";
 
 import Backdrop from "@/components/common/Backdrop";
-import ReservationPanel from "./ReservationPanel";
+import ReservationPanel from "@/components/dashboard/club/reservation/organisms/ReservationPanel";
 
 export default function ReservationChangeModal() {
   return (

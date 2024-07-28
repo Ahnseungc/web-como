@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 import Backdrop from "@/components/common/Backdrop";
 import Button from "@/components/common/Button";
 import SuccessBrandImage from "@/assets/images/status/success.svg";
@@ -11,7 +12,9 @@ export default function PurchaseSuccessModal() {
 
   return (
     <div id="purchase-success" className="modal hidden">
-      <Backdrop handleClose={() => replace("/dashboard/reservation")} />
+      <Backdrop
+        handleClose={() => replace(`${CLUB_DASHBOARD_ENDPOINT}/reservation`)}
+      />
       <div className="fixed bottom-1/2 right-1/2 translate-y-1/2 translate-x-1/2 z-50 space-y-9 w-full max-w-lg py-7 px-8 rounded-xl bg-gray-0">
         <h1 className="text-center font-bold text-gray-900">
           {"콘텐츠 예약 완료"}
@@ -28,12 +31,14 @@ export default function PurchaseSuccessModal() {
         <div className="flex gap-3">
           <Button
             content="콘텐츠 마저 살펴보기"
-            onClick={() => replace("/dashboard/reservation")}
+            onClick={() => replace(`${CLUB_DASHBOARD_ENDPOINT}/reservation`)}
           />
           <Button
             content="예약 내역 보러가기"
             primary
-            onClick={() => replace("/dashboard/reservation/manage")}
+            onClick={() =>
+              replace(`${CLUB_DASHBOARD_ENDPOINT}/reservation/manage`)
+            }
           />
         </div>
       </div>

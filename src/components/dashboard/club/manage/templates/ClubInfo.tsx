@@ -5,10 +5,10 @@ import Image from "next/image";
 import { closeModal, cn, openModal } from "@/lib/utils";
 import Backdrop from "@/components/common/Backdrop";
 import Input from "@/components/common/Input";
+import MapPlaceSearch from "@/components/dashboard/club/manage/organisms/MapPlaceSearch";
 import { Edit } from "@/assets/icons/util";
 import { Calendar } from "@/assets/icons/info";
 import { Close } from "@/assets/icons/action";
-import MapPlaceSearch from "../organisms/MapPlaceSearch";
 
 const image = null;
 

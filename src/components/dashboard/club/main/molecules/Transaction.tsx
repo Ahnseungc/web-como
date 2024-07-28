@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 import { ChevronRight } from "@/assets/icons/chevron";
 
 const tableHeadings = ["결제일자", "입출금", "금액", "입출처", "비목"];
@@ -52,7 +53,7 @@ export default function DashboardTransaction() {
     <div className="flex flex-col gap-3 p-8 rounded-xl bg-gray-0">
       <div className="flex justify-between">
         <h3 className="h1 font-bold text-brand-black">{"입출금 내역"}</h3>
-        <Link href={"/dashboard/expanse"}>
+        <Link href={`${CLUB_DASHBOARD_ENDPOINT}/expanse/transaction`}>
           <ChevronRight className="w-9 h-9 text-brand-black" />
         </Link>
       </div>

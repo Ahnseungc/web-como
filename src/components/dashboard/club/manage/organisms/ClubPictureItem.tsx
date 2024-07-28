@@ -1,11 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { closeModal, cn, openModal } from "@/lib/utils";
+import type { ClubPicture } from "@/components/dashboard/club/manage/templates/ClubPicture";
 import Avatar from "@/components/common/Avatar";
-import { ClubPicture } from "@/components/dashboard/club/manage/templates/ClubPicture";
 import Backdrop from "@/components/common/Backdrop";
 import Button from "@/components/common/Button";
-import { useState } from "react";
 
 const deleteReasonList = [
   "동호회 활동과 무관한 사진",

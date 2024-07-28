@@ -1,7 +1,7 @@
 "use client";
 
-import { ClubMenu, ClubMenuTab } from "@/app/dashboard/club/manage/page";
 import { cn } from "@/lib/utils";
+import type { ClubMenu, ClubMenuTab } from "@/app/dashboard/club/manage/page";
 
 interface Props {
   tabs: ClubMenuTab[];

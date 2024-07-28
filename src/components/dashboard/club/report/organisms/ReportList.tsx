@@ -4,7 +4,7 @@ import { useState } from "react";
 import DateFilter, {
   type DateRange,
 } from "@/components/dashboard/club/common/DateFilter";
-import ReportListTable from "@/components/dashboard/club/report/molecules/ReportListTable";
+import ReportTable from "@/components/dashboard/club/report/molecules/ReportTable";
 import Pagination from "@/components/dashboard/club/common/Pagination";
 
 export default function ReportList() {
@@ -31,7 +31,7 @@ export default function ReportList() {
           currentDateRange={currentDateRange}
           handleDateRangeChange={handleDateRangeChange}
         />
-        <ReportListTable />
+        <ReportTable />
       </div>
       <Pagination
         currentPage={currentPage}

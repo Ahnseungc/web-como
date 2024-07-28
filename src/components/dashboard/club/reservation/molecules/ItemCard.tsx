@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 import Chip from "@/components/common/Chip";
 import { Calendar, Marker, People } from "@/assets/icons/info";
 
@@ -18,7 +19,7 @@ interface Props {
 export default function ItemCard(props: Props) {
   return (
     <Link
-      href={`/dashboard/reservation/item/${props.id}`}
+      href={`${CLUB_DASHBOARD_ENDPOINT}/reservation/item/${props.id}`}
       className="rounded-xl bg-gray-0"
     >
       <div className="relative w-full aspect-square rounded-t-xl bg-orange-100">
