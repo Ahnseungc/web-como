@@ -3,9 +3,9 @@
 import { useState } from "react";
 import DateFilter, {
   type DateRange,
-} from "@/components/dashboard/club/common/DateFilter";
-import DocUtilButtons from "@/components/dashboard/club/common/DocUtil";
-import Pagination from "@/components/dashboard/club/common/Pagination";
+} from "@/components/dashboard/common/DateFilter";
+import DocUtilButtons from "@/components/dashboard/common/DocUtil";
+import Pagination from "@/components/dashboard/common/Pagination";
 import ClubQnaTable from "@/components/dashboard/club/manage/molecules/ClubQnaTable";
 
 export default function ClubQnaList() {

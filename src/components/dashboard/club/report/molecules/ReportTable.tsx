@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import DocUtilButtons from "@/components/dashboard/club/common/DocUtil";
+import DocUtilButtons from "@/components/dashboard/common/DocUtil";
 
 const tableHeadings = [
   "순번",

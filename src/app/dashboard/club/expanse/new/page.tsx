@@ -1,4 +1,4 @@
-import BackButton from "@/components/dashboard/club/common/BackButton";
+import BackButton from "@/components/dashboard/common/BackButton";
 import ClubInfoCard from "@/components/dashboard/club/common/ClubInfoCard";
 import NewExpanseReportForm from "@/components/dashboard/club/expanse/organisms/NewExpanseForm";
 

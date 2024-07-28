@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import BackButton from "@/components/dashboard/club/common/BackButton";
+import BackButton from "@/components/dashboard/common/BackButton";
 import ClubQnaQuestion from "@/components/dashboard/club/manage/organisms/ClubQnaQuestion";
 import ClubQnaOverview from "@/components/dashboard/club/manage/organisms/ClubQnaOverview";
 import ClubQnaList from "@/components/dashboard/club/manage/organisms/ClubQnaList";

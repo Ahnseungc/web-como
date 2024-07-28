@@ -1,4 +1,4 @@
-import BackButton from "@/components/dashboard/club/common/BackButton";
+import BackButton from "@/components/dashboard/common/BackButton";
 import InquiryDetail from "@/components/dashboard/club/reservation/organisms/InquiryDetail";
 
 export default function InquiryDetailPage() {

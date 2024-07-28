@@ -3,8 +3,8 @@
 import { useState } from "react";
 import DateFilter, {
   type DateRange,
-} from "@/components/dashboard/club/common/DateFilter";
-import Pagination from "@/components/dashboard/club/common/Pagination";
+} from "@/components/dashboard/common/DateFilter";
+import Pagination from "@/components/dashboard/common/Pagination";
 import SupplyTable from "@/components/dashboard/club/expanse/molecules/SupplyTable";
 import { Plus } from "@/assets/icons/action";
 

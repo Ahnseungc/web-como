@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Pagination from "@/components/dashboard/club/common/Pagination";
+import Pagination from "@/components/dashboard/common/Pagination";
 import ClubTable from "@/components/dashboard/club/remove/molecules/ClubTable";
 
 export default function ClubList() {

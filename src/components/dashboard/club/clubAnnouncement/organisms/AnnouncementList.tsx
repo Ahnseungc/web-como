@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Pagination from "@/components/dashboard/club/common/Pagination";
+import Pagination from "@/components/dashboard/common/Pagination";
 import AnnouncementTable from "@/components/dashboard/club/clubAnnouncement/molecules/AnnouncementTable";
 import { Plus } from "@/assets/icons/action";
 

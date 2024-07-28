@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import Pagination from "@/components/dashboard/club/common/Pagination";
+import Pagination from "@/components/dashboard/common/Pagination";
 
 export default function FAQList() {
   const [currentPage, setCurrentPage] = useState<number>(1);

@@ -1,4 +1,4 @@
-import BackButton from "@/components/dashboard/club/common/BackButton";
+import BackButton from "@/components/dashboard/common/BackButton";
 
 export default function HostDetailPage() {
   return (
