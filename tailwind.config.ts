@@ -67,7 +67,10 @@ const config: Config = {
       },
       transparent: "rgba(0,0,0,0)",
     },
-    fontFamily: { suit: ["SUIT", ...fontFamily.sans] },
+    fontFamily: {
+      suit: ["SUIT", ...fontFamily.sans],
+      cochin: ["Cochin", ...fontFamily.serif],
+    },
     fontSize: {
       ...fontSize,
       "2xs": ["10px", "16px"],
