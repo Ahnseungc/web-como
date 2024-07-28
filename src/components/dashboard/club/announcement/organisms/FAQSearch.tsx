@@ -1,15 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Poppins } from "next/font/google";
-import { cn } from "@/lib/utils";
 import Chip from "@/components/common/Chip";
 import SearchBar from "@/components/dashboard/club/common/SearchBar";
-
-const poppins = Poppins({
-  weight: ["400", "500", "600", "700", "800"],
-  subsets: ["latin"],
-});
 
 const filterList = [
   { name: "전체 보기", value: "all" },
@@ -17,7 +10,7 @@ const filterList = [
   {
     name: (
       <>
-        <span className={cn("font-bold", poppins.className)}>{"omo "}</span>
+        <span className="font-poppins font-bold">{"omo "}</span>
         <span className="font-cochin font-bold text-xl leading-6">
           {"shop"}
         </span>

@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { cn, openModal } from "@/lib/utils";
 import ProfileDropdown from "@/components/header/atoms/ProfileDropdown";
 import CustomerCenter from "@/components/header/molecules/CustomerCenter";
 import Logo from "@/assets/logos/logo.svg";
 import ComoWhiteLogo from "@/assets/logos/como_logo_white.svg";
-import { usePathname } from "next/navigation";
 
 export const HEADER_HEIGHT = "60px";
 
@@ -19,7 +19,6 @@ interface Props {
 
 export default function Header(props: Props) {
   const pathname = usePathname().split("/");
-  console.log(pathname);
 
   return (
     <header className="fixed top-0 inset-x-0 z-20 flex items-center justify-center h-[60px] bg-gray-900">

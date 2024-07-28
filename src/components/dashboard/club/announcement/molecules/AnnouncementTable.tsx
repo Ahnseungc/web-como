@@ -1,13 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { Poppins } from "next/font/google";
 import { cn } from "@/lib/utils";
-
-const poppins = Poppins({
-  weight: ["400", "500", "600", "700", "800"],
-  subsets: ["latin"],
-});
 
 type DepartmentType = "company" | "omo" | "omo shop";
 type AnnouncementReadStatus = "read" | "unread";
@@ -134,7 +128,7 @@ export default function AnnouncementTable() {
                   : data === "unread"
                     ? "text-point-blue"
                     : "text-gray-800",
-                data === "omo" ? `${poppins.className} font-bold` : ""
+                data === "omo" ? `font-poppins font-bold` : ""
               )}
               onClick={() => {
                 if (i === 2) {

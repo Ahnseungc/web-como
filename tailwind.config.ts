@@ -1,5 +1,5 @@
-import type { Config } from "tailwindcss";
 import { borderRadius, fontFamily, fontSize } from "tailwindcss/defaultTheme";
+import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
@@ -69,6 +69,7 @@ const config: Config = {
     },
     fontFamily: {
       suit: ["SUIT", ...fontFamily.sans],
+      poppins: ["Poppins", ...fontFamily.sans],
       cochin: ["Cochin", ...fontFamily.serif],
     },
     fontSize: {
