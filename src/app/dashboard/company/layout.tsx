@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { HEADER_HEIGHT } from "@/lib/constants";
 import Loading from "@/app/dashboard/club/loading";
 import Header from "@/components/header/Header";
-import SideBar from "@/components/dashboard/club/common/SideBar";
+import SideBar from "@/components/dashboard/company/common/SideBar";
 
 export default function DashboardLayout({
   children,
