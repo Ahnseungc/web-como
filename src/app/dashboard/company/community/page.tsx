@@ -1,3 +1,5 @@
-export default function Page() {
-  return <></>;
+import ComingSoon from "@/components/dashboard/shared/templates/ComingSoon";
+
+export default function CommunityPage() {
+  return <ComingSoon title="커뮤니티" />;
 }
