@@ -6,12 +6,18 @@ interface Props {
   placeholder: string;
   currentValue: string;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleSubmit: () => void;
 }
 
 export default function SearchBar(props: Props) {
   return (
-    <form className="flex gap-3" onSubmit={props.handleSubmit}>
+    <form
+      className="flex gap-3"
+      onSubmit={(e) => {
+        e.preventDefault();
+        props.handleSubmit();
+      }}
+    >
       <div className="flex items-center gap-3 w-[420px] h-[60px] py-4 px-3 rounded-md border border-gray-100 has-[:focus-visible]:border-gray-900 bg-gray-100 has-[:focus-visible]:bg-gray-50 transition duration-300">
         <Search className="w-5 h-5 text-gray-500" />
         <input
