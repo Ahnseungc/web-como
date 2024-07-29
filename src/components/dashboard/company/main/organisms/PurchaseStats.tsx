@@ -2,7 +2,7 @@ import PurchaseStatsLineGraph from "@/components/dashboard/company/main/molecule
 
 export default function PurchaseStats() {
   return (
-    <div className="flex-1 p-8 rounded-xl bg-gray-0">
+    <div className="flex-1 flex flex-col p-8 rounded-xl bg-gray-0">
       <h2 className="font-bold text-gray-900">
         {"임직원 omo 구매 통계 리포트"}
       </h2>
