@@ -5,7 +5,7 @@ import DateFilter, {
   type DateRange,
 } from "@/components/dashboard/common/DateFilter";
 import Pagination from "@/components/dashboard/common/Pagination";
-import AnnouncementTable from "@/components/dashboard/club/announcement/molecules/AnnouncementTable";
+import AnnouncementTable from "@/components/dashboard/shared/molecules/AnnouncementTable";
 
 export default function AnnouncementList() {
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({

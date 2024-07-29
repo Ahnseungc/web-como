@@ -19,6 +19,24 @@ export function middleware(req: NextRequest) {
 
   if (req.nextUrl.pathname.startsWith("/dashboard") && !refreshToken) {
     return NextResponse.redirect(new URL("/login", req.url));
+  } else if (
+    req.nextUrl.pathname.startsWith("/dashboard/club") &&
+    type?.value !== "club"
+  ) {
+    if (type?.value === "company") {
+      return NextResponse.redirect(new URL("/dashboard/company", req.url));
+    } else {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
+  } else if (
+    req.nextUrl.pathname.startsWith("/dashboard/company") &&
+    type?.value !== "company"
+  ) {
+    if (type?.value === "club") {
+      return NextResponse.redirect(new URL("/dashboard/club", req.url));
+    } else {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
   }
 
   if (req.nextUrl.pathname.startsWith("/login") && refreshToken) {
