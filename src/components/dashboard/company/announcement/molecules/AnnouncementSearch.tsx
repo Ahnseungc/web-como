@@ -22,7 +22,7 @@ const filterList = [
     name: (
       <>
         <span className="font-poppins font-bold">{"omo "}</span>
-        <span className="font-cochin font-bold text-xl leading-6">
+        <span className="font-cochin font-bold text-lg leading-6">
           {"shop"}
         </span>
         {" 공지"}
