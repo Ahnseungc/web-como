@@ -18,7 +18,7 @@ export default function DisbandClubModal() {
           <h2 className="text-center h1 font-bold text-gray-900">
             {"동호회 해체하기"}
           </h2>
-          <button onClick={closeModal}>
+          <button onClick={() => closeModal()}>
             <Close className="w-9 h-9 text-gray-600" />
           </button>
         </div>

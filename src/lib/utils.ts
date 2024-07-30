@@ -10,12 +10,17 @@ export function openModal(id: string) {
   modal?.classList.remove("hidden");
 }
 
-export const closeModal = () => {
-  const modals = document.querySelectorAll(".modal");
-  modals.forEach((modal) => modal.classList.add("hidden"));
+export const closeModal = (id?: string) => {
+  if (id) {
+    const modal = document.querySelector(`#${id}.modal`);
+    modal?.classList.add("hidden");
+  } else {
+    const modals = document.querySelectorAll(".modal");
+    modals.forEach((modal) => modal.classList.add("hidden"));
 
-  const inputs = document.querySelectorAll(".modal .modal-input");
-  inputs.forEach((input) => ((input as HTMLInputElement).value = ""));
+    const inputs = document.querySelectorAll(".modal .modal-input");
+    inputs.forEach((input) => ((input as HTMLInputElement).value = ""));
+  }
 };
 
 export function getPageRange(num: number) {

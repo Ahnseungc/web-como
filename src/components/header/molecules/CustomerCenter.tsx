@@ -16,13 +16,13 @@ export default function CustomerCenter() {
             <h1 className="font-bold text-gray-900">{"고객센터 문의"}</h1>
             <div
               className="absolute top-0 right-0 cursor-pointer"
-              onClick={closeModal}
+              onClick={() => closeModal()}
             >
               <Close className="w-6 h-6 text-gray-900" />
             </div>
           </div>
           <div className="text-center">
-            <button className="mx-auto" onClick={closeModal}>
+            <button className="mx-auto" onClick={() => closeModal()}>
               <Image
                 src={KakaoButton}
                 alt="카카오톡"

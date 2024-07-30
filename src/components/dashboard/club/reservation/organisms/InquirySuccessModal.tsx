@@ -23,7 +23,7 @@ export default function InquirySuccessModal() {
           className="mx-auto"
         />
         <p className="text-center h4 font-normal text-gray-800">{`정상적으로 호스트에게 문의가 전달되었습니다.\n답변은 1:1문의 탭에서 확인 가능합니다.`}</p>
-        <Button content="확인" primary onClick={closeModal} />
+        <Button content="확인" primary onClick={() => closeModal()} />
       </div>
     </div>
   );

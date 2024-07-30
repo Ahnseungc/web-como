@@ -106,7 +106,7 @@ export default function ClubInfoTab() {
                   <span className="h3 font-bold text-gray-900">
                     {"활동 일정을 선택해주세요."}
                   </span>
-                  <button onClick={closeModal}>
+                  <button onClick={() => closeModal()}>
                     <Close className="w-6 h-6 text-gray-900" />
                   </button>
                 </div>

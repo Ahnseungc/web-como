@@ -69,7 +69,7 @@ export default function NewMemberDetailModal() {
               </ul>
             </div>
           </div>
-          <button onClick={closeModal}>
+          <button onClick={() => closeModal()}>
             <Close className="w-8 h-8 text-gray-600" />
           </button>
         </div>

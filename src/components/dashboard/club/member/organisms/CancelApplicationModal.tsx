@@ -23,7 +23,7 @@ export default function CancelApplicationModal() {
           />
         </div>
         <div className="flex space-x-3">
-          <Button content="닫기" onClick={closeModal} type="button" />
+          <Button content="닫기" onClick={() => closeModal()} type="button" />
           <Button content="반려하기" primary type="submit" />
         </div>
       </form>

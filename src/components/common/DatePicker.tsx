@@ -1,6 +1,6 @@
 "use client";
 
-import { closeModal, cn, openModal } from "@/lib/utils";
+import { closeModal, cn, formatDate, openModal } from "@/lib/utils";
 import type { Matcher } from "react-day-picker";
 import Calendar from "@/components/common/Calendar";
 import Backdrop from "@/components/common/Backdrop";
@@ -23,6 +23,7 @@ export default function DatePicker({
   return (
     <div className={cn("flex-1 relative", size)}>
       <button
+        type="button"
         className={cn(
           "flex items-center justify-between w-full h-full px-3 rounded-md border border-gray-400 bg-gray-50",
           size
@@ -35,7 +36,7 @@ export default function DatePicker({
             props.currentDate ? "text-gray-900" : "text-gray-400"
           )}
         >
-          {props.currentDate?.toLocaleDateString("ko") || "일자선택"}
+          {formatDate(props.currentDate) || "일자선택"}
         </span>
         <ChevronDownFilled className="w-5 h-6 text-gray-500" />
       </button>
@@ -46,7 +47,7 @@ export default function DatePicker({
             selected={props.currentDate}
             onSelect={(selected) => {
               props.handleDateChange(selected);
-              closeModal();
+              closeModal(props.id);
             }}
             disabled={props.disabled}
           />
