@@ -15,7 +15,7 @@ export default function EmployeeShortcut() {
         <div className="h1 font-extrabold text-gray-900 truncate">
           {"1234명"}
         </div>
-        <ChevronRight className="w-9 h-9 text-gray-600" />
+        <ChevronRight className="w-8 h-8 text-gray-600" />
       </div>
     </Link>
   );
