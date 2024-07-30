@@ -56,6 +56,21 @@
     appearance: textfield;
     -moz-appearance: textfield;
   }
+
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 6px;
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    background-color: #989899;
+    border-radius: 99px;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-track {
+    background-color: #dddddd;
+    border-radius: 99px;
+  }
 }
 
 @layer components {

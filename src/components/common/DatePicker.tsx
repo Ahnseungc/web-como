@@ -41,7 +41,7 @@ export default function DatePicker({
         <ChevronDownFilled className="w-5 h-6 text-gray-500" />
       </button>
       <div id={props.id} className="hidden modal">
-        <Backdrop invisible />
+        <Backdrop invisible modalId={props.id} />
         <div className="absolute z-40">
           <Calendar
             selected={props.currentDate}
