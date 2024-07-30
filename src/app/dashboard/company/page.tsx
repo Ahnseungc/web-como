@@ -2,6 +2,7 @@ import DashboardOverview from "@/components/dashboard/company/main/molecules/Ove
 import PurchaseStats from "@/components/dashboard/company/main/organisms/PurchaseStats";
 import ClubStats from "@/components/dashboard/company/main/organisms/ClubStats";
 import EmployeeClubFigures from "@/components/dashboard/company/main/organisms/EmployeeClubFigures";
+import SpendingFigures from "@/components/dashboard/company/main/organisms/SpendingFigures";
 
 export default function DashboardPage() {
   return (
@@ -12,6 +13,7 @@ export default function DashboardPage() {
         <ClubStats />
       </div>
       <EmployeeClubFigures />
+	  <SpendingFigures />
     </section>
   );
 }
