@@ -36,3 +36,19 @@ export function formatDate(date: Date | undefined) {
 
   return `${date.getFullYear()}.${(date.getMonth() + 1).toString().padStart(2, "0")}.${date.getDate().toString().padStart(2, "0")}`;
 }
+
+export function formatTime(date: Date | undefined) {
+  if (!date) {
+    return "";
+  }
+
+  return `${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
+}
+
+export function formatDateTime(date: Date | undefined) {
+  if (!date) {
+    return "";
+  }
+
+  return `${formatDate(date)} ${formatTime(date)}`;
+}

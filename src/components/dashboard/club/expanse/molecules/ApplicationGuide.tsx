@@ -1,30 +1,16 @@
-"use client";
-
 import { INFO, INFO_TOOLTIP } from "@/lib/message/expanse";
-import { openModal } from "@/lib/utils";
-import Backdrop from "@/components/common/Backdrop";
-import { Info } from "@/assets/icons/info";
+import InfoTooltipButton from "@/components/dashboard/common/InfoTooltipButton";
 
 export default function ApplicationGuide() {
   return (
     <div className="space-y-2 p-8 rounded-2xl bg-gray-0">
       <div className="relative flex items-center gap-2">
         <h2 className="h1 font-bold text-gray-900">{"활동비 신청 안내"}</h2>
-        <button onClick={() => openModal("expanse-application-info")}>
-          <Info className="w-6 h-6 text-gray-400" />
-        </button>
-        <div
+        <InfoTooltipButton
           id="expanse-application-info"
-          className="modal hidden absolute top-0 left-[200px]"
-        >
-          <Backdrop invisible />
-          <div className="relative z-50 space-y-2 w-[460px] p-4 rounded-lg border border-gray-300 bg-gray-0">
-            <span className="body-1 font-bold text-gray-900">
-              {"활동비 신청 안내"}
-            </span>
-            <p className="body-1 font-medium text-gray-700">{INFO_TOOLTIP}</p>
-          </div>
-        </div>
+          title="활동비 신청 안내"
+          content={INFO_TOOLTIP}
+        />
       </div>
       <div className="flex items-end justify-between">
         <p className="h4 font-medium text-gray-900">{INFO}</p>

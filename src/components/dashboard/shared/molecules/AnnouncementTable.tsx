@@ -81,7 +81,11 @@ const announcements = [
   },
 ];
 
-export default function AnnouncementTable() {
+export default function AnnouncementTable({
+  number = 10,
+}: {
+  number?: number;
+}) {
   const pathname = usePathname();
   const { push } = useRouter();
 
@@ -102,7 +106,7 @@ export default function AnnouncementTable() {
           </div>
         ))}
       </li>
-      {announcements.map((announcement, idx) => (
+      {announcements.slice(0, number).map((announcement, idx) => (
         <li
           key={announcement.id}
           className="flex border-b border-gray-400 bg-gray-0"
