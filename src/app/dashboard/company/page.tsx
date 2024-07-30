@@ -1,6 +1,7 @@
 import DashboardOverview from "@/components/dashboard/company/main/molecules/Overview";
-import ClubStats from "@/components/dashboard/company/main/organisms/ClubStats";
 import PurchaseStats from "@/components/dashboard/company/main/organisms/PurchaseStats";
+import ClubStats from "@/components/dashboard/company/main/organisms/ClubStats";
+import EmployeeClubNumbers from "@/components/dashboard/company/main/organisms/EmployeeClubNumbers";
 
 export default function DashboardPage() {
   return (
@@ -10,6 +11,7 @@ export default function DashboardPage() {
         <PurchaseStats />
         <ClubStats />
       </div>
+      <EmployeeClubNumbers />
     </section>
   );
 }
