@@ -2,7 +2,6 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import type { ExpanseSearchFilter } from "@/components/dashboard/club/expanse/molecules/ExpanseSearch";
 
 const tableHeadings = [
   "순번",
@@ -116,13 +115,10 @@ const entries: ExpanseApplicationEntry[] = [
   },
 ];
 
-interface Props {
-  statusFilter?: ExpanseSearchFilter;
-}
-
-export default function ExpanseTable({ statusFilter }: Props) {
+export default function ExpanseTable() {
   const pathname = usePathname();
   const { push } = useRouter();
+  const statusFilter = "all";
 
   const EntryListItem = ({ entry }: { entry: ExpanseApplicationEntry }) => {
     return (

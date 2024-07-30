@@ -29,7 +29,7 @@ export default function SupplyList() {
     <div className="p-8 rounded-xl bg-gray-0">
       <div className="flex items-start justify-between mb-6">
         <h3 className="h2 font-semibold text-gray-900">
-          {"비품 지원 내역 조회"}
+          {"비품 조회"}
         </h3>
         <button className="flex items-center gap-[3px] py-1 pl-3 pr-2.5 rounded body-1 font-medium text-gray-50 bg-brand-orange">
           {"지급신청서 작성"}
