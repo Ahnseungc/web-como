@@ -1,4 +1,4 @@
-export default function ClubNumbers() {
+export default function ClubFigures() {
   return (
     <div className="flex-grow-[2] flex items-center gap-6 py-8 px-10 rounded-xl bg-gray-0">
       <div className="flex-1 space-y-4">
