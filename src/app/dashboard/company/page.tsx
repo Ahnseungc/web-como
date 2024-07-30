@@ -3,6 +3,7 @@ import PurchaseStats from "@/components/dashboard/company/main/organisms/Purchas
 import ClubStats from "@/components/dashboard/company/main/organisms/ClubStats";
 import EmployeeClubFigures from "@/components/dashboard/company/main/organisms/EmployeeClubFigures";
 import SpendingFigures from "@/components/dashboard/company/main/organisms/SpendingFigures";
+import Announcement from "@/components/dashboard/company/main/organisms/Announcement";
 
 export default function DashboardPage() {
   return (
@@ -13,7 +14,8 @@ export default function DashboardPage() {
         <ClubStats />
       </div>
       <EmployeeClubFigures />
-	  <SpendingFigures />
+      <SpendingFigures />
+      <Announcement />
     </section>
   );
 }
