@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { cn, formatDateTime } from "@/lib/utils";
-import ClubStatsCategoryBarGraph from "@/components/dashboard/company/main/molecules/ClubStatsCategoryBarGraph";
-import ClubStatsActivityRanking from "@/components/dashboard/company/main/molecules/ClubStatsActivityRanking";
-import ClubStatsQuitRanking from "@/components/dashboard/company/main/molecules/ClubStatsQuitRanking";
+import ShopStatsCategoryBarGraph from "@/components/dashboard/company/main/molecules/ShopStatsCategoryBarGraph";
+import ShopStatsCompanyTop from "@/components/dashboard/company/main/molecules/ShopStatsCompanyTop";
+import ShopStatsAllTop from "@/components/dashboard/company/main/molecules/ShopStatsAllTop";
+import ShopStatsSearchRanking from "@/components/dashboard/company/main/molecules/ShopStatsSearchRanking";
 
 interface Tab {
   key: string;
@@ -16,22 +17,22 @@ const tabs: Tab[] = [
   {
     name: "인기 카테고리",
     key: "category",
-    component: <ClubStatsCategoryBarGraph />,
+    component: <ShopStatsCategoryBarGraph />,
   },
   {
     name: "사내 인기 Top10",
     key: "companyTop10",
-    component: <ClubStatsActivityRanking />,
+    component: <ShopStatsCompanyTop />,
   },
   {
     name: "전체 인기 Top10",
-    key: "totalTop10",
-    component: <ClubStatsQuitRanking />,
+    key: "allTop10",
+    component: <ShopStatsAllTop />,
   },
   {
     name: "검색어 순위",
     key: "searchRanking",
-    component: <ClubStatsQuitRanking />,
+    component: <ShopStatsSearchRanking />,
   },
 ];
 
