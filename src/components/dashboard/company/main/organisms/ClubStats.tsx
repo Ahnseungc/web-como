@@ -35,7 +35,7 @@ export default function ClubStats() {
   const [currentTab, setCurrentTab] = useState<Tab>(tabs[0]);
 
   return (
-    <div className="flex-1 p-8 rounded-xl bg-gray-0">
+    <div className="flex-1 flex flex-col h-[520px] xl:h-[540px] p-8 rounded-xl bg-gray-0">
       <div className="flex items-center gap-2">
         <h2 className="font-bold text-gray-900">{"동호회 통계"}</h2>
         <InfoTooltipButton
@@ -68,7 +68,7 @@ export default function ClubStats() {
       <div className="mt-5 body-2 font-bold text-gray-500">
         {`${formatDateTime(new Date())} 기준`}
       </div>
-      <div className="mt-2.5">{currentTab.component}</div>
+      <div className="flex-1 mt-2.5">{currentTab.component}</div>
     </div>
   );
 }

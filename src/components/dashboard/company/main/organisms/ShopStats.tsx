@@ -40,7 +40,7 @@ export default function ShopStats() {
   const [currentTab, setCurrentTab] = useState<Tab>(tabs[0]);
 
   return (
-    <div className="flex-1 p-8 rounded-xl bg-gray-0">
+    <div className="flex-1 flex flex-col min-h-[528px] xl:min-h-[548px] p-8 rounded-xl bg-gray-0">
       <h2 className="flex items-center gap-1 font-bold text-gray-900">
         <span className="h2 font-poppins">{"omo"}</span>
         <span className="h1 font-cochin">{"shop"}</span>
@@ -68,7 +68,7 @@ export default function ShopStats() {
       <div className="mt-5 body-2 font-bold text-gray-500">
         {`${formatDateTime(new Date())} 기준`}
       </div>
-      <div className="mt-2.5">{currentTab.component}</div>
+      <div className="flex-1 mt-2.5">{currentTab.component}</div>
     </div>
   );
 }
