@@ -28,7 +28,7 @@ export default function ReservationCancelModal() {
           {`이 발생할 수 있습니다.\n위약금 관련 내용은 상품 상세페이지에서 확인할 수 있습니다.`}
         </p>
         <div className="flex gap-3">
-          <Button content="닫기" onClick={closeModal} />
+          <Button content="닫기" onClick={() => closeModal()} />
           <Button
             primary
             content="예약 취소"

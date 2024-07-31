@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import RadioButton from "@/components/common/RadioButton";
@@ -8,6 +10,7 @@ import ImageInput from "@/components/common/ImageInput";
 import DropdownSelect from "@/components/common/DropdownSelect";
 
 export default function NewExpanseReportForm() {
+  const { replace } = useRouter();
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [date, setDate] = useState<Date>();
   const [formValues, setFormValues] = useState({ type: "" });
@@ -16,8 +19,16 @@ export default function NewExpanseReportForm() {
     setDate(date);
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert(
+      "활동비 지급 신청서 (품의서)가 작성 및 담당 부서에게 전달되었습니다."
+    );
+    replace(`${CLUB_DASHBOARD_ENDPOINT}/expanse`);
+  };
+
   return (
-    <form className="space-y-3 w-full">
+    <form className="space-y-3 w-full" onSubmit={handleSubmit}>
       <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">
         <h3 className="h2 font-bold text-gray-900">{"기본 정보"}</h3>
         <Input
@@ -27,26 +38,19 @@ export default function NewExpanseReportForm() {
           value="산악동호회"
           readonly
         />
+        <Input
+          name="author"
+          label="작성자"
+          type="text"
+          value="송지은 / 경영지원팀 / 대리 / 총무(동호회 직책)"
+          readonly
+        />
         <div className="flex flex-col gap-2">
-          <span className="h3 font-semibold text-gray-900">{"작성자"}</span>
-          <Input name="dept" type="text" value="소속 : 경영지원팀" readonly />
-          <Input name="grade" type="text" value="직급 : 대리" readonly />
-          <Input name="name" type="text" value="성명 : 송지은" readonly />
-          <Input name="role" type="text" value="동호회 직책 : 총무" readonly />
-        </div>
-        <div className="flex flex-col gap-2">
-          <span className="h3 font-semibold text-gray-900">
-            {"지원금 종류"}
-          </span>
+          <span className="h3 font-semibold text-gray-900">{"비목"}</span>
           <DropdownSelect
             id="type"
-            placeholder="선택해 주세요"
-            options={[
-              "사내 동호회 활동비 지원금",
-              "물품 구매 지원금",
-              "우수 동호회 상금",
-              "기타",
-            ]}
+            placeholder="비목 선택"
+            options={["활동비 지원", "비품 구매", "우수 동호회 상금", "기타"]}
             currentValue={formValues.type}
             handleChange={(newValue) =>
               setFormValues((prev) => {
@@ -109,7 +113,7 @@ export default function NewExpanseReportForm() {
           checked={isChecked}
           onChange={() => setIsChecked((prev) => !prev)}
         />
-        <Button disabled content="제출하기" />
+        <Button disabled={!isChecked} content="제출하기" primary />
       </div>
     </form>
   );

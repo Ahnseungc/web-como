@@ -21,7 +21,7 @@ export default function AnnouncementList() {
     <div className="space-y-10 p-8 rounded-xl bg-gray-0">
       <div className="space-y-6">
         <div className="flex justify-between">
-          <h3 className="h2 font-semibold text-gray-900">{"전체"}</h3>
+          <h3 className="h2 font-semibold text-gray-900">{"공지사항 조회"}</h3>
           <Link href={`${pathname}/new`}>
             <button className="flex items-center gap-[3px] py-1 px-3 rounded body-1 font-medium text-gray-50 bg-gray-900">
               {"글쓰기"}

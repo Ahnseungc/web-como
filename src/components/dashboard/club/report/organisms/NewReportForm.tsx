@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { openModal } from "@/lib/utils";
+import useNavigationGuard from "@/hooks/navigationGuard";
 import Button from "@/components/common/Button";
 import DatePicker from "@/components/common/DatePicker";
 import Input from "@/components/common/Input";
@@ -8,6 +10,7 @@ import RadioButton from "@/components/common/RadioButton";
 import ImageInput from "@/components/common/ImageInput";
 
 export default function NewReportForm() {
+  useNavigationGuard();
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [date, setDate] = useState<Date | undefined>();
 
@@ -15,8 +18,13 @@ export default function NewReportForm() {
     setDate(date);
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    openModal("report-submit-success");
+  };
+
   return (
-    <form className="space-y-3 w-full">
+    <form className="space-y-3 w-full" onSubmit={handleSubmit}>
       <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">
         <h3 className="h2 font-bold text-gray-900">{"기본 정보"}</h3>
         <Input
@@ -128,7 +136,7 @@ export default function NewReportForm() {
           checked={isChecked}
           onChange={() => setIsChecked((prev) => !prev)}
         />
-        <Button disabled content="제출하기" />
+        <Button disabled={!isChecked} content="제출하기" primary />
       </div>
     </form>
   );

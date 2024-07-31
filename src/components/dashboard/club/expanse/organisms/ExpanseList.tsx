@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import type { ExpanseSearchFilter } from "@/components/dashboard/club/expanse/molecules/ExpanseSearch";
 import DateFilter, {
   type DateRange,
 } from "@/components/dashboard/common/DateFilter";
@@ -10,11 +9,7 @@ import Pagination from "@/components/dashboard/common/Pagination";
 import ExpanseTable from "@/components/dashboard/club/expanse/molecules/ExpanseTable";
 import { Plus } from "@/assets/icons/action";
 
-interface Props {
-  currentFilter: ExpanseSearchFilter;
-}
-
-export default function ExpanseList({ currentFilter }: Props) {
+export default function ExpanseList() {
   const pathname = usePathname();
   const { push } = useRouter();
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
@@ -53,7 +48,7 @@ export default function ExpanseList({ currentFilter }: Props) {
           handleDateRangeChange={handleDateRangeChange}
         />
         <div className="space-y-10">
-          <ExpanseTable statusFilter={currentFilter} />
+          <ExpanseTable />
           <Pagination
             currentPage={currentPage}
             maxPage={8}

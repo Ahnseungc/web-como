@@ -9,9 +9,8 @@ import {
 
 const filterList = [
   { name: "전체 보기", value: "all" },
-  { name: "지급 완료", value: "completed" },
-  { name: "지급 대기", value: "pending" },
-  { name: "반려", value: "canceled" },
+  { name: "보관", value: "maintain" },
+  { name: "폐기", value: "dispose" },
 ];
 
 export default function SupplySearch() {

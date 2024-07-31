@@ -77,7 +77,7 @@ export default function ClubPictureItem({ item }: Props) {
               ))}
             </div>
             <div className="flex gap-3">
-              <Button content="취소" onClick={closeModal} />
+              <Button content="취소" onClick={() => closeModal()} />
               <Button
                 content="삭제하기"
                 primary

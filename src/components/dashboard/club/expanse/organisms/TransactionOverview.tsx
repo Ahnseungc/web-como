@@ -1,11 +1,15 @@
-import { Info } from "@/assets/icons/info";
+import InfoTooltipButton from "@/components/dashboard/common/InfoTooltipButton";
 
 export default function TransactionOverview() {
   return (
     <div className="space-y-8 p-8 rounded-xl bg-gray-800">
       <div className="flex items-center gap-2">
         <h2 className="h1 font-bold text-gray-0">{"입출금 내역"}</h2>
-        <Info className="w-6 h-6 text-gray-400" />
+        <InfoTooltipButton
+          id="transaction-tooltip"
+          title="입출금 내역"
+          content="동호회 임원과 주무부서에서 입력한 동호회 지원금의 입/출금을 확인하는 페이지 입니다. 품의서와 수령증을 바탕으로 계산됩니다."
+        />
       </div>
       <div className="flex items-center justify-between">
         <div>

@@ -54,24 +54,16 @@ export default function PurchaseDetail() {
         <div className="flex items-center gap-3">
           <h4 className="font-bold text-gray-900">{"결제수단"}</h4>
           <p className="body-2 font-medium text-gray-500">
-            {
-              "코모 포인트는 각 동호회에게 충전된 동호회비 입니다. 충전 문의는 당사 주무부서에 문의해주세요."
-            }
+            {"무통장 입금은 24시간 이내 입금 완료해 주셔야 합니다."}
           </p>
         </div>
-        <button className="w-[200px] py-3.5 rounded h4 font-semibold text-gray-400 bg-gray-200">
-          {"코모 포인트"}
-        </button>
-      </div>
-      <hr className="border-gray-400" />
-      <div className="space-y-3">
-        <h4 className="font-bold text-gray-900">{"현재 잔여 회비"}</h4>
-        <div className="flex items-center gap-6">
-          <div className="h1 font-extrabold text-brand-orange">{`${(1000000).toLocaleString()}원`}</div>
-          <div className="flex items-center gap-2 body-1 font-bold text-gray-900">
-            <span className="text-gray-500">{"사용 후 잔여 회비"}</span>
-            {"9,730,000원"}
-          </div>
+        <div className="space-x-3">
+          <button className="w-[200px] py-3.5 rounded h4 font-semibold text-gray-400 bg-gray-200">
+            {"카카오페이"}
+          </button>
+          <button className="w-[200px] py-3.5 rounded h4 font-semibold text-gray-400 bg-gray-200">
+            {"무통장 입금"}
+          </button>
         </div>
       </div>
     </div>

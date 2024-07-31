@@ -32,7 +32,7 @@ export default function ProfileDropdownModal({ profileImage }: Props) {
             </div>
             <div
               className="flex items-center justify-end w-8 h-8 cursor-pointer"
-              onClick={closeModal}
+              onClick={() => closeModal()}
             >
               <Close className="w-6 h-6 text-gray-900" />
             </div>

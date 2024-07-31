@@ -56,9 +56,9 @@ const menuList: MenuItem[] = [
         routes: ["/manage/report"],
       },
       {
-        name: "동호회 취소 및 해체",
-        link: "/manage/remove",
-        routes: ["/manage/remove"],
+        name: "비품 관리",
+        link: "/manage/supply",
+        routes: ["/manage/supply"],
       },
       {
         name: "공지사항 관리",
@@ -66,9 +66,9 @@ const menuList: MenuItem[] = [
         routes: ["/manage/announcement"],
       },
       {
-        name: "서류 양식 다운로드",
-        link: "/manage/template",
-        routes: ["/manage/template"],
+        name: "동호회 취소 및 해체",
+        link: "/manage/remove",
+        routes: ["/manage/remove"],
       },
     ],
   },
@@ -103,11 +103,6 @@ const menuList: MenuItem[] = [
         routes: ["/expanse", "/expanse/new", "/expanse/detail"],
       },
       {
-        name: "비품 관리",
-        link: "/expanse/supply",
-        routes: ["/expanse/supply"],
-      },
-      {
         name: "입출금 내역",
         link: "/expanse/transaction",
         routes: ["/expanse/transaction"],
@@ -127,6 +122,11 @@ const menuList: MenuItem[] = [
         name: "자주 묻는 질문",
         link: "/announcement/faq",
         routes: ["/announcement/faq"],
+      },
+      {
+        name: "서류 다운로드",
+        link: "/announcement/document",
+        routes: ["/announcement/document"],
       },
     ],
   },
@@ -182,7 +182,11 @@ export default function SideBar() {
     <nav className="relative min-w-[228px] xl:min-w-[248px] min-h-[1080px] border-r border-gray-300 bg-gray-0">
       <ul className="sticky py-8" style={{ top: HEADER_HEIGHT }}>
         {menuList.map((menu) => (
-          <li key={menu.key} onClick={() => handleMenuClick(menu)} className="pb-3">
+          <li
+            key={menu.key}
+            onClick={() => handleMenuClick(menu)}
+            className="pb-3"
+          >
             <div
               style={{ cursor: "pointer" }}
               className={cn(

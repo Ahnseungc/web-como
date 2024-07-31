@@ -20,9 +20,7 @@ export default function MemberSearch() {
   const [currentSearchTerm, setCurrentSearchTerm] = useState<string>("");
   const [currentFilter, setCurrentFilter] = useState<MemberSearchFilter>("all");
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
+  const handleSearch = () => {};
 
   return (
     <div className="flex flex-col gap-6 p-8 rounded-2xl bg-gray-0">

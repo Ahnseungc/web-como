@@ -48,7 +48,7 @@ export default function AnnouncementDetailPage() {
           </ul>
         </div>
         <div className="py-8 px-6 border-b-2 border-gray-500">
-          <p className="body-1 font-medium text-gray-700">{`올해 첫 중증열성혈소판감소증후군(Severe Fever with Thrombocytopenia Syndrome, 이하 SFTS) 환자가 경북 상주에서 발생한 가운데 농작업과 야외활동 때 각별한 주의가 요구된다.경북도에 따르면 상주에 거주하는 60대 여성 A씨는 4월초순 과수원에서 농작업을 했고, 16일 식욕부진으로 인근 병원에서 진료받았지만 이후에도 발열 증상이 있어 19일 도내 의료기관에 입원했다. 올해 첫 중증열성혈소판감소증후군(Severe Fever with Thrombocytopenia Syndrome, 이하 SFTS) 환자가 경북 상주에서 발생한 가운데 농작업과 야외활동 때 각별한 주의가 요구된다.경북도에 따르면 상주에 거주하는 60대 여성 A씨는 4월초순 과수원에서 농작업을 했고, 16일 식욕부진으로 인근 병원에서 진료받았지만 이후에도 발열 증상이 있어 19일 도내 의료기관에 입원했다. 올해 첫 중증열성혈소판감소증후군(Severe Fever with Thrombocytopenia Syndrome, 이하 SFTS) 환자가 경북 상주에서 발생한 가운데 농작업과 야외활동 때 각별한 주의가 요구된다.경북도에 따르면 상주에 거주하는 60대 여성 A씨는 4월초순 과수원에서 농작업을 했고, 16일 식욕부진으로 인근 병원에서 진료받았지만 이후에도 발열 증상이 있어 19일 도내 의료기관에 입원했다. `}</p>
+          <p className="body-1 font-medium text-gray-800">{`올해 첫 중증열성혈소판감소증후군(Severe Fever with Thrombocytopenia Syndrome, 이하 SFTS) 환자가 경북 상주에서 발생한 가운데 농작업과 야외활동 때 각별한 주의가 요구된다.경북도에 따르면 상주에 거주하는 60대 여성 A씨는 4월초순 과수원에서 농작업을 했고, 16일 식욕부진으로 인근 병원에서 진료받았지만 이후에도 발열 증상이 있어 19일 도내 의료기관에 입원했다. 올해 첫 중증열성혈소판감소증후군(Severe Fever with Thrombocytopenia Syndrome, 이하 SFTS) 환자가 경북 상주에서 발생한 가운데 농작업과 야외활동 때 각별한 주의가 요구된다.경북도에 따르면 상주에 거주하는 60대 여성 A씨는 4월초순 과수원에서 농작업을 했고, 16일 식욕부진으로 인근 병원에서 진료받았지만 이후에도 발열 증상이 있어 19일 도내 의료기관에 입원했다. 올해 첫 중증열성혈소판감소증후군(Severe Fever with Thrombocytopenia Syndrome, 이하 SFTS) 환자가 경북 상주에서 발생한 가운데 농작업과 야외활동 때 각별한 주의가 요구된다.경북도에 따르면 상주에 거주하는 60대 여성 A씨는 4월초순 과수원에서 농작업을 했고, 16일 식욕부진으로 인근 병원에서 진료받았지만 이후에도 발열 증상이 있어 19일 도내 의료기관에 입원했다. `}</p>
         </div>
       </div>
     </>

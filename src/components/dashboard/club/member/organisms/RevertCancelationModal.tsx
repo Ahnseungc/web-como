@@ -14,7 +14,7 @@ export default function RevertCancelationModal() {
         </h2>
         <p className="text-center h4 font-normal text-gray-800">{`${"동호회 이름"}에 가입 신청한 ${"사용자 이름"}에게\n반려 취소와 함께 재가입 안내 메일이 송신됩니다.`}</p>
         <div className="flex space-x-3">
-          <Button content="닫기" onClick={closeModal} />
+          <Button content="닫기" onClick={() => closeModal()} />
           <Button content="반려취소" primary />
         </div>
       </div>

@@ -16,7 +16,7 @@ export default function ReservationList() {
   return (
     <div className="space-y-10 p-8 rounded-xl bg-gray-0">
       <div className="space-y-6">
-        <h3 className="h2 font-semibold text-gray-900">{"전체"}</h3>
+        <h3 className="h2 font-semibold text-gray-900">{"예약 내역 조회"}</h3>
         <ReservationTable />
       </div>
       <Pagination

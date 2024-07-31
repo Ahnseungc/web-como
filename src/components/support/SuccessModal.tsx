@@ -23,7 +23,7 @@ export default function SubmitSuccessModal() {
           className="mx-auto"
         />
         <p className="text-center h4 font-normal text-gray-800">{`소중한 의견 감사합니다.\n이메일로 omo 담당자가 답변드리겠습니다.`}</p>
-        <Button content="확인" primary onClick={closeModal} />
+        <Button content="확인" primary onClick={() => closeModal()} />
       </div>
     </div>
   );

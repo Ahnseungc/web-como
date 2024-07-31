@@ -3,7 +3,6 @@ import ReservationOverview from "@/components/dashboard/club/reservation/organis
 import ReservationSearch from "@/components/dashboard/club/reservation/molecules/ReservationSearch";
 import ReservationList from "@/components/dashboard/club/reservation/organisms/ReservationList";
 import ReservationCancelModal from "@/components/dashboard/club/reservation/organisms/ReservationCancelModal";
-import ReservationChangeModal from "@/components/dashboard/club/reservation/organisms/ReservationChangeModal";
 
 export default function ReservationManagementPage() {
   return (
@@ -13,7 +12,6 @@ export default function ReservationManagementPage() {
       <ReservationSearch />
       <ReservationList />
       <ReservationCancelModal />
-      <ReservationChangeModal />
     </>
   );
 }

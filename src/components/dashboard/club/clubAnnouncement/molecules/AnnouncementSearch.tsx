@@ -6,9 +6,7 @@ import SearchBar from "@/components/dashboard/common/SearchBar";
 export default function AnnouncementSearch() {
   const [currentSearchTerm, setCurrentSearchTerm] = useState<string>("");
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
+  const handleSearch = () => {};
 
   return (
     <div className="space-y-6 p-8 rounded-xl bg-gray-0">
