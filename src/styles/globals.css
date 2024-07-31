@@ -9,6 +9,18 @@
     font-weight: 100, 200, 300, 400, 500, 600, 700, 800, 900;
     font-style: normal;
   }
+  @font-face {
+    font-family: "Poppins";
+    src: url("/fonts/Poppins/Poppins.ttf");
+    font-weight: 100, 200, 300, 400, 500, 600, 700, 800, 900;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Cochin";
+    src: url("/fonts/Cochin/Cochin.ttf");
+    font-weight: 100, 200, 300, 400, 500, 600, 700, 800, 900;
+    font-style: normal;
+  }
 
   h1 {
     @apply text-2xl xl:text-3xl tracking-tightest;
@@ -43,6 +55,21 @@
   input[type="number"] {
     appearance: textfield;
     -moz-appearance: textfield;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 6px;
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    background-color: #989899;
+    border-radius: 99px;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-track {
+    background-color: #dddddd;
+    border-radius: 99px;
   }
 }
 

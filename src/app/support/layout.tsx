@@ -1,4 +1,5 @@
-import Header, { HEADER_HEIGHT } from "@/components/header/Header";
+import { HEADER_HEIGHT } from "@/lib/constants";
+import Header from "@/components/header/Header";
 
 export default function SupportLayout({
   children,

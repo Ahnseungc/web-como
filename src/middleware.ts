@@ -3,10 +3,15 @@ import { cookies } from "next/headers";
 
 export function middleware(req: NextRequest) {
   const refreshToken = cookies().get("refreshToken");
+  const type = cookies().get("type");
 
   if (req.nextUrl.pathname === "/") {
     if (refreshToken) {
-      return NextResponse.redirect(new URL("/dashboard", req.url));
+      if (type?.value === "club") {
+        return NextResponse.redirect(new URL("/dashboard/club", req.url));
+      } else if (type?.value === "company") {
+        return NextResponse.redirect(new URL("/dashboard/company", req.url));
+      }
     } else {
       return NextResponse.redirect(new URL("/login", req.url));
     }
@@ -14,10 +19,32 @@ export function middleware(req: NextRequest) {
 
   if (req.nextUrl.pathname.startsWith("/dashboard") && !refreshToken) {
     return NextResponse.redirect(new URL("/login", req.url));
+  } else if (
+    req.nextUrl.pathname.startsWith("/dashboard/club") &&
+    type?.value !== "club"
+  ) {
+    if (type?.value === "company") {
+      return NextResponse.redirect(new URL("/dashboard/company", req.url));
+    } else {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
+  } else if (
+    req.nextUrl.pathname.startsWith("/dashboard/company") &&
+    type?.value !== "company"
+  ) {
+    if (type?.value === "club") {
+      return NextResponse.redirect(new URL("/dashboard/club", req.url));
+    } else {
+      return NextResponse.redirect(new URL("/login", req.url));
+    }
   }
 
   if (req.nextUrl.pathname.startsWith("/login") && refreshToken) {
-    return NextResponse.redirect(new URL("/dashboard", req.url));
+    if (type?.value === "club") {
+      return NextResponse.redirect(new URL("/dashboard/club", req.url));
+    } else if (type?.value === "company") {
+      return NextResponse.redirect(new URL("/dashboard/company", req.url));
+    }
   }
 
   return NextResponse.next();

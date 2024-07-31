@@ -1,26 +1,28 @@
 "use client";
 
-import { useState } from "react";
 import RadioButton from "@/components/common/RadioButton";
 
-export default function RadioSelect() {
-  const [selectedOption, setSelectedOption] = useState<string>("club");
+interface Props {
+  currentValue: string;
+  handleChange: (newValue: string) => void;
+}
 
+export default function RadioSelect(props: Props) {
   return (
     <div className="flex space-x-4">
       <RadioButton
         name="role"
         value="club"
         label="동호회 임원 로그인"
-        checked={selectedOption === "club"}
-        onChange={() => setSelectedOption("club")}
+        checked={props.currentValue === "club"}
+        onChange={() => props.handleChange("club")}
       />
       <RadioButton
         name="role"
-        value="admin"
+        value="company"
         label="인사 관리 로그인"
-        checked={selectedOption === "admin"}
-        onChange={() => setSelectedOption("admin")}
+        checked={props.currentValue === "company"}
+        onChange={() => props.handleChange("company")}
       />
     </div>
   );

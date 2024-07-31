@@ -1,8 +1,8 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
-import { useRouter } from "next/navigation";
 
 export default function IdentificationForm() {
   const { replace } = useRouter();

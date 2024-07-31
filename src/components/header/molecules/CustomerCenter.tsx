@@ -1,13 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { Poppins } from "next/font/google";
 import { closeModal } from "@/lib/utils";
 import Backdrop from "@/components/common/Backdrop";
 import KakaoButton from "@/assets/images/kakaotalk_sharing_btn_medium.svg";
 import { Close } from "@/assets/icons/action";
-
-const poppins = Poppins({ weight: "700", subsets: ["latin"] });
 
 export default function CustomerCenter() {
   return (
@@ -19,13 +16,13 @@ export default function CustomerCenter() {
             <h1 className="font-bold text-gray-900">{"고객센터 문의"}</h1>
             <div
               className="absolute top-0 right-0 cursor-pointer"
-              onClick={closeModal}
+              onClick={() => closeModal()}
             >
               <Close className="w-6 h-6 text-gray-900" />
             </div>
           </div>
           <div className="text-center">
-            <button className="mx-auto" onClick={closeModal}>
+            <button className="mx-auto" onClick={() => closeModal()}>
               <Image
                 src={KakaoButton}
                 alt="카카오톡"
@@ -34,7 +31,7 @@ export default function CustomerCenter() {
                 className="mx-auto"
               />
               <div className="mt-2 text-center body-1 font-bold text-gray-900">
-                <span className={poppins.className}>{"omo"}</span>
+                <span className="font-poppins">{"omo"}</span>
                 <div>{"카카오톡 채널"}</div>
               </div>
             </button>

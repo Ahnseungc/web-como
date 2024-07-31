@@ -42,7 +42,7 @@ export default function DropdownSelect({
         <ChevronDownFilled className="w-5 h-6 text-gray-500" />
       </button>
       <div id={props.id} className="hidden modal">
-        <Backdrop invisible />
+        <Backdrop invisible modalId={props.id} />
         <div
           className={cn(
             "absolute z-40 py-8 px-6 rounded-xl bg-gray-0 shadow",
@@ -62,10 +62,10 @@ export default function DropdownSelect({
                 onClick={() => {
                   if (option === props.currentValue) {
                     props.handleChange("");
-                    closeModal();
+                    closeModal(props.id);
                   } else {
                     props.handleChange(option);
-                    closeModal();
+                    closeModal(props.id);
                   }
                 }}
               >

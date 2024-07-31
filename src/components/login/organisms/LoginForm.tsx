@@ -3,13 +3,13 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import RadioSelect from "@/components/login/molecules/RadioSelect";
 import BrandImage from "@/assets/images/brand_login.svg";
 import LogoImage from "@/assets/logos/como_logo.svg";
-import { saveRefreshToken } from "@/lib/token";
-import { useRouter } from "next/navigation";
+import { saveDashboardType, saveRefreshToken } from "@/lib/token";
 
 interface UserLoginDto {
   id: string;
@@ -19,11 +19,16 @@ interface UserLoginDto {
 
 export default function LoginForm() {
   const { refresh } = useRouter();
-  const [formData, setFormData] = useState<UserLoginDto>();
+  const [formData, setFormData] = useState<UserLoginDto>({
+    id: "",
+    password: "",
+    role: "club",
+  });
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     saveRefreshToken("token");
+    saveDashboardType(formData.role);
     refresh();
   };
 
@@ -44,7 +49,14 @@ export default function LoginForm() {
         <div className="space-y-4">
           <Input name="id" type="email" placeholder="아이디" />
           <Input name="password" type="password" placeholder="비밀번호" />
-          <RadioSelect />
+          <RadioSelect
+            currentValue={formData.role}
+            handleChange={(role: string) =>
+              setFormData((prev) => {
+                return { ...prev, role };
+              })
+            }
+          />
         </div>
         <Button content="로그인" primary />
         <div className="self-center flex items-center gap-4">
