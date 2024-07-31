@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { closeModal } from "@/lib/utils";
+import Link from "next/link";
+import { closeModal, cn } from "@/lib/utils";
+import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 import Backdrop from "@/components/common/Backdrop";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
@@ -12,6 +14,7 @@ import { ChevronDown } from "@/assets/icons/chevron";
 const DEFAULT_TEXT = "해체 신청에 동의합니다";
 
 export default function DisbandClubFormModal() {
+  const [showInfo, setShowInfo] = useState<boolean>(true);
   const [isAgree, setIsAgree] = useState<{
     sentence: boolean;
     check: boolean;
@@ -66,18 +69,30 @@ export default function DisbandClubFormModal() {
         <h2 className="text-center h1 font-bold text-gray-900">
           {"동호회 해체 안내"}
         </h2>
-        <div className="p-4 rounded-lg border border-gray-300">
+        <div
+          className="p-4 rounded-lg border border-gray-300 cursor-pointer select-none"
+          onClick={() => setShowInfo((prev) => !prev)}
+        >
           <div className="flex justify-between h4 font-bold text-gray-900">
             {"정말 동호회 해체를 진행하시겠어요?"}
-            <ChevronDown className="w-5 h-5 rotate-180" />
+            <ChevronDown
+              className={cn(
+                "w-5 h-5 transition duration-300",
+                showInfo ? "rotate-180" : ""
+              )}
+            />
           </div>
-          <p className="mt-2 h4 font-normal text-gray-800">
-            {`해체신청 시 담당 주무부서팀에게 정보가 전달됩니다.\n동호회 해체를 원하시면 밑에 동의 체크를 눌러주세요.\n남아있는 동호회비가 있다면 `}
-            <span className="font-bold text-brand-orange">
-              {"‘활동비 관리’"}
-            </span>
-            {`에서 활동비를 정산해주세요.`}
-          </p>
+          {showInfo && (
+            <p className="mt-2 h4 font-normal text-gray-800">
+              {`해체신청 시 담당 주무부서팀에게 정보가 전달됩니다.\n동호회 해체를 원하시면 밑에 동의 체크를 눌러주세요.\n남아있는 동호회비가 있다면 `}
+              <Link href={`${CLUB_DASHBOARD_ENDPOINT}/expanse`}>
+                <span className="font-bold text-brand-orange">
+                  {"‘활동비 관리’"}
+                </span>
+              </Link>
+              {`에서 활동비를 정산해주세요.`}
+            </p>
+          )}
         </div>
         <div className="space-y-4">
           <Input
