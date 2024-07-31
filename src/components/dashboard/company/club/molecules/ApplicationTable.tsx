@@ -181,7 +181,7 @@ export default function ApplicationTable() {
                 if (i === 1) {
                   openModal("applicant-profile");
                 } else if ([3, 4].includes(i)) {
-                  push(`${pathname}/${application.id}`);
+                  push(`${pathname}/${application.id}?status=${application.status}`);
                 }
               }}
             >
