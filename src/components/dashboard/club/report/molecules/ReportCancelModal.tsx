@@ -27,14 +27,7 @@ export default function ReportCancelModal() {
         </p>
         <div className="flex gap-3">
           <Button content="취소" onClick={() => closeModal()} />
-          <Button
-            primary
-            content="이동하기"
-            onClick={() => {
-              closeModal();
-              alert("예약이 취소되었습니다.");
-            }}
-          />
+          <Button primary content="이동하기" onClick={() => closeModal()} />
         </div>
       </div>
     </div>

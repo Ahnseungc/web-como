@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { openModal } from "@/lib/utils";
+import useNavigationGuard from "@/hooks/navigationGuard";
 import Button from "@/components/common/Button";
 import DatePicker from "@/components/common/DatePicker";
 import Input from "@/components/common/Input";
@@ -9,6 +10,7 @@ import RadioButton from "@/components/common/RadioButton";
 import ImageInput from "@/components/common/ImageInput";
 
 export default function NewReportForm() {
+  useNavigationGuard();
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [date, setDate] = useState<Date | undefined>();
 

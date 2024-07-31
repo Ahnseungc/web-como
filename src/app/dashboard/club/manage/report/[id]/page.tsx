@@ -7,7 +7,7 @@ import ReportTitle from "@/components/dashboard/club/report/molecules/ReportTitl
 import ClubInfoCard from "@/components/dashboard/club/common/ClubInfoCard";
 import NewReportForm from "@/components/dashboard/club/report/organisms/NewReportForm";
 import ReportSubmitSuccessModal from "@/components/dashboard/club/report/organisms/ReportSubmitSuccessModal";
-import ReportCancelModal from "@/components/dashboard/club/report/organisms/ReportCancelModal";
+import ReportCancelModal from "@/components/dashboard/club/report/molecules/ReportCancelModal";
 
 export default function ClubReportDetailPage() {
   const status = useSearchParams().get("status");
