@@ -39,18 +39,13 @@ export function formatDate(date: Date | undefined) {
     return "";
   }
 
-  return `${date.getFullYear()}.${(date.getMonth() + 1).toString().padStart(2, "0")}.${date.getDate().toString().padStart(2, "0")}`;
+  return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
 }
 
-export function formatTime(date: Date | undefined) {
+export function formatTime(date: Date | undefined, withIndicator?: boolean) {
   if (!date) {
     return "";
   }
-
-  return `${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
-}
-
-export function formatTimeWithIndicator(date: Date): string {
   const hours = date.getHours();
   const minutes = date.getMinutes();
 
@@ -59,7 +54,11 @@ export function formatTimeWithIndicator(date: Date): string {
   const formattedHours = (hours % 12 || 12).toString().padStart(2, "0");
   const formattedMinutes = minutes.toString().padStart(2, "0");
 
-  return `${period} ${formattedHours}:${formattedMinutes}`;
+  const formattedTime = `${formattedHours}:${formattedMinutes}`;
+  if (withIndicator) {
+    return `${period} ${formattedTime}`;
+  }
+  return formattedTime;
 }
 
 export function formatDateTime(date: Date | undefined) {
@@ -67,7 +66,7 @@ export function formatDateTime(date: Date | undefined) {
     return "";
   }
 
-  return `${formatDate(date)} ${formatTime(date)}`;
+  return `${formatDate(date)} ${formatTime(date, true)}`;
 }
 
 export function generateQuarterHourlyIntervals(

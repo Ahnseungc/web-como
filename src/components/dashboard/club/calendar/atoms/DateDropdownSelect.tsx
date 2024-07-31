@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  closeModal,
-  cn,
-  formatTimeWithIndicator,
-  openModal,
-} from "@/lib/utils";
+import { closeModal, cn, formatTime, openModal } from "@/lib/utils";
 import Backdrop from "@/components/common/Backdrop";
 import { ChevronDownFilled } from "@/assets/icons/chevron";
 
@@ -43,11 +38,7 @@ export default function DateDropdownSelect({
           onClick={() => openModal(props.id)}
           placeholder={props.placeholder}
           readOnly
-          value={
-            props.currentValue
-              ? formatTimeWithIndicator(props.currentValue)
-              : ""
-          }
+          value={props.currentValue ? formatTime(props.currentValue, true) : ""}
         />
         <ChevronDownFilled className="w-5 h-6 text-gray-500" />
       </button>
@@ -67,16 +58,16 @@ export default function DateDropdownSelect({
                   className={cn(
                     "py-3.5 first:pt-0 last:pb-0 border-b border-gray-200 last:border-0 h4 font-medium cursor-pointer",
                     props.currentValue &&
-                      formatTimeWithIndicator(option) ===
-                        formatTimeWithIndicator(props.currentValue)
+                      formatTime(option, true) ===
+                        formatTime(props.currentValue, true)
                       ? "text-brand-orange"
                       : "text-gray-900"
                   )}
                   onClick={() => {
                     if (
                       props.currentValue &&
-                      formatTimeWithIndicator(option) ===
-                        formatTimeWithIndicator(props.currentValue)
+                      formatTime(option, true) ===
+                        formatTime(props.currentValue, true)
                     ) {
                       props.handleChange(undefined);
                       closeModal(props.id);
@@ -86,7 +77,7 @@ export default function DateDropdownSelect({
                     }
                   }}
                 >
-                  {formatTimeWithIndicator(option)}
+                  {formatTime(option, true)}
                 </li>
               ))}
             </ul>

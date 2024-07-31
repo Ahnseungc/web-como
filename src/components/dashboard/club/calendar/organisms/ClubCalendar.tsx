@@ -3,7 +3,7 @@
 import { DayPicker } from "react-day-picker";
 import { ko } from "date-fns/locale";
 import { openModal } from "@/lib/utils";
-import { ChevronLeft, ChevronRight } from "@/assets/icons/chevron";
+import { ChevronRight } from "@/assets/icons/chevron";
 import { Plus } from "@/assets/icons/action";
 import { Complete, Incomplete } from "@/assets/icons/status";
 
@@ -31,7 +31,7 @@ export default function ClubCalendar() {
             if (orientation === "left") {
               return (
                 <div className="rounded hover:bg-gray-200 transition duration-300">
-                  <ChevronLeft className="w-8 h-8 text-gray-500" />
+                  <ChevronRight className="w-8 h-8 text-gray-500 rotate-180" />
                 </div>
               );
             } else if (orientation === "right") {
