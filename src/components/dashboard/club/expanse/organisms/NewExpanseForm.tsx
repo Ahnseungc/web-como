@@ -50,12 +50,7 @@ export default function NewExpanseReportForm() {
           <DropdownSelect
             id="type"
             placeholder="비목 선택"
-            options={[
-              "사내 동호회 활동비 지원금",
-              "물품 구매 지원금",
-              "우수 동호회 상금",
-              "기타",
-            ]}
+            options={["활동비 지원", "비품 구매", "우수 동호회 상금", "기타"]}
             currentValue={formValues.type}
             handleChange={(newValue) =>
               setFormValues((prev) => {
