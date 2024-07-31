@@ -1,11 +1,12 @@
 "use client";
 
-import { cn, openModal } from "@/lib/utils";
+import { cn, formatDate, openModal } from "@/lib/utils";
 
 type Status = "completed" | "confirmed" | "pending" | "canceled";
 
 const tableHeadings = [
   "결제일",
+  "주문번호",
   "상품명",
   "결제 금액",
   "예약 일자",
@@ -14,83 +15,83 @@ const tableHeadings = [
 
 const reservations = [
   {
-    id: 1,
-    date: "20240704 12:33:57",
+    date: null,
+    id: "112345-67891",
     name: "상품명",
     price: 250000,
-    reservationDate: "20240704 12:33:57",
+    reservationDate: "2024-07-04 12:33:57",
+    status: "pending",
+  },
+  {
+    date: "2024-07-04 12:33:57",
+    id: "212345-67891",
+    name: "상품명",
+    price: 250000,
+    reservationDate: "2024-07-04 12:33:57",
     status: "confirmed",
   },
   {
-    id: 2,
-    date: "20240704 12:33:57",
+    date: null,
+    id: "312345-67891",
     name: "상품명",
     price: 250000,
-    reservationDate: "20240704 12:33:57",
+    reservationDate: "2024-07-04 12:33:57",
+    status: "pending",
+  },
+  {
+    date: "2024-07-04 12:33:57",
+    id: "412345-67891",
+    name: "상품명",
+    price: 250000,
+    reservationDate: "2024-07-04 12:33:57",
     status: "confirmed",
   },
   {
-    id: 3,
-    date: "20240704 12:33:57",
+    date: "2024-07-04 12:33:57",
+    id: "512345-67891",
     name: "상품명",
     price: 250000,
-    reservationDate: "20240704 12:33:57",
-    status: "completed",
-  },
-  {
-    id: 4,
-    date: "20240704 12:33:57",
-    name: "상품명",
-    price: 250000,
-    reservationDate: "20240704 12:33:57",
-    status: "completed",
-  },
-  {
-    id: 5,
-    date: "20240704 12:33:57",
-    name: "상품명",
-    price: 250000,
-    reservationDate: "20240704 12:33:57",
+    reservationDate: "2024-07-04 12:33:57",
     status: "canceled",
   },
   {
-    id: 6,
-    date: "20240704 12:33:57",
+    date: "2024-07-04 12:33:57",
+    id: "612345-67891",
     name: "상품명",
     price: 250000,
-    reservationDate: "20240704 12:33:57",
+    reservationDate: "2024-07-04 12:33:57",
     status: "completed",
   },
   {
-    id: 7,
-    date: "20240704 12:33:57",
+    date: "2024-07-04 12:33:57",
+    id: "712345-67891",
     name: "상품명",
     price: 250000,
-    reservationDate: "20240704 12:33:57",
+    reservationDate: "2024-07-04 12:33:57",
     status: "canceled",
   },
   {
-    id: 8,
-    date: "20240704 12:33:57",
+    date: "2024-07-04 12:33:57",
+    id: "812345-67891",
     name: "상품명",
     price: 250000,
-    reservationDate: "20240704 12:33:57",
+    reservationDate: "2024-07-04 12:33:57",
     status: "completed",
   },
   {
-    id: 9,
-    date: "20240704 12:33:57",
+    date: "2024-07-04 12:33:57",
+    id: "912345-67891",
     name: "상품명",
     price: 250000,
-    reservationDate: "20240704 12:33:57",
+    reservationDate: "2024-07-04 12:33:57",
     status: "completed",
   },
   {
-    id: 10,
-    date: "20240704 12:33:57",
+    date: "2024-07-04 12:33:57",
+    id: "1012345-67891",
     name: "상품명",
     price: 250000,
-    reservationDate: "20240704 12:33:57",
+    reservationDate: "2024-07-04 12:33:57",
     status: "completed",
   },
 ];
@@ -104,11 +105,11 @@ export default function ReservationTable() {
             key={heading}
             className={cn(
               "flex-1 my-3 mx-6 text-center body-1 font-bold text-gray-900",
-              i === 1
+              i === 2
                 ? ""
-                : i === 4
-                  ? "flex items-center justify-center gap-2 m-0 min-w-52 max-w-60"
-                  : "max-w-60"
+                : i === 5
+                  ? "flex items-center justify-center m-0 min-w-52 max-w-60"
+                  : "max-w-32 xl:max-w-40"
             )}
           >
             {heading}
@@ -122,6 +123,7 @@ export default function ReservationTable() {
         >
           {[
             reservation.date,
+            reservation.id,
             reservation.name,
             reservation.price,
             reservation.reservationDate,
@@ -130,37 +132,50 @@ export default function ReservationTable() {
             <div
               key={data}
               className={cn(
-                "flex-1 my-3 mx-6 text-center body-1 font-medium underline-offset-2 underline decoration-transparent line-clamp-1 transition duration-300",
-                i === 1
-                  ? "hover:decoration-gray-800 cursor-pointer"
-                  : i === 4
-                    ? "flex items-center justify-center gap-2 m-0 min-w-52 max-w-60"
-                    : "max-w-60",
-                i === 2 ? "font-bold" : "",
-                data === "canceled" ? "text-gray-500" : "text-gray-800"
+                "flex-1 items-center justify-center my-3 mx-6 text-center body-1 font-medium underline-offset-2 underline decoration-transparent line-clamp-1 transition duration-300",
+                i === 2
+                  ? "flex justify-start gap-3 hover:decoration-gray-800 cursor-pointer"
+                  : i === 5
+                    ? "flex gap-2 m-0 min-w-52 max-w-60"
+                    : "flex max-w-32 xl:max-w-40",
+                i === 3
+                  ? "font-bold decoration-gray-800"
+                  : "",
+                data === "canceled"
+                  ? "text-gray-500"
+                  : data === "confirmed"
+                    ? "text-point-blue"
+                    : "text-gray-800"
               )}
             >
-              {i === 2 ? (
-                `${data.toLocaleString()}원`
+              {i === 0 ? (
+                data ? (
+                  formatDate(new Date(data))
+                ) : (
+                  "입금 대기"
+                )
+              ) : i === 4 ? (
+                formatDate(new Date(data!))
+              ) : i === 3 ? (
+                `${data!.toLocaleString()}원`
+              ) : i === 2 ? (
+                <>
+                  <div className="w-[100px] h-[100px] rounded-lg bg-gray-300" />
+                  {data}
+                </>
               ) : data === "completed" ? (
                 "참여 완료"
+              ) : data === "confirmed" ? (
+                "예약 확정"
               ) : data === "canceled" ? (
                 "예약 취소"
-              ) : data === "confirmed" ? (
-                <>
-                  <button
-                    className="py-1 px-4 rounded border border-gray-900 body-1 font-medium text-gray-50 bg-gray-900"
-                    onClick={() => openModal("reservation-change")}
-                  >
-                    {"예약 변경"}
-                  </button>
-                  <button
-                    className="py-1 px-4 rounded border border-gray-900 body-1 font-medium text-gray-900 bg-gray-50"
-                    onClick={() => openModal("reservation-cancel")}
-                  >
-                    {"예약 취소"}
-                  </button>
-                </>
+              ) : data === "pending" ? (
+                <button
+                  className="py-1 px-4 rounded border border-point-red body-1 font-medium text-point-red bg-gray-0"
+                  onClick={() => openModal("reservation-cancel")}
+                >
+                  {"예약 취소"}
+                </button>
               ) : (
                 data
               )}
