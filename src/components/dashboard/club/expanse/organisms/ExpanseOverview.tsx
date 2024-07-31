@@ -9,7 +9,7 @@ export default function ExpanseOverview() {
         <div className="flex items-center justify-between">
           <h3 className="h1 font-bold text-gray-0">{"입출금 내역"}</h3>
           <Link href={`${CLUB_DASHBOARD_ENDPOINT}/expanse/transaction`}>
-            <ChevronRight className="w-6 h-6 text-gray-0" />
+            <ChevronRight className="w-8 h-8 text-gray-0" />
           </Link>
         </div>
         <div className="flex items-center justify-between mt-8">

@@ -5,7 +5,7 @@ export default function ApplicationGuide() {
   return (
     <div className="space-y-2 p-8 rounded-2xl bg-gray-0">
       <div className="relative flex items-center gap-2">
-        <h2 className="h1 font-bold text-gray-900">{"활동비 신청 안내"}</h2>
+        <h2 className="h1 font-bold text-brand-orange">{"활동비 신청 안내"}</h2>
         <InfoTooltipButton
           id="expanse-application-info"
           title="활동비 신청 안내"
