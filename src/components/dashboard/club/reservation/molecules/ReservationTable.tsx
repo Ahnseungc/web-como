@@ -1,6 +1,8 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { cn, formatDate, openModal } from "@/lib/utils";
+import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 
 type Status = "completed" | "confirmed" | "pending" | "canceled";
 
@@ -97,6 +99,8 @@ const reservations = [
 ];
 
 export default function ReservationTable() {
+  const { push } = useRouter();
+
   return (
     <ul className="flex flex-col gap-1">
       <li className="flex border-y border-gray-400 bg-gray-200">
@@ -138,15 +142,18 @@ export default function ReservationTable() {
                   : i === 5
                     ? "flex gap-2 m-0 min-w-52 max-w-60"
                     : "flex max-w-32 xl:max-w-40",
-                i === 3
-                  ? "font-bold decoration-gray-800"
-                  : "",
+                i === 3 ? "font-bold decoration-gray-800" : "",
                 data === "canceled"
                   ? "text-gray-500"
                   : data === "confirmed"
                     ? "text-point-blue"
                     : "text-gray-800"
               )}
+              onClick={() => {
+                if (i === 2) {
+                  push(`${CLUB_DASHBOARD_ENDPOINT}/reservation/item/${1}`);
+                }
+              }}
             >
               {i === 0 ? (
                 data ? (

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { openModal } from "@/lib/utils";
+import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 import Avatar from "@/components/common/Avatar";
 import Button from "@/components/common/Button";
 import DropdownSelect from "@/components/common/DropdownSelect";
@@ -36,25 +37,32 @@ export default function InquiryForm() {
       <div className="flex gap-3">
         <div className="flex-1 space-y-3">
           <h4 className="font-bold text-gray-900">{"문의 상품"}</h4>
-          <div className="flex items-center gap-3 p-5 rounded-md bg-gray-0 shadow">
-            <div className="w-[100px] h-[100px] rounded-lg bg-gray-300"></div>
-            <div className="space-y-3">
-              <div className="w-[300px] break-keep body-1 font-medium text-gray-900">
-                {"이드커피, 몰입이 될 수밖에 없는 동굴 속 도서관 [SQNC 052]"}
+          <div className="p-5 rounded-md bg-gray-0 shadow">
+            <Link
+              href={`${CLUB_DASHBOARD_ENDPOINT}/reservation/item/${1}`}
+              className="flex items-center gap-3"
+            >
+              <div className="w-[100px] h-[100px] rounded-lg bg-gray-300"></div>
+              <div className="space-y-3">
+                <div className="w-[300px] break-keep body-1 font-medium text-gray-900">
+                  {"이드커피, 몰입이 될 수밖에 없는 동굴 속 도서관 [SQNC 052]"}
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="h2 font-extrabold text-point-red">
+                    {"7%"}
+                  </span>
+                  <span className="h2 font-extrabold text-gray-900">{`${(30000).toLocaleString()}원~`}</span>
+                  <span className="h3 font-normal text-gray-500">{"/인"}</span>
+                </div>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="h2 font-extrabold text-point-red">{"7%"}</span>
-                <span className="h2 font-extrabold text-gray-900">{`${(30000).toLocaleString()}원~`}</span>
-                <span className="h3 font-normal text-gray-500">{"/인"}</span>
-              </div>
-            </div>
+            </Link>
           </div>
         </div>
         <div className="flex-1 space-y-3">
           <h4 className="font-bold text-gray-900">{"문의할 호스트"}</h4>
           <div className="py-[42px] px-5 rounded-md bg-gray-0 shadow">
             <Link
-              href={`/dashboard/reservation/host/${1}`}
+              href={`${CLUB_DASHBOARD_ENDPOINT}/reservation/host/${1}`}
               className="flex items-center gap-2"
             >
               <Avatar size="w-[56px] h-[56px]" />
@@ -72,7 +80,7 @@ export default function InquiryForm() {
           </div>
         </div>
       </div>
-      <hr className="mt-16 mb-6 border-gray-200" />
+      <hr className="mt-12 mb-6 border-gray-200" />
       <div className="space-y-6">
         <div className="space-y-2">
           <label htmlFor="type" className="h3 font-semibold text-gray-900">
