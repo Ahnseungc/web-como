@@ -7,7 +7,7 @@ import { ChevronRight } from "@/assets/icons/chevron";
 import { Plus } from "@/assets/icons/action";
 import { Complete, Incomplete } from "@/assets/icons/status";
 
-export default function ClubCalendar() {
+export default function ClubCalendar({ readonly }: { readonly?: boolean }) {
   return (
     <div className="p-8 rounded-xl bg-gray-0">
       <DayPicker
@@ -49,13 +49,15 @@ export default function ClubCalendar() {
               <div className="flex items-center justify-center w-[224px] h-12 mb-10 text-center h2 font-bold text-gray-900">
                 {`${calendarMonth.date.getFullYear()}년 ${calendarMonth.date.getMonth() + 1}월`}
               </div>
-              <button
-                className="flex items-center justify-center gap-[3px] p-2.5 pr-3 rounded-md border border-gray-900 body-1 font-semibold text-gray-900 bg-gray-50"
-                onClick={() => openModal("new-schedule-form")}
-              >
-                <Plus className="w-5 h-5" />
-                {"동호회 일정 등록"}
-              </button>
+              {!readonly && (
+                <button
+                  className="flex items-center justify-center gap-[3px] p-2.5 pr-3 rounded-md border border-gray-900 body-1 font-semibold text-gray-900 bg-gray-50"
+                  onClick={() => openModal("new-schedule-form")}
+                >
+                  <Plus className="w-5 h-5" />
+                  {"동호회 일정 등록"}
+                </button>
+              )}
             </div>
           ),
         }}
