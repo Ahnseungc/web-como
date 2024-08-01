@@ -4,8 +4,8 @@ import { useSearchParams } from "next/navigation";
 import { openModal } from "@/lib/utils";
 import BackButton from "@/components/dashboard/common/BackButton";
 import PDFViewer from "@/components/dashboard/club/common/PDFViewer";
-import RejectApplicationModal from "@/components/dashboard/company/club/molecules/RejectApplicationModal";
-import RevertRejectionModal from "@/components/dashboard/company/club/molecules/RevertRejectionModal";
+import RejectApplicationModal from "@/components/dashboard/company/club/modals/RejectApplicationModal";
+import RevertRejectionModal from "@/components/dashboard/company/club/modals/RevertRejectionModal";
 
 export default function ApplicationDetailPage() {
   const status = useSearchParams().get("status");
