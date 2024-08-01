@@ -11,6 +11,13 @@ import Input from "@/components/common/Input";
 import { Category } from "@/assets/icons/info";
 import { ChevronRight } from "@/assets/icons/chevron";
 
+const inquiryTypes = [
+  { name: "예약 상세 문의", value: "reservation" },
+  { name: "인원 문의", value: "participant" },
+  { name: "커리큘럼", value: "curriculum" },
+  { name: "기타", value: "etc" },
+];
+
 const initialFormValues = {
   type: "",
   title: "",
@@ -87,10 +94,11 @@ export default function InquiryForm() {
             {"문의 유형"}
           </label>
           <DropdownSelect
+            required
             id="type"
             width="w-[188px]"
             placeholder="선택해 주세요"
-            options={["예약 상세 문의", "인원 문의", "커리큘럼", "기타"]}
+            options={inquiryTypes}
             currentValue={formValues.type}
             handleChange={(newValue) =>
               setFormValues((prev) => {

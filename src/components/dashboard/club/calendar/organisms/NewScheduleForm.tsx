@@ -19,7 +19,12 @@ const image = null;
 const MIN_PEOPLE = 1;
 const MAX_PEOPLE = 10;
 
-const iterationOptions = ["반복선택 안함", "1개월", "3개월", "6개월"];
+const iterationOptions = [
+  { name: "반복선택 안함", value: "none" },
+  { name: "1개월", value: "one-month" },
+  { name: "3개월", value: "three-month" },
+  { name: "6개월", value: "six-month" },
+];
 
 export default function NewScheduleForm() {
   const [maxPeople, setMaxPeople] = useState<number>(1);
@@ -27,7 +32,7 @@ export default function NewScheduleForm() {
     date: Date | undefined;
     time: Date | undefined;
     iteration: string;
-  }>({ date: undefined, time: undefined, iteration: "반복선택 안함" });
+  }>({ date: undefined, time: undefined, iteration: "none" });
   const [intervals, setIntervals] = useState<Date[]>();
 
   useEffect(() => {
@@ -122,6 +127,7 @@ export default function NewScheduleForm() {
                     }
                   />
                   <DropdownSelect
+                    required
                     id="iteration"
                     width="w-52"
                     options={iterationOptions}

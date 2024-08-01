@@ -1,5 +1,5 @@
-import type { SearchValueWithFilter } from "@/lib/types/search";
-import SearchBarWithFilterChips from "@/components/dashboard/common/SearchBarWithFilterChips";
+import type { SearchValue } from "@/lib/types/search";
+import Search from "@/components/dashboard/common/Search";
 
 const filterList = [
   { name: "전체 보기", value: "all" },
@@ -8,16 +8,14 @@ const filterList = [
 ];
 
 interface Props {
-  currentSearchValue: SearchValueWithFilter;
-  setCurrentSearchValue: React.Dispatch<
-    React.SetStateAction<SearchValueWithFilter>
-  >;
+  currentSearchValue: SearchValue;
+  setCurrentSearchValue: React.Dispatch<React.SetStateAction<SearchValue>>;
   handleSearch: () => void;
 }
 
 export default function ApplicationSearch(props: Props) {
   return (
-    <SearchBarWithFilterChips
+    <Search
       filterList={filterList}
       currentValue={props.currentSearchValue}
       handleChange={({ term, filter }) =>

@@ -1,16 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  initialSearchValueWithFilter,
-  SearchValueWithFilter,
-} from "@/lib/types/search";
+import type { SearchValue } from "@/lib/types/search";
 import ApplicationSearch from "@/components/dashboard/company/club/molecules/ApplicationSearch";
 import ApplicationList from "@/components/dashboard/company/club/organisms/ApplicationList";
 
 export default function ApplicationView() {
-  const [currentSearchValue, setCurrentSearchValue] =
-    useState<SearchValueWithFilter>(initialSearchValueWithFilter);
+  const [currentSearchValue, setCurrentSearchValue] = useState<SearchValue>({
+    term: "",
+    filter: "all",
+  });
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
@@ -30,7 +29,7 @@ export default function ApplicationView() {
         handleSearch={handleSearch}
       />
       <ApplicationList
-        currentSearchFilter={currentSearchValue.filter}
+        currentSearchFilter={currentSearchValue.filter!}
         currentSearchTerm={searchTerm}
       />
     </>
