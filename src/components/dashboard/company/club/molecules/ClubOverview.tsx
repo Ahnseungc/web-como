@@ -4,7 +4,7 @@ export default function ClubOverview() {
       <h2 className="h1 font-bold text-gray-0">{"사내동호회 관리"}</h2>
       <div className="flex gap-8 truncate">
         <div className="flex-1 flex flex-col gap-4 py-3 px-2">
-          <h4 className="font-medium text-gray-400">{"해체신정"}</h4>
+          <h4 className="font-medium text-gray-400">{"해체신청"}</h4>
           <span className="h1 font-extrabold text-brand-orange">
             {`${2}건`}
           </span>
