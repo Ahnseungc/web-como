@@ -1,4 +1,4 @@
-import { SearchValue } from "@/lib/types/search";
+import type { SearchValue } from "@/lib/types/search";
 import Search from "@/components/dashboard/common/Search";
 
 const fieldList = [
@@ -23,9 +23,13 @@ export default function ClubSearch(props: Props) {
       fieldList={fieldList}
       filterList={filterList}
       currentValue={props.currentSearchValue}
-      handleChange={({ term, filter }) =>
+      handleChange={({ field, term, filter }) =>
         props.setCurrentSearchValue((prev) => {
-          return { term: term || prev.term, filter: filter || prev.filter };
+          return {
+            field: field || prev.field,
+            term: term || prev.term,
+            filter: filter || prev.filter,
+          };
         })
       }
       handleSearch={props.handleSearch}

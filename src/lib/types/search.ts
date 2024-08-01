@@ -8,11 +8,6 @@ export interface SearchFilter {
   value: string;
 }
 
-export const initialSearchValueWithFilter: SearchValue = {
-  term: "",
-  filter: "all",
-};
-
 export interface SearchValue {
   field?: string;
   term: string;
