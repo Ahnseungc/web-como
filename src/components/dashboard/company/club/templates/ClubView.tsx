@@ -1,16 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  initialSearchValueWithFilter,
-  SearchValueWithFilter,
-} from "@/lib/types/search";
+import { initialSearchValueWithFilter, SearchValue } from "@/lib/types/search";
 import ClubSearch from "@/components/dashboard/company/club/molecules/ClubSearch";
 import ClubList from "@/components/dashboard/company/club/organisms/ClubList";
 
 export default function ClubView() {
-  const [currentSearchValue, setCurrentSearchValue] =
-    useState<SearchValueWithFilter>(initialSearchValueWithFilter);
+  const [currentSearchValue, setCurrentSearchValue] = useState<SearchValue>(
+    initialSearchValueWithFilter
+  );
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
@@ -30,7 +28,7 @@ export default function ClubView() {
         handleSearch={handleSearch}
       />
       <ClubList
-        currentSearchFilter={currentSearchValue.filter}
+        currentSearchFilter={currentSearchValue.filter!}
         currentSearchTerm={searchTerm}
       />
     </>

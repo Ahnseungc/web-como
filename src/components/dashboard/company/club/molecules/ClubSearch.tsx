@@ -1,6 +1,10 @@
-import type { SearchValueWithFilter } from "@/lib/types/search";
-import SearchBarWithFilterChips from "@/components/dashboard/common/SearchBarWithFilterChips";
+import { SearchValue } from "@/lib/types/search";
+import Search from "@/components/dashboard/common/Search";
 
+const fieldList = [
+  { name: "동호회명", value: "club" },
+  { name: "부서", value: "dept" },
+];
 const filterList = [
   { name: "전체 보기", value: "all" },
   { name: "해체신청", value: "request" },
@@ -8,16 +12,15 @@ const filterList = [
 ];
 
 interface Props {
-  currentSearchValue: SearchValueWithFilter;
-  setCurrentSearchValue: React.Dispatch<
-    React.SetStateAction<SearchValueWithFilter>
-  >;
+  currentSearchValue: SearchValue;
+  setCurrentSearchValue: React.Dispatch<React.SetStateAction<SearchValue>>;
   handleSearch: () => void;
 }
 
 export default function ClubSearch(props: Props) {
   return (
-    <SearchBarWithFilterChips
+    <Search
+      fieldList={fieldList}
       filterList={filterList}
       currentValue={props.currentSearchValue}
       handleChange={({ term, filter }) =>
