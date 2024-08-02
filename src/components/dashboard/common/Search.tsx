@@ -1,8 +1,5 @@
 "use client";
 
-import Chip from "@/components/common/Chip";
-import DropdownSelect from "@/components/common/DropdownSelect";
-import SearchBar from "@/components/dashboard/common/SearchBar";
 import type {
   ChangeSearchValue,
   SearchField,
@@ -10,6 +7,10 @@ import type {
   SearchOrder,
   SearchValue,
 } from "@/lib/types/search";
+import { cn } from "@/lib/utils";
+import Chip from "@/components/common/Chip";
+import DropdownSelect from "@/components/common/DropdownSelect";
+import SearchBar from "@/components/dashboard/common/SearchBar";
 
 interface Props {
   title?: string;
@@ -68,13 +69,18 @@ export default function Search(props: Props) {
       {props.orderList && (
         <div className="flex gap-3">
           {props.orderList.map((order) => (
-            <Chip
+            <button
               key={order.value}
-              content={order.name}
-              primary={order.value === props.currentValue.order}
-              padding="py-2.5 px-4"
+              className={cn(
+                "h-[38px] px-4 rounded-md body-1 font-semibold transition",
+                order.value === props.currentValue.order
+                  ? "text-brand-orange bg-orange-50"
+                  : "text-gray-700 bg-gray-200"
+              )}
               onClick={() => props.handleChange({ order: order.value })}
-            />
+            >
+              {order.name}
+            </button>
           ))}
         </div>
       )}
