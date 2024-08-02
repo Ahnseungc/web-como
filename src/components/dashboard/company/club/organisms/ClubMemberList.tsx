@@ -4,7 +4,7 @@ import { useState } from "react";
 import type { ChangeSearchValue, SearchValue } from "@/lib/types/search";
 import Search from "@/components/dashboard/common/Search";
 import Pagination from "@/components/dashboard/common/Pagination";
-import ClubTable from "@/components/dashboard/company/club/molecules/ClubTable";
+import ClubMemberTable from "@/components/dashboard/company/club/molecules/ClubMemberTable";
 
 const fieldList = [
   { name: "이름", value: "name" },
@@ -59,7 +59,7 @@ export default function ClubMemberList() {
         handleSearch={handleSearch}
       />
       <div className="space-y-10">
-        <ClubTable />
+        <ClubMemberTable />
         <Pagination
           currentPage={currentPage}
           maxPage={8}
