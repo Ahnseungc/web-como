@@ -60,7 +60,7 @@ export default function NewScheduleForm() {
           </div>
           <div className="flex gap-8 mt-10">
             <div className="w-fit h-fit rounded-xl border border-gray-300">
-              <div className="w-80 xl:w-[390px] aspect-[10/9] rounded-t-xl bg-gray-300">
+              <div className="w-96 aspect-[10/9] rounded-t-xl bg-gray-300">
                 {image && (
                   <Image
                     src={image}
