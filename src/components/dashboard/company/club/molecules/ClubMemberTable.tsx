@@ -1,7 +1,6 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
-import { cn, formatDate, openModal } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 
 type MemberStatus = "active" | "leave";
 
@@ -137,9 +136,6 @@ export default function ClubMemberTable() {
                       ? "max-w-48"
                       : "",
                 i === 3 ? "" : "text-center",
-                [1, 3].includes(i)
-                  ? "hover:decoration-gray-800 cursor-pointer"
-                  : "",
                 data === "leave"
                   ? "text-gray-500"
                   : data === "active"
