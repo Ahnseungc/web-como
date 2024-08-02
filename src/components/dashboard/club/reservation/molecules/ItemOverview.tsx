@@ -64,7 +64,7 @@ export default function ItemDetailOverview() {
               <div>
                 <div className="flex items-center h4 font-bold text-gray-900">
                   {"호스트명"}
-                  <ChevronRight className="w-4 h-4 xl:w-6 xl:h-6" />
+                  <ChevronRight className="w-5 h-5" />
                 </div>
                 <div className="flex items-center mt-[3px] caption-1 font-medium text-gray-500">
                   <Category className="w-3.5 h-3.5" />

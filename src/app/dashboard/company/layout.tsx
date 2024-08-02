@@ -13,7 +13,7 @@ export default function DashboardLayout({
     <>
       <Header isDashboard isLoggedIn title="주무부서 관리센터" />
       <main
-        className="flex min-w-[1186px] min-h-[1080px] bg-gray-200"
+        className="flex min-h-[1080px] bg-gray-200"
         style={{ marginTop: HEADER_HEIGHT }}
       >
         <SideBar />

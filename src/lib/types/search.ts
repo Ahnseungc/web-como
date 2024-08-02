@@ -1,19 +1,26 @@
+export interface SearchField {
+  name: string;
+  value: string;
+}
+
 export interface SearchFilter {
   name: string | React.ReactNode;
   value: string;
 }
 
-export const initialSearchValueWithFilter: SearchValueWithFilter = {
-  term: "",
-  filter: "all",
-};
-
-export interface SearchValueWithFilter {
-  term: string;
-  filter: string;
+export interface SearchOrder {
+  name: string;
+  value: string;
 }
 
-export interface ChangeSearchValueWithFilter {
+export interface SearchValue {
+  field?: string;
+  term: string;
+  filter?: string;
+}
+
+export interface ChangeSearchValue {
+  field?: string;
   term?: string;
   filter?: string;
 }

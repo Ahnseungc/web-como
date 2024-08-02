@@ -1,11 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import SearchBarWithFilterChips from "@/components/dashboard/common/SearchBarWithFilterChips";
-import {
-  initialSearchValueWithFilter,
-  SearchValueWithFilter,
-} from "@/lib/types/search";
+import type { SearchValue } from "@/lib/types/search";
+import Search from "@/components/dashboard/common/Search";
 
 const filterList = [
   { name: "전체 보기", value: "all" },
@@ -18,13 +15,15 @@ const filterList = [
 ];
 
 export default function ItemSearch() {
-  const [currentSearchValue, setCurrentSearchValue] =
-    useState<SearchValueWithFilter>(initialSearchValueWithFilter);
+  const [currentSearchValue, setCurrentSearchValue] = useState<SearchValue>({
+    term: "",
+    filter: "all",
+  });
 
   const handleSearch = () => {};
 
   return (
-    <SearchBarWithFilterChips
+    <Search
       filterList={filterList}
       currentValue={currentSearchValue}
       handleChange={({ term, filter }) =>

@@ -78,7 +78,7 @@ export default function DateFilter({
           <button
             key={filter.name}
             className={cn(
-              "flex items-center justify-center w-[60px] h-full rounded-md body-1 font-semibold",
+              "flex items-center justify-center w-[60px] h-full rounded-md body-1 font-semibold transition",
               isSameDay(
                 filter.dateRange.startDate!,
                 currentDateRange.startDate!
