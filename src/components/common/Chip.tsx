@@ -14,7 +14,7 @@ export default function Chip({ padding = "py-0.5 px-3.5", ...props }: Props) {
   return (
     <div
       className={cn(
-        "w-fit rounded-full border body-1 font-medium select-none",
+        "w-fit rounded-full border body-1 font-medium select-none transition",
         props.primary
           ? "border-gray-800 text-gray-50 bg-gray-800"
           : props.orange
