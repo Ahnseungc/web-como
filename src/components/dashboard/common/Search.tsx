@@ -7,21 +7,30 @@ import type {
   ChangeSearchValue,
   SearchField,
   SearchFilter,
+  SearchOrder,
   SearchValue,
 } from "@/lib/types/search";
 
 interface Props {
   title?: string;
+  withoutWrapper?: boolean;
   fieldList?: SearchField[];
   filterList?: SearchFilter[];
+  orderList?: SearchOrder[];
   currentValue: SearchValue;
-  handleChange: ({ field, term, filter }: ChangeSearchValue) => void;
+  handleChange: ({ field, term, filter, order }: ChangeSearchValue) => void;
   handleSearch: () => void;
 }
 
 export default function Search(props: Props) {
   return (
-    <div className="flex flex-col gap-6 p-8 rounded-2xl bg-gray-0">
+    <div
+      className={
+        props.withoutWrapper
+          ? "space-y-6"
+          : "space-y-6 p-8 rounded-2xl bg-gray-0"
+      }
+    >
       <h3 className="h2 font-semibold text-gray-900">
         {props.title || "검색 필터"}
       </h3>
@@ -52,6 +61,19 @@ export default function Search(props: Props) {
               primary={filter.value === props.currentValue.filter}
               padding="py-2.5 px-4"
               onClick={() => props.handleChange({ filter: filter.value })}
+            />
+          ))}
+        </div>
+      )}
+      {props.orderList && (
+        <div className="flex gap-3">
+          {props.orderList.map((order) => (
+            <Chip
+              key={order.value}
+              content={order.name}
+              primary={order.value === props.currentValue.order}
+              padding="py-2.5 px-4"
+              onClick={() => props.handleChange({ order: order.value })}
             />
           ))}
         </div>

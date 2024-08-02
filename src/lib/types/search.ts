@@ -8,14 +8,21 @@ export interface SearchFilter {
   value: string;
 }
 
+export interface SearchOrder {
+  name: string;
+  value: string;
+}
+
 export interface SearchValue {
   field?: string;
   term: string;
   filter?: string;
+  order?: string;
 }
 
 export interface ChangeSearchValue {
   field?: string;
   term?: string;
   filter?: string;
+  order?: string;
 }
