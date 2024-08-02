@@ -3,8 +3,10 @@
 import { useState } from "react";
 import type { ChangeSearchValue, SearchValue } from "@/lib/types/search";
 import Search from "@/components/dashboard/common/Search";
-import Pagination from "@/components/dashboard/common/Pagination";
+import SearchOrder from "@/components/dashboard/common/SearchOrder";
+import DocUtilButtons from "@/components/dashboard/common/DocUtil";
 import ClubMemberTable from "@/components/dashboard/company/club/molecules/ClubMemberTable";
+import Pagination from "@/components/dashboard/common/Pagination";
 
 const fieldList = [
   { name: "이름", value: "name" },
@@ -21,20 +23,15 @@ export default function ClubMemberList() {
   const [currentSearchValue, setCurrentSearchValue] = useState<SearchValue>({
     field: "name",
     term: "",
-    order: "date-acs",
   });
+  const [currentOrder, setCurrentOrder] = useState<string>("date-acs");
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const handleSearchValueChange = ({
-    field,
-    term,
-    order,
-  }: ChangeSearchValue) => {
+  const handleSearchValueChange = ({ field, term }: ChangeSearchValue) => {
     setCurrentSearchValue((prev) => {
       return {
         field: field || prev.field,
         term: term || prev.term,
-        order: order || prev.order,
       };
     });
   };
@@ -53,11 +50,18 @@ export default function ClubMemberList() {
         withoutWrapper
         title="동호회원"
         fieldList={fieldList}
-        orderList={orderList}
         currentValue={currentSearchValue}
         handleChange={handleSearchValueChange}
         handleSearch={handleSearch}
       />
+      <div className="flex items-center justify-between">
+        <SearchOrder
+          orderList={orderList}
+          currentOrder={currentOrder}
+          handleOrderChange={(newOrder) => setCurrentOrder(newOrder)}
+        />
+        <DocUtilButtons />
+      </div>
       <div className="space-y-10">
         <ClubMemberTable />
         <Pagination
