@@ -17,12 +17,10 @@ export interface SearchValue {
   field?: string;
   term: string;
   filter?: string;
-  order?: string;
 }
 
 export interface ChangeSearchValue {
   field?: string;
   term?: string;
   filter?: string;
-  order?: string;
 }

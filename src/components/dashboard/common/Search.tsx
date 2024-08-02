@@ -4,10 +4,8 @@ import type {
   ChangeSearchValue,
   SearchField,
   SearchFilter,
-  SearchOrder,
   SearchValue,
 } from "@/lib/types/search";
-import { cn } from "@/lib/utils";
 import Chip from "@/components/common/Chip";
 import DropdownSelect from "@/components/common/DropdownSelect";
 import SearchBar from "@/components/dashboard/common/SearchBar";
@@ -17,9 +15,8 @@ interface Props {
   withoutWrapper?: boolean;
   fieldList?: SearchField[];
   filterList?: SearchFilter[];
-  orderList?: SearchOrder[];
   currentValue: SearchValue;
-  handleChange: ({ field, term, filter, order }: ChangeSearchValue) => void;
+  handleChange: ({ field, term, filter }: ChangeSearchValue) => void;
   handleSearch: () => void;
 }
 
@@ -63,24 +60,6 @@ export default function Search(props: Props) {
               padding="py-2.5 px-4"
               onClick={() => props.handleChange({ filter: filter.value })}
             />
-          ))}
-        </div>
-      )}
-      {props.orderList && (
-        <div className="flex gap-3">
-          {props.orderList.map((order) => (
-            <button
-              key={order.value}
-              className={cn(
-                "h-[38px] px-4 rounded-md body-1 font-semibold transition",
-                order.value === props.currentValue.order
-                  ? "text-brand-orange bg-orange-50"
-                  : "text-gray-700 bg-gray-200"
-              )}
-              onClick={() => props.handleChange({ order: order.value })}
-            >
-              {order.name}
-            </button>
           ))}
         </div>
       )}
