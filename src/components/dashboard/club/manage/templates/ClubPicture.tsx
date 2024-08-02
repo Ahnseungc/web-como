@@ -1,5 +1,5 @@
-import ClubPictureTitle from "@/components/dashboard/club/manage/molecules/ClubPictureTitle";
-import ClubPictureItem from "@/components/dashboard/club/manage/organisms/ClubPictureItem";
+import ClubTitle from "@/components/dashboard/shared/molecules/ClubTitle";
+import ClubPictureItem from "@/components/dashboard/shared/organisms/ClubPictureItem";
 
 export interface ClubPicture {
   id: number;
@@ -32,7 +32,7 @@ const pictureList: ClubPicture[] = [
 export default function ClubPictureTab() {
   return (
     <>
-      <ClubPictureTitle />
+      <ClubTitle />
       {pictureList.map((picture) => (
         <ClubPictureItem key={picture.id} item={picture} />
       ))}

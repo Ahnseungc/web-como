@@ -9,6 +9,13 @@ import RadioButton from "@/components/common/RadioButton";
 import ImageInput from "@/components/common/ImageInput";
 import DropdownSelect from "@/components/common/DropdownSelect";
 
+const types = [
+  { name: "활동비 지원", value: "activity" },
+  { name: "비품 구매", value: "supply" },
+  { name: "우수 동호회 상금", value: "prize" },
+  { name: "기타", value: "etc" },
+];
+
 export default function NewExpanseReportForm() {
   const { replace } = useRouter();
   const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -48,9 +55,10 @@ export default function NewExpanseReportForm() {
         <div className="flex flex-col gap-2">
           <span className="h3 font-semibold text-gray-900">{"비목"}</span>
           <DropdownSelect
+            required
             id="type"
             placeholder="비목 선택"
-            options={["활동비 지원", "비품 구매", "우수 동호회 상금", "기타"]}
+            options={types}
             currentValue={formValues.type}
             handleChange={(newValue) =>
               setFormValues((prev) => {

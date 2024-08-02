@@ -3,12 +3,14 @@
 import { closeModal, cn, openModal } from "@/lib/utils";
 import Backdrop from "@/components/common/Backdrop";
 import { ChevronDownFilled } from "@/assets/icons/chevron";
+import { useState } from "react";
 
 interface Props {
   id: string;
-  options: string[];
+  options: { name: string; value: string }[];
   currentValue: string;
   handleChange: (newValue: string) => void;
+  required?: boolean;
   width?: string;
   height?: string;
   textStyle?: string;
@@ -21,6 +23,13 @@ export default function DropdownSelect({
   textStyle = "h4 font-medium",
   ...props
 }: Props) {
+  const [displayValue, setDisplayValue] = useState<string>(
+    props.currentValue
+      ? props.options.find((option) => option.value === props.currentValue)
+          ?.name || ""
+      : ""
+  );
+
   return (
     <div>
       <button
@@ -37,7 +46,7 @@ export default function DropdownSelect({
           onClick={() => openModal(props.id)}
           placeholder={props.placeholder}
           readOnly
-          value={props.currentValue}
+          value={displayValue}
         />
         <ChevronDownFilled className="w-5 h-6 text-gray-500" />
       </button>
@@ -52,24 +61,26 @@ export default function DropdownSelect({
           <ul>
             {props.options.map((option) => (
               <li
-                key={option}
+                key={option.value}
                 className={cn(
                   "py-3.5 first:pt-0 last:pb-0 border-b border-gray-200 last:border-0 h4 font-medium cursor-pointer",
-                  option === props.currentValue
+                  option.value === props.currentValue
                     ? "text-brand-orange"
                     : "text-gray-900"
                 )}
                 onClick={() => {
-                  if (option === props.currentValue) {
+                  if (!props.required && option.value === props.currentValue) {
                     props.handleChange("");
+                    setDisplayValue("");
                     closeModal(props.id);
                   } else {
-                    props.handleChange(option);
+                    props.handleChange(option.value);
+                    setDisplayValue(option.name);
                     closeModal(props.id);
                   }
                 }}
               >
-                {option}
+                {option.name}
               </li>
             ))}
           </ul>

@@ -7,6 +7,7 @@ import ClubPictureTab from "@/components/dashboard/club/manage/templates/ClubPic
 import ClubQnaTab from "@/components/dashboard/club/manage/templates/ClubQna";
 import ClubApplicationTab from "@/components/dashboard/club/manage/templates/ClubApplication";
 import ClubPolicyTab from "@/components/dashboard/club/manage/templates/ClubPolicy";
+import DeletePictureModal from "@/components/dashboard/club/manage/modals/DeletePictureModal";
 
 export type ClubMenu = "info" | "picture" | "qna" | "application" | "policy";
 
@@ -55,6 +56,9 @@ export default function ClubManagePage() {
         handleTabChange={handleTabChange}
       />
       {renderCurrentTabPage(currentTab)}
+      <div className="mt-0">
+        <DeletePictureModal />
+      </div>
     </>
   );
 }

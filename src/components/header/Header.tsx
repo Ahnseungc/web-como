@@ -8,6 +8,7 @@ import ProfileDropdown from "@/components/header/atoms/ProfileDropdown";
 import CustomerCenter from "@/components/header/molecules/CustomerCenter";
 import Logo from "@/assets/logos/logo.svg";
 import ComoWhiteLogo from "@/assets/logos/como_logo_white.svg";
+import useResponsiveZoom from "@/hooks/responsiveZoom";
 
 interface Props {
   isDashboard?: boolean;
@@ -16,6 +17,7 @@ interface Props {
 }
 
 export default function Header(props: Props) {
+  useResponsiveZoom();
   const pathname = usePathname().split("/");
 
   return (
