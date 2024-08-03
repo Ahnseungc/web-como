@@ -13,7 +13,7 @@ import useResponsiveZoom from "@/hooks/responsiveZoom";
 interface Props {
   isDashboard?: boolean;
   isLoggedIn?: boolean;
-  title?: "주무부서 관리센터" | "동호회 관리센터";
+  type?: "club" | "company";
 }
 
 export default function Header(props: Props) {
@@ -40,7 +40,8 @@ export default function Header(props: Props) {
                 priority
               />
             )}
-            {props.title && props.title}
+            {props.type && props.type === "club" && "동호회 관리센터"}
+            {props.type && props.type === "company" && "주무부서 관리센터"}
           </h1>
         </Link>
         <div className="flex items-center gap-8">

@@ -9,7 +9,7 @@ export default function SupportLayout({
 }>) {
   return (
     <>
-      <Header isLoggedIn title="동호회 관리센터" />
+      <Header isLoggedIn type="club" />
       <main className="pt-20 pb-40 px-10" style={{ marginTop: HEADER_HEIGHT }}>
         {children}
       </main>

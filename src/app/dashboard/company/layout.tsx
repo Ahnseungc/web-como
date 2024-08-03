@@ -12,7 +12,7 @@ export default function DashboardLayout({
 }>) {
   return (
     <>
-      <Header isDashboard isLoggedIn title="주무부서 관리센터" />
+      <Header isDashboard isLoggedIn type="company" />
       <main
         className="flex min-h-[1080px] bg-gray-200"
         style={{ marginTop: HEADER_HEIGHT }}
