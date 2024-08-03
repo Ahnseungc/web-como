@@ -3,6 +3,7 @@ import { HEADER_HEIGHT } from "@/lib/constants";
 import Loading from "@/app/dashboard/club/loading";
 import Header from "@/components/header/Header";
 import SideBar from "@/components/dashboard/club/common/SideBar";
+import Footer from "@/components/footer/Footer";
 
 export default function DashboardLayout({
   children,
@@ -19,6 +20,7 @@ export default function DashboardLayout({
         <SideBar />
         <Suspense fallback={<Loading />}>{children}</Suspense>
       </main>
+      <Footer />
     </>
   );
 }

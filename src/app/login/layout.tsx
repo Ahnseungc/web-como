@@ -1,5 +1,6 @@
 import { HEADER_HEIGHT } from "@/lib/constants";
 import Header from "@/components/header/Header";
+import ShortFooter from "@/components/footer/ShortFooter";
 
 export default function LoginLayout({
   children,
@@ -15,6 +16,7 @@ export default function LoginLayout({
       >
         {children}
       </main>
+      <ShortFooter />
     </>
   );
 }
