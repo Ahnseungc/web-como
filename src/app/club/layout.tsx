@@ -1,8 +1,7 @@
-import { HEADER_HEIGHT } from "@/lib/constants";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 
-export default function SupportLayout({
+export default function ClubLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -10,9 +9,7 @@ export default function SupportLayout({
   return (
     <>
       <Header isLoggedIn type="club" />
-      <main className="pt-20 pb-40 px-10" style={{ marginTop: HEADER_HEIGHT }}>
-        {children}
-      </main>
+      {children}
       <Footer />
     </>
   );

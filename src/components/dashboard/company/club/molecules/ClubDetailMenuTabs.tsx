@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import type {
   ClubDetailMenu,
   ClubDetailMenuTab,
-} from "@/app/dashboard/company/club/detail/[id]/page";
+} from "@/app/company/dashboard/club/detail/[id]/page";
 
 interface Props {
   tabs: ClubDetailMenuTab[];
