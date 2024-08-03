@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { cn, openModal } from "@/lib/utils";
+import { LOGIN_ENDPOINT } from "@/lib/constants";
 import ProfileDropdown from "@/components/header/atoms/ProfileDropdown";
 import CustomerCenter from "@/components/header/molecules/CustomerCenter";
 import Logo from "@/assets/logos/logo.svg";
@@ -18,7 +18,6 @@ interface Props {
 
 export default function Header(props: Props) {
   useResponsiveZoom();
-  const pathname = usePathname().split("/");
 
   return (
     <header className="fixed top-0 inset-x-0 z-20 flex items-center justify-center h-[60px] bg-gray-900">
@@ -45,20 +44,18 @@ export default function Header(props: Props) {
           </h1>
         </Link>
         <div className="flex items-center gap-8">
-          <Link href={`${pathname[2]}/announcement`}>
-            <span className="h4 font-normal text-gray-100">{"공지사항"}</span>
-          </Link>
-          <span
+          <div className="h4 font-normal text-gray-100">{"공지사항"}</div>
+          <div
             className="h4 font-normal text-gray-100 cursor-pointer"
             onClick={() => openModal("customer-center")}
           >
             {"고객센터"}
-          </span>
+          </div>
           {props.isLoggedIn ? (
             <ProfileDropdown />
           ) : (
-            <Link href={"/login"}>
-              <span className="h4 font-normal text-gray-100">{"로그인"}</span>
+            <Link href={LOGIN_ENDPOINT}>
+              <div className="h4 font-normal text-gray-100">{"로그인"}</div>
             </Link>
           )}
         </div>

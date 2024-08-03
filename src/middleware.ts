@@ -2,7 +2,9 @@ import { NextResponse, NextRequest } from "next/server";
 import { cookies } from "next/headers";
 import {
   CLUB_DASHBOARD_ENDPOINT,
+  CLUB_ENDPOINT,
   COMPANY_DASHBOARD_ENDPOINT,
+  COMPANY_ENDPOINT,
   LOGIN_ENDPOINT,
 } from "./lib/constants";
 
@@ -27,7 +29,7 @@ export function middleware(req: NextRequest) {
   if (!req.nextUrl.pathname.startsWith(LOGIN_ENDPOINT) && !refreshToken) {
     return NextResponse.redirect(new URL(LOGIN_ENDPOINT, req.url));
   } else if (
-    req.nextUrl.pathname.startsWith(CLUB_DASHBOARD_ENDPOINT) &&
+    req.nextUrl.pathname.startsWith(CLUB_ENDPOINT) &&
     type?.value !== "club"
   ) {
     if (type?.value === "company") {
@@ -38,7 +40,7 @@ export function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL(LOGIN_ENDPOINT, req.url));
     }
   } else if (
-    req.nextUrl.pathname.startsWith(COMPANY_DASHBOARD_ENDPOINT) &&
+    req.nextUrl.pathname.startsWith(COMPANY_ENDPOINT) &&
     type?.value !== "company"
   ) {
     if (type?.value === "club") {
