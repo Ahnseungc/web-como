@@ -1,4 +1,3 @@
-import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 
 export default function CompanyLayout({
@@ -8,7 +7,6 @@ export default function CompanyLayout({
 }>) {
   return (
     <>
-      <Header isLoggedIn type="company" />
       {children}
       <Footer />
     </>
