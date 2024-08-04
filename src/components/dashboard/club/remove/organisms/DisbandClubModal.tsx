@@ -78,8 +78,8 @@ export default function DisbandClubModal() {
             />
           </div>
           <Button
+            primary
             content="해체 신청하기"
-            orange
             onClick={() => {
               closeModal();
               openModal("disband-club-2");

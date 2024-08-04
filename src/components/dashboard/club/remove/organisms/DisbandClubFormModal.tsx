@@ -13,6 +13,8 @@ import { ChevronDown } from "@/assets/icons/chevron";
 
 const DEFAULT_TEXT = "해체 신청에 동의합니다";
 
+const initialInputValues = { reason: "", current: "", correct: "" };
+
 export default function DisbandClubFormModal() {
   const [showInfo, setShowInfo] = useState<boolean>(true);
   const [isAgree, setIsAgree] = useState<{
@@ -20,9 +22,10 @@ export default function DisbandClubFormModal() {
     check: boolean;
   }>({ sentence: false, check: false });
   const [inputValues, setInputValues] = useState<{
+    reason: string;
     current: string;
     correct: string;
-  }>({ current: "", correct: "" });
+  }>(initialInputValues);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -51,7 +54,7 @@ export default function DisbandClubFormModal() {
     e.preventDefault();
     closeModal();
 
-    setInputValues({ current: "", correct: "" });
+    setInputValues(initialInputValues);
     setIsAgree({ sentence: false, check: false });
 
     alert(
@@ -96,19 +99,16 @@ export default function DisbandClubFormModal() {
         </div>
         <div className="space-y-4">
           <Input
-            readonly
-            name="name"
-            label="동호회 명"
-            value="어푸어푸 수영모임"
+            name="reason"
+            label="해체 사유"
+            placeholder="해체 사유를 작성해 주세요"
+            currentValue={inputValues.reason}
+            handleInputChange={(e) =>
+              setInputValues((prev) => {
+                return { ...prev, reason: e.target.value };
+              })
+            }
           />
-          <Input readonly name="created" label="개설일자" value="2024.05.02" />
-          <Input
-            readonly
-            name="description"
-            label="한줄 소개"
-            value="서울에 위치한 수영장에서의 운동"
-          />
-          <Input readonly name="people" label="동호회 인원" value="20명" />
           <div className="relative space-y-2">
             <label
               htmlFor="agreement"
@@ -136,10 +136,10 @@ export default function DisbandClubFormModal() {
           </div>
         </div>
         <Button
-          content="해체하기"
           primary
+          content="해체하기"
           type="submit"
-          disabled={!isAgree.sentence || !isAgree.check}
+          disabled={!isAgree.sentence || !isAgree.check || !inputValues.reason}
         />
       </form>
     </div>
