@@ -1,10 +1,10 @@
 import { Info } from "@/assets/icons/info";
 
-export default function SupplyOverview() {
+export default function SupplyTitle() {
   return (
     <div className="space-y-2 p-8 rounded-xl bg-gray-0">
       <div className="flex items-center gap-2">
-        <h2 className="h1 font-bold text-gray-900">{"비품관리대장"}</h2>
+        <h2 className="h1 font-bold text-brand-orange">{"비품관리대장"}</h2>
         <Info className="w-6 h-6 text-gray-400" />
       </div>
       <div className="flex items-end justify-between">
