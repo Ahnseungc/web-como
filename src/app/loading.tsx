@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { HEADER_HEIGHT } from "@/lib/constants";
 import Header from "@/components/header/Header";
 import ShortFooter from "@/components/footer/ShortFooter";
 
@@ -20,10 +19,7 @@ export default function Loading() {
   return (
     <>
       <Header />
-      <main
-        className="flex justify-center py-[300px]"
-        style={{ marginTop: HEADER_HEIGHT }}
-      >
+      <main className="fixed bottom-1/2 right-1/2 translate-y-1/2 translate-x-1/2">
         <div className="flex flex-col items-center justify-center gap-8 h-full p-20 rounded-4xl shadow bg-gray-0">
           <div className="flex items-center justify-center w-[100px] h-[100px]">
             <Loader />
