@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { cn, formatDate, openModal } from "@/lib/utils";
 import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
+import ReservationReceiptModal from "@/components/dashboard/club/shop/modals/ReservationReceiptModal";
 
 type Status = "completed" | "confirmed" | "pending" | "canceled";
 
@@ -102,94 +103,99 @@ export default function ReservationTable() {
   const { push } = useRouter();
 
   return (
-    <ul className="flex flex-col gap-1">
-      <li className="flex border-y border-gray-400 bg-gray-200">
-        {tableHeadings.map((heading, i) => (
-          <div
-            key={heading}
-            className={cn(
-              "flex-1 my-3 mx-6 text-center body-1 font-bold text-gray-900",
-              i === 2
-                ? ""
-                : i === 5
-                  ? "flex items-center justify-center m-0 min-w-52 max-w-60"
-                  : "max-w-32 xl:max-w-40"
-            )}
-          >
-            {heading}
-          </div>
-        ))}
-      </li>
-      {reservations.map((reservation, idx) => (
-        <li
-          key={reservation.id}
-          className="flex border-b border-gray-400 bg-gray-0"
-        >
-          {[
-            reservation.date,
-            reservation.id,
-            reservation.name,
-            reservation.price,
-            reservation.reservationDate,
-            reservation.status,
-          ].map((data, i) => (
+    <>
+      <ReservationReceiptModal />
+      <ul className="flex flex-col gap-1">
+        <li className="flex border-y border-gray-400 bg-gray-200">
+          {tableHeadings.map((heading, i) => (
             <div
-              key={data}
+              key={heading}
               className={cn(
-                "flex-1 items-center justify-center my-3 mx-6 text-center body-1 font-medium underline-offset-2 underline decoration-transparent line-clamp-1 transition duration-300",
+                "flex-1 my-3 mx-6 text-center body-1 font-bold text-gray-900",
                 i === 2
-                  ? "flex justify-start gap-3 hover:decoration-gray-800 cursor-pointer"
+                  ? ""
                   : i === 5
-                    ? "flex gap-2 m-0 min-w-52 max-w-60"
-                    : "flex max-w-32 xl:max-w-40",
-                i === 3 ? "font-bold decoration-gray-800" : "",
-                data === "canceled"
-                  ? "text-gray-500"
-                  : data === "confirmed"
-                    ? "text-point-blue"
-                    : "text-gray-800"
+                    ? "flex items-center justify-center m-0 min-w-52 max-w-60"
+                    : "max-w-32 xl:max-w-40"
               )}
-              onClick={() => {
-                if (i === 2) {
-                  push(`${CLUB_DASHBOARD_ENDPOINT}/reservation/item/${1}`);
-                }
-              }}
             >
-              {i === 0 ? (
-                data ? (
-                  formatDate(new Date(data))
-                ) : (
-                  "입금 대기"
-                )
-              ) : i === 4 ? (
-                formatDate(new Date(data!))
-              ) : i === 3 ? (
-                `${data!.toLocaleString()}원`
-              ) : i === 2 ? (
-                <>
-                  <div className="w-[100px] h-[100px] rounded-lg bg-gray-300" />
-                  {data}
-                </>
-              ) : data === "completed" ? (
-                "참여 완료"
-              ) : data === "confirmed" ? (
-                "예약 확정"
-              ) : data === "canceled" ? (
-                "예약 취소"
-              ) : data === "pending" ? (
-                <button
-                  className="py-1 px-4 rounded border border-point-red body-1 font-medium text-point-red bg-gray-0"
-                  onClick={() => openModal("reservation-cancel")}
-                >
-                  {"예약 취소"}
-                </button>
-              ) : (
-                data
-              )}
+              {heading}
             </div>
           ))}
         </li>
-      ))}
-    </ul>
+        {reservations.map((reservation) => (
+          <li
+            key={reservation.id}
+            className="flex border-b border-gray-400 bg-gray-0"
+          >
+            {[
+              reservation.date,
+              reservation.id,
+              reservation.name,
+              reservation.price,
+              reservation.reservationDate,
+              reservation.status,
+            ].map((data, i) => (
+              <div
+                key={data}
+                className={cn(
+                  "flex-1 items-center justify-center my-3 mx-6 text-center body-1 font-medium underline-offset-2 underline decoration-transparent line-clamp-1 transition duration-300",
+                  i === 2
+                    ? "flex justify-start gap-3 hover:decoration-gray-800 cursor-pointer"
+                    : i === 5
+                      ? "flex gap-2 m-0 min-w-52 max-w-60"
+                      : "flex max-w-32 xl:max-w-40",
+                  i === 3 ? "font-bold decoration-gray-800 cursor-pointer" : "",
+                  data === "canceled"
+                    ? "text-gray-500"
+                    : data === "confirmed"
+                      ? "text-point-blue"
+                      : "text-gray-800"
+                )}
+                onClick={() => {
+                  if (i === 2) {
+                    push(`${CLUB_DASHBOARD_ENDPOINT}/reservation/item/${1}`);
+                  } else if (i === 3) {
+                    openModal("reservation-receipt");
+                  }
+                }}
+              >
+                {i === 0 ? (
+                  data ? (
+                    formatDate(new Date(data))
+                  ) : (
+                    "입금 대기"
+                  )
+                ) : i === 4 ? (
+                  formatDate(new Date(data!))
+                ) : i === 3 ? (
+                  `${data!.toLocaleString()}원`
+                ) : i === 2 ? (
+                  <>
+                    <div className="w-[100px] h-[100px] rounded-lg bg-gray-300" />
+                    {data}
+                  </>
+                ) : data === "completed" ? (
+                  "참여 완료"
+                ) : data === "confirmed" ? (
+                  "예약 확정"
+                ) : data === "canceled" ? (
+                  "예약 취소"
+                ) : data === "pending" ? (
+                  <button
+                    className="py-1 px-4 rounded border border-point-red body-1 font-medium text-point-red bg-gray-0"
+                    onClick={() => openModal("reservation-cancel")}
+                  >
+                    {"예약 취소"}
+                  </button>
+                ) : (
+                  data
+                )}
+              </div>
+            ))}
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }
