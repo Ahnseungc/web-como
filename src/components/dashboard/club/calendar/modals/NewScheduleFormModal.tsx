@@ -50,8 +50,8 @@ export default function NewScheduleFormModal() {
   return (
     <div id="new-schedule-form" className="hidden modal">
       <Backdrop />
-      <div className="absolute bottom-1/2 right-1/2 translate-y-1/2 translate-x-1/2 z-40 w-full max-w-[1248px] h-full max-h-screen p-6">
-        <div className="p-8 rounded-xl bg-gray-0 shadow">
+      <div className="fixed bottom-1/2 right-1/2 translate-y-1/2 translate-x-1/2 z-40 w-full max-w-[1248px] p-4 rounded-xl bg-gray-0 shadow">
+        <div className="h-full max-h-screen overflow-y-auto p-4 scrollbar-custom">
           <div className="flex justify-between">
             <h2 className="font-bold text-gray-900">{"동호회 일정 등록"}</h2>
             <button onClick={() => closeModal()}>

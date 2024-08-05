@@ -20,8 +20,8 @@ export default function NewReceiptFormModal() {
   return (
     <div id="new-receipt-form" className="hidden modal">
       <Backdrop />
-      <div className="absolute bottom-1/2 right-1/2 translate-y-1/2 translate-x-1/2 z-40 w-full max-w-[1000px] h-full max-h-screen p-6">
-        <div className="space-y-6 p-8 rounded-xl bg-gray-0 shadow">
+      <div className="fixed bottom-1/2 right-1/2 translate-y-1/2 translate-x-1/2 z-40 w-full max-w-[1000px] p-4 rounded-xl bg-gray-0 shadow">
+        <div className="space-y-6 h-full max-h-screen overflow-y-auto p-4 scrollbar-custom">
           <div className="flex justify-between">
             <h1 className="font-bold text-gray-900">{"수령증 작성"}</h1>
             <button onClick={() => closeModal()}>
