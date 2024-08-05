@@ -11,3 +11,5 @@ export const INQUIRY = `	@카카오톡채널 omo
 
 export const RESPONSIBILITY = `	(주) 핀데브는 통신판매중개자로서 거래당사자가 아니며, 호스트가 등록한 상품정보 및 거래에 대해 (주)핀데브는 일체의 책임을 지지 않습니다.
 	omo 기획전 상품에 대한 문의, 환불은 (주)핀데브에서 처리하며 이에 대한 책임은 (주) 핀데브에 있습니다.`;
+
+export const COPYRIGHT = `ⓒ 2024 FINDEV. CO. LTD ALL RIGHTS RESERVED`;

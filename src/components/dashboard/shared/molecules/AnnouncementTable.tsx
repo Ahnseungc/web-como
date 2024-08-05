@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { Pin } from "@/assets/icons/info";
 
 type DepartmentType = "company" | "omo" | "omo shop";
 type AnnouncementReadStatus = "read" | "unread";
@@ -15,6 +16,7 @@ const announcements = [
     title: "오모 공지사항",
     status: "unread",
     createdDate: "20240704 12:33:57",
+    isPinned: true,
   },
   {
     id: 2,
@@ -22,6 +24,7 @@ const announcements = [
     title: "주무부서 공지사항",
     status: "read",
     createdDate: "20240704 12:33:57",
+    isPinned: true,
   },
   {
     id: 3,
@@ -29,6 +32,7 @@ const announcements = [
     title: "오모 공지사항",
     status: "unread",
     createdDate: "20240704 12:33:57",
+    isPinned: true,
   },
   {
     id: 4,
@@ -36,6 +40,7 @@ const announcements = [
     title: "오모 공지사항",
     status: "read",
     createdDate: "20240704 12:33:57",
+    isPinned: false,
   },
   {
     id: 5,
@@ -43,6 +48,7 @@ const announcements = [
     title: "주무부서 공지사항",
     status: "unread",
     createdDate: "20240704 12:33:57",
+    isPinned: false,
   },
   {
     id: 6,
@@ -50,6 +56,7 @@ const announcements = [
     title: "오모 공지사항",
     status: "read",
     createdDate: "20240704 12:33:57",
+    isPinned: false,
   },
   {
     id: 7,
@@ -57,6 +64,7 @@ const announcements = [
     title: "주무부서 공지사항",
     status: "read",
     createdDate: "20240704 12:33:57",
+    isPinned: false,
   },
   {
     id: 8,
@@ -64,6 +72,7 @@ const announcements = [
     title: "오모 공지사항",
     status: "read",
     createdDate: "20240704 12:33:57",
+    isPinned: false,
   },
   {
     id: 9,
@@ -71,6 +80,7 @@ const announcements = [
     title: "오모 공지사항",
     status: "read",
     createdDate: "20240704 12:33:57",
+    isPinned: false,
   },
   {
     id: 10,
@@ -78,6 +88,7 @@ const announcements = [
     title: "주무부서 공지사항",
     status: "read",
     createdDate: "20240704 12:33:57",
+    isPinned: false,
   },
 ];
 
@@ -140,15 +151,22 @@ export default function AnnouncementTable({
                 }
               }}
             >
-              {i === 0
-                ? idx + 1
-                : data === "read"
-                  ? "읽음"
-                  : data === "unread"
-                    ? "안읽음"
-                    : data === "company"
-                      ? "주무부서"
-                      : data}
+              {i === 0 ? (
+                announcement.isPinned ? (
+					<div className="flex items-center justify-center">
+                  <Pin /></div>
+                ) : (
+                  idx - 2
+                )
+              ) : data === "read" ? (
+                "읽음"
+              ) : data === "unread" ? (
+                "안읽음"
+              ) : data === "company" ? (
+                "주무부서"
+              ) : (
+                data
+              )}
             </div>
           ))}
         </li>

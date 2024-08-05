@@ -79,8 +79,8 @@ const menuList: MenuItem[] = [
       },
       {
         name: "활동비 관리",
-        link: "/club/expanse",
-        routes: ["/club/expanse"],
+        link: "/club/expense",
+        routes: ["/club/expense"],
       },
     ],
   },

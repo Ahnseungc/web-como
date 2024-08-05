@@ -52,7 +52,7 @@ export default function ProfileDropdownModal({ profileImage }: Props) {
             >
               {"고객센터"}
             </div>
-            <Link href={"/support"}>
+            <Link href={"support"} onClick={() => closeModal()}>
               <div className="w-full p-3 h4 font-medium text-gray-700">
                 {"문의 및 기술지원"}
               </div>

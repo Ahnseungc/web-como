@@ -65,7 +65,7 @@ export default function InquiryForm() {
       <Input
         type="tel"
         name="phone"
-        label="연락처"
+        label="핸드폰 번호"
         currentValue={formValues.phone}
         handleInputChange={handleChange}
       />
