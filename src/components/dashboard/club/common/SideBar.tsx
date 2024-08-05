@@ -79,7 +79,7 @@ const menuList: MenuItem[] = [
       {
         name: "동호회 콘텐츠 예약",
         link: "/reservation",
-        routes: ["/reservation", "/reservation/item"],
+        routes: ["/reservation", "/reservation/item", "/reservation/host"],
       },
       {
         name: "예약한 콘텐츠 관리",
