@@ -1,4 +1,4 @@
-export default function ExpanseLayout({
+export default function ExpenseLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

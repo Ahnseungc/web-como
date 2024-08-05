@@ -14,24 +14,24 @@ const tableHeadings = [
   "반려사유",
 ];
 
-type ExpanseApplicationStatus = "pending" | "completed" | "canceled";
+type ExpenseApplicationStatus = "pending" | "completed" | "canceled";
 
-interface ExpanseApplicationEntry {
+interface ExpenseApplicationEntry {
   order: number;
   applicant: string;
   personInCharge: string;
-  expanseReport: string;
+  expenseReport: string;
   createdDate: string;
-  status: ExpanseApplicationStatus;
+  status: ExpenseApplicationStatus;
   receipt?: string;
 }
 
-const entries: ExpanseApplicationEntry[] = [
+const entries: ExpenseApplicationEntry[] = [
   {
     order: 1,
     applicant: "김오모",
     personInCharge: "박오모",
-    expanseReport: "0001-2024-07-016",
+    expenseReport: "0001-2024-07-016",
     createdDate: "20240704 12:33:57",
     status: "pending",
   },
@@ -39,7 +39,7 @@ const entries: ExpanseApplicationEntry[] = [
     order: 2,
     applicant: "김오모",
     personInCharge: "김오모",
-    expanseReport: "0001-2024-07-016",
+    expenseReport: "0001-2024-07-016",
     createdDate: "20240704 12:33:57",
     status: "pending",
   },
@@ -47,7 +47,7 @@ const entries: ExpanseApplicationEntry[] = [
     order: 3,
     applicant: "김오모",
     personInCharge: "서오모",
-    expanseReport: "0001-2024-07-016",
+    expenseReport: "0001-2024-07-016",
     createdDate: "20240704 12:33:57",
     status: "completed",
     receipt: "0001-2024-07-016",
@@ -56,7 +56,7 @@ const entries: ExpanseApplicationEntry[] = [
     order: 4,
     applicant: "김오모",
     personInCharge: "김오모",
-    expanseReport: "0001-2024-07-016",
+    expenseReport: "0001-2024-07-016",
     createdDate: "20240704 12:33:57",
     status: "completed",
     receipt: "0001-2024-07-016",
@@ -65,7 +65,7 @@ const entries: ExpanseApplicationEntry[] = [
     order: 5,
     applicant: "김오모",
     personInCharge: "김오모",
-    expanseReport: "0001-2024-07-016",
+    expenseReport: "0001-2024-07-016",
     createdDate: "20240704 12:33:57",
     status: "completed",
     receipt: "0001-2024-07-016",
@@ -74,7 +74,7 @@ const entries: ExpanseApplicationEntry[] = [
     order: 6,
     applicant: "김오모",
     personInCharge: "김오모",
-    expanseReport: "0001-2024-07-016",
+    expenseReport: "0001-2024-07-016",
     createdDate: "20240704 12:33:57",
     status: "completed",
     receipt: "0001-2024-07-016",
@@ -83,7 +83,7 @@ const entries: ExpanseApplicationEntry[] = [
     order: 7,
     applicant: "김오모",
     personInCharge: "김오모",
-    expanseReport: "0001-2024-07-016",
+    expenseReport: "0001-2024-07-016",
     createdDate: "20240704 12:33:57",
     status: "completed",
     receipt: "0001-2024-07-016",
@@ -92,7 +92,7 @@ const entries: ExpanseApplicationEntry[] = [
     order: 8,
     applicant: "김오모",
     personInCharge: "김오모",
-    expanseReport: "0001-2024-07-016",
+    expenseReport: "0001-2024-07-016",
     createdDate: "20240704 12:33:57",
     status: "completed",
     receipt: "0001-2024-07-016",
@@ -101,7 +101,7 @@ const entries: ExpanseApplicationEntry[] = [
     order: 9,
     applicant: "김오모",
     personInCharge: "김오모",
-    expanseReport: "0001-2024-07-016",
+    expenseReport: "0001-2024-07-016",
     createdDate: "20240704 12:33:57",
     status: "canceled",
   },
@@ -109,25 +109,25 @@ const entries: ExpanseApplicationEntry[] = [
     order: 10,
     applicant: "김오모",
     personInCharge: "김오모",
-    expanseReport: "0001-2024-07-016",
+    expenseReport: "0001-2024-07-016",
     createdDate: "20240704 12:33:57",
     status: "canceled",
   },
 ];
 
-export default function ExpanseTable() {
+export default function ExpenseTable() {
   const pathname = usePathname();
   const { push } = useRouter();
   const statusFilter = "all";
 
-  const EntryListItem = ({ entry }: { entry: ExpanseApplicationEntry }) => {
+  const EntryListItem = ({ entry }: { entry: ExpenseApplicationEntry }) => {
     return (
       <li className="flex border-b border-gray-400 bg-gray-0">
         {[
           entry.order,
           entry.createdDate,
           entry.applicant,
-          entry.expanseReport,
+          entry.expenseReport,
           entry.status,
           entry.personInCharge,
           entry.receipt,
@@ -152,7 +152,7 @@ export default function ExpanseTable() {
             )}
             onClick={() => {
               if (i === 3) {
-                push(`${pathname}/detail/report/${entry.expanseReport}`);
+                push(`${pathname}/detail/report/${entry.expenseReport}`);
               } else if (i === 6 && entry.receipt) {
                 push(`${pathname}/detail/receipt/${entry.receipt}`);
               }

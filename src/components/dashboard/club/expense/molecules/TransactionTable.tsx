@@ -152,7 +152,7 @@ export default function TransactionTable() {
               onClick={() => {
                 if (i === 5) {
                   push(
-                    `${CLUB_DASHBOARD_ENDPOINT}/expanse/detail/receipt/${transaction.receipt}`
+                    `${CLUB_DASHBOARD_ENDPOINT}/expense/detail/receipt/${transaction.receipt}`
                   );
                 }
               }}

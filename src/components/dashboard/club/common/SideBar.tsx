@@ -10,7 +10,7 @@ import { ChevronDown } from "@/assets/icons/chevron";
 const clubDashboardMenus = [
   "manage",
   "reservation",
-  "expanse",
+  "expense",
   "announcement",
   "community",
 ] as const;
@@ -95,17 +95,17 @@ const menuList: MenuItem[] = [
   },
   {
     name: "활동비 관리",
-    key: "expanse",
+    key: "expense",
     subMenuList: [
       {
         name: "활동비 사용내역",
-        link: "/expanse",
-        routes: ["/expanse", "/expanse/new", "/expanse/detail"],
+        link: "/expense",
+        routes: ["/expense", "/expense/new", "/expense/detail"],
       },
       {
         name: "입출금 내역",
-        link: "/expanse/transaction",
-        routes: ["/expanse/transaction"],
+        link: "/expense/transaction",
+        routes: ["/expense/transaction"],
       },
     ],
   },

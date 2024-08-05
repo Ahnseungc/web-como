@@ -11,7 +11,7 @@ const filterList = [
   { name: "반려", value: "canceled" },
 ];
 
-export default function ExpanseSearch() {
+export default function ExpenseSearch() {
   const [currentSearchValue, setCurrentSearchValue] = useState<SearchValue>({
     term: "",
     filter: "all",

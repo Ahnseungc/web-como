@@ -5,7 +5,7 @@ import DateFilter, {
   type DateRange,
 } from "@/components/dashboard/common/DateFilter";
 import Pagination from "@/components/dashboard/common/Pagination";
-import TransactionTable from "@/components/dashboard/club/expanse/molecules/TransactionTable";
+import TransactionTable from "@/components/dashboard/club/expense/molecules/TransactionTable";
 
 export default function TransactionList() {
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({

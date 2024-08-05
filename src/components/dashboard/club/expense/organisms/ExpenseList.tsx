@@ -6,10 +6,10 @@ import DateFilter, {
   type DateRange,
 } from "@/components/dashboard/common/DateFilter";
 import Pagination from "@/components/dashboard/common/Pagination";
-import ExpanseTable from "@/components/dashboard/club/expanse/molecules/ExpanseTable";
+import ExpenseTable from "@/components/dashboard/club/expense/molecules/ExpenseTable";
 import { Plus } from "@/assets/icons/action";
 
-export default function ExpanseList() {
+export default function ExpenseList() {
   const pathname = usePathname();
   const { push } = useRouter();
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
@@ -48,7 +48,7 @@ export default function ExpanseList() {
           handleDateRangeChange={handleDateRangeChange}
         />
         <div className="space-y-10">
-          <ExpanseTable />
+          <ExpenseTable />
           <Pagination
             currentPage={currentPage}
             maxPage={8}

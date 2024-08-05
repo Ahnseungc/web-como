@@ -16,7 +16,7 @@ const types = [
   { name: "기타", value: "etc" },
 ];
 
-export default function NewExpanseReportForm() {
+export default function NewExpenseReportForm() {
   const { replace } = useRouter();
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [date, setDate] = useState<Date>();
@@ -35,7 +35,7 @@ export default function NewExpanseReportForm() {
     alert(
       "활동비 지급 신청서 (품의서)가 작성 및 담당 부서에게 전달되었습니다."
     );
-    replace(`${CLUB_DASHBOARD_ENDPOINT}/expanse`);
+    replace(`${CLUB_DASHBOARD_ENDPOINT}/expense`);
   };
 
   return (

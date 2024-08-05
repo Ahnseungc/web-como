@@ -1,4 +1,4 @@
-import { INFO, INFO_TOOLTIP } from "@/lib/message/expanse";
+import { INFO, INFO_TOOLTIP } from "@/lib/message/expense";
 import InfoTooltipButton from "@/components/dashboard/common/InfoTooltipButton";
 
 export default function ApplicationGuide() {
@@ -7,7 +7,7 @@ export default function ApplicationGuide() {
       <div className="relative flex items-center gap-2">
         <h2 className="h1 font-bold text-brand-orange">{"활동비 신청 안내"}</h2>
         <InfoTooltipButton
-          id="expanse-application-info"
+          id="expense-application-info"
           title="활동비 신청 안내"
           content={INFO_TOOLTIP}
         />

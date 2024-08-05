@@ -2,7 +2,7 @@ import BackButton from "@/components/dashboard/common/BackButton";
 import DocUtilButtons from "@/components/dashboard/common/DocUtil";
 import PDFViewer from "@/components/dashboard/club/common/PDFViewer";
 
-export default function ExpanseReportDetailPage() {
+export default function ExpenseReportDetailPage() {
   return (
     <>
       <BackButton />
