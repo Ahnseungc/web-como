@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { cn } from "@/lib/utils";
+import { cn, openModal } from "@/lib/utils";
 
 const tableHeadings = [
   "순번",
@@ -141,6 +141,7 @@ export default function ExpanseTable() {
               [1, 3, 6].includes(i) ? "min-w-32" : "",
               [2, 4, 5, 7].includes(i) ? "min-w-16 max-w-36" : "",
               data && [3, 6, 7].includes(i) ? "underline cursor-pointer" : "",
+              i === 6 ? "flex items-center justify-center m-0" : "",
               data === "canceled"
                 ? "text-point-red"
                 : data === "completed"
@@ -157,17 +158,36 @@ export default function ExpanseTable() {
               }
             }}
           >
-            {data === "canceled"
-              ? "반려"
-              : data === "completed"
-                ? "지급 완료"
-                : data === "pending"
-                  ? "지급 대기"
-                  : !data
-                    ? "-"
-                    : i === 7
-                      ? "상세보기"
-                      : data}
+            {i === 4 ? (
+              data === "canceled" ? (
+                "반려"
+              ) : data === "completed" ? (
+                "지급 완료"
+              ) : data === "pending" ? (
+                "지급 대기"
+              ) : (
+                ""
+              )
+            ) : i === 6 ? (
+              data ? (
+                data
+              ) : (
+                <button
+                  className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-point-red"
+                  onClick={() => openModal("new-receipt-form")}
+                >
+                  {"수령증 작성"}
+                </button>
+              )
+            ) : i === 7 ? (
+              data ? (
+                "상세보기"
+              ) : (
+                "-"
+              )
+            ) : (
+              data
+            )}
           </div>
         ))}
       </li>
@@ -184,7 +204,8 @@ export default function ExpanseTable() {
               "my-3 mx-6 body-1 font-bold text-gray-900 text-center",
               i === 0 ? "w-8" : "flex-1",
               [1, 3, 6].includes(i) ? "min-w-32" : "",
-              [2, 4, 5, 7].includes(i) ? "min-w-16 max-w-36" : ""
+              [2, 4, 5, 7].includes(i) ? "min-w-16 max-w-36" : "",
+              i === 6 ? "flex items-center justify-center m-0" : ""
             )}
           >
             {heading}
