@@ -26,7 +26,7 @@ const iterationOptions = [
   { name: "6개월", value: "six-month" },
 ];
 
-export default function NewScheduleForm() {
+export default function NewScheduleFormModal() {
   const [maxPeople, setMaxPeople] = useState<number>(1);
   const [currentDate, setCurrentDate] = useState<{
     date: Date | undefined;
