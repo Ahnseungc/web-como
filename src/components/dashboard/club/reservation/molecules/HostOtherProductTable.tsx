@@ -52,7 +52,7 @@ const products = [
   },
 ];
 
-export default function HostOtherProductsTable() {
+export default function HostOtherProductTable() {
   const { push } = useRouter();
 
   return (
