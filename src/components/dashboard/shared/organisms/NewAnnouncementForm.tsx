@@ -1,11 +1,22 @@
+"use client";
+
+import { useState } from "react";
+import useNavigationGuard from "@/hooks/navigationGuard";
 import Button from "@/components/common/Button";
 import Checkbox from "@/components/common/Checkbox";
 import ImageInput from "@/components/common/ImageInput";
 import Input from "@/components/common/Input";
 
 export default function NewAnnouncementForm() {
+  useNavigationGuard();
+  const [currentImages, setCurrentImages] = useState<File[]>([]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
-    <div className="space-y-8 p-8 rounded-xl bg-gray-0">
+    <form className="space-y-8 p-8 rounded-xl bg-gray-0">
       <h2 className="font-semibold text-gray-900">{"공지사항 글쓰기"}</h2>
       <div className="space-y-6">
         <Input
@@ -33,12 +44,15 @@ export default function NewAnnouncementForm() {
           name="image"
           label="사진첨부"
           caption="첨부파일은 최대 2개까지 등록 가능합니다."
+          max={2}
+          currentImages={currentImages}
+          setCurrentImages={setCurrentImages}
         />
         <Checkbox name="pin" content="공지사항 상단 고정하기" />
       </div>
       <div className="text-center">
         <Button content="등록하기" className="max-w-[350px]" primary />
       </div>
-    </div>
+    </form>
   );
 }

@@ -42,7 +42,12 @@ export default function SupplyDetail() {
           readonly
           value="319,000원"
         />
-        <ImageInput name="image" label="비품 사진" />
+        <ImageInput
+          name="image"
+          label="비품 사진"
+          readonly
+          currentImages={[]}
+        />
         <Input name="note" label="비고" type="text" readonly />
       </div>
       <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">

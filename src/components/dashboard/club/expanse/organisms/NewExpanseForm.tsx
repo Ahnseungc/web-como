@@ -21,6 +21,10 @@ export default function NewExpanseReportForm() {
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [date, setDate] = useState<Date>();
   const [formValues, setFormValues] = useState({ type: "" });
+  const [currentImages, setCurrentImages] = useState<File[]>([]);
+  const [currentImagesBankAccount, setCurrentImagesBankAccount] = useState<
+    File[]
+  >([]);
 
   const handleDateChange = (date: Date) => {
     setDate(date);
@@ -88,6 +92,8 @@ export default function NewExpanseReportForm() {
           name="estimate-image"
           label="예상 비용 견적서 첨부"
           caption="해당 관련 견적서 및 금액을 증빙 할 수 있는 캡쳐본을 첨부해주세요."
+          currentImages={currentImages}
+          setCurrentImages={setCurrentImages}
         />
         <Input
           name="note"
@@ -110,6 +116,8 @@ export default function NewExpanseReportForm() {
           name="bank-image"
           label="통장 사본 첨부"
           caption="통장 사본을 첨부해주세요."
+		  currentImages={currentImagesBankAccount}
+		  setCurrentImages={setCurrentImagesBankAccount}
         />
       </div>
       <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">

@@ -9,6 +9,7 @@ import ImageInput from "@/components/common/ImageInput";
 
 export default function NewSupplyForm() {
   useNavigationGuard();
+  const [currentImages, setCurrentImages] = useState<File[]>([]);
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -62,6 +63,9 @@ export default function NewSupplyForm() {
           name="image"
           label="비품 사진"
           caption="비품 사진은 최대 8장까지 첨부할 수 있습니다."
+		  max={8}
+          currentImages={currentImages}
+          setCurrentImages={setCurrentImages}
         />
         <Input
           name="note"
