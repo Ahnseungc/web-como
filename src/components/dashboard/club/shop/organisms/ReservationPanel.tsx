@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { cn, formatDate } from "@/lib/utils";
 import Calendar from "@/components/common/Calendar";
-import OptionItem from "@/components/dashboard/club/reservation/molecules/OptionItem";
-import TimeSelectButton from "@/components/dashboard/club/reservation/molecules/TimeSelectButton";
+import OptionItem from "@/components/dashboard/club/shop/molecules/OptionItem";
+import TimeSelectButton from "@/components/dashboard/club/shop/molecules/TimeSelectButton";
 import { Calendar as CalendarIcon } from "@/assets/icons/info";
 import { ChevronDownFilled } from "@/assets/icons/chevron";
 

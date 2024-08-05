@@ -1,4 +1,4 @@
-import HostOtherProductTable from "@/components/dashboard/club/reservation/molecules/HostOtherProductTable";
+import HostOtherProductTable from "@/components/dashboard/club/shop/molecules/HostOtherProductTable";
 
 export default function HostOtherProduct() {
   return (

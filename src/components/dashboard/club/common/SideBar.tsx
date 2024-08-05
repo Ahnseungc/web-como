@@ -9,7 +9,7 @@ import { ChevronDown } from "@/assets/icons/chevron";
 
 const clubDashboardMenus = [
   "manage",
-  "reservation",
+  "shop",
   "expense",
   "announcement",
   "community",
@@ -74,22 +74,22 @@ const menuList: MenuItem[] = [
   },
   {
     name: "omo 예약 관리",
-    key: "reservation",
+    key: "shop",
     subMenuList: [
       {
         name: "동호회 콘텐츠 예약",
-        link: "/reservation",
-        routes: ["/reservation", "/reservation/item", "/reservation/host"],
+        link: "/shop",
+        routes: ["/shop", "/shop/item", "/shop/host"],
       },
       {
         name: "예약한 콘텐츠 관리",
-        link: "/reservation/manage",
-        routes: ["/reservation/manage"],
+        link: "/shop/reservation",
+        routes: ["/shop/reservation"],
       },
       {
         name: "1:1 문의",
-        link: "/reservation/inquiry",
-        routes: ["/reservation/inquiry"],
+        link: "/shop/inquiry",
+        routes: ["/shop/inquiry"],
       },
     ],
   },
