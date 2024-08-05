@@ -67,8 +67,8 @@ const menuList: MenuItem[] = [
       },
       {
         name: "동호회 취소 및 해체",
-        link: "/manage/remove",
-        routes: ["/manage/remove"],
+        link: "/manage/disband",
+        routes: ["/manage/disband"],
       },
     ],
   },

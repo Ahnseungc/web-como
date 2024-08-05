@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Pagination from "@/components/dashboard/common/Pagination";
-import ClubTable from "@/components/dashboard/club/remove/molecules/ClubTable";
+import ClubTable from "@/components/dashboard/club/disband/molecules/ClubTable";
 
 export default function ClubList() {
   const [currentPage, setCurrentPage] = useState<number>(1);
