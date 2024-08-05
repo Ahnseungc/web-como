@@ -37,13 +37,37 @@ export default function SupplyDetail() {
         <Input
           name="price"
           label="구매 비용"
-          type="number"
+          type="text"
           inputStyle="max-w-[350px]"
           readonly
           value="319,000원"
         />
         <ImageInput name="image" label="비품 사진" />
         <Input name="note" label="비고" type="text" readonly />
+      </div>
+      <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">
+        <h3 className="h2 font-bold text-gray-900">{"폐기 사유"}</h3>
+        <Input
+          name="date"
+          label="폐기 일자"
+          type="text"
+          value="2024-07-28"
+          readonly
+        />
+        <Input
+          name="personInCharge"
+          label="폐기 담당 동호회 임원"
+          type="text"
+          value="김오모 / 인사팀 / 대리 / 회장(동호회 직급)"
+          readonly
+        />
+        <Input
+          name="reason"
+          label="폐기 사유"
+          type="text"
+          readonly
+          value="고장으로 잘 작동하지 않아서 폐기하게 되었습니다."
+        />
       </div>
     </div>
   );
