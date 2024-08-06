@@ -13,6 +13,8 @@ export default function NewReportForm() {
   useNavigationGuard();
   const [isChecked, setIsChecked] = useState<boolean>(false);
   const [date, setDate] = useState<Date | undefined>();
+  const [currentImages, setCurrentImages] = useState<File[]>([]);
+  const [currentImagesExpense, setCurrentImagesExpense] = useState<File[]>([]);
 
   const handleDateChange = (date: Date | undefined) => {
     setDate(date);
@@ -70,6 +72,8 @@ export default function NewReportForm() {
           name="image"
           label="활동 사진"
           caption="활동사진 첨부 필수사항입니다."
+		  currentImages={currentImages}
+		  setCurrentImages={setCurrentImages}
         />
         <Input
           name="note"
@@ -125,6 +129,8 @@ export default function NewReportForm() {
           name="expense-image"
           label="지출 증빙용 활동 사진 첨부"
           caption="활동사진 첨부 필수사항입니다."
+		  currentImages={currentImagesExpense}
+		  setCurrentImages={setCurrentImagesExpense}
         />
       </div>
       <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">

@@ -15,14 +15,10 @@ export const Default: Story = {
   args: {},
 };
 
-export const ClubSupport: Story = {
-  args: { isDashboard: false, isLoggedIn: true, title: "동호회 관리센터" },
+export const Club: Story = {
+  args: { isDashboard: true, isLoggedIn: true, type: "club" },
 };
 
-export const ClubDashboard: Story = {
-  args: { isDashboard: true, isLoggedIn: true, title: "동호회 관리센터" },
-};
-
-export const AdminDashboard: Story = {
-  args: { isDashboard: true, isLoggedIn: true, title: "주무부서 관리센터" },
+export const Company: Story = {
+  args: { isDashboard: true, isLoggedIn: true, type: "company" },
 };

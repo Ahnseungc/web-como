@@ -8,7 +8,12 @@ import NaverMap from "@/components/dashboard/club/common/Map";
 import { Search } from "@/assets/icons/util";
 import { Remove } from "@/assets/icons/action";
 
-export default function MapPlaceSearch() {
+interface Props {
+  value?: string;
+  readonly?: boolean;
+}
+
+export default function MapPlaceSearch({ value, readonly }: Props) {
   const [selectedPlace, setSelectedPlace] = useState<{
     roadAddress: string;
     title?: string;
@@ -25,6 +30,12 @@ export default function MapPlaceSearch() {
   const [query, setQuery] = useState<string>();
   const { data: placeData } = usePlaceSearch(searchTerm);
   const { data: geocodeData } = useGeocode(query);
+
+  useEffect(() => {
+    if (value) {
+      setSearchTerm(value);
+    }
+  }, [value]);
 
   useEffect(() => {
     if (placeData) {
@@ -56,6 +67,18 @@ export default function MapPlaceSearch() {
     }
   }, [placeData, geocodeData]);
 
+  useEffect(() => {
+    if (readonly && searchResult && searchResult.length > 0) {
+      setSelectedPlace({
+        roadAddress: searchResult[0].roadAddress,
+        title: searchResult[0].title
+          ?.replaceAll("<b>", "")
+          .replaceAll("</b>", ""),
+      });
+      setSearchTerm(searchResult[0].roadAddress);
+    }
+  }, [readonly, searchResult]);
+
   return (
     <div className="flex flex-col gap-2">
       <span className="h3 font-semibold text-gray-900">{"활동 장소"}</span>
@@ -74,8 +97,9 @@ export default function MapPlaceSearch() {
                 setSearchTerm(e.target.value);
                 setCloseSearchResult(false);
               }}
+              readOnly={readonly}
             />
-            {selectedPlace?.roadAddress && (
+            {!readonly && selectedPlace?.roadAddress && (
               <button
                 type="button"
                 onClick={() => {
@@ -104,10 +128,11 @@ export default function MapPlaceSearch() {
                   });
                 }
               }}
+              readOnly={readonly}
             />
           </div>
         </div>
-        {searchResult && (
+        {!readonly && searchResult && (
           <div
             className={cn(
               "absolute z-20 flex flex-col gap-3 w-3/5 mt-1 p-6 rounded-xl bg-gray-50 shadow",

@@ -9,8 +9,8 @@ import { ChevronDown } from "@/assets/icons/chevron";
 
 const clubDashboardMenus = [
   "manage",
-  "reservation",
-  "expanse",
+  "shop",
+  "expense",
   "announcement",
   "community",
 ] as const;
@@ -67,45 +67,45 @@ const menuList: MenuItem[] = [
       },
       {
         name: "동호회 취소 및 해체",
-        link: "/manage/remove",
-        routes: ["/manage/remove"],
+        link: "/manage/disband",
+        routes: ["/manage/disband"],
       },
     ],
   },
   {
     name: "omo 예약 관리",
-    key: "reservation",
+    key: "shop",
     subMenuList: [
       {
         name: "동호회 콘텐츠 예약",
-        link: "/reservation",
-        routes: ["/reservation", "/reservation/item"],
+        link: "/shop",
+        routes: ["/shop", "/shop/item", "/shop/host"],
       },
       {
         name: "예약한 콘텐츠 관리",
-        link: "/reservation/manage",
-        routes: ["/reservation/manage"],
+        link: "/shop/reservation",
+        routes: ["/shop/reservation"],
       },
       {
         name: "1:1 문의",
-        link: "/reservation/inquiry",
-        routes: ["/reservation/inquiry"],
+        link: "/shop/inquiry",
+        routes: ["/shop/inquiry"],
       },
     ],
   },
   {
     name: "활동비 관리",
-    key: "expanse",
+    key: "expense",
     subMenuList: [
       {
         name: "활동비 사용내역",
-        link: "/expanse",
-        routes: ["/expanse", "/expanse/new", "/expanse/detail"],
+        link: "/expense",
+        routes: ["/expense", "/expense/new", "/expense/detail"],
       },
       {
         name: "입출금 내역",
-        link: "/expanse/transaction",
-        routes: ["/expanse/transaction"],
+        link: "/expense/transaction",
+        routes: ["/expense/transaction"],
       },
     ],
   },

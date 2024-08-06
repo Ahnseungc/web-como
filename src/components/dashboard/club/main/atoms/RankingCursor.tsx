@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { getZoomValue } from "@/hooks/responsiveZoom";
 
 export default function RankingCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
@@ -11,9 +12,10 @@ export default function RankingCursor() {
     }
 
     const { clientX: x, clientY: y } = event;
+    const zoom = getZoomValue();
 
-    cursorRef.current.style.left = x - 5 + "px";
-    cursorRef.current.style.top = y - 35 + "px";
+    cursorRef.current.style.left = (x - 5) / zoom + "px";
+    cursorRef.current.style.top = (y - 35) / zoom + "px";
   };
 
   const showCursor = (clubName: string) => {

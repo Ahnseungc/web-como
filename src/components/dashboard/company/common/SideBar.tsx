@@ -9,9 +9,9 @@ import { ChevronDown } from "@/assets/icons/chevron";
 
 const companyDashboardMenus = [
   "employee",
-  "point",
   "club",
   "shop",
+  "point",
   "announcement",
   "community",
 ] as const;
@@ -54,11 +54,6 @@ const menuList: MenuItem[] = [
     ],
   },
   {
-    name: "복지포인트 관리",
-    key: "point",
-    link: "/point",
-  },
-  {
     name: "사내동호회 관리",
     key: "club",
     subMenuList: [
@@ -79,8 +74,8 @@ const menuList: MenuItem[] = [
       },
       {
         name: "활동비 관리",
-        link: "/club/expanse",
-        routes: ["/club/expanse"],
+        link: "/club/expense",
+        routes: ["/club/expense"],
       },
     ],
   },
@@ -104,6 +99,11 @@ const menuList: MenuItem[] = [
         routes: ["/shop/inquiry"],
       },
     ],
+  },
+  {
+    name: "복지포인트 관리",
+    key: "point",
+    link: "/point",
   },
   {
     name: "공지사항",

@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import RadioSelect from "@/components/login/molecules/RadioSelect";
-import BrandImage from "@/assets/images/brand_login.svg";
+import BrandImage from "@/assets/images/brand_image.svg";
 import LogoImage from "@/assets/logos/como_logo.svg";
 import { saveDashboardType, saveRefreshToken } from "@/lib/token";
 

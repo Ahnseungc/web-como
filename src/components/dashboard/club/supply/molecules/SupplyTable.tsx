@@ -1,181 +1,106 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { cn } from "@/lib/utils";
-import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
+import { usePathname, useRouter } from "next/navigation";
+import { cn, formatDate } from "@/lib/utils";
 
 const tableHeadings = [
   "순번",
-  "작성일",
-  "신청자",
-  "품의서 상세",
-  "구분",
-  "담당자",
-  "수령증",
-  "반려사유",
+  "최종 수정일",
+  "작성자",
+  "품목",
+  "금액",
+  "현재 상태",
+  "상태 변경",
 ];
 
-type ExpanseApplicationStatus = "pending" | "completed" | "canceled";
+type SupplyStatus = "keep" | "disposed";
 
-interface ExpanseApplicationEntry {
-  order: number;
-  applicant: string;
-  personInCharge: string;
-  expanseReport: string;
-  createdDate: string;
-  status: ExpanseApplicationStatus;
-  receipt?: string;
-}
-
-const entries: ExpanseApplicationEntry[] = [
+const supplies = [
   {
-    order: 1,
-    applicant: "김오모",
-    personInCharge: "박오모",
-    expanseReport: "0001-2024-07-016",
-    createdDate: "20240704 12:33:57",
-    status: "pending",
+    id: 1,
+    date: "2024-07-04 12:33:57",
+    author: "김오모",
+    name: "품목",
+    price: 30000,
+    status: "keep",
   },
   {
-    order: 2,
-    applicant: "김오모",
-    personInCharge: "김오모",
-    expanseReport: "0001-2024-07-016",
-    createdDate: "20240704 12:33:57",
-    status: "pending",
+    id: 2,
+    date: "2024-07-04 12:33:57",
+    author: "김오모",
+    name: "품목",
+    price: 30000,
+    status: "keep",
   },
   {
-    order: 3,
-    applicant: "김오모",
-    personInCharge: "서오모",
-    expanseReport: "0001-2024-07-016",
-    createdDate: "20240704 12:33:57",
-    status: "completed",
-    receipt: "0001-2024-07-016",
+    id: 3,
+    date: "2024-07-04 12:33:57",
+    author: "김오모",
+    name: "품목",
+    price: 30000,
+    status: "disposed",
   },
   {
-    order: 4,
-    applicant: "김오모",
-    personInCharge: "김오모",
-    expanseReport: "0001-2024-07-016",
-    createdDate: "20240704 12:33:57",
-    status: "completed",
-    receipt: "0001-2024-07-016",
+    id: 4,
+    date: "2024-07-04 12:33:57",
+    author: "김오모",
+    name: "품목",
+    price: 30000,
+    status: "disposed",
   },
   {
-    order: 5,
-    applicant: "김오모",
-    personInCharge: "김오모",
-    expanseReport: "0001-2024-07-016",
-    createdDate: "20240704 12:33:57",
-    status: "completed",
-    receipt: "0001-2024-07-016",
+    id: 5,
+    date: "2024-07-04 12:33:57",
+    author: "김오모",
+    name: "품목",
+    price: 30000,
+    status: "keep",
   },
   {
-    order: 6,
-    applicant: "김오모",
-    personInCharge: "김오모",
-    expanseReport: "0001-2024-07-016",
-    createdDate: "20240704 12:33:57",
-    status: "completed",
-    receipt: "0001-2024-07-016",
+    id: 6,
+    date: "2024-07-04 12:33:57",
+    author: "김오모",
+    name: "품목",
+    price: 30000,
+    status: "disposed",
   },
   {
-    order: 7,
-    applicant: "김오모",
-    personInCharge: "김오모",
-    expanseReport: "0001-2024-07-016",
-    createdDate: "20240704 12:33:57",
-    status: "completed",
-    receipt: "0001-2024-07-016",
+    id: 7,
+    date: "2024-07-04 12:33:57",
+    author: "김오모",
+    name: "품목",
+    price: 30000,
+    status: "keep",
   },
   {
-    order: 8,
-    applicant: "김오모",
-    personInCharge: "김오모",
-    expanseReport: "0001-2024-07-016",
-    createdDate: "20240704 12:33:57",
-    status: "completed",
-    receipt: "0001-2024-07-016",
+    id: 8,
+    date: "2024-07-04 12:33:57",
+    author: "김오모",
+    name: "품목",
+    price: 30000,
+    status: "keep",
   },
   {
-    order: 9,
-    applicant: "김오모",
-    personInCharge: "김오모",
-    expanseReport: "0001-2024-07-016",
-    createdDate: "20240704 12:33:57",
-    status: "canceled",
+    id: 9,
+    date: "2024-07-04 12:33:57",
+    author: "김오모",
+    name: "품목",
+    price: 30000,
+    status: "disposed",
   },
   {
-    order: 10,
-    applicant: "김오모",
-    personInCharge: "김오모",
-    expanseReport: "0001-2024-07-016",
-    createdDate: "20240704 12:33:57",
-    status: "canceled",
+    id: 10,
+    date: "2024-07-04 12:33:57",
+    author: "김오모",
+    name: "품목",
+    price: 30000,
+    status: "keep",
   },
 ];
 
 export default function SupplyTable() {
+  const pathname = usePathname();
   const { push } = useRouter();
-
-  const EntryListItem = ({ entry }: { entry: ExpanseApplicationEntry }) => {
-    return (
-      <li className="flex border-b border-gray-400 bg-gray-0">
-        {[
-          entry.order,
-          entry.createdDate,
-          entry.applicant,
-          entry.expanseReport,
-          entry.status,
-          entry.personInCharge,
-          entry.receipt,
-          entry.status === "canceled",
-        ].map((data, i) => (
-          <div
-            key={data?.toString()}
-            className={cn(
-              "my-3 mx-6 body-1 font-medium underline-offset-2 line-clamp-1 text-center",
-              i === 0 ? "w-8" : "flex-1",
-              [1, 3, 6].includes(i) ? "min-w-32" : "",
-              [2, 4, 5, 7].includes(i) ? "min-w-16 max-w-36" : "",
-              data && [3, 6, 7].includes(i) ? "underline cursor-pointer" : "",
-              data === "canceled"
-                ? "text-point-red"
-                : data === "completed"
-                  ? "text-gray-500"
-                  : data === "pending"
-                    ? "text-point-blue"
-                    : "text-gray-800"
-            )}
-            onClick={() => {
-              if (i === 3) {
-                push(
-                  `${CLUB_DASHBOARD_ENDPOINT}/expanse/detail/report/${entry.expanseReport}`
-                );
-              } else if (i === 6 && entry.receipt) {
-                push(
-                  `${CLUB_DASHBOARD_ENDPOINT}/expanse/detail/receipt/${entry.receipt}`
-                );
-              }
-            }}
-          >
-            {data === "canceled"
-              ? "반려"
-              : data === "completed"
-                ? "지급 완료"
-                : data === "pending"
-                  ? "지급 대기"
-                  : !data
-                    ? "-"
-                    : i === 7
-                      ? "상세보기"
-                      : data}
-          </div>
-        ))}
-      </li>
-    );
-  };
 
   return (
     <ul className="flex flex-col gap-1">
@@ -184,18 +109,81 @@ export default function SupplyTable() {
           <div
             key={heading}
             className={cn(
-              "my-3 mx-6 body-1 font-bold text-gray-900 text-center",
+              "my-3 mx-6 body-1 font-bold text-gray-900",
               i === 0 ? "w-8" : "flex-1",
-              [1, 3, 6].includes(i) ? "min-w-32" : "",
-              [2, 4, 5, 7].includes(i) ? "min-w-16 max-w-36" : ""
+              [1, 5].includes(i) ? "max-w-36" : "",
+              [2, 4].includes(i) ? "max-w-32" : "",
+              i === 3 ? "" : "text-center",
+              i === 6 ? "flex items-center justify-center max-w-44 m-0" : ""
             )}
           >
             {heading}
           </div>
         ))}
       </li>
-      {entries.map((entry) => (
-        <EntryListItem key={entry.order} entry={entry} />
+      {supplies.map((supply, idx) => (
+        <li key={supply.id} className="flex border-b border-gray-400 bg-gray-0">
+          {[
+            supply.id,
+            supply.date,
+            supply.author,
+            supply.name,
+            supply.price,
+            supply.status,
+            supply.status,
+          ].map((data, i) => (
+            <div
+              key={i}
+              className={cn(
+                "my-3 mx-6 body-1 font-medium underline underline-offset-2 decoration-transparent line-clamp-1 transition duration-300",
+                i === 0 ? "w-8" : "flex-1",
+                [1, 5].includes(i) ? "max-w-36" : "",
+                [2, 4].includes(i) ? "max-w-32" : "",
+                i === 3
+                  ? "hover:decoration-gray-800 cursor-pointer"
+                  : "text-center",
+                i === 6 ? "flex items-center justify-center max-w-44 m-0" : "",
+                data === "disposed"
+                  ? "text-gray-500"
+                  : data === "keep"
+                    ? "text-point-blue"
+                    : "text-gray-800"
+              )}
+              onClick={() => {
+                if (i === 3) {
+                  push(`${pathname}/detail/${supply.id}`);
+                }
+              }}
+            >
+              {i === 0 ? (
+                idx + 1
+              ) : i === 1 ? (
+                formatDate(new Date(data))
+              ) : i === 4 ? (
+                `${data.toLocaleString()}원`
+              ) : i === 5 ? (
+                data === "disposed" ? (
+                  "폐기"
+                ) : (
+                  "보관"
+                )
+              ) : i === 6 ? (
+                data === "disposed" ? (
+                  "-"
+                ) : (
+                  <button
+                    className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-gray-700"
+                    onClick={() => push(`${pathname}/dispose/${supply.id}`)}
+                  >
+                    {"폐기"}
+                  </button>
+                )
+              ) : (
+                data
+              )}
+            </div>
+          ))}
+        </li>
       ))}
     </ul>
   );
