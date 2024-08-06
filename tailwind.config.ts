@@ -68,7 +68,7 @@ const config: Config = {
       transparent: "rgba(0,0,0,0)",
     },
     fontFamily: {
-      pretendard: ["Pretendard", ...fontFamily.sans],
+      suit: ["Suit", ...fontFamily.sans],
       poppins: ["Poppins", ...fontFamily.sans],
       cochin: ["Cochin", ...fontFamily.serif],
     },
