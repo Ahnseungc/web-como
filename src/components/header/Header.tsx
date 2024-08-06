@@ -4,11 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { cn, openModal } from "@/lib/utils";
 import { LOGIN_ENDPOINT } from "@/lib/constants";
+import useResponsiveZoom from "@/hooks/responsiveZoom";
 import ProfileDropdown from "@/components/header/atoms/ProfileDropdown";
 import CustomerCenter from "@/components/header/molecules/CustomerCenter";
 import Logo from "@/assets/logos/logo.svg";
 import ComoWhiteLogo from "@/assets/logos/como_logo_white.svg";
-import useResponsiveZoom from "@/hooks/responsiveZoom";
 
 interface Props {
   isDashboard?: boolean;
@@ -54,9 +54,9 @@ export default function Header(props: Props) {
           {props.isLoggedIn ? (
             <ProfileDropdown />
           ) : (
-            <Link href={LOGIN_ENDPOINT}>
-              <div className="h4 font-normal text-gray-100">{"로그인"}</div>
-            </Link>
+            <div className="h4 font-normal text-gray-100">
+              <Link href={LOGIN_ENDPOINT}>{"로그인"}</Link>
+            </div>
           )}
         </div>
       </div>

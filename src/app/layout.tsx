@@ -17,7 +17,7 @@ export default function RootLayout({
     <html lang="ko">
       <link rel="icon" href={Favicon.src} type="image/x-icon" />
       <Providers>
-        <body className="min-h-screen font-suit antialiased bg-gray-50">
+        <body className="min-h-screen font-pretendard antialiased bg-gray-50">
           {children}
         </body>
       </Providers>
