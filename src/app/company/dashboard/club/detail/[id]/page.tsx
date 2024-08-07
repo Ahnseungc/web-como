@@ -10,6 +10,7 @@ import ClubDetailAttendanceTabView from "@/components/dashboard/company/club/tem
 import ClubDetailAttendanceDetailTabView from "@/components/dashboard/company/club/templates/ClubDetailAttendanceDetailTabView";
 import ForceDisbandClubFormModal from "@/components/dashboard/company/club/modals/ForceDisbandClubFormModal";
 import CancelForceDisbandModal from "@/components/dashboard/company/club/modals/CancelForceDisbandModal";
+import ViewReportModal from "@/components/dashboard/company/club/modals/ViewReportModal";
 
 export type ClubDetailMenu = "about" | "activity" | "picture" | "attendance";
 
@@ -68,6 +69,7 @@ export default function Page() {
       <div className="m-0">
         <ForceDisbandClubFormModal />
         <CancelForceDisbandModal />
+        <ViewReportModal />
       </div>
     </>
   );
