@@ -1,4 +1,4 @@
-import PurchaseStatsLineGraph from "@/components/dashboard/company/main/molecules/PurchaseStatsLineGraph";
+import PurchaseStatsLineChart from "@/components/dashboard/company/main/molecules/PurchaseStatsLineChart";
 
 export default function PurchaseStats() {
   return (
@@ -12,7 +12,7 @@ export default function PurchaseStats() {
           {"11% 증가"}
         </div>
       </div>
-      <PurchaseStatsLineGraph />
+      <PurchaseStatsLineChart />
     </div>
   );
 }
