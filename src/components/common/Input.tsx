@@ -15,6 +15,7 @@ interface Props {
   required?: boolean;
   maxChar?: number;
   rows?: number;
+  labelStyle?: string;
   inputStyle?: string;
   value?: string;
   currentValue?: string;
@@ -87,7 +88,7 @@ const InputElement = (props: InputProps) => {
 
 export default function Input(props: Props) {
   const [currentValue, setCurrentValue] = useState<string>(props.value || "");
-  const titleStyle = "h3 font-semibold text-gray-900";
+  const labelStyle = "h3 font-semibold text-gray-900";
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -100,7 +101,7 @@ export default function Input(props: Props) {
       {props.label ? (
         <div className="flex-1 flex flex-col gap-2">
           {props.type === "file" ? (
-            <span className={titleStyle}>
+            <span className={props.labelStyle || labelStyle}>
               {props.label}
               {props.required && <span className="text-point-red">{"*"}</span>}
             </span>
@@ -108,7 +109,7 @@ export default function Input(props: Props) {
             <label
               htmlFor={props.name}
               className={cn(
-                titleStyle,
+                props.labelStyle || labelStyle,
                 props.maxChar ? "w-full flex justify-between" : ""
               )}
             >

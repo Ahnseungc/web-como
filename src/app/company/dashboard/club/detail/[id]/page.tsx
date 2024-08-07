@@ -7,6 +7,10 @@ import ClubDetailAboutTabView from "@/components/dashboard/company/club/template
 import ClubDetailActivityTabView from "@/components/dashboard/company/club/templates/ClubDetailActivityTabView";
 import ClubDetailPictureTabView from "@/components/dashboard/company/club/templates/ClubDetailPictureTabView";
 import ClubDetailAttendanceTabView from "@/components/dashboard/company/club/templates/ClubDetailAttendanceTabView";
+import ClubDetailAttendanceDetailTabView from "@/components/dashboard/company/club/templates/ClubDetailAttendanceDetailTabView";
+import ForceDisbandClubFormModal from "@/components/dashboard/company/club/modals/ForceDisbandClubFormModal";
+import CancelForceDisbandModal from "@/components/dashboard/company/club/modals/CancelForceDisbandModal";
+import ViewReportModal from "@/components/dashboard/company/club/modals/ViewReportModal";
 
 export type ClubDetailMenu = "about" | "activity" | "picture" | "attendance";
 
@@ -22,7 +26,10 @@ const tabList: ClubDetailMenuTab[] = [
   { name: "출석부", value: "attendance" },
 ];
 
-const renderCurrentTabPage = (currentTab: ClubDetailMenu) => {
+const renderCurrentTabPage = (
+  currentTab: ClubDetailMenu,
+  attendanceId: string | null
+) => {
   switch (currentTab) {
     case "about":
       return <ClubDetailAboutTabView />;
@@ -31,7 +38,11 @@ const renderCurrentTabPage = (currentTab: ClubDetailMenu) => {
     case "picture":
       return <ClubDetailPictureTabView />;
     case "attendance":
-      return <ClubDetailAttendanceTabView />;
+      if (attendanceId) {
+        return <ClubDetailAttendanceDetailTabView />;
+      } else {
+        return <ClubDetailAttendanceTabView />;
+      }
   }
 };
 
@@ -40,6 +51,7 @@ export default function Page() {
   const pathname = usePathname();
   const currentTab = (useSearchParams().get("tab") ||
     "about") as ClubDetailMenu;
+  const attendanceId = useSearchParams().get("id");
 
   const handleTabChange = (value: ClubDetailMenu) => {
     push(`${pathname}?tab=${value}`);
@@ -53,7 +65,12 @@ export default function Page() {
         currentTab={currentTab}
         handleTabChange={handleTabChange}
       />
-      {renderCurrentTabPage(currentTab)}
+      {renderCurrentTabPage(currentTab, attendanceId)}
+      <div className="m-0">
+        <ForceDisbandClubFormModal />
+        <CancelForceDisbandModal />
+        <ViewReportModal />
+      </div>
     </>
   );
 }

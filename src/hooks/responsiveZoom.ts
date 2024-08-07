@@ -15,6 +15,7 @@ export default function useResponsiveZoom() {
     const onResize = () => {
       const zoom = getZoomValue();
       document.documentElement.style.zoom = `${zoom}`;
+      document.documentElement.style.fontSize = `${16 * zoom}px`;
     };
     onResize();
 

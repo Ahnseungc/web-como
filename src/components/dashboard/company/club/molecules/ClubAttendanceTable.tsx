@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const tableHeadings = ["순번", "이름", "부서", "직급", "동호회 직급", "출석률"];
@@ -88,6 +89,10 @@ const attendances = [
 ];
 
 export default function ClubAttendanceTable() {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const { push } = useRouter();
+
   return (
     <ul className="flex flex-col gap-1">
       <li className="flex border-y border-gray-400 bg-gray-200">
@@ -128,6 +133,7 @@ export default function ClubAttendanceTable() {
               )}
               onClick={() => {
                 if (i === 5) {
+                  push(`${pathname}?${searchParams}&id=${attendance.id}`);
                 }
               }}
             >

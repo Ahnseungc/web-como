@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { openModal } from "@/lib/utils";
 import Avatar from "@/components/common/Avatar";
 import Input from "@/components/common/Input";
 
@@ -30,7 +33,10 @@ export default function ClubDetailInfo() {
         <div className="flex-1 space-y-6 p-8 rounded-xl bg-gray-0">
           <div className="flex items-center gap-3">
             <h2 className="font-bold text-gray-900">{"동호회 정보"}</h2>
-            <button className="py-1 px-4 rounded border border-point-red body-1 font-medium text-point-red">
+            <button
+              className="py-1 px-4 rounded border border-point-red body-1 font-medium text-point-red"
+              onClick={() => openModal("force-disband")}
+            >
               {"강제해체"}
             </button>
           </div>
