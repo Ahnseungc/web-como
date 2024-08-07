@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import { cn, formatDate, openModal } from "@/lib/utils";
 
-type ClubStatus = "active" | "request" | "disband";
+type ClubStatus = "active" | "disband";
 
 const tableHeadings = [
   "순번",
@@ -37,7 +37,7 @@ const clubs = [
     department: "경영팀",
     title: "동호회명",
     date: "2024-07-04 12:33:57",
-    status: "request",
+    status: "disband",
   },
   {
     id: 4,
@@ -77,7 +77,7 @@ const clubs = [
     department: "경영팀",
     title: "동호회명",
     date: "2024-07-04 12:33:57",
-    status: "request",
+    status: "disband",
   },
   {
     id: 9,
@@ -152,30 +152,25 @@ export default function ClubTable() {
                 if (i === 1) {
                   openModal("applicant-profile");
                 } else if (i === 3) {
-                  push(`${pathname}/detail/${club.id}`);
+                  if (club.status === "active") {
+                    push(`${pathname}/detail/${club.id}`);
+                  } else {
+					openModal('disband-info')
+                  }
                 }
               }}
             >
-              {i === 0 ? (
-                idx + 1
-              ) : i === 4 ? (
-                formatDate(new Date(data))
-              ) : i !== 5 ? (
-                data
-              ) : data === "disband" ? (
-                "해체"
-              ) : data === "active" ? (
-                "활동중"
-              ) : data === "request" ? (
-                <button
-                  className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-gray-600"
-                  onClick={() => openModal("revert-rejection")}
-                >
-                  {"해체"}
-                </button>
-              ) : (
-                ""
-              )}
+              {i === 0
+                ? idx + 1
+                : i === 4
+                  ? formatDate(new Date(data))
+                  : i !== 5
+                    ? data
+                    : data === "disband"
+                      ? "해체"
+                      : data === "active"
+                        ? "활동중"
+                        : ""}
             </div>
           ))}
         </li>
