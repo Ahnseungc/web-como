@@ -7,6 +7,8 @@ import ClubDetailAboutTabView from "@/components/dashboard/company/club/template
 import ClubDetailActivityTabView from "@/components/dashboard/company/club/templates/ClubDetailActivityTabView";
 import ClubDetailPictureTabView from "@/components/dashboard/company/club/templates/ClubDetailPictureTabView";
 import ClubDetailAttendanceTabView from "@/components/dashboard/company/club/templates/ClubDetailAttendanceTabView";
+import ForceDisbandClubFormModal from "@/components/dashboard/company/club/modals/ForceDisbandClubFormModal";
+import CancelForceDisbandModal from "@/components/dashboard/company/club/modals/CancelForceDisbandModal";
 
 export type ClubDetailMenu = "about" | "activity" | "picture" | "attendance";
 
@@ -54,6 +56,10 @@ export default function Page() {
         handleTabChange={handleTabChange}
       />
       {renderCurrentTabPage(currentTab)}
+      <div className="m-0">
+        <ForceDisbandClubFormModal />
+        <CancelForceDisbandModal />
+      </div>
     </>
   );
 }
