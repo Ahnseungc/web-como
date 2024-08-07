@@ -171,13 +171,15 @@ export default function ExpenseTable() {
             ) : i === 6 ? (
               data ? (
                 data
-              ) : (
+              ) : data === "pending" ? (
                 <button
-                  className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-point-red"
+                  className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-gray-900"
                   onClick={() => openModal("new-receipt-form")}
                 >
                   {"수령증 작성"}
                 </button>
+              ) : (
+                "-"
               )
             ) : i === 7 ? (
               data ? (
