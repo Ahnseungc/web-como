@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -82,7 +83,23 @@ const data = [
   },
 ];
 
+const OFFSET = 15;
+
 export default function PurchaseStatsLineChart() {
+  const [scaleValues, setScaleValues] = useState<{ min: number; max: number }>({
+    min: 0,
+    max: 100,
+  });
+
+  useEffect(() => {
+    if (data) {
+      const values = data.map((e) => e.value);
+      const min = Math.min(...values) - OFFSET;
+      const max = Math.max(...values) + OFFSET;
+      setScaleValues({ min, max });
+    }
+  }, []);
+
   const chartData: ChartData<"line", number[], string> = {
     labels: data.map((e) => `${new Date(e.date).getMonth() + 1}월`),
     datasets: [
@@ -91,7 +108,7 @@ export default function PurchaseStatsLineChart() {
         borderWidth: 2,
         borderColor: "#FD7E2D",
         pointStyle: "circle",
-        pointRadius: 3,
+        pointRadius: 0,
         pointHoverRadius: 8,
         pointHitRadius: 40,
         pointBorderWidth: 0,
@@ -104,12 +121,14 @@ export default function PurchaseStatsLineChart() {
   };
 
   return (
-    <div className="flex-1">
+    <div className="flex-1 min-h-[330px] max-h-[340px] bg-gray-50 border-t border-dashed border-gray-300">
       <Line
         data={chartData}
         options={{
           responsive: true,
+          maintainAspectRatio: false,
           backgroundColor: "#F6F6F6",
+          layout: { padding: { left: OFFSET, right: OFFSET } },
           interaction: { mode: "index", intersect: false, axis: "xy" },
           scales: {
             x: {
@@ -119,7 +138,11 @@ export default function PurchaseStatsLineChart() {
               },
               grid: { color: "#F1F1F1" },
             },
-            y: { min: 40, max: 90, grid: { color: "#DDDDDD" } },
+            y: {
+              min: scaleValues.min,
+              max: scaleValues.max,
+              display: false,
+            },
           },
           plugins: {
             tooltip: {
@@ -127,7 +150,7 @@ export default function PurchaseStatsLineChart() {
               yAlign: "bottom",
               displayColors: false,
               caretSize: 0,
-              caretPadding: 12,
+              caretPadding: OFFSET,
               padding: 10,
               cornerRadius: 20,
               borderWidth: 1,
