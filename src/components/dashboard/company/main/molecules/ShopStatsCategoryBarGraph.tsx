@@ -21,7 +21,7 @@ export default function ShopStatsCategoryBarGraph() {
           <div
             key={category.key}
             id={`${category.totalExpense.toLocaleString()}원`}
-            className="flex-1 shop-category-bar"
+            className="flex-1 shop-category-bar cursor-pointer"
           >
             <div className="mb-2.5 text-center body-1 font-medium text-gray-600">{`${category.count}건`}</div>
             <div

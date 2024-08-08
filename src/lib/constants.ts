@@ -1,4 +1,4 @@
-export const ZOOM_MIN_WIDTH = 480;
+export const ZOOM_MIN_WIDTH = 800;
 export const ZOOM_BREAKPOINT = 1800;
 
 export const HEADER_HEIGHT = "60px";
