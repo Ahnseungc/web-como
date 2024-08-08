@@ -33,7 +33,7 @@ export default function DashboardRanking() {
               <div
                 key={club.rank}
                 id={club.name}
-                className="space-y-2 w-[46px] ranking-other-club"
+                className="space-y-2 w-[46px] ranking-other-club cursor-pointer"
               >
                 <div className="w-full text-center body-2 font-medium text-gray-500">{`${club.count}명`}</div>
                 <div className="relative group">
@@ -68,7 +68,7 @@ export default function DashboardRanking() {
               id={club.name}
               className={cn(
                 "space-y-2 w-[46px]",
-                i === myClubRank - 1 ? "" : "ranking-other-club"
+                i === myClubRank - 1 ? "" : "ranking-other-club cursor-pointer"
               )}
             >
               <div className="w-full text-center body-2 font-medium text-gray-500">{`${club.count}명`}</div>
