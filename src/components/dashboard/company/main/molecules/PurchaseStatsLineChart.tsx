@@ -108,7 +108,7 @@ export default function PurchaseStatsLineChart() {
         borderWidth: 2,
         borderColor: "#FD7E2D",
         pointStyle: "circle",
-        pointRadius: 0,
+        pointRadius: 3,
         pointHoverRadius: 8,
         pointHitRadius: 40,
         pointBorderWidth: 0,
