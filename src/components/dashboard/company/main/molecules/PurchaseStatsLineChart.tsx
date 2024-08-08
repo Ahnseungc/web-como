@@ -121,7 +121,7 @@ export default function PurchaseStatsLineChart() {
   };
 
   return (
-    <div className="flex-1 min-h-[330px] max-h-[340px] bg-gray-50 border-t border-dashed border-gray-300">
+    <div className="flex-1 flex items-center justify-center min-h-[330px] max-h-[340px] bg-gray-50 border-t border-dashed border-gray-300">
       <Line
         data={chartData}
         options={{
@@ -133,7 +133,7 @@ export default function PurchaseStatsLineChart() {
           scales: {
             x: {
               ticks: {
-                font: { size: 16 },
+                font: { size: 16, family: "Suit" },
                 color: "#6A6A6C",
               },
               grid: { color: "#F1F1F1" },
@@ -157,9 +157,9 @@ export default function PurchaseStatsLineChart() {
               borderColor: "#DDDDDD",
               backgroundColor: "#FFFFFF",
               bodyColor: "#1A1A1D",
-              bodyFont: { size: 16 },
+              bodyFont: { size: 16, family: "Suit", weight: 700 },
               titleColor: "#1A1A1D",
-              titleFont: { size: 16 },
+              titleFont: { size: 14, family: "Suit", weight: 500 },
               callbacks: {
                 label: (tooltipItem) => `${tooltipItem.formattedValue}건`,
               },
