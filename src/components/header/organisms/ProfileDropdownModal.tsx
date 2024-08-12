@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { closeModal, openModal } from "@/lib/utils";
 import { deleteRefreshToken } from "@/lib/token";
 import Avatar from "@/components/common/Avatar";
@@ -13,6 +13,7 @@ interface Props {
 }
 
 export default function ProfileDropdownModal({ profileImage }: Props) {
+  const pathname = usePathname().split("/")[1];
   const { refresh } = useRouter();
 
   const handleLogout = () => {
@@ -52,7 +53,7 @@ export default function ProfileDropdownModal({ profileImage }: Props) {
             >
               {"고객센터"}
             </div>
-            <Link href={"support"} onClick={() => closeModal()}>
+            <Link href={`/${pathname}/support`} onClick={() => closeModal()}>
               <div className="w-full p-3 h4 font-medium text-gray-700">
                 {"문의 및 기술지원"}
               </div>
