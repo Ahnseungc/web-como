@@ -1,7 +1,8 @@
 import { Suspense } from "react";
+import { headers } from "next/headers";
 import { HEADER_HEIGHT } from "@/lib/constants";
-import Header from "@/components/header/Header";
 import Loading from "@/app/company/dashboard/loading";
+import Header from "@/components/header/Header";
 import SideBar from "@/components/dashboard/company/common/SideBar";
 
 export default function DashboardLayout({
@@ -9,9 +10,17 @@ export default function DashboardLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const userAgent = headers().get("user-agent") || "";
+  const initialIsMobile = /mobile/i.test(userAgent);
+
   return (
     <>
-      <Header isDashboard isLoggedIn type="company" />
+      <Header
+        initialIsMobile={initialIsMobile}
+        isDashboard
+        isLoggedIn
+        type="company"
+      />
       <main
         className="flex min-h-[1080px] bg-gray-200"
         style={{ marginTop: HEADER_HEIGHT }}

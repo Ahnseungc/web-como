@@ -10,9 +10,13 @@ export function getZoomValue() {
   return zoom;
 }
 
-export default function useResponsiveZoom() {
+export default function useResponsiveZoom(isMobile: boolean) {
   useEffect(() => {
     const onResize = () => {
+      if (isMobile) {
+        document.documentElement.style.minWidth = "1800px";
+        return;
+      }
       const zoom = getZoomValue();
       document.documentElement.style.zoom = `${zoom}`;
       document.documentElement.style.fontSize = `${16 * zoom}px`;
@@ -21,5 +25,5 @@ export default function useResponsiveZoom() {
 
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
-  }, []);
+  }, [isMobile]);
 }
