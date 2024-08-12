@@ -45,9 +45,11 @@ export default function Header(props: Props) {
           </h1>
         </Link>
         <div className="flex items-center gap-8">
-          <div className="h4 font-normal text-gray-100">{"공지사항"}</div>
+          <div className="hidden md:block h4 font-normal text-gray-100">
+            {"공지사항"}
+          </div>
           <div
-            className="h4 font-normal text-gray-100 cursor-pointer"
+            className="hidden md:block h4 font-normal text-gray-100 cursor-pointer"
             onClick={() => openModal("customer-center")}
           >
             {"고객센터"}
@@ -55,7 +57,7 @@ export default function Header(props: Props) {
           {props.isLoggedIn ? (
             <ProfileDropdown />
           ) : (
-            <div className="h4 font-normal text-gray-100">
+            <div className="body-2 md:h4 font-normal text-gray-100">
               <Link href={LOGIN_ENDPOINT}>{"로그인"}</Link>
             </div>
           )}
