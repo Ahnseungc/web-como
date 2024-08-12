@@ -14,14 +14,17 @@ const footerNav = [
 export default function ShortFooter() {
   return (
     <>
-      <style>{`body {overflow: hidden;}`}</style>
       <footer className="fixed bottom-0 z-10 w-full bg-gray-100">
-        <div className="flex gap-8 w-full max-w-[1320px] mx-auto py-6 px-8">
-          <ul className="flex gap-8">
+        <div className="flex gap-8 w-full max-w-[1320px] mx-auto py-2 md:py-6 px-8">
+          <ul className="hidden md:flex items-center gap-8">
             {footerNav.map((item) => {
               if (item.link) {
                 return (
-                  <Link key={item.name} href={item.link}>
+                  <Link
+                    key={item.name}
+                    href={item.link}
+                    className="w-fit h-fit"
+                  >
                     <li className="body-1 font-bold text-gray-900">
                       {item.name}
                     </li>
@@ -29,7 +32,11 @@ export default function ShortFooter() {
                 );
               } else {
                 return (
-                  <button key={item.name} onClick={item.onClick}>
+                  <button
+                    key={item.name}
+                    onClick={item.onClick}
+                    className="w-fit h-fit"
+                  >
                     <li className="body-1 font-bold text-gray-900">
                       {item.name}
                     </li>
@@ -38,7 +45,7 @@ export default function ShortFooter() {
               }
             })}
           </ul>
-          <h4 className="body-1 font-medium text-gray-500">{COPYRIGHT}</h4>
+          <h4 className="caption-1 md:body-1 font-medium text-gray-500">{COPYRIGHT}</h4>
         </div>
       </footer>
     </>

@@ -33,23 +33,10 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row justify-between gap-4 md:w-[1200px] md:p-8 rounded-4xl md:shadow bg-gray-0">
-      <Image
-        src={BrandImage}
-        alt="OMO"
-        width={530}
-        height={530}
-        priority
-        className="hidden md:block"
-      />
-      <Image
-        src={BrandImage}
-        alt="OMO"
-        width={350}
-        height={350}
-        priority
-        className="block md:hidden"
-      />
+    <div className="flex flex-col md:flex-row justify-between gap-4 md:w-[1200px] md:p-8 rounded-4xl md:shadow md:bg-gray-0">
+      <div className="relative w-[350px] md:w-[530px] h-[350px] md:h-[530px]">
+        <Image src={BrandImage} alt="OMO" fill priority />
+      </div>
       <form
         onSubmit={handleLogin}
         className="flex flex-col justify-between gap-4 md:w-[530px] md:h-[530px] py-6"
