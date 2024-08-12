@@ -2,8 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { cn, formatDate, openModal } from "@/lib/utils";
-import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
-import ReservationReceiptModal from "@/components/dashboard/club/shop/modals/ReservationReceiptModal";
+import ReservationReceiptModal from "@/components/dashboard/shared/shop/modals/ReservationReceiptModal";
 
 type Status = "completed" | "confirmed" | "pending" | "canceled";
 
@@ -154,7 +153,7 @@ export default function ReservationTable() {
                 )}
                 onClick={() => {
                   if (i === 2) {
-                    push(`${CLUB_DASHBOARD_ENDPOINT}/reservation/item/${1}`);
+                    push(`item/${1}`);
                   } else if (i === 3) {
                     openModal("reservation-receipt");
                   }

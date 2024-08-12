@@ -18,7 +18,7 @@ const Loader = () => {
 export default function Loading() {
   return (
     <>
-      <Header />
+      <Header initialIsMobile={false} />
       <main className="fixed bottom-1/2 right-1/2 translate-y-1/2 translate-x-1/2">
         <div className="flex flex-col items-center justify-center gap-8 h-full p-20 rounded-4xl shadow bg-gray-0">
           <div className="flex items-center justify-center w-[100px] h-[100px]">

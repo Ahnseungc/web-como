@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { openModal } from "@/lib/utils";
-import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 import Avatar from "@/components/common/Avatar";
 import Button from "@/components/common/Button";
 import DropdownSelect from "@/components/common/DropdownSelect";
@@ -45,10 +44,7 @@ export default function InquiryForm() {
         <div className="flex-1 space-y-3">
           <h4 className="font-bold text-gray-900">{"문의 상품"}</h4>
           <div className="p-5 rounded-md bg-gray-0 shadow">
-            <Link
-              href={`${CLUB_DASHBOARD_ENDPOINT}/reservation/item/${1}`}
-              className="flex items-center gap-3"
-            >
+            <Link href={`./`} className="flex items-center gap-3">
               <div className="w-[100px] h-[100px] rounded-lg bg-gray-300"></div>
               <div className="space-y-3">
                 <div className="w-[300px] break-keep body-1 font-medium text-gray-900">
@@ -68,10 +64,7 @@ export default function InquiryForm() {
         <div className="flex-1 space-y-3">
           <h4 className="font-bold text-gray-900">{"문의할 호스트"}</h4>
           <div className="py-[42px] px-5 rounded-md bg-gray-0 shadow">
-            <Link
-              href={`${CLUB_DASHBOARD_ENDPOINT}/reservation/host/${1}`}
-              className="flex items-center gap-2"
-            >
+            <Link href={`../../host/${1}`} className="flex items-center gap-2">
               <Avatar size="w-[56px] h-[56px]" />
               <div>
                 <div className="flex items-center h4 font-bold text-gray-900">
@@ -131,11 +124,6 @@ export default function InquiryForm() {
             })
           }
         />
-        {/* <div className="text-right">
-          <button className="py-3 px-4 rounded-md h4 font-semibold text-gray-50 bg-gray-900">
-            {"문의하기"}
-          </button>
-        </div> */}
         <div className="text-center">
           <Button
             content="문의하기"

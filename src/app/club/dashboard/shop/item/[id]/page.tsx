@@ -1,8 +1,8 @@
 import BackButton from "@/components/dashboard/common/BackButton";
-import InquiryShortcut from "@/components/dashboard/club/shop/molecules/InquiryShortcut";
-import ItemDetailOverview from "@/components/dashboard/club/shop/molecules/ItemOverview";
-import ItemDetail from "@/components/dashboard/club/shop/organisms/ItemDetail";
-import ReservationPanel from "@/components/dashboard/club/shop/organisms/ReservationPanel";
+import InquiryShortcut from "@/components/dashboard/shared/shop/molecules/InquiryShortcut";
+import ItemDetailOverview from "@/components/dashboard/shared/shop/molecules/ItemOverview";
+import ItemDetail from "@/components/dashboard/shared/shop/organisms/ItemDetail";
+import ReservationPanel from "@/components/dashboard/shared/shop/organisms/ReservationPanel";
 
 export default function ItemDetailPage() {
   return (
