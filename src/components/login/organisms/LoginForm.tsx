@@ -33,19 +33,36 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="flex justify-between w-[1200px] p-8 rounded-4xl shadow bg-gray-0">
-      <Image src={BrandImage} alt="OMO" width={530} height={530} priority />
+    <div className="flex flex-col md:flex-row justify-between gap-4 md:w-[1200px] md:p-8 rounded-4xl md:shadow bg-gray-0">
+      <Image
+        src={BrandImage}
+        alt="OMO"
+        width={530}
+        height={530}
+        priority
+        className="hidden md:block"
+      />
+      <Image
+        src={BrandImage}
+        alt="OMO"
+        width={350}
+        height={350}
+        priority
+        className="block md:hidden"
+      />
       <form
         onSubmit={handleLogin}
-        className="flex flex-col justify-between w-[530px] h-[530px] py-6"
+        className="flex flex-col justify-between gap-4 md:w-[530px] md:h-[530px] py-6"
       >
         <Image
           src={LogoImage}
           alt="C'OMO for business"
           width={186}
-          className="self-center"
+          className="hidden md:block self-center"
         />
-        <h2 className="h1 text-center font-bold text-gray-1000">{"로그인"}</h2>
+        <h2 className="hidden md:block h1 text-center font-bold text-gray-1000">
+          {"로그인"}
+        </h2>
         <div className="space-y-4">
           <Input name="id" type="email" placeholder="아이디" />
           <Input name="password" type="password" placeholder="비밀번호" />
