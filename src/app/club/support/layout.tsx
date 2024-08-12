@@ -1,14 +1,15 @@
-import { GetServerSideProps } from "next";
+import { headers } from "next/headers";
 import { HEADER_HEIGHT } from "@/lib/constants";
 import Header from "@/components/header/Header";
 
 export default function SupportLayout({
   children,
-  initialIsMobile,
 }: Readonly<{
   children: React.ReactNode;
-  initialIsMobile: boolean;
 }>) {
+  const userAgent = headers().get("user-agent") || "";
+  const initialIsMobile = /mobile/i.test(userAgent);
+
   return (
     <>
       <Header initialIsMobile={initialIsMobile} isLoggedIn type="club" />
@@ -18,14 +19,3 @@ export default function SupportLayout({
     </>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const userAgent = context.req.headers["user-agent"];
-  const initialIsMobile = /mobile/i.test(userAgent || "");
-
-  return {
-    props: {
-      initialIsMobile,
-    },
-  };
-};
