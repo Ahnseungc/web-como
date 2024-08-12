@@ -13,7 +13,7 @@ export default function LoginLayout({
   return (
     <>
       <Header initialIsMobile={initialIsMobile} />
-      <main className="fixed bottom-1/2 right-1/2 translate-y-1/2 translate-x-1/2">
+      <main className="flex items-center justify-center min-h-screen h-full">
         {children}
       </main>
       <ShortFooter />
