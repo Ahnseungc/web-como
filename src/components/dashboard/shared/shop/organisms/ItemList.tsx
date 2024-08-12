@@ -1,4 +1,4 @@
-import ItemCard from "@/components/dashboard/club/shop/molecules/ItemCard";
+import ItemCard from "@/components/dashboard/shared/shop/molecules/ItemCard";
 
 const itemList = [
   {

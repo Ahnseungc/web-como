@@ -1,6 +1,6 @@
 import BackButton from "@/components/dashboard/common/BackButton";
-import InquiryForm from "@/components/dashboard/club/shop/organisms/InquiryForm";
-import InquirySuccessModal from "@/components/dashboard/club/shop/modals/InquirySuccessModal";
+import InquiryForm from "@/components/dashboard/shared/shop/organisms/InquiryForm";
+import InquirySuccessModal from "@/components/dashboard/shared/shop/modals/InquirySuccessModal";
 
 export default function ItemInquiryPage() {
   return (
