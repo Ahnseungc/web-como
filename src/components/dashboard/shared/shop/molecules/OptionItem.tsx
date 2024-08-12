@@ -1,5 +1,5 @@
 import Counter from "@/components/common/Counter";
-import type { Option } from "@/components/dashboard/club/shop/organisms/ReservationPanel";
+import type { Option } from "@/components/dashboard/shared/shop/organisms/ReservationPanel";
 
 interface Props {
   option: Option;

@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 
 const tableHeadings = [
   "상품명",
@@ -93,9 +92,7 @@ export default function HostOtherProductTable() {
               )}
               onClick={() => {
                 if (i === 0) {
-                  push(
-                    `${CLUB_DASHBOARD_ENDPOINT}/reservation/item/${product.id}`
-                  );
+                  push(`../item/${product.id}`);
                 }
               }}
             >

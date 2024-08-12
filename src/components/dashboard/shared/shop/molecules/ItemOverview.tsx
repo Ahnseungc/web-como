@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 import Avatar from "@/components/common/Avatar";
 import Chip from "@/components/common/Chip";
 import {
@@ -58,7 +57,7 @@ export default function ItemDetailOverview() {
           <div className="w-full pb-2 border-b border-gray-200 h4 font-bold text-gray-900">
             {"호스트의 다른 상품 보기"}
           </div>
-          <Link href={`${CLUB_DASHBOARD_ENDPOINT}/reservation/host/${1}`}>
+          <Link href={`../host/${1}`}>
             <div className="flex items-center gap-2 w-fit py-8 pr-4 cursor-pointer select-none">
               <Avatar size="w-[56px] h-[56px]" />
               <div>

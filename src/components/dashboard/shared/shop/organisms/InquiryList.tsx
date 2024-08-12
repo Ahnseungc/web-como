@@ -5,7 +5,7 @@ import DateFilter, {
   type DateRange,
 } from "@/components/dashboard/common/DateFilter";
 import Pagination from "@/components/dashboard/common/Pagination";
-import InquiryTable from "@/components/dashboard/club/shop/molecules/InquiryTable";
+import InquiryTable from "@/components/dashboard/shared/shop/molecules/InquiryTable";
 
 export default function InquiryList() {
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({

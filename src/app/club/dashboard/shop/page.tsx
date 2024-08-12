@@ -1,6 +1,6 @@
-import AdBanners from "@/components/dashboard/club/shop/molecules/AdBanner";
-import ItemSearch from "@/components/dashboard/club/shop/organisms/ItemSearch";
-import ItemList from "@/components/dashboard/club/shop/organisms/ItemList";
+import AdBanners from "@/components/dashboard/shared/shop/molecules/AdBanner";
+import ItemSearch from "@/components/dashboard/shared/shop/organisms/ItemSearch";
+import ItemList from "@/components/dashboard/shared/shop/organisms/ItemList";
 
 export default function Page() {
   return (

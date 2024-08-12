@@ -1,7 +1,7 @@
 import BackButton from "@/components/dashboard/common/BackButton";
-import PurchaseDetail from "@/components/dashboard/club/shop/organisms/PurchaseDetail";
-import PurchasePanel from "@/components/dashboard/club/shop/organisms/PurchasePanel";
-import PurchaseSuccessModal from "@/components/dashboard/club/shop/modals/PurchaseSuccessModal";
+import PurchaseDetail from "@/components/dashboard/shared/shop/organisms/PurchaseDetail";
+import PurchasePanel from "@/components/dashboard/shared/shop/organisms/PurchasePanel";
+import PurchaseSuccessModal from "@/components/dashboard/shared/shop/modals/PurchaseSuccessModal";
 
 export default function ItemPurchasePage() {
   return (
