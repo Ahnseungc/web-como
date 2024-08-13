@@ -11,7 +11,7 @@ const companyDashboardMenus = [
   "employee",
   "club",
   "shop",
-  "point",
+  "como",
   "announcement",
   "community",
 ] as const;
@@ -101,9 +101,25 @@ const menuList: MenuItem[] = [
     ],
   },
   {
-    name: "복지포인트 관리",
-    key: "point",
-    link: "/point",
+    name: "코모이용 관리",
+    key: "como",
+    subMenuList: [
+      {
+        name: "구독권 관리",
+        link: "/como/subscription",
+        routes: ["/como/subscription"],
+      },
+      {
+        name: "코모포인트 관리",
+        link: "/como/point",
+        routes: ["/como/point"],
+      },
+      {
+        name: "임직원 사용내역",
+        link: "/como/employee",
+        routes: ["/como/employee"],
+      },
+    ],
   },
   {
     name: "공지사항",
