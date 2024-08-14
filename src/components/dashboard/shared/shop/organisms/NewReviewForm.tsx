@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { openModal } from "@/lib/utils";
 import Button from "@/components/common/Button";
 import Chip from "@/components/common/Chip";
 import Input from "@/components/common/Input";
@@ -18,6 +19,7 @@ export default function NewReviewForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    openModal("review-submit-success");
   };
 
   return (
