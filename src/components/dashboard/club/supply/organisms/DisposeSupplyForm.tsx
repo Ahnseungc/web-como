@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import useNavigationGuard from "@/hooks/navigationGuard";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import RadioButton from "@/components/common/RadioButton";
 import ImageInput from "@/components/common/ImageInput";
-import { usePathname, useRouter } from "next/navigation";
 
 export default function DisposeSupplyForm() {
   useNavigationGuard();
@@ -60,6 +60,12 @@ export default function DisposeSupplyForm() {
           inputStyle="max-w-[350px]"
           readonly
           value="319,000원"
+        />
+        <ImageInput
+          name="receipt-image"
+          label="구매 영수증 첨부"
+          readonly
+          currentImages={[]}
         />
         <ImageInput
           name="image"
