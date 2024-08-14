@@ -30,18 +30,18 @@ export default function StarRating(props: Props) {
           props.size === "small" ? "gap-1 my-[2.5px]" : "gap-1.5"
         )}
       >
-        {Array.from({ length: 5 }).map((e, i) => (
+        {Array.from({ length: 5 }, (_, index) => index + 1).map((star) => (
           <Star
-            key={i + 1}
+            key={star}
             className={cn(
               props.size === "small" ? "w-4 h-4" : "w-10 h-10",
-              props.currentValue >= i + 1
+              props.currentValue >= star
                 ? "text-brand-orange"
                 : "text-gray-300",
               props.readonly ? "" : "cursor-pointer transition duration-200"
             )}
             onClick={
-              props.readonly ? undefined : () => props.handleChange!(i + 1)
+              props.readonly ? undefined : () => props.handleChange!(star)
             }
           />
         ))}
