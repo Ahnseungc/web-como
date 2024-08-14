@@ -91,7 +91,7 @@ const menuList: MenuItem[] = [
       {
         name: "예약한 콘텐츠 관리",
         link: "/shop/reservation",
-        routes: ["/shop/reservation"],
+        routes: ["/shop/reservation", "/shop/review"],
       },
       {
         name: "1:1 문의",
