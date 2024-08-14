@@ -1,18 +1,30 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Button from "@/components/common/Button";
 import Chip from "@/components/common/Chip";
 import Input from "@/components/common/Input";
 import ImageInput from "@/components/common/ImageInput";
-import { useState } from "react";
+import StarRating from "@/components/common/StarRating";
 
 export default function NewReviewForm() {
+  const [formValues, setFormValues] = useState<{
+    rating: number;
+    content: string;
+  }>({ rating: 0, content: "" });
   const [currentImages, setCurrentImages] = useState<File[]>([]);
   const image = null;
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
-    <div className="space-y-10 p-8 rounded-xl bg-gray-0">
+    <form
+      className="space-y-10 p-8 rounded-xl bg-gray-0"
+      onSubmit={handleSubmit}
+    >
       <div className="space-y-7">
         <div>
           <div className="flex gap-8">
@@ -78,8 +90,17 @@ export default function NewReviewForm() {
         </div>
         <hr className="border-gray-400" />
         <div>
-			
-		</div>
+          <StarRating
+            name="rating"
+            label="활동에 만족하셨나요?"
+            currentValue={formValues.rating}
+            handleChange={(rating) =>
+              setFormValues((prev) => {
+                return { ...prev, rating };
+              })
+            }
+          />
+        </div>
         <hr className="border-gray-400" />
         <div>
           <Input
@@ -87,6 +108,12 @@ export default function NewReviewForm() {
             label="후기 작성"
             placeholder="후기를 작성해주세요"
             maxChar={300}
+            currentValue={formValues.content}
+            handleInputChange={(e) =>
+              setFormValues((prev) => {
+                return { ...prev, content: e.target.value };
+              })
+            }
           />
         </div>
         <hr className="border-gray-400" />
@@ -101,7 +128,11 @@ export default function NewReviewForm() {
           />
         </div>
       </div>
-      <Button primary content="후기 등록하기" />
-    </div>
+      <Button
+        primary
+        content="후기 등록하기"
+        disabled={!formValues.rating || !formValues.content}
+      />
+    </form>
   );
 }
