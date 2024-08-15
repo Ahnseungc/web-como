@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { cn, formatDate, openModal } from "@/lib/utils";
 import ReservationReceiptModal from "@/components/dashboard/shared/shop/modals/ReservationReceiptModal";
 
-type Status = "completed" | "confirmed" | "pending" | "canceled";
+type Status = "reviewed" | "completed" | "confirmed" | "pending" | "canceled";
 
 const tableHeadings = [
   "결제일",
@@ -78,7 +78,7 @@ const reservations = [
     name: "상품명",
     price: 250000,
     reservationDate: "2024-07-04 12:33:57",
-    status: "completed",
+    status: "reviewed",
   },
   {
     date: "2024-07-04 12:33:57",
@@ -94,7 +94,7 @@ const reservations = [
     name: "상품명",
     price: 250000,
     reservationDate: "2024-07-04 12:33:57",
-    status: "completed",
+    status: "reviewed",
   },
 ];
 
@@ -174,8 +174,15 @@ export default function ReservationTable() {
                     <div className="w-[100px] h-[100px] rounded-lg bg-gray-300" />
                     {data}
                   </>
-                ) : data === "completed" ? (
+                ) : data === "reviewed" ? (
                   "참여 완료"
+                ) : data === "completed" ? (
+                  <button
+                    className="py-1 px-4 rounded border border-gray-900 body-1 font-medium text-gray-900 bg-gray-0"
+                    onClick={() => push('./review/new')}
+                  >
+                    {"후기 작성"}
+                  </button>
                 ) : data === "confirmed" ? (
                   "예약 확정"
                 ) : data === "canceled" ? (

@@ -86,6 +86,26 @@ const InputElement = (props: InputProps) => {
   );
 };
 
+interface LabelProps {
+  label: string;
+  required?: boolean;
+  id?: string;
+  labelStyle?: string;
+}
+
+export const InputLabel = (props: LabelProps) => {
+  const labelStyle = "h3 font-semibold text-gray-900";
+
+  return (
+    <label htmlFor={props.id} className={cn(props.labelStyle || labelStyle)}>
+      <span>
+        {props.label}
+        {props.required && <span className="text-point-red">{"*"}</span>}
+      </span>
+    </label>
+  );
+};
+
 export default function Input(props: Props) {
   const [currentValue, setCurrentValue] = useState<string>(props.value || "");
   const labelStyle = "h3 font-semibold text-gray-900";

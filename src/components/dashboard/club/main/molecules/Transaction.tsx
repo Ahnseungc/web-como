@@ -53,7 +53,7 @@ export default function DashboardTransaction() {
     <div className="flex flex-col gap-3 p-8 rounded-xl bg-gray-0">
       <div className="flex justify-between">
         <h3 className="h1 font-bold text-brand-black">{"입출금 내역"}</h3>
-        <Link href={`${CLUB_DASHBOARD_ENDPOINT}/expanse/transaction`}>
+        <Link href={`${CLUB_DASHBOARD_ENDPOINT}/expense/transaction`}>
           <ChevronRight className="w-9 h-9 text-brand-black" />
         </Link>
       </div>
