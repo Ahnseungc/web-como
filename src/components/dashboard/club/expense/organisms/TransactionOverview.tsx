@@ -12,19 +12,17 @@ export default function TransactionOverview() {
         />
       </div>
       <div className="flex items-center justify-between">
-        <div>
-          <span className="h4 font-bold text-gray-500">{"잔여회비"}</span>
-          <div className="mt-3 h1 font-extrabold text-brand-orange">{`${(10000000).toLocaleString()}원`}</div>
+        <div className="flex-1 flex flex-col gap-3 border-r border-gray-700">
+          <span className="h4 font-bold text-gray-500">{"잔여 회비"}</span>
+          <div className="h1 font-extrabold text-brand-orange">{`${(10000000).toLocaleString()}원`}</div>
         </div>
-        <div className="flex gap-8">
-          <div>
-            <span className="h4 font-bold text-gray-500">{"결제 대기"}</span>
-            <div className="mt-3 h1 font-extrabold text-gray-0">{`${(30000).toLocaleString()}원`}</div>
-          </div>
-          <div>
-            <span className="h4 font-bold text-gray-500">{"이달 지출"}</span>
-            <div className="mt-3 h1 font-extrabold text-gray-0">{`${(200000).toLocaleString()}원`}</div>
-          </div>
+        <div className="flex-1 flex flex-col gap-3 pl-8 border-r border-gray-700">
+          <span className="h4 font-bold text-gray-500">{"결제 대기"}</span>
+          <div className="h1 font-extrabold text-gray-0">{`${(30000).toLocaleString()}원`}</div>
+        </div>
+        <div className="flex-1 flex flex-col gap-3 pl-8">
+          <span className="h4 font-bold text-gray-500">{"이달 지출"}</span>
+          <div className="h1 font-extrabold text-gray-0">{`${(200000).toLocaleString()}원`}</div>
         </div>
       </div>
     </div>
