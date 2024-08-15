@@ -43,6 +43,12 @@ export default function SupplyDetail() {
           value="319,000원"
         />
         <ImageInput
+          name="receipt-image"
+          label="구매 영수증 첨부"
+          readonly
+          currentImages={[]}
+        />
+        <ImageInput
           name="image"
           label="비품 사진"
           readonly

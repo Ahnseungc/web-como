@@ -9,7 +9,8 @@ import ImageInput from "@/components/common/ImageInput";
 
 export default function NewSupplyForm() {
   useNavigationGuard();
-  const [currentImages, setCurrentImages] = useState<File[]>([]);
+  const [receiptImages, setReceiptImages] = useState<File[]>([]);
+  const [supplyImages, setSupplyImages] = useState<File[]>([]);
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -60,12 +61,21 @@ export default function NewSupplyForm() {
         />
         <ImageInput
           required
+          name="receipt-image"
+          label="구매 영수증 첨부"
+          caption="구매를 증빙할 수 있는 실물 영수증 사진 및 캡쳐본을 첨부해주세요."
+          max={3}
+          currentImages={receiptImages}
+          setCurrentImages={setReceiptImages}
+        />
+        <ImageInput
+          required
           name="image"
           label="비품 사진"
           caption="비품 사진은 최대 8장까지 첨부할 수 있습니다."
-		  max={8}
-          currentImages={currentImages}
-          setCurrentImages={setCurrentImages}
+          max={8}
+          currentImages={supplyImages}
+          setCurrentImages={setSupplyImages}
         />
         <Input
           name="note"
