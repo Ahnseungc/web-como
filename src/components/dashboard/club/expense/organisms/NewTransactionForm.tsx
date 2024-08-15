@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { openModal } from "@/lib/utils";
 import Button from "@/components/common/Button";
 import Input, { InputLabel } from "@/components/common/Input";
@@ -33,7 +34,11 @@ interface FormValues {
 }
 
 export default function NewTransactionForm() {
-  const [formValues, setFormValues] = useState<FormValues>();
+  const searchParams = useSearchParams();
+  const receiptCode = searchParams.get("receiptCode");
+  const [formValues, setFormValues] = useState<FormValues | undefined>(
+    receiptCode ? { transactionType: "deposit", receiptCode } : undefined
+  );
   const [receiptImages, setReceiptImages] = useState<File[]>([]);
 
   const handleSubmit = (e: React.FormEvent) => {
