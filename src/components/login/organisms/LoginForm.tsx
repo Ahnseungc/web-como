@@ -4,12 +4,17 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import {
+  saveAccessToken,
+  saveClubId,
+  saveDashboardType,
+  saveRefreshToken,
+} from "@/lib/token";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import RadioSelect from "@/components/login/molecules/RadioSelect";
 import BrandImage from "@/assets/images/brand_image.svg";
 import LogoImage from "@/assets/logos/como_logo.svg";
-import { saveDashboardType, saveRefreshToken } from "@/lib/token";
 
 interface UserLoginDto {
   id: string;
@@ -25,10 +30,30 @@ export default function LoginForm() {
     role: "club",
   });
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    saveRefreshToken("token");
+
+    const response = await fetch("http://13.125.67.228:8080/login", {
+      method: "POST",
+      body: JSON.stringify({ email: formData.id, password: formData.password }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const access = response.headers.get("Authorization");
+    // const refresh = response.headers.get("Authorization-refresh");
+
+    if (!access) {
+      console.log("Error: No Access Token");
+      return;
+    }
+
+    saveAccessToken(access);
+    saveRefreshToken(access);
     saveDashboardType(formData.role);
+    saveClubId("1");
+
     refresh();
   };
 
@@ -51,8 +76,28 @@ export default function LoginForm() {
           {"로그인"}
         </h2>
         <div className="space-y-4">
-          <Input name="id" type="email" placeholder="아이디" />
-          <Input name="password" type="password" placeholder="비밀번호" />
+          <Input
+            name="id"
+            type="text"
+            placeholder="아이디"
+            currentValue={formData.id}
+            handleInputChange={(e) =>
+              setFormData((prev) => {
+                return { ...prev, id: e.target.value };
+              })
+            }
+          />
+          <Input
+            name="password"
+            type="password"
+            placeholder="비밀번호"
+            currentValue={formData.password}
+            handleInputChange={(e) =>
+              setFormData((prev) => {
+                return { ...prev, password: e.target.value };
+              })
+            }
+          />
           <RadioSelect
             currentValue={formData.role}
             handleChange={(role: string) =>
