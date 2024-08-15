@@ -9,7 +9,7 @@ import {
   saveClubId,
   saveDashboardType,
   saveRefreshToken,
-} from "@/lib/token";
+} from "@/lib/cookies";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import RadioSelect from "@/components/login/molecules/RadioSelect";
