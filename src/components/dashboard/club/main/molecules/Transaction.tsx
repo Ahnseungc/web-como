@@ -2,7 +2,7 @@ import Link from "next/link";
 import { getData } from "@/api/action";
 import type { TransactionData } from "@/api/types/club/transactions";
 import { getClubId } from "@/lib/cookies";
-import { cn, convertToDate, formatDate } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 import { ChevronRight } from "@/assets/icons/chevron";
 
@@ -69,7 +69,7 @@ export default async function DashboardTransaction() {
                     data === "출금" ? "text-point-red" : ""
                   )}
                 >
-                  {i === 0 ? formatDate(convertToDate(data)) : data}
+                  {i === 0 ? data.toString().slice(0, 10) : data}
                 </span>
               ))}
             </li>
