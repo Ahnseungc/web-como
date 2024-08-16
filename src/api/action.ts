@@ -1,3 +1,5 @@
+"use server";
+
 import { getAccessToken, getClubId } from "@/lib/cookies";
 import type { IResponse } from "@/api/types/index";
 
