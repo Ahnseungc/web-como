@@ -11,11 +11,18 @@ import {
 export function middleware(req: NextRequest) {
   const refreshToken = cookies().get("refreshToken");
   const type = cookies().get("type");
+  const clubId = cookies().get("clubId");
 
   if (req.nextUrl.pathname === "/") {
     if (refreshToken) {
       if (type?.value === "club") {
-        return NextResponse.redirect(new URL(CLUB_DASHBOARD_ENDPOINT, req.url));
+        if (clubId?.value) {
+          return NextResponse.redirect(
+            new URL(CLUB_DASHBOARD_ENDPOINT, req.url)
+          );
+        } else {
+          return NextResponse.redirect(new URL(LOGIN_ENDPOINT, req.url));
+        }
       } else if (type?.value === "company") {
         return NextResponse.redirect(
           new URL(COMPANY_DASHBOARD_ENDPOINT, req.url)
@@ -43,7 +50,7 @@ export function middleware(req: NextRequest) {
     req.nextUrl.pathname.startsWith(COMPANY_ENDPOINT) &&
     type?.value !== "company"
   ) {
-    if (type?.value === "club") {
+    if (type?.value === "club" && clubId?.value) {
       return NextResponse.redirect(new URL(CLUB_DASHBOARD_ENDPOINT, req.url));
     } else {
       return NextResponse.redirect(new URL(LOGIN_ENDPOINT, req.url));
@@ -51,13 +58,20 @@ export function middleware(req: NextRequest) {
   }
 
   if (req.nextUrl.pathname.startsWith(LOGIN_ENDPOINT) && refreshToken) {
-    if (type?.value === "club") {
+    if (type?.value === "club" && clubId?.value) {
       return NextResponse.redirect(new URL(CLUB_DASHBOARD_ENDPOINT, req.url));
     } else if (type?.value === "company") {
       return NextResponse.redirect(
         new URL(COMPANY_DASHBOARD_ENDPOINT, req.url)
       );
     }
+  }
+
+  if (
+    req.nextUrl.pathname.startsWith(LOGIN_ENDPOINT + "/club") &&
+    !refreshToken
+  ) {
+    return NextResponse.redirect(new URL(LOGIN_ENDPOINT, req.url));
   }
 
   return NextResponse.next();
