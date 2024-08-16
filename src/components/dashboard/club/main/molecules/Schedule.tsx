@@ -20,9 +20,10 @@ export default async function DashboardSchedule() {
               <span
                 key={heading}
                 className={cn(
-                  "py-2 px-4 body-2 font-bold text-gray-500",
-                  i === 1 || i === 3 ? "min-w-20 text-center" : "flex-1",
-                  i === 2 ? "max-w-80" : i === 0 ? "max-w-40" : ""
+                  "flex-1 py-2 px-4 body-2 font-bold text-gray-500",
+                  [1, 3].includes(i) ? "max-w-24 text-center" : "",
+                  i === 0 ? "max-w-32" : "",
+                  i === 2 ? "max-w-80" : ""
                 )}
               >
                 {heading}
@@ -42,20 +43,16 @@ export default async function DashboardSchedule() {
               <span
                 key={data}
                 className={cn(
-                  "py-2 px-4 truncate",
-                  i === 1 || i === 3 ? "min-w-20 text-center" : "flex-1",
-                  i === 2
-                    ? "max-w-80 body-1 font-bold text-gray-900"
-                    : i === 0
-                      ? "max-w-40 body-2 font-bold text-gray-600"
-                      : i === 1
-                        ? "body-1 font-normal text-gray-900"
-                        : i === 3
-                          ? "body-2 font-medium text-gray-900"
-                          : "body-1 font-medium text-gray-600"
+                  "flex-1 py-2 px-4 body-1 font-medium text-gray-900 truncate",
+                  i === 0 ? "max-w-32 body-2 font-bold" : "",
+                  [1, 3].includes(i) ? "max-w-24 text-center" : "",
+                  [0, 4].includes(i) ? "text-gray-600" : "",
+                  i === 1 ? "font-normal" : "",
+                  i === 2 ? "max-w-80 font-bold" : "",
+                  i === 3 ? "body-2 font-medium" : ""
                 )}
               >
-                {data}
+                {i === 3 ? `${data}명` : data}
               </span>
             ))}
           </li>

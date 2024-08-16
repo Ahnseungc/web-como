@@ -32,9 +32,12 @@ export default async function DashboardTransaction() {
                 <span
                   key={heading}
                   className={cn(
-                    "py-2 px-4 body-2 font-bold text-gray-500",
-                    i === 1 || i === 3 ? "w-20 text-center" : "flex-1",
-                    i === 2 ? "max-w-80" : i === 0 ? "max-w-40" : ""
+                    "flex-1 py-2 px-4 body-2 font-bold text-gray-500",
+                    [1, 3].includes(i) ? "text-center" : "",
+                    i === 0 ? "max-w-32" : "",
+                    i === 1 ? "max-w-24" : "",
+                    i === 2 ? "max-w-60" : "",
+                    i === 3 ? "max-w-44" : ""
                   )}
                 >
                   {heading}
@@ -54,22 +57,23 @@ export default async function DashboardTransaction() {
                 <span
                   key={data}
                   className={cn(
-                    "py-2 px-4 truncate",
-                    i === 1 || i === 3 ? "w-20 text-center" : "flex-1",
-                    i === 2
-                      ? "max-w-80 body-1 font-bold text-gray-900"
-                      : i === 0
-                        ? "max-w-40 body-2 font-bold text-gray-600"
-                        : i === 1
-                          ? "body-1 font-bold"
-                          : i === 3
-                            ? "body-2 font-medium text-gray-900"
-                            : "body-1 font-medium text-gray-700",
+                    "flex-1 py-2 px-4 body-1 font-medium text-gray-900 truncate",
+                    [1, 3].includes(i) ? "text-center" : "",
+                    i === 0 ? "max-w-32 body-2 font-bold text-gray-600" : "",
+                    [1, 2].includes(i) ? "font-bold" : "",
+                    i === 1 ? "max-w-24" : "",
+                    i === 2 ? "max-w-60" : "",
+                    i === 3 ? "max-w-44 body-2" : "",
+                    i === 4 ? "text-gray-700" : "",
                     data === "입금" ? "text-point-blue" : "",
                     data === "출금" ? "text-point-red" : ""
                   )}
                 >
-                  {i === 0 ? data.toString().slice(0, 10) : data}
+                  {i === 0
+                    ? data.toString().slice(0, 10)
+                    : i === 2
+                      ? `${transaction.transactionType === "입금" ? "" : "-"}${data.toLocaleString()}원`
+                      : data}
                 </span>
               ))}
             </li>
