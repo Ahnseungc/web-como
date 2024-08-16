@@ -16,5 +16,5 @@ export const getData = async (endpoint: string) => {
 
   const res: IResponse = await response.json();
 
-  return res.data;
+  return res;
 };

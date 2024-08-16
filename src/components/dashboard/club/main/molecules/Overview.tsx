@@ -1,19 +1,13 @@
 import Link from "next/link";
 import { getData } from "@/api/action";
+import type { NotificationData } from "@/api/types/club/notification";
 import { getClubId } from "@/lib/cookies";
 import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
-import type { NotificationData } from "@/api/types/club/notification";
 
 export default async function DashboardOverview() {
   const id = await getClubId();
-
-  if (!id) {
-    return;
-  }
-
-  const data: NotificationData = await getData(
-    `/v2/club/web/notification/${id}`
-  );
+  const res = await getData(`/v2/club/web/notification/${id}`);
+  const data: NotificationData = res.data;
 
   return (
     <div className="col-span-4 flex flex-col gap-6 h-fit p-8 rounded-xl bg-gray-800 select-none">
