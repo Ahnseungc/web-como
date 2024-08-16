@@ -20,7 +20,7 @@ export interface ClubSchedule {
 
 export default function ClubInfoTab() {
   const { data } = useQuery({
-    queryKey: ["info"],
+    queryKey: ["club-manage", "info"],
     queryFn: () =>
       getData("/v2/club/web/", true).then((res) => res.data as ClubIndexData),
   });
