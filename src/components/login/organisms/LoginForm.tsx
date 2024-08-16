@@ -6,10 +6,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   saveAccessToken,
-  saveClubId,
   saveDashboardType,
   saveRefreshToken,
 } from "@/lib/cookies";
+import { LOGIN_ENDPOINT } from "@/lib/constants";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import RadioSelect from "@/components/login/molecules/RadioSelect";
@@ -23,7 +23,7 @@ interface UserLoginDto {
 }
 
 export default function LoginForm() {
-  const { refresh } = useRouter();
+  const { replace, refresh } = useRouter();
   const [formData, setFormData] = useState<UserLoginDto>({
     id: "",
     password: "",
@@ -33,28 +33,38 @@ export default function LoginForm() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const response = await fetch("http://13.125.67.228:8080/login", {
-      method: "POST",
-      body: JSON.stringify({ email: formData.id, password: formData.password }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/login`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          email: formData.id,
+          password: formData.password,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-    const access = response.headers.get("Authorization");
-    // const refresh = response.headers.get("Authorization-refresh");
+    const accessToken = response.headers.get("Authorization");
+    const refreshToken = accessToken;
+    // const refreshToken = response.headers.get("Authorization-refresh");
 
-    if (!access) {
+    if (!accessToken || !refreshToken) {
       console.log("Error: No Access Token");
       return;
     }
 
-    saveAccessToken(access);
-    saveRefreshToken(access);
-    saveDashboardType(formData.role);
-    saveClubId("1");
+    await saveAccessToken(accessToken);
+    await saveRefreshToken(refreshToken);
+    await saveDashboardType(formData.role);
 
-    refresh();
+    if (formData.role === "club") {
+      replace(`${LOGIN_ENDPOINT}/club`);
+    } else {
+      refresh();
+    }
   };
 
   return (
