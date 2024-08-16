@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { closeModal, openModal } from "@/lib/utils";
-import { deleteRefreshToken } from "@/lib/token";
+import { deleteRefreshToken } from "@/lib/cookies";
 import Avatar from "@/components/common/Avatar";
 import Backdrop from "@/components/common/Backdrop";
 import { Close } from "@/assets/icons/action";
