@@ -16,7 +16,7 @@ export default function Button(props: Props) {
   return (
     <button
       className={cn(
-        "w-full py-[15px] rounded-md border",
+        "flex items-center justify-center w-full h-[60px] rounded-md border transition duration-200",
         props.disabled
           ? "bg-gray-200 border-gray-200"
           : props.primary
@@ -32,7 +32,7 @@ export default function Button(props: Props) {
     >
       <span
         className={cn(
-          "h3 font-bold",
+          "h3 font-bold transition duration-200",
           props.disabled
             ? "text-gray-400"
             : props.primary || props.orange
