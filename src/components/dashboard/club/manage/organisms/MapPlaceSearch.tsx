@@ -56,7 +56,6 @@ export default function MapPlaceSearch({ value, readonly }: Props) {
       }
     }
     if (geocodeData) {
-      console.log(geocodeData);
       if (geocodeData.meta.totalCount > 0) {
         return setSearchResult(
           geocodeData.addresses.map((item) => {
