@@ -1,14 +1,12 @@
 import Link from "next/link";
 import { getData } from "@/api/action";
 import type { TransactionData } from "@/api/types/club/transactions";
-import { getClubId } from "@/lib/cookies";
 import { cn } from "@/lib/utils";
 import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 import { ChevronRight } from "@/assets/icons/chevron";
 
 export default async function DashboardTransaction() {
-  const id = await getClubId();
-  const res = await getData(`/v2/club/web/transactions/${id}`);
+  const res = await getData("/v2/club/web/transactions/", true);
   const data: TransactionData = res.data;
 
   return (

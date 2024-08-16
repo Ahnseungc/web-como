@@ -1,12 +1,10 @@
 import Link from "next/link";
 import { getData } from "@/api/action";
 import type { NotificationData } from "@/api/types/club/notification";
-import { getClubId } from "@/lib/cookies";
 import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 
 export default async function DashboardOverview() {
-  const id = await getClubId();
-  const res = await getData(`/v2/club/web/notification/${id}`);
+  const res = await getData("/v2/club/web/notification/", true);
   const data: NotificationData = res.data;
 
   return (

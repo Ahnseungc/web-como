@@ -1,11 +1,9 @@
 import { getData } from "@/api/action";
 import type { UpcomingActivityData } from "@/api/types/club/upcoming/activity";
-import { getClubId } from "@/lib/cookies";
 import { cn } from "@/lib/utils";
 
 export default async function DashboardSchedule() {
-  const id = await getClubId();
-  const res = await getData(`/v2/club/web/upcoming/activity/${id}`);
+  const res = await getData("/v2/club/web/upcoming/activity/", true);
   const data: UpcomingActivityData = res.data;
 
   return (

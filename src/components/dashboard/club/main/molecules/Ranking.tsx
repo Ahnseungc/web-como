@@ -1,12 +1,10 @@
 import { getData } from "@/api/action";
 import type { RankingData } from "@/api/types/club/ranking";
-import { getClubId } from "@/lib/cookies";
 import { cn } from "@/lib/utils";
 import RankingCursor from "@/components/dashboard/club/main/atoms/RankingCursor";
 
 export default async function DashboardRanking() {
-  const id = await getClubId();
-  const res = await getData(`/v2/club/web/ranking/${id}`);
+  const res = await getData("/v2/club/web/ranking/", true);
   const data: RankingData = res.data;
 
   const myClubRank = data.myClubRanking;
