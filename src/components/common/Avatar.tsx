@@ -8,12 +8,17 @@ interface Props {
 
 export default function Avatar({ src, size = "w-8 h-8" }: Props) {
   return (
-    <>
-      {src ? (
-        <Image src={src} alt="프로필" className={cn("rounded-full", size)} />
-      ) : (
-        <div className={cn("rounded-full bg-gray-400", size)} />
+    <div className={cn("relative rounded-full bg-gray-400", size)}>
+      {src && (
+        <Image
+          src={src}
+          alt="프로필"
+          className="rounded-full"
+          fill
+          sizes="5vw"
+          objectFit="cover"
+        />
       )}
-    </>
+    </div>
   );
 }

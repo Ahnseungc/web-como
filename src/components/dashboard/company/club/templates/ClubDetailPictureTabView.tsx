@@ -33,9 +33,9 @@ export default function ClubDetailPictureTabView() {
   return (
     <>
       <ClubTitle />
-      {pictureList.map((picture) => (
+      {/* {pictureList.map((picture) => (
         <ClubPictureItem key={picture.id} item={picture} readonly />
-      ))}
+      ))} */}
     </>
   );
 }

@@ -1,8 +1,23 @@
 import Link from "next/link";
+import { getData } from "@/api/action";
+import type { TransactionOverviewData } from "@/api/types/club/activityExpenses/transactions";
+import type { ExpenseOverviewData } from "@/api/types/club/activityExpenses/requestStatus";
 import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 import { ChevronRight } from "@/assets/icons/chevron";
 
-export default function ExpenseOverview() {
+export default async function ExpenseOverview() {
+  const transactionsRes = await getData(
+    "/v2/club/web/activityexpenses/transactions/",
+    true
+  );
+  const transactionsData: TransactionOverviewData = transactionsRes.data;
+
+  const requestRes = await getData(
+    "/v2/club/web/activityexpenses/requeststatus/",
+    true
+  );
+  const requestData: ExpenseOverviewData = requestRes.data;
+
   return (
     <div className="flex gap-3">
       <div className="flex-1 p-8 rounded-xl bg-gray-800">
@@ -14,34 +29,40 @@ export default function ExpenseOverview() {
         </div>
         <div className="flex items-center justify-between mt-8">
           <div>
-            <span className="h4 font-bold text-gray-500">{"잔여회비"}</span>
-            <div className="mt-3 h1 font-extrabold text-brand-orange">{`${(10000000).toLocaleString()}원`}</div>
+            <span className="h4 font-bold text-gray-500">{"잔여 회비"}</span>
+            <div className="mt-3 h1 font-extrabold text-brand-orange">{`${transactionsData.remainingFee.toLocaleString()}원`}</div>
           </div>
           <div className="flex gap-8">
             <div>
               <span className="h4 font-bold text-gray-500">{"결제 대기"}</span>
-              <div className="mt-3 h1 font-extrabold text-gray-0">{`${(30000).toLocaleString()}원`}</div>
+              <div className="mt-3 h1 font-extrabold text-gray-0">{`${transactionsData.pendingPayment.toLocaleString()}원`}</div>
             </div>
             <div>
               <span className="h4 font-bold text-gray-500">{"이달 지출"}</span>
-              <div className="mt-3 h1 font-extrabold text-gray-0">{`${(200000).toLocaleString()}원`}</div>
+              <div className="mt-3 h1 font-extrabold text-gray-0">{`${transactionsData.currentMonthExpenses.toLocaleString()}원`}</div>
             </div>
           </div>
         </div>
       </div>
       <div className="flex-1 p-8 rounded-xl bg-gray-800">
-        <h3 className="h1 font-bold text-gray-0">{"활동비 신청현황"}</h3>
+        <h3 className="h1 font-bold text-gray-0">{"활동비 신청 현황"}</h3>
         <div className="flex mt-8">
           <div className="flex-1 flex flex-col items-center gap-3 border-r border-gray-700">
-            <span className="h1 font-extrabold text-gray-0">{1}</span>
-            <span className="h4 font-bold text-gray-500">{"지급대기"}</span>
+            <span className="h1 font-extrabold text-gray-0">
+              {requestData.pendingPayment}
+            </span>
+            <span className="h4 font-bold text-gray-500">{"지급 대기"}</span>
           </div>
           <div className="flex-1 flex flex-col items-center gap-3 border-r border-gray-700">
-            <span className="h1 font-extrabold text-gray-0">{8}</span>
-            <span className="h4 font-bold text-gray-500">{"지급완료"}</span>
+            <span className="h1 font-extrabold text-gray-0">
+              {requestData.paymentCompleted}
+            </span>
+            <span className="h4 font-bold text-gray-500">{"지급 완료"}</span>
           </div>
           <div className="flex-1 flex flex-col items-center gap-3">
-            <span className="h1 font-extrabold text-gray-0">{3}</span>
+            <span className="h1 font-extrabold text-gray-0">
+              {requestData.rejected}
+            </span>
             <span className="h4 font-bold text-gray-500">{"반려"}</span>
           </div>
         </div>
