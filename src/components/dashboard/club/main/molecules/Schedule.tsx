@@ -3,7 +3,7 @@ import type { UpcomingActivityData } from "@/api/types/club/upcoming/activity";
 import { cn } from "@/lib/utils";
 
 export default async function DashboardSchedule() {
-  const res = await getData("/v2/club/web/upcoming/activity/", true);
+  const res = await getData("v2/club/web/upcoming/activity/", true);
   const data: UpcomingActivityData = res.data;
 
   return (

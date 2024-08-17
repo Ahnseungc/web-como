@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import RankingCursor from "@/components/dashboard/club/main/atoms/RankingCursor";
 
 export default async function DashboardRanking() {
-  const res = await getData("/v2/club/web/ranking/", true);
+  const res = await getData("v2/club/web/ranking/", true);
   const data: RankingData = res.data;
 
   const myClubRank = data.myClubRanking;

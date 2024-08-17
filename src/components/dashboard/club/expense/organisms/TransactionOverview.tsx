@@ -4,7 +4,7 @@ import InfoTooltipButton from "@/components/dashboard/common/InfoTooltipButton";
 
 export default async function TransactionOverview() {
   const res = await getData(
-    "/v2/club/web/activityexpenses/transactions/",
+    "v2/club/web/activityexpenses/transactions/",
     true
   );
   const data: TransactionOverviewData = res.data;

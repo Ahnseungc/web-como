@@ -7,13 +7,13 @@ import { ChevronRight } from "@/assets/icons/chevron";
 
 export default async function ExpenseOverview() {
   const transactionsRes = await getData(
-    "/v2/club/web/activityexpenses/transactions/",
+    "v2/club/web/activityexpenses/transactions/",
     true
   );
   const transactionsData: TransactionOverviewData = transactionsRes.data;
 
   const requestRes = await getData(
-    "/v2/club/web/activityexpenses/requeststatus/",
+    "v2/club/web/activityexpenses/requeststatus/",
     true
   );
   const requestData: ExpenseOverviewData = requestRes.data;

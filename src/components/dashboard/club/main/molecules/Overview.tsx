@@ -4,7 +4,7 @@ import type { NotificationData } from "@/api/types/club/notification";
 import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 
 export default async function DashboardOverview() {
-  const res = await getData("/v2/club/web/notification/", true);
+  const res = await getData("v2/club/web/notification/", true);
   const data: NotificationData = res.data;
 
   return (
