@@ -6,7 +6,7 @@ import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 import { ChevronRight } from "@/assets/icons/chevron";
 
 export default async function DashboardTransaction() {
-  const res = await getData("/v2/club/web/transactions/", true);
+  const res = await getData("v2/club/web/transactions/", true);
   const data: TransactionData = res.data;
 
   return (
