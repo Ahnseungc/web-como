@@ -15,6 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
+      <meta
+        httpEquiv="Content-Security-Policy"
+        content="upgrade-insecure-requests"
+      ></meta>
       <link rel="icon" href={Favicon.src} type="image/x-icon" />
       <Providers>
         <body className="min-h-screen font-suit antialiased bg-gray-50">
