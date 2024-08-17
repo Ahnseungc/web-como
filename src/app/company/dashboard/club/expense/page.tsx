@@ -1,7 +1,6 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import BackButton from "@/components/dashboard/common/BackButton";
 import ClubExpenseMenuTabs from "@/components/dashboard/company/club/molecules/ClubExpenseMenuTabs";
 import ClubExpenseAllTabView from "@/components/dashboard/company/club/templates/ClubExpenseAllTabView";
 import ClubExpenseClubTabView from "@/components/dashboard/company/club/templates/ClubExpenseClubTabView";
@@ -42,7 +41,6 @@ export default function Page() {
 
   return (
     <>
-      <BackButton />
       <ClubExpenseMenuTabs
         tabs={tabList}
         currentTab={currentTab}
