@@ -1,54 +1,14 @@
 import Link from "next/link";
+import { getData } from "@/api/action";
+import type { TransactionData } from "@/api/types/club/transactions";
 import { cn } from "@/lib/utils";
 import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 import { ChevronRight } from "@/assets/icons/chevron";
 
-const tableHeadings = ["결제일자", "입출금", "금액", "입출처", "비목"];
+export default async function DashboardTransaction() {
+  const res = await getData("/v2/club/web/transactions/", true);
+  const data: TransactionData = res.data;
 
-const transactions = [
-  {
-    id: 1,
-    date: "20240708 12:00:37",
-    type: "입금",
-    amount: "100,000,000원",
-    from: "인사팀",
-    detail: "정기 동아리 회비 입금",
-  },
-  {
-    id: 2,
-    date: "20240708 12:00:37",
-    type: "입금",
-    amount: "00,000원",
-    from: "인사팀",
-    detail: "정기 동아리 회비 입금",
-  },
-  {
-    id: 3,
-    date: "20240708 12:00:37",
-    type: "출금",
-    amount: "-00,000원",
-    from: "인사팀",
-    detail: "정기 동아리 회비 입금, 정기 동아리 회비 입금",
-  },
-  {
-    id: 4,
-    date: "20240708 12:00:37",
-    type: "입금",
-    amount: "00,000원",
-    from: "인사팀",
-    detail: "정기 동아리 회비 입금, 정기 동아리 회비 입금",
-  },
-  {
-    id: 5,
-    date: "20240708 12:00:37",
-    type: "입금",
-    amount: "00,000원",
-    from: "인사팀",
-    detail: "정기 동아리 회비 입금, 정기 동아리 회비 입금",
-  },
-];
-
-export default function DashboardTransaction() {
   return (
     <div className="flex flex-col gap-3 p-8 rounded-xl bg-gray-0">
       <div className="flex justify-between">
@@ -61,51 +21,57 @@ export default function DashboardTransaction() {
       <div className="flex flex-col gap-6">
         <div className="flex items-center gap-3">
           <span className="h2 font-semibold text-gray-900">{"잔여회비"}</span>
-          <span className="h1 font-extrabold text-brand-orange">{`${(10000000).toLocaleString()}원`}</span>
+          <span className="h1 font-extrabold text-brand-orange">{`${data.remainingFee.toLocaleString()}원`}</span>
         </div>
         <ul className="flex flex-col gap-1">
           <li className="flex rounded bg-gray-100">
-            {tableHeadings.map((heading, i) => (
-              <span
-                key={heading}
-                className={cn(
-                  "py-2 px-4 body-2 font-bold text-gray-500",
-                  i === 1 || i === 3 ? "w-20 text-center" : "flex-1",
-                  i === 2 ? "max-w-80" : i === 0 ? "max-w-40" : ""
-                )}
-              >
-                {heading}
-              </span>
-            ))}
+            {["결제일자", "입출금", "금액", "입출처", "비목"].map(
+              (heading, i) => (
+                <span
+                  key={heading}
+                  className={cn(
+                    "flex-1 py-2 px-4 body-2 font-bold text-gray-500",
+                    [1, 3].includes(i) ? "text-center" : "",
+                    i === 0 ? "max-w-32" : "",
+                    i === 1 ? "max-w-24" : "",
+                    i === 2 ? "max-w-60" : "",
+                    i === 3 ? "max-w-44" : ""
+                  )}
+                >
+                  {heading}
+                </span>
+              )
+            )}
           </li>
-          {transactions.map((transaction) => (
-            <li key={transaction.id} className="flex">
+          {data.clubTransactionHistoryListDTOS.map((transaction, i) => (
+            <li key={i} className="flex">
               {[
                 transaction.date,
-                transaction.type,
-                transaction.amount,
-                transaction.from,
+                transaction.transactionType,
+                100000,
+                transaction.department,
                 transaction.detail,
               ].map((data, i) => (
                 <span
                   key={data}
                   className={cn(
-                    "py-2 px-4 truncate",
-                    i === 1 || i === 3 ? "w-20 text-center" : "flex-1",
-                    i === 2
-                      ? "max-w-80 body-1 font-bold text-gray-900"
-                      : i === 0
-                        ? "max-w-40 body-2 font-bold text-gray-600"
-                        : i === 1
-                          ? "body-1 font-bold"
-                          : i === 3
-                            ? "body-2 font-medium text-gray-900"
-                            : "body-1 font-medium text-gray-700",
+                    "flex-1 py-2 px-4 body-1 font-medium text-gray-900 truncate",
+                    [1, 3].includes(i) ? "text-center" : "",
+                    i === 0 ? "max-w-32 body-2 font-bold text-gray-600" : "",
+                    [1, 2].includes(i) ? "font-bold" : "",
+                    i === 1 ? "max-w-24" : "",
+                    i === 2 ? "max-w-60" : "",
+                    i === 3 ? "max-w-44 body-2" : "",
+                    i === 4 ? "text-gray-700" : "",
                     data === "입금" ? "text-point-blue" : "",
                     data === "출금" ? "text-point-red" : ""
                   )}
                 >
-                  {data}
+                  {i === 0
+                    ? data.toString().slice(0, 10)
+                    : i === 2
+                      ? `${transaction.transactionType === "입금" ? "" : "-"}${data.toLocaleString()}원`
+                      : data}
                 </span>
               ))}
             </li>

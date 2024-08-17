@@ -4,12 +4,17 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import {
+  saveAccessToken,
+  saveDashboardType,
+  saveRefreshToken,
+} from "@/lib/cookies";
+import { LOGIN_ENDPOINT } from "@/lib/constants";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import RadioSelect from "@/components/login/molecules/RadioSelect";
 import BrandImage from "@/assets/images/brand_image.svg";
 import LogoImage from "@/assets/logos/como_logo.svg";
-import { saveDashboardType, saveRefreshToken } from "@/lib/token";
 
 interface UserLoginDto {
   id: string;
@@ -18,18 +23,48 @@ interface UserLoginDto {
 }
 
 export default function LoginForm() {
-  const { refresh } = useRouter();
+  const { replace, refresh } = useRouter();
   const [formData, setFormData] = useState<UserLoginDto>({
     id: "",
     password: "",
     role: "club",
   });
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    saveRefreshToken("token");
-    saveDashboardType(formData.role);
-    refresh();
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/login`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          email: formData.id,
+          password: formData.password,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const accessToken = response.headers.get("Authorization");
+    const refreshToken = accessToken;
+    // const refreshToken = response.headers.get("Authorization-refresh");
+
+    if (!accessToken || !refreshToken) {
+      console.log("Error: No Access Token");
+      return;
+    }
+
+    await saveAccessToken(accessToken);
+    await saveRefreshToken(refreshToken);
+    await saveDashboardType(formData.role);
+
+    if (formData.role === "club") {
+      replace(`${LOGIN_ENDPOINT}/club`);
+    } else {
+      refresh();
+    }
   };
 
   return (
@@ -51,8 +86,28 @@ export default function LoginForm() {
           {"로그인"}
         </h2>
         <div className="space-y-4">
-          <Input name="id" type="email" placeholder="아이디" />
-          <Input name="password" type="password" placeholder="비밀번호" />
+          <Input
+            name="id"
+            type="text"
+            placeholder="아이디"
+            currentValue={formData.id}
+            handleInputChange={(e) =>
+              setFormData((prev) => {
+                return { ...prev, id: e.target.value };
+              })
+            }
+          />
+          <Input
+            name="password"
+            type="password"
+            placeholder="비밀번호"
+            currentValue={formData.password}
+            handleInputChange={(e) =>
+              setFormData((prev) => {
+                return { ...prev, password: e.target.value };
+              })
+            }
+          />
           <RadioSelect
             currentValue={formData.role}
             handleChange={(role: string) =>
