@@ -18,7 +18,7 @@ export default function ClubSelectForm() {
       const token = await getAccessToken();
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/v2/member/web/login`,
+        `/api/server/v2/member/web/login`,
         {
           method: "POST",
           headers: {
