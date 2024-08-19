@@ -58,6 +58,13 @@ export default function ExpenseRejectDetailModal() {
                 label="지급 계좌"
                 type="text"
                 readonly
+                value="0000-00000000-0000"
+              />
+              <Input
+                name="reason"
+                label="반려 사유"
+                type="text"
+                readonly
                 value="사내 동호회 활동과 적합하지 않은 내용의 품의서로 수정하여 다시 전달 부탁드립니다."
               />
               <Button
