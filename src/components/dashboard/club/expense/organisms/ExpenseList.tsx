@@ -34,13 +34,15 @@ export default function ExpenseList() {
         <h3 className="h2 font-semibold text-gray-900">
           {"활동비 지급 내역 조회"}
         </h3>
-        <button
-          className="flex items-center gap-[3px] py-1 px-3 rounded body-1 font-medium text-gray-50 bg-brand-orange cursor-pointer"
-          onClick={() => push(`${pathname}/new`)}
-        >
-          {"지급신청서 작성"}
-          <Plus className="w-5 h-5 text-gray-50" />
-        </button>
+        {pathname.startsWith("/club") && (
+          <button
+            className="flex items-center gap-[3px] py-1 px-3 rounded body-1 font-medium text-gray-50 bg-brand-orange cursor-pointer"
+            onClick={() => push(`${pathname}/new`)}
+          >
+            {"지급신청서 작성"}
+            <Plus className="w-5 h-5 text-gray-50" />
+          </button>
+        )}
       </div>
       <div className="space-y-4">
         <DateFilter
