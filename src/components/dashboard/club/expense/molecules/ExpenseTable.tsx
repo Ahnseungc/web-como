@@ -1,23 +1,23 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { cn, openModal } from "@/lib/utils";
+import { cn, formatDate, openModal } from "@/lib/utils";
 
 const tableHeadings = [
   "순번",
   "작성일",
   "신청자",
-  "품의서 상세",
-  "구분",
+  "품의서",
+  "지급 여부",
   "담당자",
   "수령증",
-  "반려사유",
+  "반려 사유",
 ];
 
 type ExpenseApplicationStatus = "pending" | "completed" | "canceled";
 
 interface ExpenseApplicationEntry {
-  order: number;
+  id: number;
   applicant: string;
   personInCharge: string;
   expenseReport: string;
@@ -28,89 +28,89 @@ interface ExpenseApplicationEntry {
 
 const entries: ExpenseApplicationEntry[] = [
   {
-    order: 1,
+    id: 1,
     applicant: "김오모",
     personInCharge: "박오모",
+    createdDate: "2024-07-04 12:33:57",
     expenseReport: "0001-2024-07-016",
-    createdDate: "20240704 12:33:57",
     status: "pending",
   },
   {
-    order: 2,
+    id: 2,
     applicant: "김오모",
     personInCharge: "김오모",
+    createdDate: "2024-07-04 12:33:57",
     expenseReport: "0001-2024-07-016",
-    createdDate: "20240704 12:33:57",
     status: "pending",
   },
   {
-    order: 3,
+    id: 3,
     applicant: "김오모",
     personInCharge: "서오모",
+    createdDate: "2024-07-04 12:33:57",
     expenseReport: "0001-2024-07-016",
-    createdDate: "20240704 12:33:57",
     status: "completed",
     receipt: "0001-2024-07-016",
   },
   {
-    order: 4,
+    id: 4,
     applicant: "김오모",
     personInCharge: "김오모",
+    createdDate: "2024-07-04 12:33:57",
     expenseReport: "0001-2024-07-016",
-    createdDate: "20240704 12:33:57",
     status: "completed",
     receipt: "0001-2024-07-016",
   },
   {
-    order: 5,
+    id: 5,
     applicant: "김오모",
     personInCharge: "김오모",
+    createdDate: "2024-07-04 12:33:57",
     expenseReport: "0001-2024-07-016",
-    createdDate: "20240704 12:33:57",
     status: "completed",
     receipt: "0001-2024-07-016",
   },
   {
-    order: 6,
+    id: 6,
     applicant: "김오모",
     personInCharge: "김오모",
+    createdDate: "2024-07-04 12:33:57",
     expenseReport: "0001-2024-07-016",
-    createdDate: "20240704 12:33:57",
     status: "completed",
     receipt: "0001-2024-07-016",
   },
   {
-    order: 7,
+    id: 7,
     applicant: "김오모",
     personInCharge: "김오모",
+    createdDate: "2024-07-04 12:33:57",
     expenseReport: "0001-2024-07-016",
-    createdDate: "20240704 12:33:57",
     status: "completed",
     receipt: "0001-2024-07-016",
   },
   {
-    order: 8,
+    id: 8,
     applicant: "김오모",
     personInCharge: "김오모",
+    createdDate: "2024-07-04 12:33:57",
     expenseReport: "0001-2024-07-016",
-    createdDate: "20240704 12:33:57",
     status: "completed",
     receipt: "0001-2024-07-016",
   },
   {
-    order: 9,
+    id: 9,
     applicant: "김오모",
     personInCharge: "김오모",
+    createdDate: "2024-07-04 12:33:57",
     expenseReport: "0001-2024-07-016",
-    createdDate: "20240704 12:33:57",
     status: "canceled",
   },
   {
-    order: 10,
+    id: 10,
     applicant: "김오모",
     personInCharge: "김오모",
+    createdDate: "2024-07-04 12:33:57",
     expenseReport: "0001-2024-07-016",
-    createdDate: "20240704 12:33:57",
     status: "canceled",
   },
 ];
@@ -118,83 +118,6 @@ const entries: ExpenseApplicationEntry[] = [
 export default function ExpenseTable() {
   const pathname = usePathname();
   const { push } = useRouter();
-  const statusFilter = "all";
-
-  const EntryListItem = ({ entry }: { entry: ExpenseApplicationEntry }) => {
-    return (
-      <li className="flex border-b border-gray-400 bg-gray-0">
-        {[
-          entry.order,
-          entry.createdDate,
-          entry.applicant,
-          entry.expenseReport,
-          entry.status,
-          entry.personInCharge,
-          entry.receipt,
-          entry.status === "canceled",
-        ].map((data, i) => (
-          <div
-            key={i}
-            className={cn(
-              "my-3 mx-6 body-1 font-medium underline-offset-2 line-clamp-1 text-center",
-              i === 0 ? "w-8" : "flex-1",
-              [1, 3, 6].includes(i) ? "min-w-32" : "",
-              [2, 4, 5, 7].includes(i) ? "min-w-16 max-w-36" : "",
-              data && [3, 6, 7].includes(i) ? "underline cursor-pointer" : "",
-              i === 6 ? "flex items-center justify-center m-0" : "",
-              data === "canceled"
-                ? "text-point-red"
-                : data === "completed"
-                  ? "text-gray-500"
-                  : data === "pending"
-                    ? "text-point-blue"
-                    : "text-gray-800"
-            )}
-            onClick={() => {
-              if (i === 3) {
-                push(`${pathname}/detail/report/${entry.expenseReport}`);
-              } else if (i === 6 && entry.receipt) {
-                push(`${pathname}/detail/receipt/${entry.receipt}`);
-              }
-            }}
-          >
-            {i === 4 ? (
-              data === "canceled" ? (
-                "반려"
-              ) : data === "completed" ? (
-                "지급 완료"
-              ) : data === "pending" ? (
-                "지급 대기"
-              ) : (
-                ""
-              )
-            ) : i === 6 ? (
-              data ? (
-                data
-              ) : data === "pending" ? (
-                <button
-                  className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-gray-900"
-                  onClick={() => openModal("new-receipt-form")}
-                >
-                  {"수령증 작성"}
-                </button>
-              ) : (
-                "-"
-              )
-            ) : i === 7 ? (
-              data ? (
-                "상세보기"
-              ) : (
-                "-"
-              )
-            ) : (
-              data
-            )}
-          </div>
-        ))}
-      </li>
-    );
-  };
 
   return (
     <ul className="flex flex-col gap-1">
@@ -214,13 +137,83 @@ export default function ExpenseTable() {
           </div>
         ))}
       </li>
-      {statusFilter === "all"
-        ? entries.map((entry) => (
-            <EntryListItem key={entry.order} entry={entry} />
-          ))
-        : entries
-            .filter((entry) => entry.status === statusFilter)
-            .map((entry) => <EntryListItem key={entry.order} entry={entry} />)}
+      {entries.map((entry, idx) => (
+        <li key={entry.id} className="flex border-b border-gray-400 bg-gray-0">
+          {[
+            entry.id,
+            entry.createdDate,
+            entry.applicant,
+            entry.expenseReport,
+            entry.status,
+            entry.personInCharge,
+            entry.receipt,
+            entry.status === "canceled",
+          ].map((data, i) => (
+            <div
+              key={i}
+              className={cn(
+                "my-3 mx-6 body-1 font-medium underline-offset-2 line-clamp-1 text-center",
+                i === 0 ? "w-8" : "flex-1",
+                [1, 3, 6].includes(i) ? "min-w-32" : "",
+                [2, 4, 5, 7].includes(i) ? "min-w-16 max-w-36" : "",
+                data && [3, 6, 7].includes(i) ? "underline cursor-pointer" : "",
+                i === 6 ? "flex items-center justify-center m-0" : "",
+                data === "canceled"
+                  ? "text-point-red"
+                  : data === "completed"
+                    ? "text-gray-500"
+                    : data === "pending"
+                      ? "text-point-blue"
+                      : "text-gray-800"
+              )}
+              onClick={() => {
+                if (i === 3) {
+                  push(`${pathname}/detail/report/${entry.expenseReport}`);
+                } else if (i === 6 && entry.receipt) {
+                  push(`${pathname}/detail/receipt/${entry.receipt}`);
+                }
+              }}
+            >
+              {i === 0 ? (
+                idx + 1
+              ) : i === 1 ? (
+                formatDate(new Date(data as string))
+              ) : i === 4 ? (
+                data === "canceled" ? (
+                  "반려"
+                ) : data === "completed" ? (
+                  "지급 완료"
+                ) : data === "pending" ? (
+                  "지급 대기"
+                ) : (
+                  ""
+                )
+              ) : i === 6 ? (
+                data ? (
+                  data
+                ) : entry.status === "pending" ? (
+                  <button
+                    className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-gray-900"
+                    onClick={() => openModal("new-receipt-form")}
+                  >
+                    {"수령증 작성"}
+                  </button>
+                ) : (
+                  "-"
+                )
+              ) : i === 7 ? (
+                data ? (
+                  "상세보기"
+                ) : (
+                  "-"
+                )
+              ) : (
+                data
+              )}
+            </div>
+          ))}
+        </li>
+      ))}
     </ul>
   );
 }
