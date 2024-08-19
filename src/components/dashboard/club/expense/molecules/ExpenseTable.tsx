@@ -193,7 +193,8 @@ export default function ExpenseTable() {
               ) : i === 6 ? (
                 data ? (
                   data
-                ) : entry.status === "pending" ? (
+                ) : entry.status === "pending" &&
+                  pathname.startsWith("/club") ? (
                   <button
                     className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-gray-900"
                     onClick={() => openModal("new-receipt-form")}
