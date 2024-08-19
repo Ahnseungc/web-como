@@ -1,9 +1,9 @@
-import ExpenseSupplyOverview from "@/components/dashboard/company/club/molecules/ExpenseSupplyOverview";
+import SupplyOverview from "@/components/dashboard/club/supply/molecules/SupplyOverview";
 
 export default function ClubExpenseSupplyTabView() {
   return (
     <>
-      <ExpenseSupplyOverview />
+      <SupplyOverview />
     </>
   );
 }
