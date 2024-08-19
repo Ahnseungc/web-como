@@ -1,10 +1,18 @@
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 import ClubProfileInfo from "@/components/dashboard/club/common/ClubProfileInfo";
 
-export default function ClubInfoCard() {
+interface Props {
+  padding?: string;
+}
+
+export default function ClubInfoCard({ padding }: Props) {
   const image = null;
+
   return (
-    <div className="h-fit p-5 rounded-xl bg-gray-0">
+    <div
+      className={cn("h-fit rounded-xl bg-gray-0", padding ? padding : "p-5")}
+    >
       <div className="relative w-[350px] h-[350px] mb-6 rounded-lg object-cover bg-gray-300">
         {image && (
           <Image
