@@ -1,4 +1,4 @@
-export default function ClubExpenseAllOverview() {
+export default function ExpenseOverview() {
   return (
     <div className="flex gap-3">
       <div className="flex-1 space-y-6 p-8 rounded-xl bg-gray-800">
