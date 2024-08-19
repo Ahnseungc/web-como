@@ -12,10 +12,10 @@ const tableHeadings = [
   "품의서",
   "지급 여부",
   "수령증",
-  "반려 사유",
+  "반려사유",
 ];
 
-type ExpenseApplicationStatus = "pending" | "completed" | "canceled";
+type ExpenseApplicationStatus = "pending" | "completed" | "rejected";
 
 interface ExpenseApplicationEntry {
   id: number;
@@ -114,7 +114,7 @@ const entries: ExpenseApplicationEntry[] = [
     personInCharge: "김오모",
     createdDate: "2024-07-04 12:33:57",
     expenseReport: "0001-2024-07-016",
-    status: "canceled",
+    status: "rejected",
   },
   {
     id: 10,
@@ -123,7 +123,7 @@ const entries: ExpenseApplicationEntry[] = [
     personInCharge: "김오모",
     createdDate: "2024-07-04 12:33:57",
     expenseReport: "0001-2024-07-016",
-    status: "canceled",
+    status: "rejected",
   },
 ];
 
@@ -161,7 +161,7 @@ export default function ExpenseTable() {
             entry.expenseReport,
             entry.status,
             entry.receipt,
-            entry.status === "canceled",
+            entry.status === "rejected",
           ].map((data, i) => (
             <div
               key={i}
@@ -173,7 +173,7 @@ export default function ExpenseTable() {
                 [3, 4, 6, 8].includes(i) ? "min-w-16 max-w-28" : "",
                 data && [5, 7, 8].includes(i) ? "underline cursor-pointer" : "",
                 i === 7 ? "flex items-center justify-center m-0" : "",
-                data === "canceled"
+                data === "rejected"
                   ? "text-point-red"
                   : data === "completed"
                     ? "text-gray-500"
@@ -186,6 +186,8 @@ export default function ExpenseTable() {
                   push(`${pathname}/detail/report/${entry.expenseReport}`);
                 } else if (i === 7 && entry.receipt) {
                   push(`${pathname}/detail/receipt/${entry.receipt}`);
+                } else if (i === 8 && data) {
+                  openModal("expense-reject-detail");
                 }
               }}
             >
@@ -194,7 +196,7 @@ export default function ExpenseTable() {
                 : i === 2
                   ? formatDate(new Date(data as string))
                   : i === 6
-                    ? data === "canceled"
+                    ? data === "rejected"
                       ? "반려"
                       : data === "completed"
                         ? "지급 완료"

@@ -5,6 +5,7 @@ import ClubExpenseMenuTabs from "@/components/dashboard/company/club/molecules/C
 import ClubExpenseAllTabView from "@/components/dashboard/company/club/templates/ClubExpenseAllTabView";
 import ClubExpenseClubTabView from "@/components/dashboard/company/club/templates/ClubExpenseClubTabView";
 import ClubExpenseSupplyTabView from "@/components/dashboard/company/club/templates/ClubExpenseSupplyTabView";
+import ExpenseRejectDetailModal from "@/components/dashboard/company/club/modals/ExpenseRejectDetailModal";
 
 export type ClubExpenseMenu = "all" | "club" | "supply";
 
@@ -47,7 +48,9 @@ export default function Page() {
         handleTabChange={handleTabChange}
       />
       {renderCurrentTabPage(currentTab)}
-      <div className="m-0"></div>
+      <div className="m-0">
+		<ExpenseRejectDetailModal />
+	  </div>
     </>
   );
 }
