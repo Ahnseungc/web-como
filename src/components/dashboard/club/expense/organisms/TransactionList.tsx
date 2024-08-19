@@ -32,12 +32,14 @@ export default function TransactionList() {
     <div className="space-y-6 p-8 rounded-xl bg-gray-0">
       <div className="flex justify-between">
         <h3 className="h2 font-semibold text-gray-900">{"입출금 내역"}</h3>
-        <Link href={`${pathname}/new`}>
-          <button className="flex items-center gap-[3px] py-1 pl-3 pr-2.5 rounded body-1 font-medium text-gray-50 bg-brand-orange">
-            {"입출금 내역 작성"}
-            <Plus className="w-5 h-5" />
-          </button>
-        </Link>
+        {pathname.startsWith("/club") && (
+          <Link href={`${pathname}/new`}>
+            <button className="flex items-center gap-[3px] py-1 pl-3 pr-2.5 rounded body-1 font-medium text-gray-50 bg-brand-orange">
+              {"입출금 내역 작성"}
+              <Plus className="w-5 h-5" />
+            </button>
+          </Link>
+        )}
       </div>
       <div className="space-y-4">
         <DateFilter

@@ -3,6 +3,7 @@ import ExpenseList from "@/components/dashboard/club/expense/organisms/ExpenseLi
 import ExpenseOverview from "@/components/dashboard/club/expense/organisms/ExpenseOverview";
 import ExpenseSearch from "@/components/dashboard/club/expense/molecules/ExpenseSearch";
 import NewReceiptFormModal from "@/components/dashboard/club/expense/modals/NewReceiptFormModal";
+import ExpenseRejectDetailModal from "@/components/dashboard/club/expense/modals/ExpenseRejectDetailModal";
 
 export default function ExpensePage() {
   return (
@@ -13,6 +14,7 @@ export default function ExpensePage() {
       <ExpenseList />
       <div className="m-0">
         <NewReceiptFormModal />
+        <ExpenseRejectDetailModal />
       </div>
     </>
   );

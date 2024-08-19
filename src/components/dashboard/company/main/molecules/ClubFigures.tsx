@@ -11,7 +11,7 @@ export default function ClubFigures() {
       </div>
       <div className="flex-1 space-y-4">
         <div className="h4 font-medium text-gray-700 truncate">
-          {"탈퇴 동호회"}
+          {"해체한 동호회"}
         </div>
         <div className="h1 font-extrabold text-gray-900 truncate">
           {"123개"}
