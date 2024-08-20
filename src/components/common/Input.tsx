@@ -46,15 +46,17 @@ const InputElement = (props: InputProps) => {
           <File className="w-5 h-[22px] text-gray-500" />
         </label>
       )}
-      {props.maxChar && props.maxChar > 30 ? (
+      {(props.maxChar && props.maxChar > 100) ||
+      (props.rows && props.rows > 1) ? (
         <textarea
-          rows={props.rows || 2}
           name={props.name}
           id={props.name}
           placeholder={props.placeholder}
           autoComplete={props.autocomplete}
           readOnly={props.readonly}
           disabled={props.readonly}
+          rows={props.rows || 2}
+          maxLength={props.maxChar}
           value={props.currentValue}
           onChange={props.handleInputChange}
           className={cn(
@@ -73,6 +75,7 @@ const InputElement = (props: InputProps) => {
           placeholder={props.placeholder}
           readOnly={props.readonly}
           disabled={props.readonly}
+          maxLength={props.maxChar}
           value={props.currentValue}
           onChange={props.handleInputChange}
           className={cn(
