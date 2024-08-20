@@ -94,3 +94,17 @@ export function generateQuarterHourlyIntervals(
   console.log(intervals);
   return intervals;
 }
+
+export function formatFileSize(bytes: number) {
+  let number = Math.round(bytes / 1000);
+  let text = "KB";
+
+  if (number === 0) {
+    number = bytes / 1000;
+  } else if (number.toString().length > 3) {
+    number = parseFloat((bytes / 1000).toFixed(1));
+    text = "MB";
+  }
+
+  return `${number.toLocaleString()} ${text}`;
+}
