@@ -102,7 +102,7 @@ export function formatFileSize(bytes: number) {
   if (number === 0) {
     number = bytes / 1000;
   } else if (number.toString().length > 3) {
-    number = parseFloat((bytes / 1000).toFixed(1));
+    number = parseFloat((number / 1000).toFixed(1));
     text = "MB";
   }
 
