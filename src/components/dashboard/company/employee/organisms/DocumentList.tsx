@@ -32,13 +32,15 @@ export default function DocumentList() {
           currentOrder={currentOrder}
           handleOrderChange={(newOrder) => setCurrentOrder(newOrder)}
         />
-        <button
-          className="flex items-center gap-[3px] py-1 px-3 rounded body-1 font-medium text-gray-50 bg-gray-900 cursor-pointer"
-          onClick={() => push(`${pathname}/new`)}
-        >
-          {"글쓰기"}
-          <Plus className="w-5 h-5 text-gray-50" />
-        </button>
+        {pathname.startsWith("company") && (
+          <button
+            className="flex items-center gap-[3px] py-1 px-3 rounded body-1 font-medium text-gray-50 bg-gray-900 cursor-pointer"
+            onClick={() => push(`${pathname}/new`)}
+          >
+            {"글쓰기"}
+            <Plus className="w-5 h-5 text-gray-50" />
+          </button>
+        )}
       </div>
       <div className="space-y-10">
         <DocumentTable />

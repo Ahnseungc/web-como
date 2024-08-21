@@ -1,10 +1,10 @@
 "use client";
 
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Button from "@/components/common/Button";
 import DocUtilButtons from "@/components/dashboard/common/DocUtil";
 import { Document } from "@/assets/icons/util";
-import { useRouter } from "next/navigation";
 
 const document = [
   { name: "제목", content: "서류 제목 서류 제목" },
@@ -13,11 +13,14 @@ const document = [
 ];
 
 export default function DocumentDetail() {
+  const pathname = usePathname();
   const { push } = useRouter();
 
   return (
     <div className="space-y-8 p-8 rounded-xl bg-gray-0">
-      <h2 className="font-semibold text-gray-900">{"사내 규정 및 서류"}</h2>
+      <h2 className="font-semibold text-gray-900">
+        {pathname.startsWith("company") ? "사내 규정 및 서류" : "서류 다운로드"}
+      </h2>
       <div className="space-y-8">
         <ul>
           {document.map((item, i) => (
@@ -60,12 +63,14 @@ export default function DocumentDetail() {
           </ul>
         </div>
       </div>
-      <Button
-        primary
-        content="수정하기"
-        className="max-w-[350px] mx-auto"
-        onClick={() => push(`../new?edit=${1}`)}
-      />
+      {pathname.startsWith("company") && (
+        <Button
+          primary
+          content="수정하기"
+          className="max-w-[350px] mx-auto"
+          onClick={() => push(`../new?edit=${1}`)}
+        />
+      )}
     </div>
   );
 }
