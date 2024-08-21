@@ -27,7 +27,7 @@ export default function EmployeeList() {
 
   return (
     <div className="space-y-4 p-8 rounded-2xl bg-gray-0">
-      <div className="flex items-start justify-between">
+      <div className="flex items-center justify-between gap-6">
         <DateFilter
           currentDateRange={currentDateRange}
           handleDateRangeChange={handleDateRangeChange}
