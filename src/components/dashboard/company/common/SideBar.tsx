@@ -42,14 +42,14 @@ const menuList: MenuItem[] = [
         routes: ["/employee", "/employee/detail"],
       },
       {
-        name: "사내 규정 및 서류",
-        link: "/employee/policy",
-        routes: ["/employee/policy"],
-      },
-      {
         name: "공지사항 관리",
         link: "/employee/announcement",
         routes: ["/employee/announcement"],
+      },
+      {
+        name: "사내 규정 및 서류",
+        link: "/employee/document",
+        routes: ["/employee/document"],
       },
     ],
   },
