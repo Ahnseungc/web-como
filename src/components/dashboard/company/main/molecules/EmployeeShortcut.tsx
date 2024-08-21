@@ -13,12 +13,12 @@ export default function EmployeeShortcut() {
 
     if (pathname.endsWith("dashboard")) {
       return (
-        <Link href={`./employee`} className={style}>
+        <Link href={`./dashboard/employee`} className={style}>
           {children}
         </Link>
       );
     } else {
-      <div className={style}>{children}</div>;
+      return <div className={style}>{children}</div>;
     }
   };
 
