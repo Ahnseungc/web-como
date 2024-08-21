@@ -8,7 +8,7 @@ export default function EmployeeInfo(){
         <Input readOnly name="name" label="이름" value="김오모" />
         <Input readOnly name="dept" label="부서" value="경영지원" />
         <Input readOnly name="rank" label="직급" value="대리" />
-        <Input readOnly name="date" label="입사일" value="20240716" />
+        <Input readOnly name="date" label="입사일" value="2024-07-16" />
       </div>
     </div>
   );
