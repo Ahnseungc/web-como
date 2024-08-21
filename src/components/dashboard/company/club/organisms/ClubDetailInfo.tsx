@@ -40,21 +40,21 @@ export default function ClubDetailInfo() {
               {"강제해체"}
             </button>
           </div>
-          <Input readonly name="category" label="카테고리" value="카테고리" />
+          <Input readOnly name="category" label="카테고리" value="카테고리" />
           <Input
-            readonly
+            readOnly
             name="purpose"
             label="설립 목적"
             value=" 산을 좋아하는 사람들이 모인 동호회"
           />
           <Input
-            readonly
+            readOnly
             name="schedule"
             label="활동 일정"
             value="수요일, 월 1회, 오후 7시"
           />
           <Input
-            readonly
+            readOnly
             name="location"
             label="위치"
             value="서울 마포구 양화대로 11가 5길,영차 클라이밍 센터"

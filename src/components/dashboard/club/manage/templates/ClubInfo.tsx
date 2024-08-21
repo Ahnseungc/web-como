@@ -79,44 +79,44 @@ export default function ClubInfoTab() {
               label="소속 기업명"
               type="text"
               value={data.companyName}
-              readonly
+              readOnly
             />
             <Input
               name="clubName"
               label="동호회명"
               type="text"
               value={data.name}
-              readonly
+              readOnly
             />
             <Input
               name="category"
               label="카테고리"
               type="text"
               value={data.category}
-              readonly
+              readOnly
             />
             <Input
               name="purpose"
               label="설립 목적"
               type="text"
               value={data.goal}
-              readonly
+              readOnly
             />
             <Input
               name="overview"
               label="한줄 소개"
               type="text"
-              maxChar={18}
+              maxLength={18}
               value={data.intro}
-              readonly
+              readOnly
             />
             <Input
               name="description"
               label="상세 소개"
               type="text"
-              maxChar={300}
+              maxLength={300}
               value={data.detail}
-              readonly
+              readOnly
             />
           </div>
           <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">

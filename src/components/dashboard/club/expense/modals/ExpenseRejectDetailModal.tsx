@@ -30,41 +30,41 @@ export default function ExpenseRejectDetailModal() {
                 label="작성자"
                 type="text"
                 value="송지은 / 경영지원팀 / 대리 / 총무(동호회 직책)"
-                readonly
+                readOnly
               />
               <Input
                 name="expenseType"
                 label="비목"
                 type="text"
-                readonly
+                readOnly
                 value="활동비 지원"
               />
               <Input
                 name="content"
                 label="품의 내용"
                 type="text"
-                readonly
+                readOnly
                 value="도서구매"
               />
               <Input
                 name="estimatedPrice"
                 label="예상 비용"
                 type="text"
-                readonly
+                readOnly
                 value="50,000원"
               />
               <Input
                 name="bankAccount"
                 label="지급 계좌"
                 type="text"
-                readonly
+                readOnly
                 value="0000-00000000-0000"
               />
               <Input
                 name="reason"
                 label="반려 사유"
                 type="text"
-                readonly
+                readOnly
                 value="사내 동호회 활동과 적합하지 않은 내용의 품의서로 수정하여 다시 전달 부탁드립니다."
               />
               <Button

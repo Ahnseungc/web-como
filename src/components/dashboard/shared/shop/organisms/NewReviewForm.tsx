@@ -109,7 +109,7 @@ export default function NewReviewForm() {
             name="content"
             label="후기 작성"
             placeholder="후기를 작성해주세요"
-            maxChar={300}
+            maxLength={300}
             currentValue={formValues.content}
             handleInputChange={(e) =>
               setFormValues((prev) => {

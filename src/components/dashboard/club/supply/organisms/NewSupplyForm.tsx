@@ -26,21 +26,21 @@ export default function NewSupplyForm() {
           label="동호회명"
           type="text"
           value="산악동호회"
-          readonly
+          readOnly
         />
         <Input
           name="author"
           label="담당 동호회 임원"
           type="text"
           value="김오모 / 인사팀 / 대리 / 회장(동호회 직급)"
-          readonly
+          readOnly
         />
         <Input
           required
           name="name"
           label="품목 이름"
           type="text"
-          maxChar={30}
+          maxLength={30}
           placeholder="비품의 이름을 작성해주세요."
         />
         <Input
@@ -48,7 +48,7 @@ export default function NewSupplyForm() {
           name="purpose"
           label="구매 목적"
           type="text"
-          maxChar={300}
+          maxLength={300}
           placeholder="비품을 구매하게 된 목적을 작성해주세요."
         />
         <Input
@@ -81,7 +81,7 @@ export default function NewSupplyForm() {
           name="note"
           label="비고"
           type="text"
-          maxChar={300}
+          maxLength={300}
           placeholder="내용을 입력해주세요."
         />
       </div>

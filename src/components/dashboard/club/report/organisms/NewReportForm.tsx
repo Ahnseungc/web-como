@@ -34,7 +34,7 @@ export default function NewReportForm() {
           label="동호회명"
           type="text"
           value="산악동호회"
-          readonly
+          readOnly
         />
         <div className="flex flex-col gap-2">
           <span className="h3 font-semibold text-gray-900">
@@ -44,19 +44,19 @@ export default function NewReportForm() {
             name="clubAdmin1"
             type="text"
             value="동호회 회장 : 송지은 (경영기획팀)"
-            readonly
+            readOnly
           />
           <Input
             name="clubAdmin2"
             type="text"
             value="동호회 부회장 : 송지은 (경영기획팀)"
-            readonly
+            readOnly
           />
           <Input
             name="clubAdmin3"
             type="text"
             value="총무 : 송지은 (경영기획팀)"
-            readonly
+            readOnly
           />
         </div>
         <Input
@@ -64,7 +64,7 @@ export default function NewReportForm() {
           name="content"
           label="활동 내용"
           type="text"
-          maxChar={300}
+          maxLength={300}
           placeholder="내용을 입력해주세요."
         />
         <ImageInput
@@ -79,7 +79,7 @@ export default function NewReportForm() {
           name="note"
           label="비고"
           type="text"
-          maxChar={300}
+          maxLength={300}
           placeholder="내용을 입력해주세요."
         />
       </div>
