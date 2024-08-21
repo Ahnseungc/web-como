@@ -20,7 +20,7 @@ export default function NewAnnouncementForm() {
       <h2 className="font-semibold text-gray-900">{"공지사항 글쓰기"}</h2>
       <div className="space-y-6">
         <Input
-          readonly
+          readOnly
           name="author"
           type="text"
           label="작성자"
@@ -37,7 +37,7 @@ export default function NewAnnouncementForm() {
           type="text"
           label="내용"
           placeholder="내용을 입력하세요"
-          maxChar={300}
+          maxLength={300}
           rows={5}
         />
         <ImageInput

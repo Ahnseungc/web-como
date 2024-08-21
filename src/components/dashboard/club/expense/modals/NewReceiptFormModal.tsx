@@ -46,7 +46,7 @@ export default function NewReceiptFormModal() {
                 label="지급 담당자"
                 type="text"
                 value="구오모 / 대리 / 인사팀"
-                readonly
+                readOnly
               />
             </div>
             <hr className="border-gray-400" />
@@ -56,13 +56,13 @@ export default function NewReceiptFormModal() {
                 label="작성자"
                 type="text"
                 value="송지은 / 경영지원팀 / 대리 / 총무(동호회 직책)"
-                readonly
+                readOnly
               />
               <Input
                 name="content"
                 label="품의 내용"
                 type="text"
-                readonly
+                readOnly
                 value="도서구매"
               />
               <Input
@@ -70,7 +70,7 @@ export default function NewReceiptFormModal() {
                 label="수령 내역"
                 type="text"
                 inputStyle="max-w-[350px]"
-                readonly
+                readOnly
                 value="9,999,999원"
               />
               <ImageInput
@@ -86,7 +86,7 @@ export default function NewReceiptFormModal() {
                 name="note"
                 label="비고"
                 type="text"
-                maxChar={300}
+                maxLength={300}
                 placeholder="내용을 입력해 주세요."
               />
             </div>

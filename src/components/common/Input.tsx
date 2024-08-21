@@ -4,16 +4,19 @@ import { useState, type HTMLInputTypeAttribute } from "react";
 import { cn } from "@/lib/utils";
 import { File } from "@/assets/icons/info";
 
-interface Props {
-  name: string;
+interface Props
+  extends React.DetailedHTMLProps<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  > {
   type?: HTMLInputTypeAttribute;
   accept?: string;
-  autocomplete?: string;
+  autoComplete?: string;
   placeholder?: string;
   label?: string;
-  readonly?: boolean;
+  readOnly?: boolean;
   required?: boolean;
-  maxChar?: number;
+  maxLength?: number;
   rows?: number;
   labelStyle?: string;
   inputStyle?: string;
@@ -27,8 +30,16 @@ interface InputProps extends Props {
   handleInputChange: (e: React.ChangeEvent<any>) => void;
 }
 
-const InputElement = (props: InputProps) => {
-  const inputStyle =
+const InputElement = ({
+  readOnly,
+  rows,
+  maxLength,
+  inputStyle,
+  currentValue,
+  handleInputChange,
+  ...props
+}: InputProps) => {
+  const defaultInputStyle =
     "w-full min-h-[60px] py-4 px-3 rounded-md outline-none border border-gray-100 focus-visible:border-gray-900 truncate h4 font-medium placeholder:text-gray-400 text-gray-900 bg-gray-100 focus-visible:bg-gray-50 transition duration-300";
 
   return (
@@ -37,8 +48,8 @@ const InputElement = (props: InputProps) => {
         <label
           htmlFor={props.name}
           className={cn(
+            defaultInputStyle,
             inputStyle,
-            props.inputStyle,
             "flex-1 flex items-center justify-between text-gray-400 cursor-pointer select-none"
           )}
         >
@@ -46,43 +57,31 @@ const InputElement = (props: InputProps) => {
           <File className="w-5 h-[22px] text-gray-500" />
         </label>
       )}
-      {(props.maxChar && props.maxChar > 100) ||
-      (props.rows && props.rows > 1) ? (
+      {(maxLength && maxLength > 100) || (rows && rows > 1) ? (
         <textarea
-          name={props.name}
-          id={props.name}
           placeholder={props.placeholder}
-          autoComplete={props.autocomplete}
-          readOnly={props.readonly}
-          disabled={props.readonly}
-          rows={props.rows || 2}
-          maxLength={props.maxChar}
-          value={props.currentValue}
-          onChange={props.handleInputChange}
+          disabled={readOnly}
+          rows={rows || 2}
+          value={currentValue}
+          onChange={handleInputChange}
           className={cn(
+            defaultInputStyle,
             inputStyle,
-            props.inputStyle,
             props.type === "file" ? "hidden" : "block"
           )}
         />
       ) : (
         <input
-          type={props.type}
-          accept={props.accept}
-          autoComplete={props.autocomplete}
-          name={props.name}
-          id={props.name}
-          placeholder={props.placeholder}
-          readOnly={props.readonly}
-          disabled={props.readonly}
-          maxLength={props.maxChar}
-          value={props.currentValue}
-          onChange={props.handleInputChange}
+          disabled={readOnly}
+          maxLength={maxLength}
+          value={currentValue}
+          onChange={handleInputChange}
           className={cn(
+            defaultInputStyle,
             inputStyle,
-            props.inputStyle,
             props.type === "file" ? "hidden" : "block"
           )}
+          {...props}
         />
       )}
     </>
@@ -133,7 +132,7 @@ export default function Input(props: Props) {
               htmlFor={props.name}
               className={cn(
                 props.labelStyle || labelStyle,
-                props.maxChar ? "w-full flex justify-between" : ""
+                props.maxLength ? "w-full flex justify-between" : ""
               )}
             >
               <span>
@@ -142,8 +141,8 @@ export default function Input(props: Props) {
                   <span className="text-point-red">{"*"}</span>
                 )}
               </span>
-              {props.maxChar && (
-                <span className="h4 font-medium text-gray-600">{`${(props.currentValue || currentValue).length}자/${props.maxChar}자`}</span>
+              {props.maxLength && (
+                <span className="h4 font-medium text-gray-600">{`${(props.currentValue || currentValue).length}자/${props.maxLength}자`}</span>
               )}
             </label>
           )}

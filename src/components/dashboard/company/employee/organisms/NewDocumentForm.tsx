@@ -26,7 +26,7 @@ export default function NewDocumentForm() {
           name="title"
           label="제목"
           placeholder="제목을 입력하세요"
-          maxChar={50}
+          maxLength={50}
           currentValue={formValues.title}
           handleInputChange={(e) =>
             setFormValues((prev) => {
@@ -38,7 +38,7 @@ export default function NewDocumentForm() {
           name="content"
           label="내용"
           placeholder="내용을 입력하세요"
-          maxChar={300}
+          maxLength={300}
           rows={3}
           currentValue={formValues.content}
           handleInputChange={(e) =>

@@ -18,7 +18,7 @@ export default function DisbandInfoModal() {
         </div>
         <div className="space-y-4">
           <Input
-            readonly
+            readOnly
             name="date"
             label="해체 일자"
             value="2024-07-08"
@@ -26,7 +26,7 @@ export default function DisbandInfoModal() {
             inputStyle="font-bold"
           />
           <Input
-            readonly
+            readOnly
             name="date"
             label="해체 사유"
             value="부진한 활동실적 및 동호회 회원 감소"

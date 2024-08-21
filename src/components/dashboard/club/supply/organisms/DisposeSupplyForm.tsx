@@ -30,27 +30,27 @@ export default function DisposeSupplyForm() {
           label="동호회명"
           type="text"
           value="산악동호회"
-          readonly
+          readOnly
         />
         <Input
           name="author"
           label="담당 동호회 임원"
           type="text"
           value="김오모 / 인사팀 / 대리 / 회장(동호회 직급)"
-          readonly
+          readOnly
         />
         <Input
           name="name"
           label="품목 이름"
           type="text"
-          readonly
+          readOnly
           value="빔프로젝터"
         />
         <Input
           name="purpose"
           label="구매 목적"
           type="text"
-          readonly
+          readOnly
           value="PT시 필요자료 띄우기"
         />
         <Input
@@ -58,7 +58,7 @@ export default function DisposeSupplyForm() {
           label="구매 비용"
           type="text"
           inputStyle="max-w-[350px]"
-          readonly
+          readOnly
           value="319,000원"
         />
         <ImageInput
@@ -73,7 +73,7 @@ export default function DisposeSupplyForm() {
           readonly
           currentImages={[]}
         />
-        <Input name="note" label="비고" type="text" readonly />
+        <Input name="note" label="비고" type="text" readOnly />
       </div>
       <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">
         <h3 className="h2 font-bold text-gray-900">{"폐기 사유"}</h3>
@@ -82,14 +82,14 @@ export default function DisposeSupplyForm() {
           label="폐기 담당 동호회 임원"
           type="text"
           value="김오모 / 인사팀 / 대리 / 회장(동호회 직급)"
-          readonly
+          readOnly
         />
         <Input
           required
           name="reason"
           label="폐기 사유"
           type="text"
-          maxChar={300}
+          maxLength={300}
           placeholder="비품을 폐기하게 된 사유를 작성해 주세요."
           currentValue={formValue}
           handleInputChange={(e) => setFormValue(e.target.value)}

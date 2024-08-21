@@ -47,14 +47,14 @@ export default function NewExpenseReportForm() {
           label="동호회명"
           type="text"
           value="산악동호회"
-          readonly
+          readOnly
         />
         <Input
           name="author"
           label="작성자"
           type="text"
           value="송지은 / 경영지원팀 / 대리 / 총무(동호회 직책)"
-          readonly
+          readOnly
         />
         <div className="flex flex-col gap-2">
           <span className="h3 font-semibold text-gray-900">{"비목"}</span>
@@ -76,7 +76,7 @@ export default function NewExpenseReportForm() {
           name="content"
           label="품의 내용"
           type="text"
-          maxChar={300}
+          maxLength={300}
           placeholder="내용을 입력해주세요."
         />
         <Input
@@ -99,7 +99,7 @@ export default function NewExpenseReportForm() {
           name="note"
           label="비고"
           type="text"
-          maxChar={300}
+          maxLength={300}
           placeholder="내용을 입력해주세요."
         />
       </div>

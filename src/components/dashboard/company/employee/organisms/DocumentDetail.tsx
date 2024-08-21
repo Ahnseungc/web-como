@@ -19,7 +19,7 @@ export default function DocumentDetail() {
   return (
     <div className="space-y-8 p-8 rounded-xl bg-gray-0">
       <h2 className="font-semibold text-gray-900">
-        {pathname.startsWith("company") ? "사내 규정 및 서류" : "서류 다운로드"}
+        {pathname.startsWith("/company") ? "사내 규정 및 서류" : "서류 다운로드"}
       </h2>
       <div className="space-y-8">
         <ul>
@@ -63,7 +63,7 @@ export default function DocumentDetail() {
           </ul>
         </div>
       </div>
-      {pathname.startsWith("company") && (
+      {pathname.startsWith("/company") && (
         <Button
           primary
           content="수정하기"

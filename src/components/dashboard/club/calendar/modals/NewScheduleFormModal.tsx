@@ -88,13 +88,13 @@ export default function NewScheduleFormModal() {
                 name="title"
                 label="제목"
                 placeholder="제목을 입력해주세요."
-                maxChar={30}
+                maxLength={30}
               />
               <Input
                 name="description"
                 label="상세 정보"
                 placeholder="상세 정보를 작성해주세요."
-                maxChar={300}
+                maxLength={300}
               />
               <div className="space-y-2">
                 <label

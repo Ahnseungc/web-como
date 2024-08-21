@@ -59,13 +59,13 @@ export default function NewTransactionForm() {
             label="동호회 정보"
             type="text"
             value="동호회명 : 어푸어푸 수영 동호회"
-            readonly
+            readOnly
           />
           <Input
             name="clubInfo2"
             type="text"
             value="회장 : 김오모 / 부회장 : 김오모 / 총무 : 김오모"
-            readonly
+            readOnly
           />
         </div>
         <Input
@@ -73,7 +73,7 @@ export default function NewTransactionForm() {
           label="작성자"
           type="text"
           value="송지은 / 경영지원팀 / 대리 / 총무(동호회 직책)"
-          readonly
+          readOnly
         />
       </div>
       <Separator />
