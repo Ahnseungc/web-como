@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { cn, formatDate } from "@/lib/utils";
 
 const tableHeadings = [
@@ -112,17 +112,18 @@ export default function EmployeeTable() {
   const { push } = useRouter();
 
   return (
-    <ul className="flex flex-col gap-1">
-      <li className="flex border-y border-gray-400 bg-gray-200">
+    <ul>
+      <li className="flex py-0.5 border-y border-gray-400 bg-gray-200">
         {tableHeadings.map((heading, i) => (
           <div
             key={heading}
             className={cn(
               "my-3 mx-6 body-1 font-bold text-gray-900",
               i === 0 ? "w-8" : "flex-1",
-              i === 3 ? "" : "text-center",
-              i === 4 ? "flex items-center justify-center max-w-36 m-0" : "",
-              [1, 2].includes(i) ? "max-w-32" : ""
+              i === 4 ? "" : "text-center",
+              i === 6 ? "flex items-center justify-center max-w-44 m-0" : "",
+              [2, 3].includes(i) ? "max-w-28" : "",
+              [1, 5].includes(i) ? "max-w-36" : ""
             )}
           >
             {heading}
@@ -133,12 +134,14 @@ export default function EmployeeTable() {
         <li
           key={employee.id}
           className={cn(
-            "flex border-b border-gray-400 bg-gray-0",
-            employee.status === "active" ? "" : ""
+            "flex py-0.5 border-b border-gray-400 bg-gray-0 transition duration-200",
+            employee.status === "active"
+              ? "cursor-pointer group hover:bg-gray-200"
+              : ""
           )}
           onClick={() => {
             if (employee.status === "active") {
-              push(`./detail/${employee.id}`);
+              push(`./employee/detail/${employee.id}`);
             }
           }}
         >
@@ -154,13 +157,14 @@ export default function EmployeeTable() {
             <div
               key={i}
               className={cn(
-                "my-3 mx-6 body-1 font-medium text-gray-800 underline underline-offset-2 decoration-transparent line-clamp-1 transition duration-300",
+                "my-3 mx-6 body-1 font-medium text-gray-800 underline underline-offset-2 decoration-transparent line-clamp-1 transition duration-200",
                 i === 0 ? "w-8" : "flex-1",
-                i === 3
-                  ? "hover:decoration-gray-800 cursor-pointer"
-                  : "text-center",
-                i === 4 ? "flex items-center justify-center max-w-36 m-0" : "",
-                [1, 2].includes(i) ? "max-w-32" : ""
+                i === 1 ? "group-hover:decoration-gray-800" : "",
+                i === 4 ? "" : "text-center",
+                i === 6 ? "flex items-center justify-center max-w-44 m-0" : "",
+                i === 6 && data === "deleted" ? "decoration-gray-800" : "",
+                [2, 3].includes(i) ? "max-w-28" : "",
+                [1, 5].includes(i) ? "max-w-36" : ""
               )}
             >
               {i === 0 ? (
@@ -173,7 +177,10 @@ export default function EmployeeTable() {
                     {"가입신청 내역"}
                   </button>
                 ) : data === "active" ? (
-                  <div className="flex gap-2">
+                  <div
+                    className="flex gap-2"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <button className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-gray-800 cursor-pointer">
                       {"수정"}
                     </button>
