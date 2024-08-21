@@ -2,17 +2,8 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { cn, formatDate } from "@/lib/utils";
-import DocUtilButtons from "@/components/dashboard/common/DocUtil";
 
-const tableHeadings = [
-  "순번",
-  "최종 수정일",
-  "작성자",
-  "서류명",
-  "조회수",
-  "저장 및 인쇄",
-  "수정",
-];
+const tableHeadings = ["순번", "최종 수정일", "작성자", "서류명", "수정"];
 
 const documents = [
   {
@@ -20,80 +11,60 @@ const documents = [
     date: "2024-07-04 12:33:57",
     author: "김오모",
     name: "동호회 활동 규정",
-    viewCount: 50,
-    url: "document-url",
   },
   {
     id: 2,
     date: "2024-07-04 12:33:57",
     author: "김오모",
     name: "동호회 활동 규정",
-    viewCount: 50,
-    url: "document-url",
   },
   {
     id: 3,
     date: "2024-07-04 12:33:57",
     author: "김오모",
     name: "동호회 활동 규정",
-    viewCount: 50,
-    url: "document-url",
   },
   {
     id: 4,
     date: "2024-07-04 12:33:57",
     author: "김오모",
     name: "동호회 활동 규정",
-    viewCount: 50,
-    url: "document-url",
   },
   {
     id: 5,
     date: "2024-07-04 12:33:57",
     author: "김오모",
     name: "동호회 활동 규정",
-    viewCount: 50,
-    url: "document-url",
   },
   {
     id: 6,
     date: "2024-07-04 12:33:57",
     author: "김오모",
     name: "동호회 활동 규정",
-    viewCount: 50,
-    url: "document-url",
   },
   {
     id: 7,
     date: "2024-07-04 12:33:57",
     author: "김오모",
     name: "동호회 활동 규정",
-    viewCount: 50,
-    url: "document-url",
   },
   {
     id: 8,
     date: "2024-07-04 12:33:57",
     author: "김오모",
     name: "동호회 활동 규정",
-    viewCount: 50,
-    url: "document-url",
   },
   {
     id: 9,
     date: "2024-07-04 12:33:57",
     author: "김오모",
     name: "동호회 활동 규정",
-    viewCount: 50,
-    url: "document-url",
   },
   {
     id: 10,
     date: "2024-07-04 12:33:57",
     author: "김오모",
     name: "동호회 활동 규정",
-    viewCount: 50,
-    url: "document-url",
   },
 ];
 
@@ -111,9 +82,8 @@ export default function DocumentTable() {
               "my-3 mx-6 body-1 font-bold text-gray-900",
               i === 0 ? "w-8" : "flex-1",
               i === 3 ? "" : "text-center",
-              i === 6 ? "max-w-36" : "",
-              [1, 2, 4, 5].includes(i) ? "max-w-32" : "",
-              [5, 6].includes(i) ? "flex items-center justify-center m-0" : ""
+              i === 4 ? "flex items-center justify-center max-w-36 m-0" : "",
+              [1, 2].includes(i) ? "max-w-32" : ""
             )}
           >
             {heading}
@@ -130,8 +100,6 @@ export default function DocumentTable() {
             document.date,
             document.author,
             document.name,
-            document.viewCount,
-            document.url,
             document.id,
           ].map((data, i) => (
             <div
@@ -142,9 +110,8 @@ export default function DocumentTable() {
                 i === 3
                   ? "hover:decoration-gray-800 cursor-pointer"
                   : "text-center",
-                i === 6 ? "max-w-36" : "",
-                [1, 2, 4, 5].includes(i) ? "max-w-32" : "",
-                [5, 6].includes(i) ? "flex items-center justify-center m-0" : ""
+                i === 4 ? "flex items-center justify-center max-w-36 m-0" : "",
+                [1, 2].includes(i) ? "max-w-32" : ""
               )}
               onClick={() => {
                 if (i === 3) {
@@ -156,9 +123,7 @@ export default function DocumentTable() {
                 idx + 1
               ) : i === 1 ? (
                 formatDate(new Date(data))
-              ) : i === 5 ? (
-                <DocUtilButtons />
-              ) : i === 6 ? (
+              ) : i === 4 ? (
                 <button
                   className="flex items-center gap-[3px] py-1 px-3 rounded body-1 font-medium text-gray-50 bg-gray-700 cursor-pointer"
                   onClick={() => push(`${pathname}/new?edit=${data}`)}
