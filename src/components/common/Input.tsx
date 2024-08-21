@@ -9,7 +9,6 @@ interface Props
     React.InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement
   > {
-  name: string;
   type?: HTMLInputTypeAttribute;
   accept?: string;
   autoComplete?: string;
