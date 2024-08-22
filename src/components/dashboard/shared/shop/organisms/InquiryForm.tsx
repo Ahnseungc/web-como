@@ -115,7 +115,7 @@ export default function InquiryForm() {
           name="content"
           label="내용"
           placeholder="내용을 입력하세요"
-          maxChar={300}
+          maxLength={300}
           rows={6}
           currentValue={formValues.content}
           handleInputChange={(e) =>

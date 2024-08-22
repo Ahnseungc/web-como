@@ -11,27 +11,27 @@ export default function SupplyDetail() {
           label="동호회명"
           type="text"
           value="산악동호회"
-          readonly
+          readOnly
         />
         <Input
           name="author"
           label="담당 동호회 임원"
           type="text"
           value="김오모 / 인사팀 / 대리 / 회장(동호회 직급)"
-          readonly
+          readOnly
         />
         <Input
           name="name"
           label="품목 이름"
           type="text"
-          readonly
+          readOnly
           value="빔프로젝터"
         />
         <Input
           name="purpose"
           label="구매 목적"
           type="text"
-          readonly
+          readOnly
           value="PT시 필요자료 띄우기"
         />
         <Input
@@ -39,7 +39,7 @@ export default function SupplyDetail() {
           label="구매 비용"
           type="text"
           inputStyle="max-w-[350px]"
-          readonly
+          readOnly
           value="319,000원"
         />
         <ImageInput
@@ -54,7 +54,7 @@ export default function SupplyDetail() {
           readonly
           currentImages={[]}
         />
-        <Input name="note" label="비고" type="text" readonly />
+        <Input name="note" label="비고" type="text" readOnly />
       </div>
       <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">
         <h3 className="h2 font-bold text-gray-900">{"폐기 사유"}</h3>
@@ -63,20 +63,20 @@ export default function SupplyDetail() {
           label="폐기 일자"
           type="text"
           value="2024-07-28"
-          readonly
+          readOnly
         />
         <Input
           name="personInCharge"
           label="폐기 담당 동호회 임원"
           type="text"
           value="김오모 / 인사팀 / 대리 / 회장(동호회 직급)"
-          readonly
+          readOnly
         />
         <Input
           name="reason"
           label="폐기 사유"
           type="text"
-          readonly
+          readOnly
           value="고장으로 잘 작동하지 않아서 폐기하게 되었습니다."
         />
       </div>

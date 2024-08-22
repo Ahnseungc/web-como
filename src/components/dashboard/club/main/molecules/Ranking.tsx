@@ -11,7 +11,7 @@ export default async function DashboardRanking() {
   const maxHeight = data.clubRankingDetails[0].clubMember;
 
   return (
-    <div className="flex-1 flex flex-col justify-between gap-10 p-8 rounded-xl bg-gray-0">
+    <div className="flex-1 flex flex-col justify-between h-[473px] p-8 rounded-xl bg-gray-0">
       <RankingCursor />
       <div className="space-y-2">
         <h3 className="h1 font-bold text-brand-black">{"사내동호회 순위"}</h3>

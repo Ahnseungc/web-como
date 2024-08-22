@@ -75,7 +75,10 @@ export default function DocumentTable() {
   return (
     <ul className="flex flex-col gap-1">
       <li className="flex border-y border-gray-400 bg-gray-200">
-        {tableHeadings.map((heading, i) => (
+        {(pathname.startsWith("/company")
+          ? ["순번", "최종 수정일", "작성자", "서류명", "수정"]
+          : ["순번", "최종 수정일", "작성자", "서류명"]
+        ).map((heading, i) => (
           <div
             key={heading}
             className={cn(
@@ -95,13 +98,16 @@ export default function DocumentTable() {
           key={document.id}
           className="flex border-b border-gray-400 bg-gray-0"
         >
-          {[
-            document.id,
-            document.date,
-            document.author,
-            document.name,
-            document.id,
-          ].map((data, i) => (
+          {(pathname.startsWith("/company")
+            ? [
+                document.id,
+                document.date,
+                document.author,
+                document.name,
+                document.id,
+              ]
+            : [document.id, document.date, document.author, document.name]
+          ).map((data, i) => (
             <div
               key={i}
               className={cn(

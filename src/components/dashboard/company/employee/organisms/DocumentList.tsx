@@ -32,7 +32,7 @@ export default function DocumentList() {
           currentOrder={currentOrder}
           handleOrderChange={(newOrder) => setCurrentOrder(newOrder)}
         />
-        {pathname.startsWith("company") && (
+        {pathname.startsWith("/company") && (
           <button
             className="flex items-center gap-[3px] py-1 px-3 rounded body-1 font-medium text-gray-50 bg-gray-900 cursor-pointer"
             onClick={() => push(`${pathname}/new`)}

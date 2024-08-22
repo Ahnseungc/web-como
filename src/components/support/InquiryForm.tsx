@@ -80,7 +80,7 @@ export default function InquiryForm() {
         type="text"
         name="content"
         label="문의사항"
-        maxChar={500}
+        maxLength={500}
         rows={5}
         currentValue={formValues.content}
         handleInputChange={handleChange}

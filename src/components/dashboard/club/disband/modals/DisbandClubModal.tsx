@@ -64,20 +64,20 @@ export default function DisbandClubModal() {
             </div>
             <div className="space-y-4">
               <Input
-                readonly
+                readOnly
                 name="category"
                 label="카테고리"
                 value="액티비티"
               />
               <Input
-                readonly
+                readOnly
                 name="description"
                 label="한줄 소개"
                 value="서울에 위치한 수영장에서의 운동"
               />
-              <Input readonly name="people" label="동호회 인원" value="20명" />
+              <Input readOnly name="people" label="동호회 인원" value="20명" />
               <Input
-                readonly
+                readOnly
                 name="recent-activity"
                 label="최근 일정"
                 value="2024-07-08"
