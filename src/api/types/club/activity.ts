@@ -3,5 +3,5 @@ export interface ActivityPictureData {
   nickName: string;
   profile: string;
   department: string;
-  createDate: number[];
+  createDate: string;
 }

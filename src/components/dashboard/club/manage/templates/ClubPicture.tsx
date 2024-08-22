@@ -10,7 +10,7 @@ export default function ClubPictureTab() {
   const { data } = useQuery({
     queryKey: ["club-manage", "picture"],
     queryFn: () =>
-      getData("/v2/club/web/activity", false).then(
+      getData("v2/club/web/activity/", true).then(
         (res) => res.data as ActivityPictureData
       ),
   });
