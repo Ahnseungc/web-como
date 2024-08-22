@@ -26,14 +26,14 @@ interface DatesProps {
 
 const Dates = ({ eventDates }: DatesProps) => {
   const now = new Date();
-  const dayOfWeek = now.getDay(); // 0 (Sunday) to 6 (Saturday)
-  const startOfWeek = new Date(now); // Copy current date
-  startOfWeek.setDate(now.getDate() - dayOfWeek); // Set to the previous Sunday
+  const dayOfWeek = now.getDay(); 
+  const startOfWeek = new Date(now); 
+  startOfWeek.setDate(now.getDate() - dayOfWeek); 
 
   const weekDates = [];
   for (let i = 0; i < 7; i++) {
     const currentDay = new Date(startOfWeek);
-    currentDay.setDate(startOfWeek.getDate() + i); // Add i days to the start of the week
+    currentDay.setDate(startOfWeek.getDate() + i); 
     weekDates.push(currentDay);
   }
 
@@ -68,7 +68,7 @@ export default function DashboardUpcomingDue() {
   const eventDates = [now.getDate(), now.getDate() + 2, now.getDate() - 2];
 
   return (
-    <div className="flex flex-col gap-[18px] p-8 rounded-xl bg-gray-0">
+    <div className="flex flex-col justify-between h-[300px] p-8 rounded-xl bg-gray-0">
       <h3 className="h1 font-bold text-brand-black">{"다가오는 마감"}</h3>
       <div className="space-y-3">
         <DaysOfWeek />
