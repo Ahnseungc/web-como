@@ -17,7 +17,7 @@ export default function ExpenseList() {
   const { push } = useRouter();
 
   const { data } = useQuery({
-    queryKey: ["expense", "list"],
+    queryKey: ["club-expense", "list"],
     queryFn: () =>
       getData("v2/club/web/activityexpenses/paymenthistory/", true).then(
         (res) => res.data as ExpenseListData
