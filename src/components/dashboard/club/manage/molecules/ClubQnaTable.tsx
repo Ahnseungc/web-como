@@ -1,174 +1,99 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { cn } from "@/lib/utils";
+import type { ClubWebQuestionInfoDTO } from "@/api/types/club/question";
+import { cn, formatDateFromString } from "@/lib/utils";
 
-type QuestionStatus = "completed" | "pending";
+interface Props {
+  data: ClubWebQuestionInfoDTO[] | undefined;
+}
 
-const tableHeadings = ["순번", "이름", "부서", "질문", "작성일", "답변상태"];
-
-const questions = [
-  {
-    order: 1,
-    name: "김오모",
-    department: "회계 1팀",
-    question:
-      "완전 초보자도 가능한가요? 지인 말로는 초보자들은 진입장벽이 좀 있다고 해서 걱정되네요ㅠㅠ",
-    date: "20240704 12:33:57",
-    status: "pending",
-  },
-  {
-    order: 2,
-    name: "김오모",
-    department: "경리 3팀",
-    question: "실력별로 나눠서 활동하나요?",
-    date: "20240704 12:33:57",
-    status: "completed",
-  },
-  {
-    order: 3,
-    name: "김오모",
-    department: "미래사업전략부",
-    question: "사전 답변 한줄한줄",
-    date: "20240704 12:33:57",
-    status: "completed",
-  },
-  {
-    order: 4,
-    name: "김오모",
-    department: "서비스혁신경영",
-    question: "사전 답변 한줄한줄",
-    date: "20240704 12:33:57",
-    status: "completed",
-  },
-  {
-    order: 5,
-    name: "김오모",
-    department: "부서 이름",
-    question: "사전 답변 한줄한줄",
-    date: "20240704 12:33:57",
-    status: "completed",
-  },
-  {
-    order: 6,
-    name: "김오모",
-    department: "부서 이름",
-    question: "사전 답변 한줄한줄",
-    date: "20240704 12:33:57",
-    status: "completed",
-  },
-  {
-    order: 7,
-    name: "김오모",
-    department: "부서 이름",
-    question: "사전 답변 한줄한줄",
-    date: "20240704 12:33:57",
-    status: "completed",
-  },
-  {
-    order: 8,
-    name: "김오모",
-    department: "부서 이름",
-    question: "사전 답변 한줄한줄",
-    date: "20240704 12:33:57",
-    status: "completed",
-  },
-  {
-    order: 9,
-    name: "김오모",
-    department: "부서 이름",
-    question: "사전 답변 한줄한줄",
-    date: "20240704 12:33:57",
-    status: "completed",
-  },
-  {
-    order: 10,
-    name: "김오모",
-    department: "부서 이름",
-    question: "사전 답변 한줄한줄",
-    date: "20240704 12:33:57",
-    status: "completed",
-  },
-];
-
-export default function ClubQnaTable() {
+export default function ClubQnaTable({ data }: Props) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { push } = useRouter();
 
   return (
-    <ul className="flex flex-col gap-1">
-      <li className="flex border-y border-gray-400 bg-gray-200">
-        {tableHeadings.map((heading, i) => (
-          <div
-            key={heading}
-            className={cn(
-              "my-3 mx-6 body-1 font-bold text-gray-900",
-              i === 0 ? "w-8" : "flex-1",
-              i === 3 ? "" : "text-center max-w-60",
-              i === 1
-                ? "max-w-20"
-                : i === 2
-                  ? "max-w-32"
-                  : [4, 5].includes(i)
-                    ? "max-w-40"
-                    : ""
-            )}
-          >
-            {heading}
-          </div>
-        ))}
-      </li>
-      {questions.map((question) => (
-        <li
-          key={question.order}
-          className="flex border-b border-gray-400 bg-gray-0"
-        >
-          {[
-            question.order,
-            question.name,
-            question.department,
-            question.question,
-            question.date,
-            question.status,
-          ].map((data, i) => (
+    <ul>
+      <li className="flex py-0.5 border-y border-gray-400 bg-gray-200">
+        {["순번", "이름", "부서", "질문", "작성일", "답변상태"].map(
+          (heading, i) => (
             <div
-              key={data}
+              key={heading}
               className={cn(
-                "my-3 mx-6 body-1 font-medium underline-offset-2 underline decoration-transparent line-clamp-1 transition duration-300",
+                "my-3 mx-6 body-1 font-bold text-gray-900",
                 i === 0 ? "w-8" : "flex-1",
-                i === 3
-                  ? "hover:decoration-gray-800 cursor-pointer"
-                  : "text-center",
+                i === 3 ? "" : "text-center max-w-60",
                 i === 1
                   ? "max-w-20"
                   : i === 2
                     ? "max-w-32"
                     : [4, 5].includes(i)
                       ? "max-w-40"
-                      : "",
-                data === "pending"
-                  ? "text-point-blue"
-                  : data === "completed"
-                    ? "text-gray-500"
-                    : "text-gray-800"
+                      : ""
               )}
-              onClick={() => {
-                if (i === 3)
-                  push(
-                    `${pathname}?${searchParams}&question=${question.order}`
-                  );
-              }}
             >
-              {data === "pending"
-                ? "답변 대기중"
-                : data === "completed"
-                  ? "답변 완료"
-                  : data}
+              {heading}
             </div>
-          ))}
-        </li>
-      ))}
+          )
+        )}
+      </li>
+      {data && data.length > 0 ? (
+        data.map((item, idx) => (
+          <li
+            key={item.questionId}
+            className="flex py-0.5 border-b border-gray-400 bg-gray-0 hover:bg-gray-100 transition duration-200 cursor-pointer"
+          >
+            {[
+              item.questionId,
+              item.questionerName,
+              item.questionerDepartment,
+              item.content,
+              item.createdDate,
+              item.answerId,
+            ].map((data, i) => (
+              <div
+                key={data}
+                className={cn(
+                  "my-3 mx-6 body-1 font-medium underline-offset-2 underline decoration-transparent line-clamp-1 transition duration-200",
+                  i === 0 ? "w-8" : "flex-1",
+                  i === 3 ? "hover:decoration-gray-800" : "text-center",
+                  i === 1
+                    ? "max-w-20"
+                    : i === 2
+                      ? "max-w-32"
+                      : [4, 5].includes(i)
+                        ? "max-w-40"
+                        : "",
+                  i === 5
+                    ? data
+                      ? "text-gray-500"
+                      : "text-point-blue"
+                    : "text-gray-800"
+                )}
+                onClick={() => {
+                  if (i === 3)
+                    push(
+                      `${pathname}?${searchParams}&question=${item.questionId}`
+                    );
+                }}
+              >
+                {i === 0
+                  ? idx + 1
+                  : i === 4
+                    ? formatDateFromString(data as string)
+                    : i === 5
+                      ? data
+                        ? "답변 완료"
+                        : "답변 대기중"
+                      : data}
+              </div>
+            ))}
+          </li>
+        ))
+      ) : (
+        <></>
+      )}
     </ul>
   );
 }
