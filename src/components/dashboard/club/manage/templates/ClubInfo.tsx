@@ -22,7 +22,7 @@ export default function ClubInfoTab() {
   const { data } = useQuery({
     queryKey: ["club-manage", "info"],
     queryFn: () =>
-      getData("/v2/club/web/", true).then((res) => res.data as ClubIndexData),
+      getData("v2/club/web/", true).then((res) => res.data as ClubIndexData),
   });
 
   const [selectedSchedule, setSelectedSchedule] = useState<ClubSchedule>();
