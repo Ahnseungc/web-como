@@ -8,4 +8,5 @@ interface ClubTransactionHistoryListDTO {
   transactionType: string;
   department: string;
   detail: string;
+  amount: number;
 }
