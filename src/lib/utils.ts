@@ -108,3 +108,9 @@ export function formatFileSize(bytes: number) {
 
   return `${number.toLocaleString()} ${text}`;
 }
+
+export function formatDateFromString(string: string) {
+  return (
+    string.slice(0, 4) + "-" + string.slice(4, 6) + "-" + string.slice(6, 8)
+  );
+}

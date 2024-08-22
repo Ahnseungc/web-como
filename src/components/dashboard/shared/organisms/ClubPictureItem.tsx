@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { openModal } from "@/lib/utils";
+import { formatDateFromString, openModal } from "@/lib/utils";
 import type { ActivityPictureData } from "@/api/types/club/activity";
 import Avatar from "@/components/common/Avatar";
 
@@ -20,7 +20,7 @@ export default function ClubPictureItem({ item, readonly }: Props) {
             <span className="h4 font-bold text-gray-900">{item.nickName}</span>
             <div className="space-x-2 body-1 font-medium text-gray-500">
               <span>{item.department}</span>
-              <span>{item.createDate}</span>
+              <span>{formatDateFromString(item.createDate)}</span>
             </div>
           </div>
         </div>
