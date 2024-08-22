@@ -13,8 +13,8 @@ export default function ExpenseTable({ data }: Props) {
   const { push } = useRouter();
 
   return (
-    <ul className="flex flex-col gap-1">
-      <li className="flex border-y border-gray-400 bg-gray-200">
+    <ul>
+      <li className="flex py-0.5 border-y border-gray-400 bg-gray-200">
         {[
           "순번",
           "작성일",
@@ -41,7 +41,10 @@ export default function ExpenseTable({ data }: Props) {
       </li>
       {data && data.length > 0 ? (
         data.map((item, idx) => (
-          <li key={item.id} className="flex border-b border-gray-400 bg-gray-0">
+          <li
+            key={item.id}
+            className="flex py-0.5 border-b border-gray-400 bg-gray-0 hover:bg-gray-100 transition duration-200"
+          >
             {[
               item.id,
               item.createdDate,

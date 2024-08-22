@@ -43,6 +43,9 @@ export default function ClubQnaTable({ data }: Props) {
           <li
             key={item.questionId}
             className="flex py-0.5 border-b border-gray-400 bg-gray-0 hover:bg-gray-100 transition duration-200 cursor-pointer"
+            onClick={() =>
+              push(`${pathname}?${searchParams}&question=${item.questionId}`)
+            }
           >
             {[
               item.questionId,
@@ -71,12 +74,6 @@ export default function ClubQnaTable({ data }: Props) {
                       : "text-point-blue"
                     : "text-gray-800"
                 )}
-                onClick={() => {
-                  if (i === 3)
-                    push(
-                      `${pathname}?${searchParams}&question=${item.questionId}`
-                    );
-                }}
               >
                 {i === 0
                   ? idx + 1
