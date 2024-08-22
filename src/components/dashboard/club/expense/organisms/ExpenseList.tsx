@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { getData } from "@/api/action";
+import type { ExpenseListData } from "@/api/types/club/activityExpenses/paymentHistory";
 import DateFilter, {
   type DateRange,
 } from "@/components/dashboard/common/DateFilter";
@@ -12,6 +15,15 @@ import { Plus } from "@/assets/icons/action";
 export default function ExpenseList() {
   const pathname = usePathname();
   const { push } = useRouter();
+
+  const { data } = useQuery({
+    queryKey: ["expense", "list"],
+    queryFn: () =>
+      getData("v2/club/web/activityexpenses/paymenthistory/", true).then(
+        (res) => res.data as ExpenseListData
+      ),
+  });
+
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
     startDate: undefined,
     endDate: undefined,
@@ -50,7 +62,7 @@ export default function ExpenseList() {
           handleDateRangeChange={handleDateRangeChange}
         />
         <div className="space-y-10">
-          <ExpenseTable />
+          <ExpenseTable data={data?.clubActivityExpensePaymentHistories} />
           <Pagination
             currentPage={currentPage}
             maxPage={8}
