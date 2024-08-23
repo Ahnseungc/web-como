@@ -2,6 +2,14 @@
 
 import { cookies } from "next/headers";
 
+export const deleteAllCookies = async () => {
+  await deleteAccessToken();
+  await deleteRefreshToken();
+  await deleteDashboardType();
+  await deleteClubId();
+  await deleteClubName();
+};
+
 export const saveAccessToken = async (accessToken: string) => {
   cookies().set("accessToken", accessToken);
 };
@@ -44,4 +52,16 @@ export const getClubId = async () => {
 
 export const deleteClubId = async () => {
   cookies().delete("clubId");
+};
+
+export const saveClubName = async (clubName: string) => {
+  cookies().set("clubName", clubName);
+};
+
+export const getClubName = async () => {
+  return cookies().get("clubName")?.value;
+};
+
+export const deleteClubName = async () => {
+  cookies().delete("clubName");
 };
