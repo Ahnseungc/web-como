@@ -8,4 +8,5 @@ export interface ClubWebMemberDTO {
   answer: string;
   createDate: string;
   processStatus: string;
+  id: number;
 }

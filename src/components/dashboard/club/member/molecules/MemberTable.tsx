@@ -48,13 +48,12 @@ export default function MemberTable({ data }: Props) {
               key={idx}
               className="flex py-0.5 border-b border-gray-400 bg-gray-0 hover:bg-gray-100 transition duration-200 cursor-pointer"
               onClick={() => {
-                // setSelectedId(item.id);
-                setSelectedId(1);
+                setSelectedId(item.id);
                 openModal("new-member-detail");
               }}
             >
               {[
-                idx,
+                item.id,
                 item.name,
                 item.department,
                 item.answer,
