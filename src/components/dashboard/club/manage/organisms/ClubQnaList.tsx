@@ -13,7 +13,7 @@ import ClubQnaTable from "@/components/dashboard/club/manage/molecules/ClubQnaTa
 
 export default function ClubQnaList() {
   const { data } = useQuery({
-    queryKey: ["club-manage", "qna"],
+    queryKey: ["club-manage", "qna", 'list'],
     queryFn: () =>
       getData("v2/club/web/question/", true).then(
         (res) => res.data as QnaListData

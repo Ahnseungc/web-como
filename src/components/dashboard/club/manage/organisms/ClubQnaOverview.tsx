@@ -6,7 +6,7 @@ import type { QnaNotificationData } from "@/api/types/club/question/notification
 
 export default function ClubQnaOverview() {
   const { data } = useQuery({
-    queryKey: ["club-manage", "qna"],
+    queryKey: ["club-manage", "qna", 'notification'],
     queryFn: () =>
       getData("v2/club/web/question/notification/", true).then(
         (res) => res.data as QnaNotificationData
