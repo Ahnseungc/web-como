@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import type { ClubWebQuestionInfoDTO } from "@/api/types/club/question";
+import type { ClubWebQuestionInfoDTO } from "@/api/types/club/question/index";
 import { cn, formatDate } from "@/lib/utils";
 
 interface Props {

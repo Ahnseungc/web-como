@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getData } from "@/api/action";
-import type { QnaListData } from "@/api/types/club/question";
+import type { QnaListData } from "@/api/types/club/question/index";
 import DateFilter, {
   type DateRange,
 } from "@/components/dashboard/common/DateFilter";
