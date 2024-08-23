@@ -12,12 +12,13 @@ interface Props {
 
 export default function MemberTable({ data }: Props) {
   const [selectedId, setSelectedId] = useState<number>();
+  const [selectedName, setSelectedName] = useState<string>('');
 
   return (
     <>
       <div className="m-0">
         <NewMemberDetailModal id={selectedId} />
-        <CancelApplicationModal />
+        <CancelApplicationModal name={selectedName} />
       </div>
       <ul>
         <li className="flex py-0.5 border-y border-gray-400 bg-gray-200">
@@ -111,7 +112,10 @@ export default function MemberTable({ data }: Props) {
                         </button>
                         <button
                           className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-gray-600"
-                          onClick={() => openModal("cancel-application")}
+                          onClick={() => {
+                            setSelectedName(item.name);
+                            openModal("cancel-application");
+                          }}
                         >
                           {"반려"}
                         </button>
