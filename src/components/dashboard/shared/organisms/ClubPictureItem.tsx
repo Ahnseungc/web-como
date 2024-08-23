@@ -1,12 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { formatDateFromString, openModal } from "@/lib/utils";
-import type { ActivityPictureData } from "@/api/types/club/activity";
+import type { ClubWebActivityInfoDTO } from "@/api/types/club/activity";
+import { formatDate, openModal } from "@/lib/utils";
 import Avatar from "@/components/common/Avatar";
 
 interface Props {
-  item: ActivityPictureData;
+  item: ClubWebActivityInfoDTO;
   readonly?: boolean;
 }
 
@@ -20,7 +20,7 @@ export default function ClubPictureItem({ item, readonly }: Props) {
             <span className="h4 font-bold text-gray-900">{item.nickName}</span>
             <div className="space-x-2 body-1 font-medium text-gray-500">
               <span>{item.department}</span>
-              <span>{formatDateFromString(item.createDate)}</span>
+              <span>{formatDate(new Date(item.createDate))}</span>
             </div>
           </div>
         </div>
@@ -33,7 +33,7 @@ export default function ClubPictureItem({ item, readonly }: Props) {
           </button>
         )}
       </div>
-      {/* <p className="h3 font-medium text-gray-900">{item.}</p> */}
+      <p className="h3 font-medium text-gray-900">{item.content}</p>
       <div className="flex gap-4 flex-nowrap w-[75vw] pb-4 overflow-x-auto scrollbar-custom">
         {item.activityImages.map((picture, i) => (
           <div key={i} className="relative w-80 h-80 bg-gray-300">

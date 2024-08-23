@@ -19,8 +19,8 @@ export default function ClubPictureTab() {
     <>
       <ClubTitle />
       {data &&
-        [data].map((picture) => (
-          <ClubPictureItem key={picture?.nickName} item={picture} />
+        data.clubWebActivityInfoDTOS.map((picture) => (
+          <ClubPictureItem key={picture.id} item={picture} />
         ))}
     </>
   );
