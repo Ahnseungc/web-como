@@ -1,6 +1,6 @@
 import { getData } from "@/api/action";
 import type { UpcomingActivityData } from "@/api/types/club/upcoming/activity";
-import { cn } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 
 export default async function DashboardSchedule() {
   const res = await getData("v2/club/web/upcoming/activity/", true);
@@ -51,7 +51,11 @@ export default async function DashboardSchedule() {
                     i === 3 ? "body-2 font-medium" : ""
                   )}
                 >
-                  {i === 3 ? `${data}명` : data}
+                  {i === 0
+                    ? formatDate(new Date(data))
+                    : i === 3
+                      ? `${data}명`
+                      : data}
                 </span>
               ))}
             </li>

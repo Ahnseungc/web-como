@@ -34,14 +34,6 @@ export function getPageRange(num: number) {
   return range;
 }
 
-export function convertToDate(dateString: any) {
-  const [year, month, day, hours, minutes, seconds] = dateString
-    .split("-")
-    .map(Number);
-  const date = new Date(year, month - 1, day, hours, minutes, seconds);
-  return date;
-}
-
 export function formatDate(date: Date | undefined) {
   if (!date) {
     return "";

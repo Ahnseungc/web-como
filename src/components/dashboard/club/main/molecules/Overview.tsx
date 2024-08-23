@@ -17,7 +17,7 @@ export default async function DashboardOverview() {
           </span>
           <Link href={`${CLUB_DASHBOARD_ENDPOINT}/manage/member?filter=new`}>
             <span className="h1 font-extrabold text-brand-orange underline underline-offset-4 decoration-gray-800 hover:decoration-brand-orange transition duration-300">
-              {`${data.newClubApplications}건`}
+              {`${data.newClubApplications || 0}건`}
             </span>
           </Link>
         </div>
@@ -28,7 +28,7 @@ export default async function DashboardOverview() {
           </span>
           <Link href={`${CLUB_DASHBOARD_ENDPOINT}/manage?tab=qna`}>
             <span className="h1 font-extrabold text-gray-0 underline underline-offset-4 decoration-gray-800 hover:decoration-gray-0 transition duration-300">
-              {`${data.newClubInquiry}건`}
+              {`${data.newClubInquiry || 0}건`}
             </span>
           </Link>
         </div>
@@ -39,7 +39,7 @@ export default async function DashboardOverview() {
           </span>
           <Link href={`${CLUB_DASHBOARD_ENDPOINT}/announcement?filter=company`}>
             <span className="h1 font-extrabold text-gray-0 underline underline-offset-4 decoration-gray-800 hover:decoration-gray-0 transition duration-300">
-              {`${data.unreadExecutiveNotice}건`}
+              {`${data.unreadExecutiveNotice || 0}건`}
             </span>
           </Link>
         </div>
@@ -50,7 +50,7 @@ export default async function DashboardOverview() {
           </span>
           <Link href={`${CLUB_DASHBOARD_ENDPOINT}/announcement?filter=omo`}>
             <span className="h1 font-extrabold text-gray-0 underline underline-offset-4 decoration-gray-800 hover:decoration-gray-0 transition duration-300">
-              {`${data.unreadOmoNotice}건`}
+              {`${data.unreadOmoNotice || 0}건`}
             </span>
           </Link>
         </div>

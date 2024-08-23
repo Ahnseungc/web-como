@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getData } from "@/api/action";
 import type { TransactionData } from "@/api/types/club/transactions";
-import { cn } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 import { ChevronRight } from "@/assets/icons/chevron";
 
@@ -69,7 +69,7 @@ export default async function DashboardTransaction() {
                     )}
                   >
                     {i === 0
-                      ? data.toString().slice(0, 10)
+                      ? formatDate(new Date(data))
                       : i === 2
                         ? `${transaction.transactionType === "입금" ? "" : "-"}${data.toLocaleString()}원`
                         : data}
