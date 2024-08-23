@@ -4,35 +4,32 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { IResponse } from "@/api/types";
 import type { LoginClubData, LoginClubDTO } from "@/api/types/member/login";
-import { getAccessToken, saveClubId } from "@/lib/cookies";
+import { getAccessToken, saveClubId, saveClubName } from "@/lib/cookies";
 import { cn } from "@/lib/utils";
 import Button from "@/components/common/Button";
 
 export default function ClubSelectForm() {
   const { refresh } = useRouter();
   const [clubOptions, setClubOptions] = useState<LoginClubDTO[]>();
-  const [selectedClub, setSelectedClub] = useState<number>();
+  const [selectedClub, setSelectedClub] = useState<LoginClubDTO>();
 
   useEffect(() => {
     const getClubOptions = async () => {
       const token = await getAccessToken();
 
-      const response = await fetch(
-        `/api/server/v2/member/web/login`,
-        {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`/api/server/v2/member/web/login`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
 
       const res: IResponse = await response.json();
       const data: LoginClubData = res.data;
 
       setClubOptions(data.loginClubDTOS);
-      setSelectedClub(data.loginClubDTOS[0].clubId);
+      setSelectedClub(data.loginClubDTOS[0]);
     };
 
     getClubOptions();
@@ -43,7 +40,8 @@ export default function ClubSelectForm() {
       return;
     }
 
-    await saveClubId(selectedClub.toString());
+    await saveClubId(selectedClub.clubId.toString());
+    await saveClubName(selectedClub.clubName);
     refresh();
   };
 
@@ -58,11 +56,11 @@ export default function ClubSelectForm() {
             <Button
               key={option.clubId}
               content={option.clubName}
-              onClick={() => setSelectedClub(option.clubId)}
-              orange={option.clubId === selectedClub}
+              onClick={() => setSelectedClub(option)}
+              orange={option.clubId === selectedClub?.clubId}
               className={cn(
                 "justify-start px-3",
-                option.clubId === selectedClub
+                option.clubId === selectedClub?.clubId
                   ? ""
                   : "border-gray-100 bg-gray-100"
               )}

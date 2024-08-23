@@ -1,8 +1,6 @@
 export const POLICY_TITLE = "동호회 상세 규정 및 동의서";
 
-export const POLICY = `
-
-개인정보처리방침
+export const POLICY = `개인정보처리방침
 
 사내동호회 운영규정
 제1조(목적)

@@ -1,11 +1,22 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import { closeModal } from "@/lib/utils";
+import { getClubName } from "@/lib/cookies";
 import Backdrop from "@/components/common/Backdrop";
 import Button from "@/components/common/Button";
 import Textarea from "@/components/common/Textarea";
 
-export default function CancelApplicationModal() {
+interface Props {
+  name: string;
+}
+
+export default function CancelApplicationModal({ name }: Props) {
+  const { data } = useQuery({
+    queryKey: ["cookies", "clubName"],
+    queryFn: () => getClubName().then((clubName) => clubName),
+  });
+
   return (
     <div id="cancel-application" className="hidden modal">
       <Backdrop />
@@ -14,7 +25,12 @@ export default function CancelApplicationModal() {
           {"정말 반려하시겠습니까?"}
         </h2>
         <div className="space-y-3">
-          <p className="text-center h4 font-normal text-gray-800">{`${"동호회 이름"}에 가입 신청한 ${"사용자 이름"}에게\n반려 사유와 함께 안내 메일이 송신됩니다.`}</p>
+          <p className="text-center h4 font-normal text-gray-800">
+            <span className="font-semibold">{data}</span>
+            {`에 가입 신청한 `}
+            <span className="font-semibold">{name}</span>
+            {`에게\n반려 사유와 함께 안내 메일이 송신됩니다.`}
+          </p>
           <Textarea
             required
             name="reason"

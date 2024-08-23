@@ -3,12 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { closeModal, openModal } from "@/lib/utils";
-import {
-  deleteAccessToken,
-  deleteRefreshToken,
-  deleteDashboardType,
-  deleteClubId,
-} from "@/lib/cookies";
+import { deleteAllCookies } from "@/lib/cookies";
 import Avatar from "@/components/common/Avatar";
 import Backdrop from "@/components/common/Backdrop";
 import { Close } from "@/assets/icons/action";
@@ -22,10 +17,7 @@ export default function ProfileDropdownModal({ profileImage }: Props) {
   const { refresh } = useRouter();
 
   const handleLogout = async () => {
-    await deleteAccessToken();
-    await deleteRefreshToken();
-    await deleteDashboardType();
-    await deleteClubId();
+    await deleteAllCookies();
     refresh();
   };
 
