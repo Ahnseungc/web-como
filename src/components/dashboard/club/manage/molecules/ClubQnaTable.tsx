@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { ClubWebQuestionInfoDTO } from "@/api/types/club/question";
-import { cn, formatDateFromString } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 
 interface Props {
   data: ClubWebQuestionInfoDTO[] | undefined;
@@ -78,7 +78,7 @@ export default function ClubQnaTable({ data }: Props) {
                 {i === 0
                   ? idx + 1
                   : i === 4
-                    ? formatDateFromString(data as string)
+                    ? formatDate(new Date(data))
                     : i === 5
                       ? data
                         ? "답변 완료"

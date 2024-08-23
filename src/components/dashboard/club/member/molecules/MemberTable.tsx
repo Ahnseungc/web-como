@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { ClubWebMemberDTO } from "@/api/types/club/member";
-import { cn, formatDateFromString, openModal } from "@/lib/utils";
+import { cn, formatDate, openModal } from "@/lib/utils";
 import NewMemberDetailModal from "@/components/dashboard/club/member/modals/NewMemberDetailModal";
 import CancelApplicationModal from "@/components/dashboard/club/member/modals/CancelApplicationModal";
 
@@ -90,7 +90,7 @@ export default function MemberTable({ data }: Props) {
                   {i === 0 ? (
                     idx + 1
                   ) : i === 4 ? (
-                    formatDateFromString(data as string)
+                    formatDate(new Date(data))
                   ) : i === 5 ? (
                     data === "SIGNOUT" ? (
                       "탈퇴"

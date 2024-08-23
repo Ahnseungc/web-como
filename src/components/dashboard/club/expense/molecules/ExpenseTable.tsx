@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import type { ClubActivityExpensePaymentHistory } from "@/api/types/club/activityExpenses/paymentHistory";
-import { cn, formatDateFromString, openModal } from "@/lib/utils";
+import { cn, formatDate, openModal } from "@/lib/utils";
 
 interface Props {
   data: ClubActivityExpensePaymentHistory[] | undefined;
@@ -89,7 +89,7 @@ export default function ExpenseTable({ data }: Props) {
                 {i === 0 ? (
                   idx + 1
                 ) : i === 1 ? (
-                  formatDateFromString(data as string)
+                  formatDate(new Date(data as string))
                 ) : i === 6 ? (
                   data ? (
                     data
