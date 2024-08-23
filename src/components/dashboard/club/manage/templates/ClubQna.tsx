@@ -14,7 +14,7 @@ export default function ClubQnaTab() {
       {question ? (
         <>
           <BackButton />
-          <ClubQnaQuestion />
+          <ClubQnaQuestion id={question} />
         </>
       ) : (
         <>
