@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getData } from "@/api/action";
 import type { ClubIndexData } from "@/api/types/club";
 import { cn, openModal } from "@/lib/utils";
+import { CATEGORY } from "@/lib/types/enum";
 import Input from "@/components/common/Input";
 import MapPlaceSearch from "@/components/dashboard/club/manage/organisms/MapPlaceSearch";
 import ScheduleSelect from "@/components/dashboard/club/manage/molecules/ScheduleSelect";
@@ -92,7 +93,7 @@ export default function ClubInfoTab() {
               name="category"
               label="카테고리"
               type="text"
-              value={data.category}
+              value={CATEGORY[data.category]}
               readOnly
             />
             <Input
