@@ -30,16 +30,16 @@ export default async function ExpenseOverview() {
         <div className="flex items-center justify-between mt-8">
           <div>
             <span className="h4 font-bold text-gray-500">{"잔여 회비"}</span>
-            <div className="mt-3 h1 font-extrabold text-brand-orange">{`${transactionsData.remainingFee.toLocaleString()}원`}</div>
+            <div className="mt-3 h1 font-extrabold text-brand-orange">{`${transactionsData.remainingFee.toLocaleString() || 0}원`}</div>
           </div>
           <div className="flex gap-8">
             <div>
               <span className="h4 font-bold text-gray-500">{"결제 대기"}</span>
-              <div className="mt-3 h1 font-extrabold text-gray-0">{`${transactionsData.pendingPayment.toLocaleString()}원`}</div>
+              <div className="mt-3 h1 font-extrabold text-gray-0">{`${transactionsData.pendingPayment.toLocaleString() || 0}원`}</div>
             </div>
             <div>
               <span className="h4 font-bold text-gray-500">{"이달 지출"}</span>
-              <div className="mt-3 h1 font-extrabold text-gray-0">{`${transactionsData.currentMonthExpenses.toLocaleString()}원`}</div>
+              <div className="mt-3 h1 font-extrabold text-gray-0">{`${transactionsData.currentMonthExpenses.toLocaleString() || 0}원`}</div>
             </div>
           </div>
         </div>
@@ -49,19 +49,19 @@ export default async function ExpenseOverview() {
         <div className="flex mt-8">
           <div className="flex-1 flex flex-col items-center gap-3 border-r border-gray-700">
             <span className="h1 font-extrabold text-gray-0">
-              {requestData.pendingPayment}
+              {requestData.pendingPayment || 0}
             </span>
             <span className="h4 font-bold text-gray-500">{"지급 대기"}</span>
           </div>
           <div className="flex-1 flex flex-col items-center gap-3 border-r border-gray-700">
             <span className="h1 font-extrabold text-gray-0">
-              {requestData.paymentCompleted}
+              {requestData.paymentCompleted || 0}
             </span>
             <span className="h4 font-bold text-gray-500">{"지급 완료"}</span>
           </div>
           <div className="flex-1 flex flex-col items-center gap-3">
             <span className="h1 font-extrabold text-gray-0">
-              {requestData.rejected}
+              {requestData.rejected || 0}
             </span>
             <span className="h4 font-bold text-gray-500">{"반려"}</span>
           </div>
