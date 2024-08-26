@@ -9,7 +9,7 @@ export default function ClubInfoModal() {
   return (
     <div id="club-info" className="hidden modal">
       <Backdrop />
-      <div className="fixed bottom-1/2 right-1/2 translate-y-1/2 translate-x-1/2 z-50 w-[960px] p-4 rounded-xl bg-gray-0 shadow">
+      <div className="fixed bottom-1/2 right-1/2 translate-y-1/2 translate-x-1/2 z-50 w-full max-w-[960px] p-4 rounded-xl bg-gray-0 shadow">
         <div className="space-y-6 h-full max-h-screen overflow-y-auto p-4 scrollbar-custom">
           <div className="flex items-center justify-between">
             <h2 className="text-center h1 font-bold text-gray-900">
