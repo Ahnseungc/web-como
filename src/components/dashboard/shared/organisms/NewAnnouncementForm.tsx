@@ -1,15 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import useNavigationGuard from "@/hooks/navigationGuard";
 import Button from "@/components/common/Button";
 import Checkbox from "@/components/common/Checkbox";
 import ImageInput from "@/components/common/ImageInput";
 import Input from "@/components/common/Input";
+import FileDragNDropInput from "@/components/common/FileDragNDropInput";
 
 export default function NewAnnouncementForm() {
   useNavigationGuard();
+  const pathname = usePathname();
+
   const [currentImages, setCurrentImages] = useState<File[]>([]);
+  const [files, setFiles] = useState<File[]>([]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,6 +45,9 @@ export default function NewAnnouncementForm() {
           maxLength={300}
           rows={5}
         />
+        {!pathname.includes("manage") && (
+          <FileDragNDropInput setFiles={setFiles} />
+        )}
         <ImageInput
           name="image"
           label="사진첨부"
@@ -51,7 +59,7 @@ export default function NewAnnouncementForm() {
         <Checkbox name="pin" content="공지사항 상단 고정하기" />
       </div>
       <div className="text-center">
-        <Button content="등록하기" className="max-w-[350px]" primary />
+        <Button primary content="등록하기" className="max-w-[350px]" />
       </div>
     </form>
   );
