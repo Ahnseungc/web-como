@@ -25,11 +25,16 @@ export default function EditEmployeeInfoModal() {
             </button>
           </div>
           <div className="space-y-4">
-            <Input label="이름" value="마포구" />
-            <Input label="부서" value="수,목 / 월 2회 / 오후 7:30" />
-            <Input label="직책" value="최소 3명, 최대 20명" />
-            <Input label="이메일 주소" value="150,000원" />
-            <Input label="핸드폰 번호" value="150,000원" />
+            <Input id="name" label="이름" value="김오모" />
+            <Input id="dept" label="부서" value="경영지원팀" />
+            <Input id="rank" label="직책" value="대리" />
+            <Input
+              id="email"
+              type="email"
+              label="이메일 주소"
+              value="omo@omo.com"
+            />
+            <Input id="phone" label="핸드폰 번호" value="010-0000-1111" />
           </div>
           <div className="space-y-3">
             <InputLabel label="권한 부여" />

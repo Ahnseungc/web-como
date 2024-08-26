@@ -25,11 +25,11 @@ export default function ApplicationDetailModal() {
             </button>
           </div>
           <div className="space-y-4">
-            <Input label="이름" value="마포구" />
-            <Input label="부서" value="수,목 / 월 2회 / 오후 7:30" />
-            <Input label="직책" value="최소 3명, 최대 20명" />
-            <Input label="이메일 주소" value="150,000원" />
-            <Input label="핸드폰 번호" value="150,000원" />
+            <Input readOnly label="이름" value="김오모" />
+            <Input readOnly label="부서" value="경영지원팀" />
+            <Input readOnly label="직책" value="대리" />
+            <Input readOnly label="이메일 주소" value="omo@omo.com" />
+            <Input readOnly label="핸드폰 번호" value="010-0000-1111" />
           </div>
           <div className="space-y-3">
             <InputLabel label="권한 부여" />
