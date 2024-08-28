@@ -18,7 +18,7 @@ export default function InfoTooltipButton({ id, title, content }: Props) {
         <Info className="w-6 h-6 text-gray-400" />
       </button>
       <div id={id} className="modal hidden absolute top-8 left-0">
-        <Backdrop invisible />
+        <Backdrop invisible modalId={id} />
         <div className="relative z-50 space-y-2 w-96 p-4 rounded-lg border border-gray-300 bg-gray-0">
           <div className="flex justify-between">
             <div className="body-1 font-bold text-gray-900">{title}</div>
