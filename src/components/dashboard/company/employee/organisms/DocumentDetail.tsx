@@ -3,8 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Button from "@/components/common/Button";
-import DocUtilButtons from "@/components/dashboard/common/DocUtil";
-import { Document } from "@/assets/icons/util";
+import FileItem from "@/components/common/FileItem";
 
 const document = [
   { name: "제목", content: "서류 제목 서류 제목" },
@@ -19,7 +18,9 @@ export default function DocumentDetail() {
   return (
     <div className="space-y-8 p-8 rounded-xl bg-gray-0">
       <h2 className="font-semibold text-gray-900">
-        {pathname.startsWith("/company") ? "사내 규정 및 서류" : "서류 다운로드"}
+        {pathname.startsWith("/company")
+          ? "사내 규정 및 서류"
+          : "서류 다운로드"}
       </h2>
       <div className="space-y-8">
         <ul>
@@ -49,16 +50,7 @@ export default function DocumentDetail() {
           <div className="body-1 font-bold text-gray-600">{"파일 목록"}</div>
           <ul className="space-y-2">
             {[1, 2, 3].map((file, i) => (
-              <li
-                key={i}
-                className="flex items-center justify-between p-3 rounded-md border border-gray-400 bg-gray-0"
-              >
-                <div className="flex gap-2 h4 font-medium text-gray-800">
-                  <Document className="w-6 h-6 text-gray-500" />
-                  {"동호회 운영 지침 사내 임직원 안내용 PT자료.pdf"}
-                </div>
-                <DocUtilButtons />
-              </li>
+              <FileItem key={i} />
             ))}
           </ul>
         </div>
