@@ -5,17 +5,43 @@ import { formatFileSize } from "@/lib/utils";
 import { Close } from "@/assets/icons/action";
 import { Document } from "@/assets/icons/util";
 
+const MAX_FILE_SIZE = 50 * 1024 * 1024;
+
 interface Props {
   onFilesChange: React.Dispatch<React.SetStateAction<File[]>>;
   placeholder?: React.ReactNode;
   style?: string;
+  limit?: number;
 }
 
-export default function DragNDrop({ onFilesChange, ...props }: Props) {
+export default function DragNDrop({ onFilesChange, limit, ...props }: Props) {
   const [files, setFiles] = useState<File[]>([]);
+  const [fileSize, setFileSize] = useState<number>(0);
 
   useEffect(() => {
-    onFilesChange(files);
+    if (limit) {
+      if (files.length > limit) {
+        setFiles((prev) => prev.slice(0, limit));
+      }
+    }
+  }, [files.length, limit]);
+
+  useEffect(() => {
+    if (fileSize > MAX_FILE_SIZE) {
+      setFiles((prev) => prev.slice(0, prev.length - 1));
+    }
+  }, [fileSize]);
+
+  useEffect(() => {
+    if (files.length > 0) {
+      const totalFileSize = files
+        .map((file) => file.size)
+        .reduce((acc, cur) => acc + cur);
+
+      setFileSize(totalFileSize);
+
+      onFilesChange(files);
+    }
   }, [files, onFilesChange]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,6 +79,7 @@ export default function DragNDrop({ onFilesChange, ...props }: Props) {
         id="drag-drop"
         accept=".pdf,.docx,.pptx,.txt,.xlsx"
         onChange={handleFileChange}
+        disabled={limit ? files.length === limit : fileSize >= MAX_FILE_SIZE}
       />
       {files.length > 0 ? (
         <ul className="space-y-2">

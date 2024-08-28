@@ -4,9 +4,15 @@ import { Document } from "@/assets/icons/util";
 
 interface Props {
   setFiles: React.Dispatch<React.SetStateAction<File[]>>;
+  helperText?: string;
+  limit?: number;
 }
 
-export default function FileDragNDropInput({ setFiles }: Props) {
+export default function FileDragNDropInput({
+  setFiles,
+  helperText,
+  limit,
+}: Props) {
   return (
     <div className="space-y-2">
       <InputLabel required label="파일 첨부" />
@@ -19,10 +25,13 @@ export default function FileDragNDropInput({ setFiles }: Props) {
             {"파일을 마우스로 끌어오거나, 하단 '내 PC' 버튼을 클릭하세요."}
           </>
         }
+		limit={limit}
       />
       <div className="flex justify-between">
         <div className="body-1 font-medium text-gray-500">
-          {"첨부파일은 한 게시글 당 최대 50MB까지 등록 가능합니다."}
+          {helperText
+            ? helperText
+            : "첨부파일은 한 게시글 당 최대 50MB까지 등록 가능합니다."}
         </div>
         <button
           type="button"
