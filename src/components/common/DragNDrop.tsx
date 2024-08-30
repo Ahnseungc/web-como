@@ -6,6 +6,8 @@ import { Close } from "@/assets/icons/action";
 import { Document } from "@/assets/icons/util";
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024;
+const FILE_TYPES =
+  ".hwp,.hwpx,.xls,.xlsx,.pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png";
 
 interface Props {
   onFilesChange: React.Dispatch<React.SetStateAction<File[]>>;
@@ -77,7 +79,7 @@ export default function DragNDrop({ onFilesChange, limit, ...props }: Props) {
         type="file"
         name="drag-drop"
         id="drag-drop"
-        accept=".pdf,.docx,.pptx,.txt,.xlsx"
+        accept={FILE_TYPES}
         onChange={handleFileChange}
         disabled={limit ? files.length === limit : fileSize >= MAX_FILE_SIZE}
       />
