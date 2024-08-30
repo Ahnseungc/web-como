@@ -5,7 +5,7 @@ export default function ClubAnnouncementDetailPage() {
   return (
     <>
       <BackButton />
-      <AnnouncementDetailContent />
+      <AnnouncementDetailContent isEditable />
     </>
   );
 }

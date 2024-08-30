@@ -7,6 +7,7 @@ import Backdrop from "@/components/common/Backdrop";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import Separator from "@/components/common/Separator";
+import InfoTooltipButton from "@/components/dashboard/common/InfoTooltipButton";
 import { Close, Remove } from "@/assets/icons/action";
 import { ChevronRight } from "@/assets/icons/chevron";
 
@@ -54,9 +55,16 @@ export default function AddNewEmployeeModal() {
       <Backdrop />
       <div className="fixed bottom-1/2 right-1/2 translate-y-1/2 translate-x-1/2 z-40 space-y-8 w-full max-w-[1200px] p-8 rounded-xl bg-gray-0 shadow">
         <div className="flex items-center justify-between">
-          <h2 className="text-center h1 font-bold text-gray-900">
-            {"신규 임직원 이메일 등록하기"}
-          </h2>
+          <div className="flex items-center gap-2">
+            <h2 className="text-center h1 font-bold text-gray-900">
+              {"신규 임직원 이메일 등록하기"}
+            </h2>
+            <InfoTooltipButton
+              id="add-employee-tooltip"
+              title="임직원 추가 절차 안내"
+              content="임직원에게 전송되는 가입 안내 이메일을 통해 임직원은 가입 절차를 밟을 수 있습니다."
+            />
+          </div>
           <button onClick={() => closeModal()}>
             <Close className="w-8 h-8" />
           </button>

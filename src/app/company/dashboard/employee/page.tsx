@@ -4,6 +4,9 @@ import ClubFigures from "@/components/dashboard/company/main/molecules/ClubFigur
 import DownloadFigure from "@/components/dashboard/company/main/molecules/DownloadFigure";
 import EmployeeView from "@/components/dashboard/company/employee/templates/EmployeeView";
 import AddNewEmployeeModal from "@/components/dashboard/company/employee/modals/AddNewEmployeeModal";
+import ApprovalSuccessModal from "@/components/dashboard/company/employee/modals/ApprovalSuccessModal";
+import EditSuccessModal from "@/components/dashboard/company/employee/modals/EditSuccessModal";
+import DeleteSuccessModal from "@/components/dashboard/company/employee/modals/DeleteSuccessModal";
 
 export default function Page() {
   return (
@@ -17,6 +20,9 @@ export default function Page() {
       <EmployeeView />
       <div className="m-0">
         <AddNewEmployeeModal />
+        <ApprovalSuccessModal />
+        <EditSuccessModal />
+        <DeleteSuccessModal />
       </div>
     </>
   );

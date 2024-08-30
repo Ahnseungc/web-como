@@ -1,8 +1,9 @@
 interface Props {
   className?: string;
+  fillColor?: string;
 }
 
-export const Checked = ({ className }: Props) => {
+export const Checked = ({ className, fillColor }: Props) => {
   return (
     <svg
       width="24"
@@ -12,7 +13,13 @@ export const Checked = ({ className }: Props) => {
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      <rect y="0.5" width="24" height="24" rx="12" fill="#FD7E2D" />
+      <rect
+        y="0.5"
+        width="24"
+        height="24"
+        rx="12"
+        fill={fillColor || "#FD7E2D"}
+      />
       <path
         d="M16 9.5L10.5 15L8 12.5"
         stroke="#FDFDFD"

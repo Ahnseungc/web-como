@@ -6,7 +6,7 @@ import { openModal } from "@/lib/utils";
 import Avatar from "@/components/common/Avatar";
 import Button from "@/components/common/Button";
 import DropdownSelect from "@/components/common/DropdownSelect";
-import Input from "@/components/common/Input";
+import Input, { InputLabel } from "@/components/common/Input";
 import { Category } from "@/assets/icons/info";
 import { ChevronRight } from "@/assets/icons/chevron";
 
@@ -43,49 +43,47 @@ export default function InquiryForm() {
       <div className="flex gap-3">
         <div className="flex-1 space-y-3">
           <h4 className="font-bold text-gray-900">{"문의 상품"}</h4>
-          <div className="p-5 rounded-md bg-gray-0 shadow">
-            <Link href={`./`} className="flex items-center gap-3">
-              <div className="w-[100px] h-[100px] rounded-lg bg-gray-300"></div>
-              <div className="space-y-3">
-                <div className="w-[300px] break-keep body-1 font-medium text-gray-900">
-                  {"이드커피, 몰입이 될 수밖에 없는 동굴 속 도서관 [SQNC 052]"}
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="h2 font-extrabold text-point-red">
-                    {"7%"}
-                  </span>
-                  <span className="h2 font-extrabold text-gray-900">{`${(30000).toLocaleString()}원~`}</span>
-                  <span className="h3 font-normal text-gray-500">{"/인"}</span>
-                </div>
+          <Link
+            href={`./`}
+            className="flex items-center gap-3 h-[140px] p-5 rounded-md bg-gray-0 shadow"
+          >
+            <div className="w-[100px] h-[100px] rounded-lg bg-gray-300"></div>
+            <div className="space-y-3">
+              <div className="w-[300px] break-keep body-1 font-medium text-gray-900">
+                {"이드커피, 몰입이 될 수밖에 없는 동굴 속 도서관 [SQNC 052]"}
               </div>
-            </Link>
-          </div>
+              <div className="flex items-center gap-2">
+                <span className="h2 font-extrabold text-point-red">{"7%"}</span>
+                <span className="h2 font-extrabold text-gray-900">{`${(30000).toLocaleString()}원~`}</span>
+                <span className="h3 font-normal text-gray-500">{"/인"}</span>
+              </div>
+            </div>
+          </Link>
         </div>
         <div className="flex-1 space-y-3">
           <h4 className="font-bold text-gray-900">{"문의할 호스트"}</h4>
-          <div className="py-[42px] px-5 rounded-md bg-gray-0 shadow">
-            <Link href={`../../host/${1}`} className="flex items-center gap-2">
-              <Avatar size="w-[56px] h-[56px]" />
-              <div>
-                <div className="flex items-center h4 font-bold text-gray-900">
-                  {"호스트명"}
-                  <ChevronRight className="w-5 h-5" />
-                </div>
-                <div className="flex items-center mt-[3px] caption-1 font-medium text-gray-500">
-                  <Category className="w-3.5 h-3.5" />
-                  {"카테고리"}
-                </div>
+          <Link
+            href={`../../host/${1}`}
+            className="flex items-center gap-2 h-[140px] py-[42px] px-5 rounded-md bg-gray-0 shadow"
+          >
+            <Avatar size="w-[56px] h-[56px]" />
+            <div>
+              <div className="flex items-center h4 font-bold text-gray-900">
+                {"호스트명"}
+                <ChevronRight className="w-5 h-5" />
               </div>
-            </Link>
-          </div>
+              <div className="flex items-center mt-[3px] caption-1 font-medium text-gray-500">
+                <Category className="w-3.5 h-3.5" />
+                {"카테고리"}
+              </div>
+            </div>
+          </Link>
         </div>
       </div>
       <hr className="mt-12 mb-6 border-gray-200" />
       <div className="space-y-6">
         <div className="space-y-2">
-          <label htmlFor="type" className="h3 font-semibold text-gray-900">
-            {"문의 유형"}
-          </label>
+          <InputLabel required label="문의 유형" />
           <DropdownSelect
             required
             id="type"
@@ -101,6 +99,7 @@ export default function InquiryForm() {
           />
         </div>
         <Input
+          required
           name="title"
           label="제목"
           placeholder="제목을 입력하세요"
@@ -112,6 +111,7 @@ export default function InquiryForm() {
           }
         />
         <Input
+          required
           name="content"
           label="내용"
           placeholder="내용을 입력하세요"
@@ -128,7 +128,6 @@ export default function InquiryForm() {
           <Button
             content="문의하기"
             primary
-            className="max-w-[350px]"
             disabled={isSubmitDisabled}
             onClick={handleSubmit}
           />

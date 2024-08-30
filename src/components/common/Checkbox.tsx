@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 interface Props {
   name: string;
   content: React.ReactNode | string;
+  fillColor?: string;
   style?: string;
   checked?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -26,7 +27,10 @@ export default function Checkbox(props: Props) {
         checked={props.checked}
         onChange={props.onChange}
       />
-      <Checked className="hidden peer-checked:block" />
+      <Checked
+        className="hidden peer-checked:block"
+        fillColor={props.fillColor}
+      />
       <Unchecked className="block peer-checked:hidden" />
       {props.content}
     </label>
