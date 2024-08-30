@@ -12,7 +12,7 @@ interface Props {
 
 export default function MemberTable({ data }: Props) {
   const [selectedId, setSelectedId] = useState<number>();
-  const [selectedName, setSelectedName] = useState<string>('');
+  const [selectedName, setSelectedName] = useState<string>("");
 
   return (
     <>
@@ -75,11 +75,9 @@ export default function MemberTable({ data }: Props) {
                     i === 5 ? "flex items-center justify-center gap-2 m-0" : "",
                     data === "SIGNOUT"
                       ? "text-gray-500"
-                      : data === "revert"
-                        ? "text-point-red"
-                        : data === "APPROVED"
-                          ? "text-point-blue"
-                          : "text-gray-800"
+                      : data === "APPROVED"
+                        ? "text-point-blue"
+                        : "text-gray-800"
                   )}
                   onClick={(e) => {
                     if (i === 5) {
@@ -94,17 +92,8 @@ export default function MemberTable({ data }: Props) {
                   ) : i === 5 ? (
                     data === "SIGNOUT" ? (
                       "탈퇴"
-                    ) : data === "revert" ? (
-                      "반려 취소"
                     ) : data === "APPROVED" ? (
                       "활동중"
-                    ) : data === "cancel" ? (
-                      <button
-                        className="py-1 px-4 rounded border border-point-red body-1 font-medium text-point-red bg-gray-0"
-                        onClick={() => openModal("revert-cancelation")}
-                      >
-                        {"반려 취소"}
-                      </button>
                     ) : data === "PENDING" ? (
                       <>
                         <button className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-point-blue">

@@ -10,7 +10,7 @@ export default function ClubCard() {
       onClick={() => openModal("club-info")}
     >
       <div className="h-[200px] rounded-t-lg bg-gray-300"></div>
-      <div className="flex flex-col justify-between h-[120px] p-3 rounded-b-lg">
+      <div className="flex flex-col justify-between h-[120px] p-4 rounded-b-lg">
         <div className="space-y-1">
           <div className="h4 font-bold text-gray-900">
             {"우리는 클라이밍족"}
