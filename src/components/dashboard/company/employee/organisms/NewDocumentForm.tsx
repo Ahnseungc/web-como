@@ -17,7 +17,10 @@ export default function NewDocumentForm() {
   };
 
   return (
-    <form className="space-y-8 p-8 rounded-xl bg-gray-0" onClick={handleSubmit}>
+    <form
+      className="space-y-8 p-8 rounded-xl bg-gray-0"
+      onSubmit={handleSubmit}
+    >
       <h2 className="font-semibold text-gray-900">{"서류 업로드"}</h2>
       <div className="space-y-6">
         <Input
@@ -46,7 +49,7 @@ export default function NewDocumentForm() {
             })
           }
         />
-       <FileDragNDropInput setFiles={setFiles} />
+        <FileDragNDropInput required setFiles={setFiles} />
       </div>
       <Button
         primary
