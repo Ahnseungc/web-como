@@ -25,7 +25,10 @@ export default function NewAnnouncementForm() {
   };
 
   return (
-    <form className="space-y-8 p-8 rounded-xl bg-gray-0">
+    <form
+      className="space-y-8 p-8 rounded-xl bg-gray-0"
+      onSubmit={handleSubmit}
+    >
       <h2 className="font-semibold text-gray-900">{"공지사항 글쓰기"}</h2>
       <div className="space-y-6">
         <Input
