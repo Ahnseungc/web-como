@@ -29,8 +29,8 @@ export default async function DashboardSchedule() {
             )
           )}
         </li>
-        {data.upcomingClubActivityLists.length > 0 ? (
-          data.upcomingClubActivityLists.map((schedule) => (
+        {data.count > 0 ? (
+          data.contents.map((schedule) => (
             <li key={schedule.order} className="flex">
               {[
                 schedule.date,
