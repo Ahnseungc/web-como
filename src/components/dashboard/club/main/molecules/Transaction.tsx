@@ -21,7 +21,7 @@ export default async function DashboardTransaction() {
       <div className="flex flex-col gap-6">
         <div className="flex items-center gap-3">
           <span className="h2 font-semibold text-gray-900">{"잔여회비"}</span>
-          <span className="h1 font-extrabold text-brand-orange">{`${data.remainingFee.toLocaleString()}원`}</span>
+          <span className="h1 font-extrabold text-brand-orange">{`${data ? data.remainingFee.toLocaleString() : 0}원`}</span>
         </div>
         <ul className="space-y-1 h-[284px]">
           <li className="flex rounded bg-gray-100">
@@ -43,7 +43,7 @@ export default async function DashboardTransaction() {
               )
             )}
           </li>
-          {data.clubTransactionHistoryListDTOS.length > 0 ? (
+          {data && data.clubTransactionHistoryListDTOS.length > 0 ? (
             data.clubTransactionHistoryListDTOS.map((transaction, i) => (
               <li key={i} className="flex">
                 {[

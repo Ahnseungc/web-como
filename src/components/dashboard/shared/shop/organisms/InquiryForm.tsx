@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { openModal } from "@/lib/utils";
 import Avatar from "@/components/common/Avatar";
@@ -26,6 +27,7 @@ const initialFormValues = {
 export default function InquiryForm() {
   const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(true);
   const [formValues, setFormValues] = useState(initialFormValues);
+  const image = null;
 
   useEffect(() => {
     setIsSubmitDisabled(
@@ -47,9 +49,11 @@ export default function InquiryForm() {
             href={`./`}
             className="flex items-center gap-3 h-[140px] p-5 rounded-md bg-gray-0 shadow"
           >
-            <div className="w-[100px] h-[100px] rounded-lg bg-gray-300"></div>
+            <div className="w-[100px] aspect-square rounded-lg bg-gray-300">
+              {image && <Image src={image} alt="image" />}
+            </div>
             <div className="space-y-3">
-              <div className="w-[300px] break-keep body-1 font-medium text-gray-900">
+              <div className="line-clamp-2 break-keep body-1 font-medium text-gray-900">
                 {"이드커피, 몰입이 될 수밖에 없는 동굴 속 도서관 [SQNC 052]"}
               </div>
               <div className="flex items-center gap-2">

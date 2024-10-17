@@ -1,91 +1,91 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { cn } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 
 type Status = "pending" | "completed";
 
-const tableHeadings = ["순번", "호스트명", "질문", "작성일", "상태"];
+const tableHeadings = ["순번", "크루명", "질문", "작성일", "상태"];
 
 const inquiries = [
   {
     id: 1,
-    name: "호스트이름",
+    name: "크루명",
     question:
       "완전 초보자도 가능한가요? 지인 말로는 초보자들은 진입장벽이 좀 있다고 해서 걱정이 되는 것 같아요",
-    date: "20240704 12:33:57",
+    date: "2024-07-04 12:33:57",
     status: "pending",
   },
   {
     id: 2,
-    name: "호스트이름",
+    name: "크루명",
     question:
       "완전 초보자도 가능한가요? 지인 말로는 초보자들은 진입장벽이 좀 있다고 해서 걱정이 되는 것 같아요",
-    date: "20240704 12:33:57",
+    date: "2024-07-04 12:33:57",
     status: "pending",
   },
   {
     id: 3,
-    name: "호스트이름",
+    name: "크루명",
     question:
       "완전 초보자도 가능한가요? 지인 말로는 초보자들은 진입장벽이 좀 있다고 해서 걱정이 되는 것 같아요",
-    date: "20240704 12:33:57",
+    date: "2024-07-04 12:33:57",
     status: "pending",
   },
   {
     id: 4,
-    name: "호스트이름",
+    name: "크루명",
     question:
       "완전 초보자도 가능한가요? 지인 말로는 초보자들은 진입장벽이 좀 있다고 해서 걱정이 되는 것 같아요",
-    date: "20240704 12:33:57",
+    date: "2024-07-04 12:33:57",
     status: "completed",
   },
   {
     id: 5,
-    name: "호스트이름",
+    name: "크루명",
     question:
       "완전 초보자도 가능한가요? 지인 말로는 초보자들은 진입장벽이 좀 있다고 해서 걱정이 되는 것 같아요",
-    date: "20240704 12:33:57",
+    date: "2024-07-04 12:33:57",
     status: "completed",
   },
   {
     id: 6,
-    name: "호스트이름",
+    name: "크루명",
     question:
       "완전 초보자도 가능한가요? 지인 말로는 초보자들은 진입장벽이 좀 있다고 해서 걱정이 되는 것 같아요",
-    date: "20240704 12:33:57",
+    date: "2024-07-04 12:33:57",
     status: "completed",
   },
   {
     id: 7,
-    name: "호스트이름",
+    name: "크루명",
     question:
       "완전 초보자도 가능한가요? 지인 말로는 초보자들은 진입장벽이 좀 있다고 해서 걱정이 되는 것 같아요",
-    date: "20240704 12:33:57",
+    date: "2024-07-04 12:33:57",
     status: "completed",
   },
   {
     id: 8,
-    name: "호스트이름",
+    name: "크루명",
     question:
       "완전 초보자도 가능한가요? 지인 말로는 초보자들은 진입장벽이 좀 있다고 해서 걱정이 되는 것 같아요",
-    date: "20240704 12:33:57",
+    date: "2024-07-04 12:33:57",
     status: "completed",
   },
   {
     id: 9,
-    name: "호스트이름",
+    name: "크루명",
     question:
       "완전 초보자도 가능한가요? 지인 말로는 초보자들은 진입장벽이 좀 있다고 해서 걱정이 되는 것 같아요",
-    date: "20240704 12:33:57",
+    date: "2024-07-04 12:33:57",
     status: "completed",
   },
   {
     id: 10,
-    name: "호스트이름",
+    name: "크루명",
     question:
       "완전 초보자도 가능한가요? 지인 말로는 초보자들은 진입장벽이 좀 있다고 해서 걱정이 되는 것 같아요",
-    date: "20240704 12:33:57",
+    date: "2024-07-04 12:33:57",
     status: "completed",
   },
 ];
@@ -95,8 +95,8 @@ export default function InquiryTable() {
   const { push } = useRouter();
 
   return (
-    <ul className="flex flex-col gap-1">
-      <li className="flex border-y border-gray-400 bg-gray-200">
+    <ul>
+      <li className="flex py-0.5 border-y border-gray-400 bg-gray-200">
         {tableHeadings.map((heading, i) => (
           <div
             key={heading}
@@ -113,7 +113,7 @@ export default function InquiryTable() {
       {inquiries.map((inquiry, idx) => (
         <li
           key={inquiry.id}
-          className="flex border-b border-gray-400 bg-gray-0"
+          className="flex py-0.5 border-b border-gray-400 bg-gray-0 hover:bg-gray-100 transition duration-200"
         >
           {[
             inquiry.id,
@@ -125,7 +125,7 @@ export default function InquiryTable() {
             <div
               key={data}
               className={cn(
-                "my-3 mx-6 body-1 font-medium underline-offset-2 underline decoration-transparent line-clamp-1 transition duration-300",
+                "my-3 mx-6 body-1 font-medium underline-offset-2 underline decoration-transparent line-clamp-1 transition duration-200",
                 i === 0 ? "w-8" : "flex-1",
                 i === 2
                   ? "hover:decoration-gray-800 cursor-pointer"
@@ -144,11 +144,13 @@ export default function InquiryTable() {
             >
               {i === 0
                 ? idx + 1
-                : data === "pending"
-                  ? "응답 대기 중"
-                  : data === "completed"
-                    ? "응답 완료"
-                    : data}
+                : i === 3
+                  ? formatDate(new Date(data))
+                  : data === "pending"
+                    ? "응답 대기 중"
+                    : data === "completed"
+                      ? "응답 완료"
+                      : data}
             </div>
           ))}
         </li>

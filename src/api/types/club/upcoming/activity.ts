@@ -1,5 +1,6 @@
 export interface UpcomingActivityData {
-  upcomingClubActivityLists: UpcomingClubActivityList[];
+  count: number;
+  contents: UpcomingClubActivityList[];
 }
 
 interface UpcomingClubActivityList {
