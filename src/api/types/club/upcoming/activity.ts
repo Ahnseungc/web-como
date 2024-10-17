@@ -1,7 +1,7 @@
 export interface UpcomingActivityData {
   count: number;
   contents: UpcomingClubActivityList[];
-}
+} 
 
 interface UpcomingClubActivityList {
   date: string;
