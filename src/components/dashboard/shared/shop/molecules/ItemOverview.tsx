@@ -31,7 +31,7 @@ export default function ItemDetailOverview() {
       </div>
       <div className="flex flex-col justify-between">
         <div>
-          <Chip content="카테고리" primary />
+          <Chip content="액티비티" primary />
           <h2 className="mt-2 font-semibold text-gray-900 whitespace-pre-line">
             {`고고에스파냐 - 스페인 바르셀로나 일주일 살기`}
           </h2>
@@ -48,13 +48,13 @@ export default function ItemDetailOverview() {
               </div>
               <div className="flex items-center gap-1">
                 <Calendar className="w-4 h-4" />
-                {"5/1부터"}
+                {"11/28부터"}
               </div>
             </div>
             <div className="space-y-1">
               <div className="flex items-center gap-1">
                 <Marker className="w-4 h-4" />
-                {"서울시 구로구"}
+                {"스페인 바르셀로나"}
               </div>
               <div className="flex items-center gap-1">
                 <People className="w-4 h-4" />

@@ -4,7 +4,7 @@ import Chip from "@/components/common/Chip";
 import { Calendar, Marker, People } from "@/assets/icons/info";
 
 interface Props {
-  image?: string;
+  image?: any;
   id: number;
   location: string;
   name: string;

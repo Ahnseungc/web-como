@@ -1,14 +1,16 @@
 import ItemCard from "@/components/dashboard/shared/shop/molecules/ItemCard";
+import Thumbnail from "@/assets/images/shop/spain_thumbnail.png";
 
 const itemList = [
   {
     id: 1,
-    location: "서울 구로구",
-    name: "상품명",
-    category: "카테고리",
+    image: Thumbnail,
+    location: "스페인 바르셀로나",
+    name: "고고에스파냐",
+    category: "액티비티",
     description:
-      "상품 상세 설명은 최대 2줄입니다. 그 이상은 점점점 처리됩니다. 상품 상세 설명은 최대 2줄입니다. 그 이상은 점점점 처리됩니다.",
-    maxPeople: 23,
+      "스페인 바르셀로나 일주일 살기: 바쁜 직장인을 위한 가성비 트립 콘텐츠",
+    maxPeople: 30,
     timePerWeek: 1,
     pricePerPerson: 30000,
   },
