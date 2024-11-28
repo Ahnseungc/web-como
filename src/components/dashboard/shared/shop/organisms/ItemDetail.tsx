@@ -6,11 +6,20 @@ import { cn } from "@/lib/utils";
 import Map from "@/components/dashboard/club/common/Map";
 import CopyButton from "@/components/dashboard/club/common/CopyButton";
 import { ChevronDown } from "@/assets/icons/chevron";
+import DetailImage1 from "@/assets/images/shop/spain_detail_1.png";
+import DetailImage2 from "@/assets/images/shop/spain_detail_2.png";
+import DetailImage3 from "@/assets/images/shop/spain_detail_3.png";
+import DetailImage4 from "@/assets/images/shop/spain_detail_4.png";
+import DetailImage5 from "@/assets/images/shop/spain_detail_5.png";
 
 export default function ItemDetail() {
   const [isInfoExpanded, setIsInfoExpanded] = useState<boolean>(false);
 
-  const image = null;
+  const image1 = DetailImage1;
+  const image2 = DetailImage2;
+  const image3 = DetailImage3;
+  const image4 = DetailImage4;
+  const image5 = DetailImage5;
   const address = "서울 마포구 양화로11길 54";
 
   return (
@@ -19,9 +28,54 @@ export default function ItemDetail() {
         <h4 className="font-bold text-gray-900">{"컨텐츠 상세 소개"}</h4>
         <div className={cn("relative", isInfoExpanded ? "" : "h-[280px]")}>
           <div className={isInfoExpanded ? "" : "h-[260px] overflow-y-clip"}>
-            <div className="relative w-full h-[800px] object-contain bg-gray-300">
-              {image && (
-                <Image src={image} alt="상세 이미지" fill sizes="60vw" />
+            <div className="relative min-h-[260px] bg-gray-300">
+              {image1 && (
+                <Image
+                  src={image1}
+                  alt="상세 이미지1"
+                  width={1500}
+                  height={1500}
+                />
+              )}
+            </div>
+            <div className="relative min-h-[260px] bg-gray-300">
+              {image2 && (
+                <Image
+                  src={image2}
+                  alt="상세 이미지2"
+                  width={1500}
+                  height={1500}
+                />
+              )}
+            </div>
+            <div className="relative min-h-[260px] bg-gray-300">
+              {image3 && (
+                <Image
+                  src={image3}
+                  alt="상세 이미지3"
+                  width={1500}
+                  height={1500}
+                />
+              )}
+            </div>
+            <div className="relative min-h-[260px] bg-gray-300">
+              {image4 && (
+                <Image
+                  src={image4}
+                  alt="상세 이미지4"
+                  width={1500}
+                  height={1500}
+                />
+              )}
+            </div>
+            <div className="relative min-h-[260px] bg-gray-300">
+              {image5 && (
+                <Image
+                  src={image5}
+                  alt="상세 이미지5"
+                  width={1500}
+                  height={1500}
+                />
               )}
             </div>
           </div>

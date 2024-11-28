@@ -10,20 +10,30 @@ import {
   Profile,
 } from "@/assets/icons/info";
 import { ChevronRight } from "@/assets/icons/chevron";
+import Thumbnail from "@/assets/images/shop/spain_thumbnail.png";
 
 export default function ItemDetailOverview() {
-  const image = null;
+  const image = Thumbnail;
 
   return (
     <div className="flex gap-8 p-8 rounded-xl bg-gray-0">
-      <div className="min-w-[460px] min-h-[460px] rounded-xl bg-gray-300 object-cover">
-        {image && <Image src={image} alt="대표 이미지" fill sizes="40vw" />}
+      <div className="min-w-[460px] max-w-[460px] aspect-square rounded-xl bg-gray-300 object-cover">
+        {image && (
+          <Image
+            priority
+            src={image}
+            alt="대표 이미지"
+            width={460}
+            height={460}
+            className="rounded-xl"
+          />
+        )}
       </div>
       <div className="flex flex-col justify-between">
         <div>
           <Chip content="카테고리" primary />
           <h2 className="mt-2 font-semibold text-gray-900 whitespace-pre-line">
-            {`이드커피, 몰입이 될 수밖에 없는 동굴 속 도서관 [SQNC 052]`}
+            {`고고에스파냐 - 스페인 바르셀로나 일주일 살기`}
           </h2>
           <div className="flex gap-2 mt-3">
             <span className="h2 font-extrabold text-point-red">{"7%"}</span>
