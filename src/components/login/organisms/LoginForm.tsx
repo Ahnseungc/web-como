@@ -33,19 +33,16 @@ export default function LoginForm() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const response = await fetch(
-      `/api/server/login`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          email: formData.id,
-          password: formData.password,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch(`/api/server/login`, {
+      method: "POST",
+      body: JSON.stringify({
+        email: formData.id,
+        password: formData.password,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     const accessToken = response.headers.get("Authorization");
     const refreshToken = accessToken;

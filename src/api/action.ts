@@ -15,10 +15,10 @@ export const getData = async (endpoint: string, useClubId?: boolean) => {
       "Content-Type": "application/json",
     },
   });
-  console.log(endpoint);
-  console.log(response);
+  // console.log(endpoint);
+  // console.log(response);
   const res: IResponse = await response.json();
-  console.log(res);
+  // console.log(res);
 
   return res;
 };
