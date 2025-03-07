@@ -1,10 +1,9 @@
 "use client";
 
-import { GeocodeResultType } from "@/types/geoCodeType";
-import { PlaceSearchResultType } from "@/types/placeSearch";
-import { ClubIndexSchemaType } from "@/types/schema";
 import { useQuery } from "@tanstack/react-query";
 import { getGeocode } from "./getGeocode";
+import { ClubIndexSchemaType } from "@/lib/types/schema";
+import { PlaceSearchResultType } from "@/lib/types/placeSearch";
 
 type ResponseType<T> = { message: string; data: T };
 

@@ -1,4 +1,4 @@
-import { GeocodeResultType } from "@/types/geoCodeType";
+import { GeocodeResultType } from "@/app/api/map/type";
 
 export const getGeocode = async (
   query: string | undefined
