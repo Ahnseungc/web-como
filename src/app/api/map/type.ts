@@ -1,3 +1,20 @@
+export type GeocodeResultType = {
+  addresses: GeocodeAddressType[];
+  errorMessage: string;
+  meta: { totalCount: number; page: number; count: number };
+  status: string;
+};
+
+export type GeocodeAddressType = {
+  addressElements: Object[];
+  distance: number;
+  englishAddress: string;
+  jibunAddress: string;
+  roadAddress: string;
+  x: string;
+  y: string;
+};
+
 export interface GeocodeResult {
   addresses: GeocodeAddress[];
   errorMessage: string;

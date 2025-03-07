@@ -5,6 +5,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+// 이벤트 버블링으로 인한 상위 버튼의 click 이벤트 발생 방지
+export function stopPropagation(e: React.MouseEvent) {
+  e.stopPropagation();
+}
+
 export function openModal(id: string) {
   const modal = document.querySelector(`#${id}.modal`);
   modal?.classList.remove("hidden");

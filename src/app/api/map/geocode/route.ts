@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { GeocodeResultType } from "../type";
 
 const ENDPOINT = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode";
 
@@ -15,7 +16,7 @@ export async function GET(req: NextRequest) {
     cache: "force-cache",
   });
 
-  const data = await res.json();
+  const data: GeocodeResultType = await res.json();
 
   return NextResponse.json(data);
 }

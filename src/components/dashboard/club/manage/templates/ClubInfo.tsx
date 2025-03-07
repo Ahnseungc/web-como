@@ -87,21 +87,18 @@ export default function ClubInfoTab() {
               label="동호회명"
               type="text"
               value={data.name}
-              readOnly
             />
             <Input
               name="category"
               label="카테고리"
               type="text"
               value={CATEGORY[data.category]}
-              readOnly
             />
             <Input
               name="purpose"
               label="설립 목적"
               type="text"
               value={data.goal}
-              readOnly
             />
             <Input
               name="overview"
@@ -109,7 +106,6 @@ export default function ClubInfoTab() {
               type="text"
               maxLength={18}
               value={data.intro}
-              readOnly
             />
             <Input
               name="description"
@@ -117,7 +113,6 @@ export default function ClubInfoTab() {
               type="text"
               maxLength={300}
               value={data.detail}
-              readOnly
             />
           </div>
           <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">
@@ -136,7 +131,7 @@ export default function ClubInfoTab() {
                   //   ? "text-gray-900"
                   //   : "text-gray-400"
                 )}
-                //   onClick={() => openModal("schedule-select")}
+                onClick={() => openModal("schedule-select")}
               >
                 {data.activityPlan}
                 <Calendar className="w-5 h-5 text-gray-500" />
@@ -146,7 +141,7 @@ export default function ClubInfoTab() {
                 handleChange={handleScheduleChange}
               />
             </div>
-            <MapPlaceSearch readonly value={data.location} />
+            <MapPlaceSearch value={data.location} />
           </div>
         </div>
       )}
