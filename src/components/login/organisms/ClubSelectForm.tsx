@@ -7,6 +7,7 @@ import type { LoginClubData, LoginClubDTO } from "@/api/types/member/login";
 import { getAccessToken, saveClubId, saveClubName } from "@/lib/cookies";
 import { cn } from "@/lib/utils";
 import Button from "@/components/common/Button";
+import { LOGIN_ENDPOINT } from "@/lib/constants";
 
 export default function ClubSelectForm() {
   const { refresh } = useRouter();
@@ -17,13 +18,23 @@ export default function ClubSelectForm() {
     const getClubOptions = async () => {
       const token = await getAccessToken();
 
-      const response = await fetch(`/api/server/v2/member/web/login`, {
+      const response = await fetch(`/api/server/v1/executive/clubs/select`, {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
+
+      // 인증 에러 처리 (401)
+      if (response.status === 401) {
+        const errorData = await response.json();
+        console.error('인증 에러 응답:', errorData); // 전체 응답 데이터 확인
+
+        alert('인증이 필요한 서비스입니다. 다시 로그인해 주세요.');
+        window.location.href = LOGIN_ENDPOINT;
+        return;
+      }
 
       const res: IResponse = await response.json();
       const data: LoginClubData = res.data;
