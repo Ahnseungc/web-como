@@ -30,8 +30,53 @@ export default function LoginForm() {
     role: "club",
   });
 
+  // 입력값 에러 상태 추가
+  const [errors, setErrors] = useState({
+    id: "",
+    password: "",
+  });
+  // 로그인 에러 메시지를 위한 상태 추가
+  const [loginError, setLoginError] = useState("");
+
+  // 입력값 유효성 검사 함수
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = {
+      id: "",
+      password: "",
+    };
+
+    if (!formData.id.trim()) {
+      newErrors.id = "필수 입력사항입니다.";
+      isValid = false;
+    }
+
+    if (!formData.password.trim()) {
+      newErrors.password = "필수 입력사항입니다.";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // 로그인 시도 시 이전 에러 메시지 초기화
+    setLoginError("");
+
+    // 폼 데이터 확인을 위한 콘솔 로그
+    console.log("로그인 시도:", {
+      이메일: formData.id,
+      비밀번호: formData.password,
+      역할: formData.role,
+    });
+
+    // 폼 유효성 검사
+    if (!validateForm()) {
+      return;
+    }
 
     const response = await fetch(`/api/server/login`, {
       method: "POST",
@@ -43,6 +88,17 @@ export default function LoginForm() {
         "Content-Type": "application/json",
       },
     });
+
+    // API 응답 확인을 위한 콘솔 로그
+    console.log("API 응답 상태:", response.status);
+
+    // 로그인 실패 시 에러 처리
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      setLoginError(errorMessage);
+      console.error("로그인 실패:", errorMessage);
+      return;
+    }
 
     const accessToken = response.headers.get("Authorization");
     const refreshToken = accessToken;
@@ -83,28 +139,57 @@ export default function LoginForm() {
           {"로그인"}
         </h2>
         <div className="space-y-4">
-          <Input
-            name="id"
-            type="text"
-            placeholder="아이디"
-            currentValue={formData.id}
-            handleInputChange={(e) =>
-              setFormData((prev) => {
-                return { ...prev, id: e.target.value };
-              })
-            }
-          />
-          <Input
-            name="password"
-            type="password"
-            placeholder="비밀번호"
-            currentValue={formData.password}
-            handleInputChange={(e) =>
-              setFormData((prev) => {
-                return { ...prev, password: e.target.value };
-              })
-            }
-          />
+          <div>
+            <Input
+              name="id"
+              type="text"
+              placeholder="아이디"
+              currentValue={formData.id}
+              handleInputChange={(e) =>
+                setFormData((prev) => {
+                  return { ...prev, id: e.target.value };
+                })
+              }
+            />
+            {errors.id && (
+              <p
+                className="mt-2 text-[16px] font-[500]"
+                style={{ color: "#FF3D00" }}
+              >
+                {errors.id}
+              </p>
+            )}
+          </div>
+          <div>
+            <Input
+              name="password"
+              type="password"
+              placeholder="비밀번호"
+              currentValue={formData.password}
+              handleInputChange={(e) =>
+                setFormData((prev) => {
+                  return { ...prev, password: e.target.value };
+                })
+              }
+            />
+            {errors.password && (
+              <p
+                className="mt-2 text-[16px] font-[500]"
+                style={{ color: "#FF3D00" }}
+              >
+                {errors.password}
+              </p>
+            )}
+            {/* 로그인 에러 메시지를 비밀번호 필드 아래에 표시 */}
+            {loginError && (
+              <p
+                className="mt-2 text-[16px] font-[500]"
+                style={{ color: "#FF3D00" }}
+              >
+                {loginError}
+              </p>
+            )}
+          </div>
           <RadioSelect
             currentValue={formData.role}
             handleChange={(role: string) =>
