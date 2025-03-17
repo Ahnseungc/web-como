@@ -45,12 +45,16 @@ export default function LoginForm() {
       id: "",
       password: "",
     };
-
+   
+    // 아이디 체크를 먼저 수행
     if (!formData.id.trim()) {
       newErrors.id = "필수 입력사항입니다.";
       isValid = false;
+      setErrors(newErrors);
+      return isValid;  // 아이디가 비어있으면 바로 리턴
     }
 
+    // 아이디가 있을 때만 비밀번호 체크
     if (!formData.password.trim()) {
       newErrors.password = "필수 입력사항입니다.";
       isValid = false;
