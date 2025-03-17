@@ -19,9 +19,10 @@ export default function IdentificationForm() {
           {"본인확인"}
         </h2>
         <div className="space-y-4">
-          <Input name="name" type="text" placeholder="이름" />
+          {/* <Input name="name" type="text" placeholder="이름" />
           <Input name="company" type="text" placeholder="기업명" />
-          <Input name="carrier" type="text" placeholder="통신사" />
+          <Input name="carrier" type="text" placeholder="통신사" /> */}
+          <Input name="email" type="email" placeholder="아이디(이메일)" />
           <Input name="phone" type="text" placeholder="핸드폰 번호" />
         </div>
         <Button content="인증번호 전송" primary />
