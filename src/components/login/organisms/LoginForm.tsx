@@ -99,7 +99,7 @@ export default function LoginForm() {
     // 로그인 실패 시 에러 처리
     if (!response.ok) {
       const errorMessage = await response.text();
-      setLoginError(errorMessage);
+      setLoginError("올바른 정보가 아닙니다.");
       console.error("로그인 실패:", errorMessage);
       return;
     }
