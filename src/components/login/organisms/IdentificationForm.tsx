@@ -203,10 +203,11 @@ export default function IdentificationForm() {
     }
 
     if (response.ok) {
+      sessionStorage.setItem('isVerified', 'true');
       console.log("인증번호 인증 성공");
-      replace("/login/reset"); // 바로 페이지 이동
+      replace("/login/reset");
     } else {
-      refresh(); // 실패 시 현재 페이지 새로고침
+      refresh();
     }
 };
 
