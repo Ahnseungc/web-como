@@ -2,11 +2,31 @@
 
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
+import { useRouter } from "next/navigation";
+import { useEffect, useState, useRef } from "react";
+import { LOGIN_ENDPOINT } from "@/lib/constants";
 
 export default function ResetPasswordForm() {
+  const { replace, refresh } = useRouter();
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const alertShown = useRef(false);
+
+  useEffect(() => {
+    const isVerified = sessionStorage.getItem('isVerified');
+    if (!isVerified && !alertShown.current) {
+      alertShown.current = true;
+      alert("본인인증이 필요한 페이지입니다.");
+      replace(`${LOGIN_ENDPOINT}`);
+      return;
+    }
+    setIsAuthorized(true);
+  }, []);
+
   const handleResetPassword = (e: React.FormEvent) => {
     e.preventDefault();
   };
+
+  if (!isAuthorized) return null;
 
   return (
     <div className="p-8 rounded-4xl shadow bg-gray-0">
