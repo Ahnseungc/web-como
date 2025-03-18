@@ -13,7 +13,10 @@ export default function ResetPasswordForm() {
 
   useEffect(() => {
     const isVerified = sessionStorage.getItem('isVerified');
-    if (!isVerified && !alertShown.current) {
+    const verifiedEmail = sessionStorage.getItem('verifiedEmail');
+    const verifiedPhone = sessionStorage.getItem('verifiedPhone');
+
+    if ((!isVerified || !verifiedEmail || !verifiedPhone) && !alertShown.current) {
       alertShown.current = true;
       alert("본인인증이 필요한 페이지입니다.");
       replace(`${LOGIN_ENDPOINT}`);
