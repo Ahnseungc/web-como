@@ -203,7 +203,10 @@ export default function IdentificationForm() {
     }
 
     if (response.ok) {
+      // 인증 상태와 함께 이메일, 전화번호도 저장
       sessionStorage.setItem('isVerified', 'true');
+      sessionStorage.setItem('verifiedEmail', formData.email);
+      sessionStorage.setItem('verifiedPhone', formData.phone);
       console.log("인증번호 인증 성공");
       replace("/login/reset");
     } else {
