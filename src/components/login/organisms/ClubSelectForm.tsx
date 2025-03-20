@@ -18,13 +18,16 @@ export default function ClubSelectForm() {
     const token = await getAccessToken();
 
     try {
-      const response = await fetch(`/api/server/v1/executive/clubs/select`, {
-        method: "POST",
+      const response = await fetch(`/api/server/v1/executive/club/select`, {
+        method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
+      
+      // API 응답 확인을 위한 콘솔 로그
+      console.log("API 응답 상태:", response.status);
 
       // 401 인증 에러 처리
       if (response.status === 401) {
@@ -46,9 +49,12 @@ export default function ClubSelectForm() {
 
       // 정상 응답 처리
       const res: IResponse = await response.json();
-      const data: LoginClubData = res.data;
-      setClubOptions(data.loginClubDTOS);
-      setSelectedClub(data.loginClubDTOS[0]);
+      const clubList = res.data;
+      console.log('클럽 목록 데이터:', clubList);
+
+      // 클럽 목록 설정
+      setClubOptions(clubList);
+      // setSelectedClub(clubList[0]);
     } catch (error) {
       console.error('담당 동호회 목록 조회 에러:', error);
     }
@@ -58,6 +64,15 @@ export default function ClubSelectForm() {
     getClubOptions();
   }, []);
 
+  // selectedClub 상태가 변경될 때마다 로그 출력
+  useEffect(() => {
+    if (selectedClub) {
+      console.log('클럽 선택됨:', {
+        clubId: selectedClub.clubId,
+        clubName: selectedClub.clubName
+      });
+    }
+  }, [selectedClub]);
 
   // 인증 에러 시 렌더링하지 않음
   if (!clubOptions?.length) {  // optional chaining 추가
@@ -70,7 +85,11 @@ export default function ClubSelectForm() {
     }
 
     await saveClubId(selectedClub.clubId.toString());
+    console.log('클럽 ID 저장 완료:', selectedClub.clubId.toString());
+
     await saveClubName(selectedClub.clubName);
+    console.log('클럽 이름 저장 완료:', selectedClub.clubName);
+
     refresh();
   };
 
