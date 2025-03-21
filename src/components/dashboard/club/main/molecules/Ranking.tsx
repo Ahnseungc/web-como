@@ -1,14 +1,70 @@
 import { getData } from "@/api/action";
 import type { RankingData } from "@/api/types/club/ranking";
 import { cn } from "@/lib/utils";
+import { getAccessToken, getClubId, getClubName } from "@/lib/cookies";
 import RankingCursor from "@/components/dashboard/club/main/atoms/RankingCursor";
+import { LOGIN_ENDPOINT } from "@/lib/constants";
+import type { IResponse } from "@/api/types";
+
+// 랭킹 데이터 조회 API 호출 함수
+const getDashboardRankings = async () => {
+  try {
+    const [clubId, token] = await Promise.all([getClubId(), getAccessToken()]);
+    const url = `${process.env.NEXT_PUBLIC_SERVER_URL}v1/executive/club/${clubId}/dashboard/rankings`;
+    
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      cache: "force-cache"
+    });
+
+    // API 응답 확인을 위한 콘솔 로그
+    console.log("API 응답 상태:", response.status);
+
+    if (response.status === 401) {
+      alert("인증이 필요한 서비스입니다. 다시 로그인해 주세요.");
+      window.location.href = LOGIN_ENDPOINT;
+      return;
+    }
+    
+    // 정상 응답 처리
+    const res: IResponse = await response.json();
+    const data = res.data;
+    console.log("응답 데이터:", data);
+    return data;
+  } catch (error) {
+    console.error('랭킹 데이터 조회 오류:', error);
+    return { data: null };
+  }
+};
 
 export default async function DashboardRanking() {
-  const res = await getData("v2/club/web/ranking/", true);
-  const data: RankingData = res.data;
+  // const res = await getData("v2/club/web/ranking/", true);
+  // const data: RankingData = res.data;
 
-  const myClubRank = data.myClubRanking || 0;
-  const maxHeight = data.clubRankingDetails[0].clubMember;
+  // 랭킹 데이터 조회
+  const rankingData = await getDashboardRankings();
+
+  // 안전하게 데이터 추출 및 기본값 설정
+  const totalClubCount = rankingData.totalClubCount || 0;
+
+  // 현재 클럽 ID 가져오기
+  const currentClubId = await getClubId();
+
+  // 내 클럽 순위 찾기
+  let myClubRank = 0;
+  const myClubDetail = rankingData.rankings.find(
+    (club: { clubId: string }) => club.clubId.toString() === currentClubId
+  );
+  
+  if (myClubDetail) {
+    myClubRank = myClubDetail.rank;
+  }
+  
+  const maxHeight = rankingData.rankings[0].memberCount;
 
   return (
     <div className="flex-1 flex flex-col justify-between h-[473px] p-8 rounded-xl bg-gray-0">
@@ -16,76 +72,76 @@ export default async function DashboardRanking() {
       <div className="space-y-2">
         <h3 className="h1 font-bold text-brand-black">{"사내동호회 순위"}</h3>
         <div className="flex flex-col">
-          <span className="body-2 font-bold text-gray-500">{`총 ${data.totalClubCount || 0}개 중`}</span>
-          <span className="h1 font-extrabold text-gray-800">{`${myClubRank}위`}</span>
+          <span className="body-2 font-bold text-gray-500">{`총 ${totalClubCount || 0}개 중`}</span>
+          <span className="h1 font-extrabold text-gray-800">{`${myClubRank || '-'}위`}</span>
         </div>
       </div>
-      {data ? (
+      {rankingData ? (
         <div className="flex items-end gap-2.5">
           {myClubRank > 6 ? (
             <>
-              {data.clubRankingDetails.slice(0, 5).map((club) => (
+              {rankingData.rankings.slice(0, 5).map((club: { clubId: string; clubName: string; memberCount: number; rank: number }) => (
                 <div
                   key={club.clubId}
                   id={club.clubName}
                   className="space-y-2 w-[46px] ranking-other-club cursor-pointer"
                 >
-                  <div className="w-full text-center body-2 font-medium text-gray-500">{`${club.clubMember}명`}</div>
+                  <div className="w-full text-center body-2 font-medium text-gray-500">{`${club.memberCount}명`}</div>
                   <div className="relative group">
                     <div className="opacity-0 group-hover:opacity-100 absolute -top-2.5 left-[15px] w-4 h-4 rounded-full border-[3px] border-gray-0 bg-brand-orange shadow-xs transition-opacity duration-200" />
                     <div
                       style={{
-                        height: `${(club.clubMember / maxHeight) * 200}px`,
+                        height: `${(club.memberCount / maxHeight) * 200}px`,
                       }}
                       className="w-full rounded-lg bg-gray-200"
                     />
                   </div>
                   <div className="w-full text-center h4 font-bold text-gray-800">
-                    {club.ranking}
+                    {club.rank}
                   </div>
                 </div>
               ))}
-              {data.clubRankingDetails
+              {rankingData.rankings
                 .slice(myClubRank - 1, myClubRank)
-                .map((club) => (
+                .map((club: { clubId: string; clubName: string; memberCount: number; rank: number }) => (
                   <div key={club.clubId} className="space-y-2 w-[46px]">
-                    <div className="w-full text-center body-2 font-medium text-gray-500">{`${club.clubMember}명`}</div>
+                    <div className="w-full text-center body-2 font-medium text-gray-500">{`${club.memberCount}명`}</div>
                     <div
                       style={{
-                        height: `${(club.clubMember / maxHeight) * 200}px`,
+                        height: `${(club.memberCount / maxHeight) * 200}px`,
                       }}
                       className="w-full rounded-lg bg-brand-orange"
                     />
                     <div className="w-full text-center h4 font-bold text-gray-0 rounded-full bg-gray-800">
-                      {club.ranking}
+                      {club.rank}
                     </div>
                   </div>
                 ))}
             </>
           ) : (
-            data.clubRankingDetails.slice(0, 6).map((club) => (
+            rankingData.rankings.slice(0, 6).map((club: { clubId: string; clubName: string; memberCount: number; rank: number }) => (
               <div
                 key={club.clubId}
                 id={club.clubName}
                 className={cn(
                   "space-y-2 w-[46px]",
-                  club.ranking === myClubRank
+                  club.rank === myClubRank
                     ? ""
                     : "ranking-other-club cursor-pointer"
                 )}
               >
-                <div className="w-full text-center body-2 font-medium text-gray-500">{`${club.clubMember}명`}</div>
+                <div className="w-full text-center body-2 font-medium text-gray-500">{`${club.memberCount}명`}</div>
                 <div className="relative group">
-                  {club.ranking !== myClubRank && (
+                  {club.rank !== myClubRank && (
                     <div className="opacity-0 group-hover:opacity-100 absolute -top-2.5 left-[15px] w-4 h-4 rounded-full border-[3px] border-gray-0 bg-brand-orange shadow-xs transition-opacity duration-200" />
                   )}
                   <div
                     style={{
-                      height: `${(club.clubMember / maxHeight) * 200}px`,
+                      height: `${(club.memberCount / maxHeight) * 200}px`,
                     }}
                     className={cn(
                       "w-full rounded-lg",
-                      club.ranking === myClubRank
+                      club.rank === myClubRank
                         ? "bg-brand-orange"
                         : "bg-gray-200"
                     )}
@@ -94,12 +150,12 @@ export default async function DashboardRanking() {
                 <div
                   className={cn(
                     "w-full text-center h4 font-bold",
-                    club.ranking === myClubRank
+                    club.rank === myClubRank
                       ? "text-gray-0 rounded-full bg-gray-800"
                       : "text-gray-800"
                   )}
                 >
-                  {club.ranking}
+                  {club.rank}
                 </div>
               </div>
             ))
@@ -113,3 +169,4 @@ export default async function DashboardRanking() {
     </div>
   );
 }
+
