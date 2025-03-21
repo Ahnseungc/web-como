@@ -77,20 +77,19 @@ export default function ResetPasswordForm() {
      * 1. 최소 8자, 최대 20자
      * 2. 최소 하나의 영문자(대문자 또는 소문자) 포함
      * 3. 최소 하나의 숫자 포함
-     * 4. 최소 하나의 특수 문자 포함 (!@#$%^&*(),.?":{}|<> 중 하나)
      */
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,20}$/;
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$/;
     
     // 1. 새 비밀번호 정규식 체크
     if (!passwordRegex.test(formData.newPassword)) {
-      newErrors.newPassword = "영어, 숫자, 특수문자를 조합하여 8자 이상 20자 이하로 입력해주세요.";
+      newErrors.newPassword = "영어, 숫자를 조합하여 8자 이상 20자 이하로 입력해주세요.";
       setErrors(newErrors);
       return false;
     }
 
     // 2. 새 비밀번호 확인 정규식 체크
     if (!passwordRegex.test(confirmPassword)) {
-      newErrors.confirmPassword = "영어, 숫자, 특수문자를 조합하여 8자 이상 20자 이하로 입력해주세요.";
+      newErrors.confirmPassword = "영어, 숫자를 조합하여 8자 이상 20자 이하로 입력해주세요.";
       setErrors(newErrors);
       return false;
     }
