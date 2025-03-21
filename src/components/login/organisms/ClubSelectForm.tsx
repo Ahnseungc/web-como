@@ -7,10 +7,12 @@ import type { LoginClubData, LoginClubDTO } from "@/api/types/member/login";
 import { getAccessToken, saveClubId, saveClubName } from "@/lib/cookies";
 import { cn } from "@/lib/utils";
 import Button from "@/components/common/Button";
-import { LOGIN_ENDPOINT } from "@/lib/constants";
+import { LOGIN_ENDPOINT, CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 
 export default function ClubSelectForm() {
-  const { refresh } = useRouter();
+  // const { refresh } = useRouter();
+  const router = useRouter();
+
   const [clubOptions, setClubOptions] = useState<LoginClubDTO[]>();
   const [selectedClub, setSelectedClub] = useState<LoginClubDTO>();
   
@@ -90,7 +92,10 @@ export default function ClubSelectForm() {
     await saveClubName(selectedClub.clubName);
     console.log('클럽 이름 저장 완료:', selectedClub.clubName);
 
-    refresh();
+    // 🚀 100ms 지연 후 refresh() 실행하여 쿠키 반영 대기
+    setTimeout(() => {
+      router.push(CLUB_DASHBOARD_ENDPOINT);
+    }, 100);
   };
 
   return (
