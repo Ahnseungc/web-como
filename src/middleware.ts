@@ -12,6 +12,11 @@ export function middleware(req: NextRequest) {
   const refreshToken = cookies().get("refreshToken");
   const type = cookies().get("type");
   const clubId = cookies().get("clubId");
+  
+  console.log("🔍 미들웨어 실행됨");
+  console.log("🔹 type:", type?.value);
+  console.log("🔹 clubId:", clubId?.value)
+  console.log("🔹 req.nextUrl.pathname:", req.nextUrl.pathname);
 
   if (req.nextUrl.pathname === "/") {
     if (refreshToken) {
