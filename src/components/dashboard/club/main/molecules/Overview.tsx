@@ -68,7 +68,6 @@ export default async function DashboardOverview() {
   // console.log(clubJoinRequest);
 
   const [dashboardNotifications, clubName] = await Promise.all([getDashboardNotifications(), getClubName()]);
-  console.log(dashboardNotifications);
 
   // API 응답에서 안전하게 데이터 추출
   const newJoinRequests = dashboardNotifications?.data?.newJoinRequests || 0;
