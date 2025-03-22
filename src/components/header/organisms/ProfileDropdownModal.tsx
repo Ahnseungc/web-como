@@ -7,19 +7,55 @@ import { deleteAllCookies } from "@/lib/cookies";
 import Avatar from "@/components/common/Avatar";
 import Backdrop from "@/components/common/Backdrop";
 import { Close } from "@/assets/icons/action";
-
+import { useEffect, useState } from "react";
+import { getData } from "@/api/action";
 interface Props {
+  profileImage?: string | null;
+} 
+
+interface ProfileData {
+  name?: string;
   profileImage?: string | null;
 }
 
 export default function ProfileDropdownModal({ profileImage }: Props) {
   const pathname = usePathname().split("/")[1];
   const { refresh } = useRouter();
+  const [profileData, setProfileData] = useState<ProfileData | null>(null);
 
   const handleLogout = async () => {
     await deleteAllCookies();
     refresh();
   };
+  
+  // useEffect 안에 API 호출 코드 추가
+  useEffect(() => {
+    // API 호출 함수
+    const loadProfileData = async () => {
+      try {
+        // API 호출
+        const res = await getData(`v1/executive/club/{clubId}/my-profile`, true);
+        
+        // 응답 처리
+        if (res.resultCode === 'OK' && res.data) {
+          setProfileData(res.data);
+        } else {
+          console.error("API 오류:", res.resultMessage);
+        }
+      } catch (error) {
+        console.error("API 호출 오류:", error);
+      }
+    };
+    
+    // API 함수 호출
+    loadProfileData();
+    
+    // 컴포넌트 언마운트 시 실행될 클린업 함수
+    return () => {
+      // console.log("ProfileDropdownModal 언마운트됨");
+    };
+    
+  }, []); // 빈 배열: 컴포넌트 마운트 시 한 번만 실행
 
   return (
     <div className="fixed modal hidden" id="profile-dropdown">
@@ -28,8 +64,10 @@ export default function ProfileDropdownModal({ profileImage }: Props) {
         <div className="space-y-[28px] p-8 rounded-t-xl bg-gray-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <Avatar src={profileImage} />
-              <span className="h3 font-semibold text-gray-900">{`${"김오모"}님`}</span>
+            <Avatar src={profileData?.profileImage || profileImage} />
+            <span className="h3 font-semibold text-gray-900">
+                {`${profileData?.name || "김오모"}님`}
+                </span>
             </div>
             <div
               className="flex items-center justify-end w-8 h-8 cursor-pointer"
