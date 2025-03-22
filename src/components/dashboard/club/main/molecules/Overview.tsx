@@ -36,15 +36,6 @@ const getDashboardNotifications = async () => {
         },
         cache: "force-cache"
       });
-    
-    // API 응답 확인을 위한 콘솔 로그
-    console.log("API 응답 상태:", res.status);
-
-    if (res.status === 401) {
-      alert("인증이 필요한 서비스입니다. 다시 로그인해 주세요.");
-      window.location.href = LOGIN_ENDPOINT;
-      return;
-    }
 
     // 다른 에러 처리
     if (!res.ok) {
