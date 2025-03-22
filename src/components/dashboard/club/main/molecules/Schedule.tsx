@@ -1,10 +1,33 @@
 import { getData } from "@/api/action";
 import type { UpcomingActivityData } from "@/api/types/club/upcoming/activity";
+import { LOGIN_ENDPOINT } from "@/lib/constants";
 import { cn, formatDate } from "@/lib/utils";
 
+
+// 이 파일에서만 사용할 API 응답 아이템 타입 정의
+interface ApiActivityItem {
+  id: number;
+  createdDate: string;
+  title?: string;
+  currentMember: number;
+  detail: string;
+}
+
 export default async function DashboardSchedule() {
-  const res = await getData("v2/club/web/upcoming/activity/", true);
-  const data: UpcomingActivityData = res.data;
+  const res = await getData("v1/executive/club/{clubId}/dashboard/schedules/upcoming", true);
+  const apiResponse = res.data as ApiActivityItem[]; // API 응답 (배열)
+  
+  // API 응답을 인터페이스에 맞게 변환
+  const data: UpcomingActivityData = {
+    count: apiResponse.length,
+    contents: apiResponse.map((item: ApiActivityItem, index: number) => ({
+      date: item.createdDate,
+      order: index + 1,
+      activityName: item.title || `활동 ${item.id}`,
+      memberCount: item.currentMember,
+      detail: item.detail
+  }))
+};
 
   return (
     <div className="space-y-6 p-8 rounded-xl bg-gray-0">
@@ -52,7 +75,7 @@ export default async function DashboardSchedule() {
                   )}
                 >
                   {i === 0
-                    ? formatDate(new Date(data))
+                    ? data
                     : i === 3
                       ? `${data}명`
                       : data}
