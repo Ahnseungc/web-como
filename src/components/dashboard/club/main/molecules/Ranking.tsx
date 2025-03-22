@@ -20,20 +20,10 @@ const getDashboardRankings = async () => {
       },
       cache: "force-cache"
     });
-
-    // API 응답 확인을 위한 콘솔 로그
-    console.log("API 응답 상태:", response.status);
-
-    if (response.status === 401) {
-      alert("인증이 필요한 서비스입니다. 다시 로그인해 주세요.");
-      window.location.href = LOGIN_ENDPOINT;
-      return;
-    }
     
     // 정상 응답 처리
     const res: IResponse = await response.json();
     const data = res.data;
-    console.log("응답 데이터:", data);
     return data;
   } catch (error) {
     console.error('랭킹 데이터 조회 오류:', error);
