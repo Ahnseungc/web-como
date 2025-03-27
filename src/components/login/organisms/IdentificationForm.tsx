@@ -110,10 +110,10 @@ export default function IdentificationForm() {
     setIdentificationError("");
 
     // 폼 데이터 확인을 위한 콘솔 로그
-    console.log("본인인증 시도:", {
-      이메일: formData.email,
-      전화번호: formData.phone,
-    });
+    // console.log("본인인증 시도:", {
+    //   이메일: formData.email,
+    //   전화번호: formData.phone,
+    // });
 
     // 폼 유효성 검사
     if (!validateForm()) {
@@ -132,19 +132,19 @@ export default function IdentificationForm() {
     });
 
     // API 응답 확인을 위한 콘솔 로그
-    console.log("API 응답 상태:", response.status);
+    // console.log("API 응답 상태:", response.status);
 
     // 로그인 실패 시 에러 처리
     if (!response.ok) {
       const errorMessage = await response.text();
       setIdentificationError("올바른 정보가 아닙니다.");
-      console.error("본인인증 실패:", errorMessage);
+      // console.error("본인인증 실패:", errorMessage);
       return;
     }
 
     if (response.ok) {
       setShowModal(true); // 성공 시 모달 표시
-      console.log("본인인증 성공");
+      // console.log("본인인증 성공");
     } else {
       refresh(); // 실패 시 현재 페이지 새로고침
     }
@@ -171,11 +171,11 @@ export default function IdentificationForm() {
     }
 
     // 폼 데이터 확인을 위한 콘솔 로그
-    console.log("인증 번호 입력:", {
-      이메일: formData.email,
-      전화번호: formData.phone,
-      인증번호: verificationCode,
-    });
+    // console.log("인증 번호 입력:", {
+    //   이메일: formData.email,
+    //   전화번호: formData.phone,
+    //   인증번호: verificationCode,
+    // });
 
     const verificationData: verificationDto = {
       email: formData.email,
@@ -192,13 +192,13 @@ export default function IdentificationForm() {
     });
 
     // API 응답 확인을 위한 콘솔 로그
-    console.log("API 응답 상태:", response.status);
+    // console.log("API 응답 상태:", response.status);
 
     // 인증번호 인증 실패 시 에러 처리
     if (!response.ok) {
       const errorMessage = await response.text();
       setVerificationError("인증번호가 일치하지 않습니다.");
-      console.error("인증번호 인증 실패:", errorMessage);
+      // console.error("인증번호 인증 실패:", errorMessage);
       return;
     }
 
@@ -207,7 +207,7 @@ export default function IdentificationForm() {
       sessionStorage.setItem('isVerified', 'true');
       sessionStorage.setItem('verifiedEmail', formData.email);
       sessionStorage.setItem('verifiedPhone', formData.phone);
-      console.log("인증번호 인증 성공");
+      // console.log("인증번호 인증 성공");
       replace("/login/reset");
     } else {
       refresh();
