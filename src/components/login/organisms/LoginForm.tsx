@@ -71,11 +71,11 @@ export default function LoginForm() {
     setLoginError("");
 
     // 폼 데이터 확인을 위한 콘솔 로그
-    console.log("로그인 시도:", {
-      이메일: formData.id,
-      비밀번호: formData.password,
-      역할: formData.role,
-    });
+    // console.log("로그인 시도:", {
+    //   이메일: formData.id,
+    //   비밀번호: formData.password,
+    //   역할: formData.role,
+    // });
 
     // 폼 유효성 검사
     if (!validateForm()) {
@@ -94,13 +94,13 @@ export default function LoginForm() {
     });
 
     // API 응답 확인을 위한 콘솔 로그
-    console.log("API 응답 상태:", response.status);
+    // console.log("API 응답 상태:", response.status);
 
     // 로그인 실패 시 에러 처리
     if (!response.ok) {
       const errorMessage = await response.text();
       setLoginError("올바른 정보가 아닙니다.");
-      console.error("로그인 실패:", errorMessage);
+      // console.error("로그인 실패:", errorMessage);
       return;
     }
 
