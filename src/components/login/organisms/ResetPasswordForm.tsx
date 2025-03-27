@@ -74,22 +74,23 @@ export default function ResetPasswordForm() {
     /**
      * 비밀번호 유효성 검사를 위한 정규식
      * 다음 조건을 충족해야 함:
-     * 1. 최소 8자, 최대 20자
+     * 1. 공백 제외하고 최소 8자, 최대 20자
      * 2. 최소 하나의 영문자(대문자 또는 소문자) 포함
      * 3. 최소 하나의 숫자 포함
+     * 4. 최소 하나의 특수문자 포함
      */
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,20}$/;
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=])[^\s]{8,20}$/;
     
     // 1. 새 비밀번호 정규식 체크
     if (!passwordRegex.test(formData.newPassword)) {
-      newErrors.newPassword = "영어, 숫자를 조합하여 8자 이상 20자 이하로 입력해주세요.";
+      newErrors.newPassword = "영어, 숫자, 특수문자를 조합하여 8자 이상 20자 이하로 입력해주세요.";
       setErrors(newErrors);
       return false;
     }
 
     // 2. 새 비밀번호 확인 정규식 체크
     if (!passwordRegex.test(confirmPassword)) {
-      newErrors.confirmPassword = "영어, 숫자를 조합하여 8자 이상 20자 이하로 입력해주세요.";
+      newErrors.confirmPassword = "영어, 숫자, 특수문자를 조합하여 8자 이상 20자 이하로 입력해주세요.";
       setErrors(newErrors);
       return false;
     }
@@ -125,12 +126,12 @@ export default function ResetPasswordForm() {
     setResetPasswordError("");
 
     // 폼 데이터 확인을 위한 콘솔 로그
-    console.log("비밀번호 재설정 시도:", {
-        이메일: formData.email,
-        전화번호: formData.phone,
-        newPassword: formData.newPassword,
-        confirmPassword: confirmPassword,
-     });
+    // console.log("비밀번호 재설정 시도:", {  
+    //     이메일: formData.email,
+    //     전화번호: formData.phone,
+    //     newPassword: formData.newPassword,
+    //     confirmPassword: confirmPassword,
+    //  });
 
     // 폼 유효성 검사
     if (!validateForm()) {
@@ -150,17 +151,20 @@ export default function ResetPasswordForm() {
     });
 
     // API 응답 확인을 위한 콘솔 로그
-    console.log("API 응답 상태:", response.status);
+    // console.log("API 응답 상태:", response.status);
 
     if (!response.ok) {
       const errorMessage = await response.text();
       setResetPasswordError("비밀번호 재설정에 실패했습니다.");
-      console.error("비밀번호 재설정 실패:", errorMessage);
+      // console.error("비밀번호 재설정 실패:", errorMessage);
       return;
     }
 
     if (response.ok) {
       alert("비밀번호 재설정이 완료되었습니다.");
+      sessionStorage.removeItem('isVerified');
+      sessionStorage.removeItem('verifiedEmail');
+      sessionStorage.removeItem('verifiedPhone');
       replace(`${LOGIN_ENDPOINT}`);
     } else {
       refresh();
