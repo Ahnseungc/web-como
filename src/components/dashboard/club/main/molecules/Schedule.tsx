@@ -1,8 +1,10 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import { getData } from "@/api/action";
 import type { UpcomingActivityData } from "@/api/types/club/upcoming/activity";
 import { LOGIN_ENDPOINT } from "@/lib/constants";
 import { cn, formatDate } from "@/lib/utils";
-
 
 // 이 파일에서만 사용할 API 응답 아이템 타입 정의
 interface ApiActivityItem {
@@ -13,21 +15,37 @@ interface ApiActivityItem {
   detail: string;
 }
 
-export default async function DashboardSchedule() {
-  const res = await getData("v1/executive/club/{clubId}/dashboard/schedules/upcoming", true);
-  const apiResponse = res.data as ApiActivityItem[]; // API 응답 (배열)
-  
-  // API 응답을 인터페이스에 맞게 변환
-  const data: UpcomingActivityData = {
-    count: apiResponse.length,
-    contents: apiResponse.map((item: ApiActivityItem, index: number) => ({
+export default function DashboardSchedule() {
+  const [scheduleData, setScheduleData] = useState<ApiActivityItem[]>([]);
+
+  useEffect(() => {
+    const loadSchedules = async () => {
+      try {
+        const res = await getData("v1/executive/club/{clubId}/dashboard/schedules/upcoming", true);
+        console.log("스케줄 응답:", res); // 디버깅용
+        
+        if (res.resultCode === 'OK' && res.data) {
+          setScheduleData(res.data);
+        }
+      } catch (error) {
+        console.error("스케줄 로딩 오류:", error);
+      }
+    };
+
+    loadSchedules();
+  }, []); // 컴포넌트 마운트 시 한 번만 실행
+
+  // 데이터 변환
+  const data = {
+    count: scheduleData?.length || 0,
+    contents: scheduleData?.map((item, index) => ({
       date: item.createdDate,
       order: index + 1,
       activityName: item.title || `활동 ${item.id}`,
       memberCount: item.currentMember,
       detail: item.detail
-  }))
-};
+    })) || []
+  };
 
   return (
     <div className="space-y-6 p-8 rounded-xl bg-gray-0">
