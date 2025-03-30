@@ -47,7 +47,7 @@ export default async function DashboardRanking() {
 
   // 내 클럽 순위 찾기
   let myClubRank = 0;
-  const myClubDetail = rankingData.rankings.find(
+  const myClubDetail = rankingData?.rankings?.find(
     (club: { clubId: string }) => club.clubId.toString() === currentClubId
   );
   
@@ -55,7 +55,17 @@ export default async function DashboardRanking() {
     myClubRank = myClubDetail.rank;
   }
   
-  const maxHeight = rankingData.rankings[0].memberCount;
+  // 데이터가 없을 때 처리
+  if (!rankingData || !rankingData.rankings) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <span className="text-gray-500">순위 데이터를 불러올 수 없습니다.</span>
+      </div>
+    );
+  }
+  
+  // 데이터가 있을 때 처리
+  const maxHeight = rankingData.rankings[0]?.memberCount || 0;
 
   return (
     <div className="flex-1 flex flex-col justify-between h-[473px] p-8 rounded-xl bg-gray-0">
