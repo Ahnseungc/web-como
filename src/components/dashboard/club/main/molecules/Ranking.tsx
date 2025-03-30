@@ -39,7 +39,8 @@ export default async function DashboardRanking() {
   const rankingData = await getDashboardRankings();
 
   // 안전하게 데이터 추출 및 기본값 설정
-  const totalClubCount = rankingData.totalClubCount || 0;
+  const totalClubCount = rankingData?.totalClubCount || 0;
+  console.log('totalClubCount', totalClubCount);
 
   // 현재 클럽 ID 가져오기
   const currentClubId = await getClubId();
