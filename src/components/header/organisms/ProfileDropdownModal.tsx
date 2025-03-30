@@ -112,40 +112,41 @@ export default function ProfileDropdownModal({ profileImage }: Props) {
               <span className="body-2 font-medium text-gray-600">
                 {"관리중인 동호회"}
               </span>
-              <div 
-                className="h4 font-bold text-gray-900 flex items-center justify-between cursor-pointer"
-                onClick={() => setIsClubDropdownOpen(!isClubDropdownOpen)}
-              >
-                <span>
-                  {(() => {
-                    const foundClub = clubs.find(club => String(club.clubId) === String(currentClubId));
-                    return foundClub?.clubName || "동호회 선택";
-                  })()}
-                </span>
-                <svg 
-                  className={`w-5 h-5 transition-transform ${isClubDropdownOpen ? 'rotate-180' : ''}`} 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
+              <div className="relative">
+                <div 
+                  className="flex items-center justify-between cursor-pointer"
+                  onClick={() => clubs.length > 1 && setIsClubDropdownOpen(!isClubDropdownOpen)}
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-              {isClubDropdownOpen && (
-                <div className="space-y-2">
-                  {clubs
-                    .filter(club => String(club.clubId) !== String(currentClubId))
-                    .map((club) => (
-                      <div
-                        key={club.clubId}
-                        onClick={() => handleClubChange(club.clubId, club.clubName)}
-                        className="h4 font-medium text-gray-700 cursor-pointer hover:text-brand-orange"
-                      >
-                        {club.clubName}
-                      </div>
-                    ))}
+                  <span className="h4 font-bold text-gray-900">
+                    {clubs.find(club => String(club.clubId) === String(currentClubId))?.clubName}
+                  </span>
+                  {clubs.length > 1 && (
+                    <svg 
+                      className={`w-5 h-5 transition-transform ${isClubDropdownOpen ? 'rotate-180' : ''}`} 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  )}
                 </div>
-              )}
+                {isClubDropdownOpen && clubs.length > 1 && (
+                  <div className="absolute left-0 right-0 mt-2 bg-gray-0 rounded-md shadow-md z-50 border border-gray-200">
+                    {clubs
+                      .filter(club => String(club.clubId) !== String(currentClubId))
+                      .map((club) => (
+                        <div
+                          key={club.clubId}
+                          onClick={() => handleClubChange(club.clubId, club.clubName)}
+                          className="p-3 h4 font-medium text-gray-700 cursor-pointer hover:bg-gray-100"
+                        >
+                          {club.clubName}
+                        </div>
+                      ))}
+                  </div>
+                )}
+              </div>
             </div>
             <div
               className="w-full p-3 h4 font-medium text-gray-700 cursor-pointer"
