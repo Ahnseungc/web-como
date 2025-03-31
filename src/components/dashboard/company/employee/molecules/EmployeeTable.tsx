@@ -6,6 +6,10 @@ import ApplicationDetailModal from "@/components/dashboard/company/employee/moda
 import EditEmployeeInfoModal from "@/components/dashboard/company/employee/modals/EditEmployeeInfoModal";
 import DeleteEmployeeModal from "@/components/dashboard/company/employee/modals/DeleteEmployeeModal";
 import DeleteReasonModal from "@/components/dashboard/company/employee/modals/DeleteReasonModal";
+import { useEffect, useState } from "react";
+import { getData } from "@/api/action";
+import { startOfToday } from "date-fns";
+import { DateRange } from "@/components/dashboard/common/DateFilter";
 
 const tableHeadings = [
   "순번",
@@ -19,101 +23,27 @@ const tableHeadings = [
 
 type EmployeeStatus = "pending" | "active" | "deleted";
 
-const employees = [
-  {
-    id: 1,
-    name: "김오모",
-    dept: "부서",
-    rank: "대리",
-    clubName: "동호회명",
-    date: "2024-07-04 12:33:57",
-    status: "pending",
-  },
-  {
-    id: 2,
-    name: "김오모",
-    dept: "부서",
-    rank: "대리",
-    clubName: "동호회명",
-    date: "2024-07-04 12:33:57",
-    status: "pending",
-  },
-  {
-    id: 3,
-    name: "김오모",
-    dept: "부서",
-    rank: "대리",
-    clubName: "동호회명",
-    date: "2024-07-04 12:33:57",
-    status: "active",
-  },
-  {
-    id: 4,
-    name: "김오모",
-    dept: "부서",
-    rank: "대리",
-    clubName: "동호회명",
-    date: "2024-07-04 12:33:57",
-    status: "active",
-  },
-  {
-    id: 5,
-    name: "김오모",
-    dept: "부서",
-    rank: "대리",
-    clubName: "동호회명",
-    date: "2024-07-04 12:33:57",
-    status: "active",
-  },
-  {
-    id: 6,
-    name: "김오모",
-    dept: "부서",
-    rank: "대리",
-    clubName: "동호회명",
-    date: "2024-07-04 12:33:57",
-    status: "active",
-  },
-  {
-    id: 7,
-    name: "김오모",
-    dept: "부서",
-    rank: "대리",
-    clubName: "동호회명",
-    date: "2024-07-04 12:33:57",
-    status: "active",
-  },
-  {
-    id: 8,
-    name: "김오모",
-    dept: "부서",
-    rank: "대리",
-    clubName: "동호회명",
-    date: "2024-07-04 12:33:57",
-    status: "deleted",
-  },
-  {
-    id: 9,
-    name: "김오모",
-    dept: "부서",
-    rank: "대리",
-    clubName: "동호회명",
-    date: "2024-07-04 12:33:57",
-    status: "active",
-  },
-  {
-    id: 10,
-    name: "김오모",
-    dept: "부서",
-    rank: "대리",
-    clubName: "동호회명",
-    date: "2024-07-04 12:33:57",
-    status: "deleted",
-  },
-];
+interface Employee {
+  memberId: string;
+  memberName: string;
+  department: string;
+  position: string;
+  clubName: string;
+  joinDate: string;
+  memberStatus: string;
+}
 
-export default function EmployeeTable() {
-  const { push } = useRouter();
+interface EmployeeTableProps {
+  employees: Employee[];
+}
+
+export default function EmployeeTable({ employees }: EmployeeTableProps) {
+  const router = useRouter();
+
+  const handleRowClick = (memberId: string) => {
+    router.push(`./employee/detail/${memberId}`);
+    // console.log("memberId", memberId);
+  };
 
   return (
     <>
@@ -143,27 +73,27 @@ export default function EmployeeTable() {
         </li>
         {employees.map((employee, idx) => (
           <li
-            key={employee.id}
+            key={employee.memberId}
             className={cn(
               "flex py-0.5 border-b border-gray-400 bg-gray-0 transition duration-200",
-              employee.status === "active"
+              employee.memberStatus === "Y"
                 ? "cursor-pointer group hover:bg-gray-200"
                 : ""
             )}
             onClick={() => {
-              if (employee.status === "active") {
-                push(`./employee/detail/${employee.id}`);
+              if (employee.memberStatus === "Y") {
+                handleRowClick(employee.memberId);
               }
             }}
           >
             {[
-              employee.id,
-              employee.name,
-              employee.dept,
-              employee.rank,
-              employee.clubName,
-              employee.date,
-              employee.status,
+              idx + 1,
+              employee.memberName,
+              employee.department,
+              employee.position,
+              employee.clubName || '-',
+              employee.joinDate,
+              employee.memberStatus,
             ].map((data, i) => (
               <div
                 key={i}
@@ -183,29 +113,25 @@ export default function EmployeeTable() {
                 {i === 0 ? (
                   idx + 1
                 ) : i === 5 ? (
-                  formatDate(new Date(data))
+                  Array.isArray(data) ? 
+                    formatDate(new Date(data[0], data[1]-1, data[2])) : 
+                    formatDate(new Date(data))
                 ) : i === 6 ? (
-                  data === "pending" ? (
-                    <button
-                      className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-point-blue"
-                      onClick={() => openModal("application-detail")}
-                    >
-                      {"가입신청 내역"}
-                    </button>
-                  ) : data === "active" ? (
+                  data === "Y" ? (
                     <div
                       className="flex gap-2"
                       onClick={(e) => e.stopPropagation()}
                     >
                       <button
                         className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-gray-800"
-                        onClick={() => openModal("employee-edit")}
+                        // onClick={() => openModal("employee-edit")}
+                        onClick={() => openModal("employee-edit", { memberId: employee.memberId })}
                       >
                         {"수정"}
                       </button>
                       <button
                         className="py-1 px-4 rounded border border-gray-800 body-1 font-medium text-gray-800"
-                        onClick={() => openModal("employee-delete")}
+                        onClick={() => openModal("employee-delete", { memberId: employee.memberId })}
                       >
                         {"삭제"}
                       </button>

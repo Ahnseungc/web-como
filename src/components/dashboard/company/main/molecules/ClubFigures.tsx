@@ -6,7 +6,7 @@ export default function ClubFigures() {
           {"신규 동호회"}
         </div>
         <div className="h1 font-extrabold text-gray-900 truncate">
-          {"123개"}
+          {"0개"}
         </div>
       </div>
       <div className="flex-1 space-y-4">
@@ -14,7 +14,7 @@ export default function ClubFigures() {
           {"해체한 동호회"}
         </div>
         <div className="h1 font-extrabold text-gray-900 truncate">
-          {"123개"}
+          {"0개"}
         </div>
       </div>
       <div className="flex-1 space-y-4">
@@ -22,7 +22,7 @@ export default function ClubFigures() {
           {"현재 사내동호회 수"}
         </div>
         <div className="h1 font-extrabold text-brand-orange truncate">
-          {"123개"}
+          {"0개"}
         </div>
       </div>
     </div>

@@ -15,7 +15,7 @@ export default function Page() {
       <div className="flex gap-3">
         <EmployeeShortcut />
         <ClubFigures />
-        <DownloadFigure />
+        {/* <DownloadFigure /> */}
       </div>
       <EmployeeView />
       <div className="m-0">
