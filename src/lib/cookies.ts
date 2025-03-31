@@ -65,3 +65,19 @@ export const getClubName = async () => {
 export const deleteClubName = async () => {
   cookies().delete("clubName");
 };
+
+export const saveRole = async (role: string) => {
+  cookies().set("role", role);
+};
+
+export const getRole = async () => {
+  return  cookies().get('role')?.value;
+};
+
+export const saveCompanyName = async (companyName: string) => {
+  cookies().set("companyName", companyName);
+};
+
+export const getCompanyName = async () => {
+  return cookies().get("companyName")?.value;
+};
