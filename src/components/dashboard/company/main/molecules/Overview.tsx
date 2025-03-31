@@ -1,7 +1,23 @@
+'use client';
+
+import { getCompanyName } from "@/lib/cookies";
+import { useEffect, useState } from "react";
+
 export default function DashboardOverview() {
+  const [companyName, setCompanyName] = useState<string>("");
+
+  useEffect(() => {
+    const loadCompanyName = async () => {
+      const name = await getCompanyName();
+      setCompanyName(name || "회사");
+    };
+
+    loadCompanyName();
+  }, []);
+
   return (
     <div className="col-span-4 flex flex-col gap-6 h-fit p-8 rounded-xl bg-gray-800 select-none">
-      <h2 className="h1 font-bold text-gray-0">{"‘회사 이름' 주요 알림"}</h2>
+      <h2 className="h1 font-bold text-gray-0">{`${companyName} 주요 알림`}</h2>
       <div className="flex gap-8 truncate">
         <div className="flex-1 flex flex-col gap-4 py-3 px-2">
           <h4 className="font-medium text-gray-400">
