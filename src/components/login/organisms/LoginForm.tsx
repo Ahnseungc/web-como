@@ -44,7 +44,7 @@ export default function LoginForm() {
     // role 타입 체크
     if (newValue === "club" || newValue === "company") {
       setFormData(prev => ({ ...prev, role: newValue }));
-      console.log('선택된 role:', newValue);
+      // console.log('선택된 role:', newValue);
     }
   };
 

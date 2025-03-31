@@ -42,7 +42,7 @@ export default function EmployeeTable({ employees }: EmployeeTableProps) {
 
   const handleRowClick = (memberId: string) => {
     router.push(`./employee/detail/${memberId}`);
-    console.log("memberId", memberId);
+    // console.log("memberId", memberId);
   };
 
   return (

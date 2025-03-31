@@ -98,7 +98,7 @@ export default function EditEmployeeInfoModal() {
         role: role  // isAdmin 대신 role 사용
       };
       
-      console.log("수정할 데이터:", submitData);
+      // console.log("수정할 데이터:", submitData);
 
       const response = await fetch(`/api/server/v1/manager/member/${modalParams.memberId}`, {
         method: 'PATCH',
@@ -110,7 +110,7 @@ export default function EditEmployeeInfoModal() {
       }); 
 
       const result = await response.json();
-      console.log("수정 결과:", result);  // API 응답 확인
+      // console.log("수정 결과:", result);  // API 응답 확인
 
       if (result.resultCode === 'OK') {
         closeModal("employee-edit");

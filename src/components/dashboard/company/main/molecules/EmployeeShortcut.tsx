@@ -17,7 +17,7 @@ export default function EmployeeShortcut() {
         if (res.resultCode === 'OK' && res.data) {
           setEmployeeCount(res.data || 0);  
         }
-        console.log(res.data);
+        // console.log(res.data);
       } catch (error) { 
         console.error("직원 수 로딩 오류:", error);
       }

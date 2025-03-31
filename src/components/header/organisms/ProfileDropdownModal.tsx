@@ -49,7 +49,7 @@ export default function ProfileDropdownModal({ profileImage }: Props) {
       try {
         const role = await getRole();  // role 가져오기
         const savedClubId = await getClubId();
-        console.log("role:", role);
+        // console.log("role:", role);
 
         if (role) {  // role이 존재할 때만 상태 업데이트
           setUserRole(role);
@@ -84,7 +84,7 @@ export default function ProfileDropdownModal({ profileImage }: Props) {
               });
             }
           }
-          console.log('회사 정보:', profileRes.data);
+          // console.log('회사 정보:', profileRes.data);
         }
         
       } catch (error) {

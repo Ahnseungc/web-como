@@ -17,7 +17,7 @@ interface MemberDetailDTO {
 
 export default function EmployeeInfo({ memberId }: { memberId: string }) {
 	const [memberData, setMemberData] = useState<MemberDetailDTO | null>(null);
-  console.log(memberId);
+  // console.log(memberId);
 
 	const convertArrayToDate = (dateArray: number[]) => {
 		if (!dateArray || dateArray.length < 3) return new Date();
@@ -30,7 +30,7 @@ export default function EmployeeInfo({ memberId }: { memberId: string }) {
 			try {
 				const res = await getData(`v1/manager/member/${memberId}`, true); 
         setMemberData(res.data);
-        console.log(res.data);
+        // console.log(res.data);
 			} catch (error) {
 				console.error("임직원 정보 로딩 오류:", error);
 			}
