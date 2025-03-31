@@ -10,10 +10,15 @@ export function stopPropagation(e: React.MouseEvent) {
   e.stopPropagation();
 }
 
-export function openModal(id: string) {
-  const modal = document.querySelector(`#${id}.modal`);
-  modal?.classList.remove("hidden");
-}
+export const openModal = (modalId: string, params?: Record<string, any>) => {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.classList.remove("hidden");
+    if (params) {
+      modal.dataset.modalParams = JSON.stringify(params);
+    }
+  }
+};
 
 export const closeModal = (id?: string) => {
   if (id) {
@@ -39,13 +44,15 @@ export function getPageRange(num: number) {
   return range;
 }
 
-export function formatDate(date: Date | undefined) {
-  if (!date) {
-    return "";
-  }
-
-  return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
-}
+export const formatDate = (date: Date) => {
+  // 한국 시간으로 변환
+  const koreaDate = new Date(date.getTime() + (9 * 60 * 60 * 1000));
+  return koreaDate.toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).replace(/\. /g, '-').replace('.', '');
+};
 
 export function formatTime(date: Date | undefined, withIndicator?: boolean) {
   if (!date) {
