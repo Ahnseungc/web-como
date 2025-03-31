@@ -8,6 +8,7 @@ import {
   saveAccessToken,
   saveDashboardType,
   saveRefreshToken,
+  saveRole,
 } from "@/lib/cookies";
 import { LOGIN_ENDPOINT } from "@/lib/constants";
 import Button from "@/components/common/Button";
@@ -27,7 +28,7 @@ export default function LoginForm() {
   const [formData, setFormData] = useState<UserLoginDto>({
     id: "",
     password: "",
-    role: "club",
+    role: "club", // 기본값은 동호회 임원
   });
 
   // 입력값 에러 상태 추가
@@ -37,6 +38,15 @@ export default function LoginForm() {
   });
   // 로그인 에러 메시지를 위한 상태 추가
   const [loginError, setLoginError] = useState("");
+
+   // RadioSelect에서 role 변경 시 호출되는 handleChange
+   const handleRoleChange = (newValue: string) => {
+    // role 타입 체크
+    if (newValue === "club" || newValue === "company") {
+      setFormData(prev => ({ ...prev, role: newValue }));
+      console.log('선택된 role:', newValue);
+    }
+  };
 
   // 입력값 유효성 검사 함수
   const validateForm = () => {
@@ -116,10 +126,14 @@ export default function LoginForm() {
     await saveAccessToken(accessToken);
     await saveRefreshToken(refreshToken);
     await saveDashboardType(formData.role);
+    await saveRole(formData.role);
+    console.log('formData.role:', formData.role)
 
     if (formData.role === "club") {
       replace(`${LOGIN_ENDPOINT}/club`);
-    } else {
+    } else if (formData.role === "company") {
+      replace(`${LOGIN_ENDPOINT}/company`);
+    }else {
       refresh();
     }
   };
@@ -196,11 +210,7 @@ export default function LoginForm() {
           </div>
           <RadioSelect
             currentValue={formData.role}
-            handleChange={(role: string) =>
-              setFormData((prev) => {
-                return { ...prev, role };
-              })
-            }
+            handleChange={handleRoleChange}
           />
         </div>
         <Button content="로그인" primary />

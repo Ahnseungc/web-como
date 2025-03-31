@@ -9,7 +9,7 @@ import Backdrop from "@/components/common/Backdrop";
 import { Close } from "@/assets/icons/action";
 import { useEffect, useState } from "react";
 import { getData } from "@/api/action";
-import { saveClubId, saveClubName, getClubId, getClubName } from "@/lib/cookies";
+import { saveClubId, saveClubName, getClubId, getClubName, getRole, saveCompanyName } from "@/lib/cookies";
 
 interface Props {
   profileImage?: string | null;
@@ -25,10 +25,16 @@ interface ClubData {
   clubName: string;
 }
 
+interface CompanyData {
+  companyName: string;
+}
+
 export default function ProfileDropdownModal({ profileImage }: Props) {
   const pathname = usePathname().split("/")[1];
   const { refresh } = useRouter();
+  const [userRole, setUserRole] = useState<string>("");
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  const [companyData, setCompanyData] = useState<CompanyData | null>(null);
   const [clubs, setClubs] = useState<ClubData[]>([]);
   const [currentClubId, setCurrentClubId] = useState<string>("");
   const [isClubDropdownOpen, setIsClubDropdownOpen] = useState(false);
@@ -41,25 +47,46 @@ export default function ProfileDropdownModal({ profileImage }: Props) {
   useEffect(() => {
     const loadData = async () => {
       try {
+        const role = await getRole();  // role 가져오기
         const savedClubId = await getClubId();
-        console.log('쿠키에서 가져온 clubId:', savedClubId);
+        console.log("role:", role);
+
+        if (role) {  // role이 존재할 때만 상태 업데이트
+          setUserRole(role);
+        }
         
         if (savedClubId) {
           setCurrentClubId(savedClubId);
         }
+
+        if (role === "club") {
+          // 동호회 관리자용 API
+          const profileRes = await getData(`v1/executive/club/{clubId}/my-profile`, true);
+          if (profileRes.resultCode === 'OK' && profileRes.data) {
+            setProfileData(profileRes.data);
+          }
+
+          const clubsRes = await getData('v1/executive/club/select', true);
+          if (clubsRes.resultCode === 'OK' && clubsRes.data) {
+            setClubs(clubsRes.data);
+          }
+        } else if (role === "company") {
+          // 기업 관리자용 API
+          const profileRes = await getData(`v1/manager/member/my-profile`, true);
+          if (profileRes.resultCode === 'OK' && profileRes.data) {
+            setProfileData(profileRes.data);
+            // 회사 이름 저장
+            const companyName = profileRes.data.departmentName || profileRes.data.companyName;
+            if (companyName) {
+              await saveCompanyName(companyName);
+              setCompanyData({
+                companyName: companyName
+              });
+            }
+          }
+          console.log('회사 정보:', profileRes.data);
+        }
         
-        // 프로필 데이터 가져오기
-        const profileRes = await getData(`v1/executive/club/{clubId}/my-profile`, true);
-        if (profileRes.resultCode === 'OK' && profileRes.data) {
-          setProfileData(profileRes.data);
-        }
-  
-        // 동호회 목록 가져오기
-        const clubsRes = await getData('v1/executive/club/select', true);
-        if (clubsRes.resultCode === 'OK' && clubsRes.data) {
-          console.log('받아온 clubs:', clubsRes.data); // 디버깅용
-          setClubs(clubsRes.data);
-        }
       } catch (error) {
         console.error("데이터 로딩 오류:", error);
       }
@@ -70,7 +97,7 @@ export default function ProfileDropdownModal({ profileImage }: Props) {
 
   const handleClubChange = async (clubId: string, clubName: string) => {
     try {
-      console.log('클릭한 동호회:', clubId, clubName); // 디버깅용 로그
+      // console.log('클릭한 동호회:', clubId, clubName); // 디버깅용 로그
       
       // 먼저 상태 업데이트
       setCurrentClubId(clubId);
@@ -108,6 +135,7 @@ export default function ProfileDropdownModal({ profileImage }: Props) {
             </div>
           </div>
           <div className="space-y-2">
+            {userRole === "club" && (
             <div className="space-y-1 p-3 rounded-md bg-orange-50">
               <span className="body-2 font-medium text-gray-600">
                 {"관리중인 동호회"}
@@ -148,6 +176,19 @@ export default function ProfileDropdownModal({ profileImage }: Props) {
                 )}
               </div>
             </div>
+            )}
+            {userRole === "company" && (
+              <div className="space-y-1 p-3 rounded-md bg-orange-50">
+                <span className="body-2 font-medium text-gray-600">
+                  {"주무부서"}
+                </span>
+                <div className="flex items-center justify-between">
+                  <span className="h4 font-bold text-gray-900">
+                    {companyData?.companyName}
+                  </span>
+                </div>
+              </div>
+            )}
             <div
               className="w-full p-3 h4 font-medium text-gray-700 cursor-pointer"
               onClick={() => openModal("customer-center")}
