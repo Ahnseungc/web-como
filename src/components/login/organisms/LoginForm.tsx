@@ -16,6 +16,8 @@ import Input from "@/components/common/Input";
 import RadioSelect from "@/components/login/molecules/RadioSelect";
 import BrandImage from "@/assets/images/brand_image.svg";
 import LogoImage from "@/assets/logos/como_logo.svg";
+import { SHA256 } from 'crypto-js';
+import { enc } from 'crypto-js';
 
 interface UserLoginDto {
   id: string;
@@ -76,65 +78,67 @@ export default function LoginForm() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // 로그인 시도 시 이전 에러 메시지 초기화
-    setLoginError("");
-
-    // 폼 데이터 확인을 위한 콘솔 로그
-    // console.log("로그인 시도:", {
+    // console.log("1. 로그인 시도:", {
     //   이메일: formData.id,
-    //   비밀번호: formData.password,
     //   역할: formData.role,
     // });
 
-    // 폼 유효성 검사
+    setLoginError("");
+
     if (!validateForm()) {
       return;
     }
 
-    const response = await fetch(`/api/server/login`, {
-      method: "POST",
-      body: JSON.stringify({
-        email: formData.id,
-        password: formData.password,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    try {
+      // 비밀번호 해싱
+      const hashedPassword = SHA256(formData.password).toString(enc.Hex);
+      // console.log("2. 비밀번호 해싱 완료");
 
-    // API 응답 확인을 위한 콘솔 로그
-    // console.log("API 응답 상태:", response.status);
+      const response = await fetch(`/api/server/login`, {
+        method: "POST",
+        body: JSON.stringify({
+          email: formData.id,
+          password: hashedPassword,  // 해싱된 비밀번호 전송
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    // 로그인 실패 시 에러 처리
-    if (!response.ok) {
-      const errorMessage = await response.text();
-      setLoginError("올바른 정보가 아닙니다.");
-      // console.error("로그인 실패:", errorMessage);
-      return;
-    }
+      // console.log("3. API 응답 상태:", response.status);
+      // console.log("4. API 응답 헤더:", Object.fromEntries(response.headers.entries()));
 
-    const accessToken = response.headers.get("Authorization");
-    const refreshToken = accessToken;
-    // const refreshToken = response.headers.get("Authorization-refresh");
+      const responseText = await response.text();
+      // console.log("5. API 응답 데이터:", responseText);
 
-    if (!accessToken || !refreshToken) {
-      console.log("Error: No Access Token");
-      return;
-    }
+      if (!response.ok) {
+        // console.log("6. 로그인 실패");
+        setLoginError("올바른 정보가 아닙니다.");
+        return;
+      }
 
-    await saveAccessToken(accessToken);
-    await saveRefreshToken(refreshToken);
-    await saveDashboardType(formData.role);
-    await saveRole(formData.role);
-    console.log('formData.role:', formData.role)
+      const accessToken = response.headers.get("Authorization");
+      // console.log("7. 받은 토큰:", accessToken);
 
-    if (formData.role === "club") {
-      replace(`${LOGIN_ENDPOINT}/club`);
-    } else if (formData.role === "company") {
-      replace(`${LOGIN_ENDPOINT}/company`);
-    }else {
-      refresh();
+      if (!accessToken) {
+        // console.log("8. 토큰 없음");
+        return;
+      }
+
+      // console.log("9. 토큰 저장 시작");
+      await saveAccessToken(accessToken);
+      await saveRefreshToken(accessToken);
+      await saveDashboardType(formData.role);
+      await saveRole(formData.role);
+      // console.log("10. 저장 완료, role:", formData.role);
+
+      if (formData.role === "club") {
+        replace(`${LOGIN_ENDPOINT}/club`);
+      } else if (formData.role === "company") {
+        replace(`${LOGIN_ENDPOINT}/company`);
+      }
+    } catch (error) {
+      console.error("에러 발생:", error);
     }
   };
 
