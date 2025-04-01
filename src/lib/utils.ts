@@ -44,7 +44,10 @@ export function getPageRange(num: number) {
   return range;
 }
 
-export const formatDate = (date: Date) => {
+export const formatDate = (date: Date | undefined) => {
+  if (!date || isNaN(date.getTime())) {
+    return '';
+  }
   // 한국 시간으로 변환
   const koreaDate = new Date(date.getTime() + (9 * 60 * 60 * 1000));
   return koreaDate.toLocaleDateString('ko-KR', {
