@@ -8,6 +8,7 @@ import {
   saveAccessToken,
   saveDashboardType,
   saveRefreshToken,
+  saveRole,
 } from "@/lib/cookies";
 import { LOGIN_ENDPOINT } from "@/lib/constants";
 import Button from "@/components/common/Button";
@@ -15,6 +16,8 @@ import Input from "@/components/common/Input";
 import RadioSelect from "@/components/login/molecules/RadioSelect";
 import BrandImage from "@/assets/images/brand_image.svg";
 import LogoImage from "@/assets/logos/como_logo.svg";
+import { SHA256 } from 'crypto-js';
+import { enc } from 'crypto-js';
 
 interface UserLoginDto {
   id: string;
@@ -27,43 +30,115 @@ export default function LoginForm() {
   const [formData, setFormData] = useState<UserLoginDto>({
     id: "",
     password: "",
-    role: "club",
+    role: "club", // 기본값은 동호회 임원
   });
+
+  // 입력값 에러 상태 추가
+  const [errors, setErrors] = useState({
+    id: "",
+    password: "",
+  });
+  // 로그인 에러 메시지를 위한 상태 추가
+  const [loginError, setLoginError] = useState("");
+
+   // RadioSelect에서 role 변경 시 호출되는 handleChange
+   const handleRoleChange = (newValue: string) => {
+    // role 타입 체크
+    if (newValue === "club" || newValue === "company") {
+      setFormData(prev => ({ ...prev, role: newValue }));
+      // console.log('선택된 role:', newValue);
+    }
+  };
+
+  // 입력값 유효성 검사 함수
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = {
+      id: "",
+      password: "",
+    };
+   
+    // 아이디 체크를 먼저 수행
+    if (!formData.id.trim()) {
+      newErrors.id = "필수 입력사항입니다.";
+      isValid = false;
+      setErrors(newErrors);
+      return isValid;  // 아이디가 비어있으면 바로 리턴
+    }
+
+    // 아이디가 있을 때만 비밀번호 체크
+    if (!formData.password.trim()) {
+      newErrors.password = "필수 입력사항입니다.";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    // console.log("1. 로그인 시도:", {
+    //   이메일: formData.id,
+    //   역할: formData.role,
+    // });
 
-    const response = await fetch(
-      `/api/server/login`,
-      {
+    setLoginError("");
+
+    if (!validateForm()) {
+      return;
+    }
+
+    try {
+      // 비밀번호 해싱
+      const hashedPassword = SHA256(formData.password).toString(enc.Hex);
+      // console.log("2. 비밀번호 해싱 완료");
+
+      const response = await fetch(`/api/server/login`, {
         method: "POST",
         body: JSON.stringify({
           email: formData.id,
-          password: formData.password,
+          password: hashedPassword,  // 해싱된 비밀번호 전송
         }),
         headers: {
           "Content-Type": "application/json",
         },
+      });
+
+      // console.log("3. API 응답 상태:", response.status);
+      // console.log("4. API 응답 헤더:", Object.fromEntries(response.headers.entries()));
+
+      const responseText = await response.text();
+      // console.log("5. API 응답 데이터:", responseText);
+
+      if (!response.ok) {
+        // console.log("6. 로그인 실패");
+        setLoginError("올바른 정보가 아닙니다.");
+        return;
       }
-    );
 
-    const accessToken = response.headers.get("Authorization");
-    const refreshToken = accessToken;
-    // const refreshToken = response.headers.get("Authorization-refresh");
+      const accessToken = response.headers.get("Authorization");
+      // console.log("7. 받은 토큰:", accessToken);
 
-    if (!accessToken || !refreshToken) {
-      console.log("Error: No Access Token");
-      return;
-    }
+      if (!accessToken) {
+        // console.log("8. 토큰 없음");
+        return;
+      }
 
-    await saveAccessToken(accessToken);
-    await saveRefreshToken(refreshToken);
-    await saveDashboardType(formData.role);
+      // console.log("9. 토큰 저장 시작");
+      await saveAccessToken(accessToken);
+      await saveRefreshToken(accessToken);
+      await saveDashboardType(formData.role);
+      await saveRole(formData.role);
+      // console.log("10. 저장 완료, role:", formData.role);
 
-    if (formData.role === "club") {
-      replace(`${LOGIN_ENDPOINT}/club`);
-    } else {
-      refresh();
+      if (formData.role === "club") {
+        replace(`${LOGIN_ENDPOINT}/club`);
+      } else if (formData.role === "company") {
+        replace(`${LOGIN_ENDPOINT}/company`);
+      }
+    } catch (error) {
+      console.error("에러 발생:", error);
     }
   };
 
@@ -86,35 +161,60 @@ export default function LoginForm() {
           {"로그인"}
         </h2>
         <div className="space-y-4">
-          <Input
-            name="id"
-            type="text"
-            placeholder="아이디"
-            currentValue={formData.id}
-            handleInputChange={(e) =>
-              setFormData((prev) => {
-                return { ...prev, id: e.target.value };
-              })
-            }
-          />
-          <Input
-            name="password"
-            type="password"
-            placeholder="비밀번호"
-            currentValue={formData.password}
-            handleInputChange={(e) =>
-              setFormData((prev) => {
-                return { ...prev, password: e.target.value };
-              })
-            }
-          />
+          <div>
+            <Input
+              name="id"
+              type="text"
+              placeholder="아이디"
+              currentValue={formData.id}
+              handleInputChange={(e) =>
+                setFormData((prev) => {
+                  return { ...prev, id: e.target.value };
+                })
+              }
+            />
+            {errors.id && (
+              <p
+                className="mt-2 text-[16px] font-[500]"
+                style={{ color: "#FF3D00" }}
+              >
+                {errors.id}
+              </p>
+            )}
+          </div>
+          <div>
+            <Input
+              name="password"
+              type="password"
+              placeholder="비밀번호"
+              currentValue={formData.password}
+              handleInputChange={(e) =>
+                setFormData((prev) => {
+                  return { ...prev, password: e.target.value };
+                })
+              }
+            />
+            {errors.password && (
+              <p
+                className="mt-2 text-[16px] font-[500]"
+                style={{ color: "#FF3D00" }}
+              >
+                {errors.password}
+              </p>
+            )}
+            {/* 로그인 에러 메시지를 비밀번호 필드 아래에 표시 */}
+            {loginError && (
+              <p
+                className="mt-2 text-[16px] font-[500]"
+                style={{ color: "#FF3D00" }}
+              >
+                {loginError}
+              </p>
+            )}
+          </div>
           <RadioSelect
             currentValue={formData.role}
-            handleChange={(role: string) =>
-              setFormData((prev) => {
-                return { ...prev, role };
-              })
-            }
+            handleChange={handleRoleChange}
           />
         </div>
         <Button content="로그인" primary />

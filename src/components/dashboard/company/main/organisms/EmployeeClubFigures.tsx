@@ -7,7 +7,7 @@ export default function EmployeeClubFigures() {
     <div className="flex gap-3">
       <EmployeeShortcut />
       <ClubFigures />
-      <DownloadFigure />
+      {/* <DownloadFigure /> */}
     </div>
   );
 }

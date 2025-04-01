@@ -1,9 +1,10 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
-import { GeocodeResult, PlaceSearchResult } from "@/app/api/map/type";
+import { GeocodeResultType } from "./type";
+import { PlaceSearchResultType } from "@/lib/types/placeSearch";
 
 export const useGeocode: (
   query: string | undefined
-) => UseQueryResult<GeocodeResult> = (query) => {
+) => UseQueryResult<GeocodeResultType> = (query) => {
   return useQuery({
     queryKey: ["geocode", query],
     queryFn: () =>
@@ -14,7 +15,7 @@ export const useGeocode: (
 
 export const usePlaceSearch: (
   query: string | undefined
-) => UseQueryResult<PlaceSearchResult> = (query) => {
+) => UseQueryResult<PlaceSearchResultType> = (query) => {
   return useQuery({
     queryKey: ["place-search", query],
     queryFn: () =>

@@ -2,12 +2,13 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ClubMenuTabs from "@/components/dashboard/club/manage/molecules/ClubMenuTabs";
-import ClubInfoTab from "@/components/dashboard/club/manage/templates/ClubInfo";
+// import ClubInfoTab from "@/components/dashboard/club/manage/templates/ClubInfo";
 import ClubPictureTab from "@/components/dashboard/club/manage/templates/ClubPicture";
 import ClubQnaTab from "@/components/dashboard/club/manage/templates/ClubQna";
 import ClubApplicationTab from "@/components/dashboard/club/manage/templates/ClubApplication";
 import ClubPolicyTab from "@/components/dashboard/club/manage/templates/ClubPolicy";
 import DeletePictureModal from "@/components/dashboard/club/manage/modals/DeletePictureModal";
+import RHFClubIndexFormProvider from "@/components/dashboard/club/manage/templates/RHFClubIndexFormProvider";
 
 export type ClubMenu = "info" | "picture" | "qna" | "application" | "policy";
 
@@ -27,7 +28,8 @@ const tabList: ClubMenuTab[] = [
 const renderCurrentTabPage = (currentTab: ClubMenu) => {
   switch (currentTab) {
     case "info":
-      return <ClubInfoTab />;
+      // ClubInfoTab은 읽기 전용으로 이루어진 컴포넌트이기 때문에 react-hook-form으로 이루어진 컴포넌트를 만들었습니다.
+      return <RHFClubIndexFormProvider />;
     case "picture":
       return <ClubPictureTab />;
     case "qna":

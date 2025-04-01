@@ -22,7 +22,15 @@ export default function CustomerCenter() {
             </div>
           </div>
           <div className="text-center">
-            <button className="mx-auto" onClick={() => closeModal()}>
+            <button 
+              className="mx-auto" 
+              onClick={() => {
+                // 카카오톡 채널 링크로 이동
+                window.open('https://open.kakao.com/o/s1t61zah', '_blank');
+                // 모달 닫기
+                closeModal();
+              }}
+            >
               <Image
                 src={KakaoButton}
                 alt="카카오톡"
