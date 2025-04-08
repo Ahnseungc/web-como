@@ -2,8 +2,22 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { cn, formatDate, openModal } from "@/lib/utils";
+import { useEffect, useState } from "react";
+import { getData } from "@/api/action";
+import { getAccessToken } from "@/lib/cookies";
 
 type ApplicationStatus = "new" | "active" | "reject" | "revert" | "leave";
+
+interface ClubApplication {
+  clubId: number;
+  applicantId: number;
+  applicantName: string;
+  department: string;
+  clubName: string;
+  clubSummary: string;
+  appliedDate: string;
+  status: 'PENDING' | 'APPROVED' | 'REJECTED';
+}
 
 const tableHeadings = [
   "순번",
@@ -15,102 +29,88 @@ const tableHeadings = [
   "상태",
 ];
 
-const applications = [
-  {
-    id: 1,
-    applicant: "신청자",
-    department: "경영팀",
-    title: "동호회명",
-    description: "동호회 한줄소개",
-    date: "2024-07-04 12:33:57",
-    status: "new",
-  },
-  {
-    id: 2,
-    applicant: "신청자",
-    department: "경영팀",
-    title: "동호회명",
-    description: "동호회 한줄소개",
-    date: "2024-07-04 12:33:57",
-    status: "new",
-  },
-  {
-    id: 3,
-    applicant: "신청자",
-    department: "경영팀",
-    title: "동호회명",
-    description: "동호회 한줄소개",
-    date: "2024-07-04 12:33:57",
-    status: "new",
-  },
-  {
-    id: 4,
-    applicant: "신청자",
-    department: "경영팀",
-    title: "동호회명",
-    description: "동호회 한줄소개",
-    date: "2024-07-04 12:33:57",
-    status: "active",
-  },
-  {
-    id: 5,
-    applicant: "신청자",
-    department: "경영팀",
-    title: "동호회명",
-    description: "동호회 한줄소개",
-    date: "2024-07-04 12:33:57",
-    status: "active",
-  },
-  {
-    id: 6,
-    applicant: "신청자",
-    department: "경영팀",
-    title: "동호회명",
-    description: "동호회 한줄소개",
-    date: "2024-07-04 12:33:57",
-    status: "reject",
-  },
-  {
-    id: 7,
-    applicant: "신청자",
-    department: "경영팀",
-    title: "동호회명",
-    description: "동호회 한줄소개",
-    date: "2024-07-04 12:33:57",
-    status: "reject",
-  },
-  {
-    id: 8,
-    applicant: "신청자",
-    department: "경영팀",
-    title: "동호회명",
-    description: "동호회 한줄소개",
-    date: "2024-07-04 12:33:57",
-    status: "leave",
-  },
-  {
-    id: 9,
-    applicant: "신청자",
-    department: "경영팀",
-    title: "동호회명",
-    description: "동호회 한줄소개",
-    date: "2024-07-04 12:33:57",
-    status: "active",
-  },
-  {
-    id: 10,
-    applicant: "신청자",
-    department: "경영팀",
-    title: "동호회명",
-    description: "동호회 한줄소개",
-    date: "2024-07-04 12:33:57",
-    status: "revert",
-  },
-];
-
 export default function ApplicationTable() {
   const pathname = usePathname();
   const { push } = useRouter();
+  const [applications, setApplications] = useState<ClubApplication[]>([]);
+
+  useEffect(() => {
+    const loadApplications = async () => {
+      try {
+        const response = await getData('v1/manager/club', true);
+        if (response.resultCode === 'OK') {
+          setApplications(response.data);
+        }
+      } catch (error) {
+        console.error('동호회 신청 목록 로딩 오류:', error);
+      }
+    };
+
+    loadApplications();
+  }, []);
+
+  const getStatus = (status: string): ApplicationStatus => {
+    switch (status) {
+      case 'PENDING': return 'new';
+      case 'APPROVED': return 'active';
+      case 'REJECTED': return 'reject';
+      default: return 'new';
+    }
+  };
+
+  const formatAppliedDate = (dateArray: number[]) => {
+    if (!Array.isArray(dateArray) || dateArray.length < 7) return '';
+    const [year, month, day, hour, minute, second] = dateArray;
+    return formatDate(new Date(year, month - 1, day, hour, minute, second));
+  };
+
+  const handleApprove = async (clubId: number) => {
+    const token = await getAccessToken();
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}v1/manager/club/${clubId.toString()}/approve`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('승인 처리 실패');
+      }
+
+      const data = await response.json();
+      if (data.resultCode === 'OK') {
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error('동호회 승인 처리 오류:', error);
+    }
+  };
+
+  const handleReject = async (clubId: number) => {
+    const token = await getAccessToken();
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}v1/manager/club/${clubId.toString()}/reject`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('반려 처리 실패');
+      }
+
+      const data = await response.json();
+      if (data.resultCode === 'OK') {
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error('동호회 반려 처리 오류:', error);
+    }
+  };
 
   return (
     <ul className="flex flex-col gap-1">
@@ -138,17 +138,17 @@ export default function ApplicationTable() {
       </li>
       {applications.map((application, idx) => (
         <li
-          key={application.id}
+          key={application.clubId}
           className="flex border-b border-gray-400 bg-gray-0"
         >
           {[
-            application.id,
-            application.applicant,
+            application.clubId,
+            application.applicantName,
             application.department,
-            application.title,
-            application.description,
-            application.date,
-            application.status,
+            application.clubName,
+            application.clubSummary,
+            formatAppliedDate(application.appliedDate as unknown as number[]),
+            getStatus(application.status),
           ].map((data, i) => (
             <div
               key={data}
@@ -181,14 +181,14 @@ export default function ApplicationTable() {
                 if (i === 1) {
                   openModal("applicant-profile");
                 } else if ([3, 4].includes(i)) {
-                  push(`${pathname}/${application.id}?status=${application.status}`);
+                  push(`${pathname}/${application.clubId}?status=${getStatus(application.status)}`);
                 }
               }}
             >
               {i === 0 ? (
                 idx + 1
               ) : i === 5 ? (
-                formatDate(new Date(data))
+                data
               ) : i !== 6 ? (
                 data
               ) : data === "leave" ? (
@@ -206,12 +206,21 @@ export default function ApplicationTable() {
                 </button>
               ) : data === "new" ? (
                 <>
-                  <button className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-point-blue">
+                  <button 
+                    className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-point-blue"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleApprove(application.clubId);
+                    }}
+                  >
                     {"승인"}
                   </button>
                   <button
                     className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-gray-600"
-                    onClick={() => openModal("reject-application")}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleReject(application.clubId);
+                    }}
                   >
                     {"반려"}
                   </button>
