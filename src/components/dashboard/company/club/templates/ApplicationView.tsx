@@ -23,11 +23,11 @@ export default function ApplicationView() {
 
   return (
     <>
-      <ApplicationSearch
+      {/* <ApplicationSearch
         currentSearchValue={currentSearchValue}
         setCurrentSearchValue={setCurrentSearchValue}
         handleSearch={handleSearch}
-      />
+      /> */}
       <ApplicationList
         currentSearchFilter={currentSearchValue.filter!}
         currentSearchTerm={searchTerm}
