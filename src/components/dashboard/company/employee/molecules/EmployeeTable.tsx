@@ -5,7 +5,7 @@ import { cn, formatDate, openModal } from "@/lib/utils";
 import ApplicationDetailModal from "@/components/dashboard/company/employee/modals/ApplicationDetailModal";
 import EditEmployeeInfoModal from "@/components/dashboard/company/employee/modals/EditEmployeeInfoModal";
 import DeleteEmployeeModal from "@/components/dashboard/company/employee/modals/DeleteEmployeeModal";
-import DeleteReasonModal from "@/components/dashboard/company/employee/modals/DeleteReasonModal";
+import DeleteReasonModal from "../modals/DeleteReasonModal";
 import { useEffect, useState } from "react";
 import { getData } from "@/api/action";
 import { startOfToday } from "date-fns";
@@ -16,7 +16,7 @@ const tableHeadings = [
   "이름",
   "부서",
   "직급",
-  "동호회명",
+  // "동호회명",
   "입사일",
   "회원 상태 수정",
 ];
@@ -54,17 +54,18 @@ export default function EmployeeTable({ employees }: EmployeeTableProps) {
         <DeleteReasonModal />
       </div>
       <ul>
-        <li className="flex py-0.5 border-y border-gray-400 bg-gray-200">
+        <li className="flex border-y border-gray-400 bg-gray-200 h-14 items-center">
           {tableHeadings.map((heading, i) => (
             <div
               key={heading}
               className={cn(
-                "my-3 mx-6 body-1 font-bold text-gray-900",
-                i === 0 ? "w-8" : "flex-1",
-                i === 4 ? "" : "text-center",
-                i === 6 ? "flex items-center justify-center max-w-44 m-0" : "",
-                [2, 3].includes(i) ? "max-w-28" : "",
-                [1, 5].includes(i) ? "max-w-36" : ""
+                "body-1 font-bold text-gray-900 text-center",
+                i === 0 ? "w-[5%] pl-4" : "",
+                i === 1 ? "w-[19%]" : "",
+                i === 2 ? "w-[19%]" : "",
+                i === 3 ? "w-[19%]" : "",
+                i === 4 ? "w-[19%]" : "",
+                i === 5 ? "w-[19%] pr-4" : "",
               )}
             >
               {heading}
@@ -75,7 +76,7 @@ export default function EmployeeTable({ employees }: EmployeeTableProps) {
           <li
             key={employee.memberId}
             className={cn(
-              "flex py-0.5 border-b border-gray-400 bg-gray-0 transition duration-200",
+              "flex border-b border-gray-400 bg-gray-0 transition duration-200 h-14 items-center",
               employee.memberStatus === "Y"
                 ? "cursor-pointer group hover:bg-gray-200"
                 : ""
@@ -91,32 +92,30 @@ export default function EmployeeTable({ employees }: EmployeeTableProps) {
               employee.memberName,
               employee.department,
               employee.position,
-              employee.clubName || '-',
               employee.joinDate,
               employee.memberStatus,
             ].map((data, i) => (
               <div
                 key={i}
                 className={cn(
-                  "my-3 mx-6 body-1 font-medium text-gray-800 underline underline-offset-2 decoration-transparent line-clamp-1 transition duration-200",
-                  i === 0 ? "w-8" : "flex-1",
+                  "body-1 font-medium text-gray-800 underline underline-offset-2 decoration-transparent line-clamp-1 transition duration-200 text-center",
+                  i === 0 ? "w-[5%] pl-4" : "",
+                  i === 1 ? "w-[19%]" : "",
+                  i === 2 ? "w-[19%]" : "",
+                  i === 3 ? "w-[19%]" : "",
+                  i === 4 ? "w-[19%]" : "",
+                  i === 5 ? "w-[19%] pr-4" : "",
                   i === 1 ? "group-hover:decoration-gray-800" : "",
-                  i === 4 ? "" : "text-center",
-                  i === 6
-                    ? "flex items-center justify-center max-w-44 m-0"
-                    : "",
-                  i === 6 && data === "deleted" ? "decoration-gray-800" : "",
-                  [2, 3].includes(i) ? "max-w-28" : "",
-                  [1, 5].includes(i) ? "max-w-36" : ""
+                  i === 5 ? "flex items-center justify-center" : ""
                 )}
               >
                 {i === 0 ? (
                   idx + 1
-                ) : i === 5 ? (
+                ) : i === 4 ? (
                   Array.isArray(data) ? 
                     formatDate(new Date(data[0], data[1]-1, data[2])) : 
                     formatDate(new Date(data))
-                ) : i === 6 ? (
+                ) : i === 5 ? (
                   data === "Y" ? (
                     <div
                       className="flex gap-2"
@@ -131,7 +130,7 @@ export default function EmployeeTable({ employees }: EmployeeTableProps) {
                       </button>
                       <button
                         className="py-1 px-4 rounded border border-gray-800 body-1 font-medium text-gray-800"
-                        onClick={() => openModal("employee-delete", { memberId: employee.memberId })}
+                        onClick={() => openModal("delete-reason", { memberId: employee.memberId })}
                       >
                         {"삭제"}
                       </button>

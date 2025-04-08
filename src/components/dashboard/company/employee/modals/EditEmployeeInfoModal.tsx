@@ -11,7 +11,6 @@ import { getData } from "@/api/action";
 import { getAccessToken } from "@/lib/cookies";
 
 export default function EditEmployeeInfoModal() {
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [memberData, setMemberData] = useState<any>(null);
   const [modalParams, setModalParams] = useState<any>(null);
   const [formData, setFormData] = useState({
@@ -21,7 +20,7 @@ export default function EditEmployeeInfoModal() {
     email: '',
     phoneNumber: '',
   });
-  const [role, setRole] = useState<'MEMBER' | 'ADMIN'>('MEMBER');
+  const [role, setRole] = useState<'MEMBER' | 'EXECUTIVE' | 'ADMIN'>('MEMBER');
 
   useEffect(() => {
     const modal = document.getElementById('employee-edit');
@@ -52,8 +51,10 @@ export default function EditEmployeeInfoModal() {
 
       try {
         const res = await getData(`v1/manager/member/${modalParams.memberId}`, true);
-        console.log("모달 데이터", res.data);
+        // console.log("받아온 회원 데이터:", res.data);  // 데이터 확인용
         setMemberData(res.data);
+        // role도 함께 설정
+        setRole(res.data.role || 'MEMBER');
       } catch (error) {
         console.error("직원 정보 로딩 오류:", error);
       }
@@ -108,7 +109,6 @@ export default function EditEmployeeInfoModal() {
         },
         body: JSON.stringify(submitData)
       }); 
-
       const result = await response.json();
       // console.log("수정 결과:", result);  // API 응답 확인
 
@@ -172,16 +172,30 @@ export default function EditEmployeeInfoModal() {
           <div className="space-y-3">
             <InputLabel label="권한 부여" />
             <Checkbox
-              name="none"
+              name="member"
               content="권한 없음"
               checked={role === 'MEMBER'}
-              onChange={(e) => setRole(e.target.checked ? 'MEMBER' : 'ADMIN')}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                console.log('권한 없음 클릭됨 - 체크상태:', e.target.checked);
+                if (e.target.checked) {
+                  setRole('MEMBER');
+                } else {
+                  setRole('EXECUTIVE');
+                }
+              }}
             />
             <Checkbox
-              name="admin"
+              name="executive"
               content="동호회 관리자 권한"
-              checked={role === 'ADMIN'}
-              onChange={(e) => setRole(e.target.checked ? 'ADMIN' : 'MEMBER')}
+              checked={role === 'EXECUTIVE' || role === 'ADMIN'}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                console.log('관리자 권한 클릭됨 - 체크상태:', e.target.checked);
+                if (e.target.checked) {
+                  setRole('EXECUTIVE');
+                } else {
+                  setRole('MEMBER');
+                }
+              }}
             />
           </div>
           <Button

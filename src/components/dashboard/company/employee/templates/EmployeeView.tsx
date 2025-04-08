@@ -4,7 +4,7 @@ import EmployeeList from "@/components/dashboard/company/employee/organisms/Empl
 export default function EmployeeView() {
   return (
     <>
-      <EmployeeSearch />
+      {/* <EmployeeSearch /> */}
 	  <EmployeeList />
     </>
   );

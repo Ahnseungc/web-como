@@ -26,7 +26,7 @@ export default function Search(props: Props) {
       className={
         props.withoutWrapper
           ? "space-y-6"
-          : "space-y-6 p-8 rounded-2xl bg-gray-0"
+          : "space-y-6 rounded-2xl bg-gray-0 mb-8"
       }
     >
       <h3 className="h2 font-semibold text-gray-900">

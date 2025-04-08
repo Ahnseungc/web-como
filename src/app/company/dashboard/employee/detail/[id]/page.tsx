@@ -16,7 +16,7 @@ export default function Page() {
       <BackButton />
       <EmployeeInfo memberId={memberId} />
       <JoinedClub />
-      <OmoHistoryList />
+      {/* <OmoHistoryList /> */}
       <div className="m-0">
         <ClubInfoModal />
       </div>

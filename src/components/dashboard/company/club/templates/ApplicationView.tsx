@@ -13,7 +13,7 @@ export default function ApplicationView() {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
-    console.log(currentSearchValue.filter);
+    // console.log(currentSearchValue.filter);
   }, [currentSearchValue.filter]);
 
   const handleSearch = () => {
@@ -23,11 +23,11 @@ export default function ApplicationView() {
 
   return (
     <>
-      <ApplicationSearch
+      {/* <ApplicationSearch
         currentSearchValue={currentSearchValue}
         setCurrentSearchValue={setCurrentSearchValue}
         handleSearch={handleSearch}
-      />
+      /> */}
       <ApplicationList
         currentSearchFilter={currentSearchValue.filter!}
         currentSearchTerm={searchTerm}
