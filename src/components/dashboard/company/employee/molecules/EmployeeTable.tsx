@@ -5,7 +5,7 @@ import { cn, formatDate, openModal } from "@/lib/utils";
 import ApplicationDetailModal from "@/components/dashboard/company/employee/modals/ApplicationDetailModal";
 import EditEmployeeInfoModal from "@/components/dashboard/company/employee/modals/EditEmployeeInfoModal";
 import DeleteEmployeeModal from "@/components/dashboard/company/employee/modals/DeleteEmployeeModal";
-import DeleteReasonModal from "@/components/dashboard/company/employee/modals/DeleteReasonModal";
+import DeleteReasonModal from "../modals/DeleteReasonModal";
 import { useEffect, useState } from "react";
 import { getData } from "@/api/action";
 import { startOfToday } from "date-fns";
@@ -131,7 +131,7 @@ export default function EmployeeTable({ employees }: EmployeeTableProps) {
                       </button>
                       <button
                         className="py-1 px-4 rounded border border-gray-800 body-1 font-medium text-gray-800"
-                        onClick={() => openModal("employee-delete", { memberId: employee.memberId })}
+                        onClick={() => openModal("delete-reason", { memberId: employee.memberId })}
                       >
                         {"삭제"}
                       </button>
