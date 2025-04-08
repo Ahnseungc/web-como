@@ -15,8 +15,6 @@ interface Props {
   currentSearchFilter: string;
 }
 
-
-
 export default function ApplicationList(props: Props) {
   const [applications, setApplications] = useState([]);
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
@@ -34,10 +32,11 @@ export default function ApplicationList(props: Props) {
 
   const loadApplications = async () => {
     try {
-      const response = await getData('v1/manager/club', true);
+      const response = await getData(`v1/manager/club?page=${currentPage}&startDate=${formatDateToString(currentDateRange.startDate)}&endDate=${formatDateToString(currentDateRange.endDate)}`, true);
       console.log(response.data)
       if (response.resultCode === 'OK') {
-        setApplications(response.data);
+        console.log("Applications Data:", response.data); // 데이터 확인
+        setApplications(response.data.memberList);
         setMaxPage(response.data.maxPage);
       }
     } catch (error) {

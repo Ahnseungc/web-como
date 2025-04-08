@@ -17,7 +17,7 @@ export default function ApplicationDetailPage() {
   const clubId = params.id as string;
 
   const categoryMapping = {
-    "ARTCULTURE": "문화/예술",
+    "ART_CULTURE": "문화/예술",
     "ACTIVITY": "액티비티",
     "CREATIVE": "크리에이티브",
     "FOODBEVERAGE": "F&B",
@@ -75,7 +75,7 @@ export default function ApplicationDetailPage() {
       <div className="space-y-3 p-8 rounded-xl bg-gray-0">
         <div className="flex items-center justify-between">
           <h2 className="h3 font-semibold text-gray-900">{"작성한 신청서"}</h2>
-          {status === "new" ? (
+          {/* {status === "new" ? (
             <div className="flex gap-2">
               <button className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-point-blue">
                 {"승인"}
@@ -96,7 +96,7 @@ export default function ApplicationDetailPage() {
                 {"반려 취소"}
               </button>
             )
-          )}
+          )} */}
         </div>
         {/* <PDFViewer file="../../../../../sample.pdf" /> */}
         
