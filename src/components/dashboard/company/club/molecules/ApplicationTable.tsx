@@ -37,6 +37,8 @@ export default function ApplicationTable({ applications }: ApplicationTableProps
   const pathname = usePathname();
   const { push } = useRouter();
 
+  console.log("applications", applications);
+
   const getStatus = (status: string): ApplicationStatus => {
     switch (status) {
       case 'PENDING': return 'new';
@@ -69,7 +71,8 @@ export default function ApplicationTable({ applications }: ApplicationTableProps
 
       const data = await response.json();
       if (data.resultCode === 'OK') {
-        window.location.reload();
+        alert('승인 처리 완료!'); // 알림 추가
+        window.location.reload(); // 페이지 새로고침
       }
     } catch (error) {
       console.error('동호회 승인 처리 오류:', error);
@@ -124,7 +127,7 @@ export default function ApplicationTable({ applications }: ApplicationTableProps
           </div>
         ))}
       </li>
-      {applications?.map((application, idx) => (
+      {applications && applications.length > 0 && applications.map((application, idx) => (
         <li
           key={application.clubId}
           className="flex border-b border-gray-400 bg-gray-0"
