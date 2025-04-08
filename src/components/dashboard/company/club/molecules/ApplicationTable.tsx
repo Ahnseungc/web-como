@@ -29,25 +29,13 @@ const tableHeadings = [
   "상태",
 ];
 
-export default function ApplicationTable() {
+interface ApplicationTableProps {
+  applications: ClubApplication[];
+}
+
+export default function ApplicationTable({ applications }: ApplicationTableProps) {
   const pathname = usePathname();
   const { push } = useRouter();
-  const [applications, setApplications] = useState<ClubApplication[]>([]);
-
-  useEffect(() => {
-    const loadApplications = async () => {
-      try {
-        const response = await getData('v1/manager/club', true);
-        if (response.resultCode === 'OK') {
-          setApplications(response.data);
-        }
-      } catch (error) {
-        console.error('동호회 신청 목록 로딩 오류:', error);
-      }
-    };
-
-    loadApplications();
-  }, []);
 
   const getStatus = (status: string): ApplicationStatus => {
     switch (status) {
@@ -136,7 +124,7 @@ export default function ApplicationTable() {
           </div>
         ))}
       </li>
-      {applications.map((application, idx) => (
+      {applications?.map((application, idx) => (
         <li
           key={application.clubId}
           className="flex border-b border-gray-400 bg-gray-0"
