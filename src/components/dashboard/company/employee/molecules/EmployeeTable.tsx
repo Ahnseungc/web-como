@@ -16,7 +16,7 @@ const tableHeadings = [
   "이름",
   "부서",
   "직급",
-  "동호회명",
+  // "동호회명",
   "입사일",
   "회원 상태 수정",
 ];
@@ -59,12 +59,13 @@ export default function EmployeeTable({ employees }: EmployeeTableProps) {
             <div
               key={heading}
               className={cn(
-                "my-3 mx-6 body-1 font-bold text-gray-900",
-                i === 0 ? "w-8" : "flex-1",
-                i === 4 ? "" : "text-center",
-                i === 6 ? "flex items-center justify-center max-w-44 m-0" : "",
-                [2, 3].includes(i) ? "max-w-28" : "",
-                [1, 5].includes(i) ? "max-w-36" : ""
+                "my-3 body-1 font-bold text-gray-900 text-center",
+                i === 0 ? "w-[5%] pl-4" : "",            // 순번 - 왼쪽 끝, 왼쪽 패딩 추가
+                i === 1 ? "w-[19%]" : "",                // 이름
+                i === 2 ? "w-[19%]" : "",                // 부서
+                i === 3 ? "w-[19%]" : "",                // 직급
+                i === 4 ? "w-[19%]" : "",                // 입사일
+                i === 5 ? "w-[19%] pr-4" : "",           // 회원 상태 수정 - 오른쪽 끝, 오른쪽 패딩 추가
               )}
             >
               {heading}
@@ -91,32 +92,30 @@ export default function EmployeeTable({ employees }: EmployeeTableProps) {
               employee.memberName,
               employee.department,
               employee.position,
-              employee.clubName || '-',
               employee.joinDate,
               employee.memberStatus,
             ].map((data, i) => (
               <div
                 key={i}
                 className={cn(
-                  "my-3 mx-6 body-1 font-medium text-gray-800 underline underline-offset-2 decoration-transparent line-clamp-1 transition duration-200",
-                  i === 0 ? "w-8" : "flex-1",
+                  "my-3 body-1 font-medium text-gray-800 underline underline-offset-2 decoration-transparent line-clamp-1 transition duration-200 text-center",
+                  i === 0 ? "w-[5%] pl-4" : "",            // 순번 - 왼쪽 끝, 왼쪽 패딩 추가
+                  i === 1 ? "w-[19%]" : "",                // 이름
+                  i === 2 ? "w-[19%]" : "",                // 부서
+                  i === 3 ? "w-[19%]" : "",                // 직급
+                  i === 4 ? "w-[19%]" : "",                // 입사일
+                  i === 5 ? "w-[19%] pr-4" : "",           // 회원 상태 수정 - 오른쪽 끝, 오른쪽 패딩 추가
                   i === 1 ? "group-hover:decoration-gray-800" : "",
-                  i === 4 ? "" : "text-center",
-                  i === 6
-                    ? "flex items-center justify-center max-w-44 m-0"
-                    : "",
-                  i === 6 && data === "deleted" ? "decoration-gray-800" : "",
-                  [2, 3].includes(i) ? "max-w-28" : "",
-                  [1, 5].includes(i) ? "max-w-36" : ""
+                  i === 5 ? "flex items-center justify-center" : ""
                 )}
               >
                 {i === 0 ? (
                   idx + 1
-                ) : i === 5 ? (
+                ) : i === 4 ? (
                   Array.isArray(data) ? 
                     formatDate(new Date(data[0], data[1]-1, data[2])) : 
                     formatDate(new Date(data))
-                ) : i === 6 ? (
+                ) : i === 5 ? (
                   data === "Y" ? (
                     <div
                       className="flex gap-2"
