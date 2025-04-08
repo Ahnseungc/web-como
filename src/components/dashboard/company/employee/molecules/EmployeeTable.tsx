@@ -54,18 +54,18 @@ export default function EmployeeTable({ employees }: EmployeeTableProps) {
         <DeleteReasonModal />
       </div>
       <ul>
-        <li className="flex py-0.5 border-y border-gray-400 bg-gray-200">
+        <li className="flex border-y border-gray-400 bg-gray-200 h-14 items-center">
           {tableHeadings.map((heading, i) => (
             <div
               key={heading}
               className={cn(
-                "my-3 body-1 font-bold text-gray-900 text-center",
-                i === 0 ? "w-[5%] pl-4" : "",            // 순번 - 왼쪽 끝, 왼쪽 패딩 추가
-                i === 1 ? "w-[19%]" : "",                // 이름
-                i === 2 ? "w-[19%]" : "",                // 부서
-                i === 3 ? "w-[19%]" : "",                // 직급
-                i === 4 ? "w-[19%]" : "",                // 입사일
-                i === 5 ? "w-[19%] pr-4" : "",           // 회원 상태 수정 - 오른쪽 끝, 오른쪽 패딩 추가
+                "body-1 font-bold text-gray-900 text-center",
+                i === 0 ? "w-[5%] pl-4" : "",
+                i === 1 ? "w-[19%]" : "",
+                i === 2 ? "w-[19%]" : "",
+                i === 3 ? "w-[19%]" : "",
+                i === 4 ? "w-[19%]" : "",
+                i === 5 ? "w-[19%] pr-4" : "",
               )}
             >
               {heading}
@@ -76,7 +76,7 @@ export default function EmployeeTable({ employees }: EmployeeTableProps) {
           <li
             key={employee.memberId}
             className={cn(
-              "flex py-0.5 border-b border-gray-400 bg-gray-0 transition duration-200",
+              "flex border-b border-gray-400 bg-gray-0 transition duration-200 h-14 items-center",
               employee.memberStatus === "Y"
                 ? "cursor-pointer group hover:bg-gray-200"
                 : ""
@@ -98,13 +98,13 @@ export default function EmployeeTable({ employees }: EmployeeTableProps) {
               <div
                 key={i}
                 className={cn(
-                  "my-3 body-1 font-medium text-gray-800 underline underline-offset-2 decoration-transparent line-clamp-1 transition duration-200 text-center",
-                  i === 0 ? "w-[5%] pl-4" : "",            // 순번 - 왼쪽 끝, 왼쪽 패딩 추가
-                  i === 1 ? "w-[19%]" : "",                // 이름
-                  i === 2 ? "w-[19%]" : "",                // 부서
-                  i === 3 ? "w-[19%]" : "",                // 직급
-                  i === 4 ? "w-[19%]" : "",                // 입사일
-                  i === 5 ? "w-[19%] pr-4" : "",           // 회원 상태 수정 - 오른쪽 끝, 오른쪽 패딩 추가
+                  "body-1 font-medium text-gray-800 underline underline-offset-2 decoration-transparent line-clamp-1 transition duration-200 text-center",
+                  i === 0 ? "w-[5%] pl-4" : "",
+                  i === 1 ? "w-[19%]" : "",
+                  i === 2 ? "w-[19%]" : "",
+                  i === 3 ? "w-[19%]" : "",
+                  i === 4 ? "w-[19%]" : "",
+                  i === 5 ? "w-[19%] pr-4" : "",
                   i === 1 ? "group-hover:decoration-gray-800" : "",
                   i === 5 ? "flex items-center justify-center" : ""
                 )}
