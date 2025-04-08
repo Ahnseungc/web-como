@@ -1,12 +1,95 @@
 "use client";
 
-import { closeModal } from "@/lib/utils";
+import { closeModal, openModal } from "@/lib/utils";
 import Backdrop from "@/components/common/Backdrop";
 import Input from "@/components/common/Input";
+import Button from "@/components/common/Button";
 import { Close } from "@/assets/icons/action";
 import { ChevronRight } from "@/assets/icons/chevron";
+import { useState, useEffect } from "react";
+import { getData } from "@/api/action";
+import { getAccessToken } from "@/lib/cookies";
 
 export default function DeleteReasonModal() {
+  const [modalParams, setModalParams] = useState<any>(null);
+  const [memberData, setMemberData] = useState<any>(null);
+  const [deleteReason, setDeleteReason] = useState('');
+
+  useEffect(() => {
+    const modal = document.getElementById('delete-reason');
+    // console.log('모달 엘리먼트:', modal); // 모달 엘리먼트 확인
+
+    if (modal) {
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'data-modal-params') {
+            const newParams = modal.dataset.modalParams;
+            // console.log('새로운 모달 파라미터:', newParams); // 파라미터 확인
+            if (newParams) {
+              const parsedParams = JSON.parse(newParams);
+              // console.log('파싱된 파라미터:', parsedParams); // 파싱된 파라미터 확인
+              setModalParams(parsedParams);
+            }
+          }
+        });
+      });
+
+      observer.observe(modal, {
+        attributes: true,
+        attributeFilter: ['data-modal-params']
+      });
+
+      return () => observer.disconnect();
+    }
+  }, []);
+
+  useEffect(() => {
+    const loadMemberData = async () => {
+      // console.log('modalParams:', modalParams); // modalParams 확인
+      if (!modalParams?.memberId) return;
+
+      try {
+        // console.log('API 호출 시작:', modalParams.memberId); // API 호출 확인
+        const res = await getData(`v1/manager/member/${modalParams.memberId}`, true);
+        // console.log('API 응답:', res); // API 응답 확인
+        if (res.resultCode === 'OK') {
+          setMemberData(res.data);
+        }
+      } catch (error) {
+        console.error("직원 정보 로딩 오류:", error);
+      }
+    };
+
+    loadMemberData();
+  }, [modalParams]);
+
+  // console.log('현재 memberData:', memberData); // 현재 memberData 확인
+
+  const handleDelete = async () => {
+    try {
+      const token = await getAccessToken();
+      const response = await fetch(`/api/server/v1/manager/member/${modalParams.memberId}`, {
+        method: 'DELETE',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({ reason: deleteReason })
+      });
+
+      // console.log('삭제 응답:', response.status);
+
+      if (response.ok) {
+        closeModal("delete-reason");
+        openModal("delete-success");
+      } else {
+        console.error("삭제 실패");
+      }
+    } catch (error) {
+      console.error("삭제 요청 오류:", error);
+    }
+  };
+
   return (
     <div id="delete-reason" className="hidden modal">
       <Backdrop />
@@ -16,15 +99,16 @@ export default function DeleteReasonModal() {
             <h2 className="text-center h1 font-bold text-gray-900">
               {"회원 삭제 사유"}
             </h2>
-            <button onClick={() => closeModal()}>
+            <button onClick={() => closeModal("delete-reason")}>
               <Close className="w-8 h-8" />
             </button>
           </div>
           <div className="pb-8 border-b border-gray-400">
             <Input
-              readOnly
-              label="김오모(대리)님의 회원 삭제 사유"
-              value="이직"
+              label={`${memberData?.name || '김오모'}님의 회원 삭제 사유`}
+              value={deleteReason}
+              onChange={(e) => setDeleteReason(e.target.value)}
+              placeholder="삭제 사유를 입력해주세요"
             />
           </div>
           <div className="flex items-center justify-between text-gray-900 cursor-pointer select-none">
@@ -32,6 +116,13 @@ export default function DeleteReasonModal() {
               {"자동으로 회원 삭제되는 경우"}
             </div>
             <ChevronRight className="w-6 h-6" />
+          </div>
+          <div className="flex gap-2 justify-center">
+            <Button
+              primary
+              content="삭제하기"
+              onClick={handleDelete}
+            />
           </div>
         </div>
       </div>
