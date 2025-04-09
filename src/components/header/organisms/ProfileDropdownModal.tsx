@@ -10,6 +10,7 @@ import { Close } from "@/assets/icons/action";
 import { useEffect, useState } from "react";
 import { getData } from "@/api/action";
 import { saveClubId, saveClubName, getClubId, getClubName, getRole, saveCompanyName } from "@/lib/cookies";
+import { LOGIN_ENDPOINT } from "@/lib/constants";
 
 interface Props {
   profileImage?: string | null;
@@ -39,9 +40,11 @@ export default function ProfileDropdownModal({ profileImage }: Props) {
   const [currentClubId, setCurrentClubId] = useState<string>("");
   const [isClubDropdownOpen, setIsClubDropdownOpen] = useState(false);
 
+
   const handleLogout = async () => {
     await deleteAllCookies();
     refresh();
+    window.location.replace(LOGIN_ENDPOINT); // 로그인 페이지로 이동
   };
   
   useEffect(() => {

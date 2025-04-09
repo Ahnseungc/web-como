@@ -12,6 +12,7 @@ import { getData } from "@/api/action";
 
 export default function ApplicationDetailPage() {
   const [registrationData, setRegistrationData] = useState(null);
+  const [loading, setLoading] = useState(true); // 로딩 상태 변수 추가
   const status = useSearchParams().get("status");
   const params = useParams();
   const clubId = params.id as string;
@@ -63,11 +64,19 @@ export default function ApplicationDetailPage() {
           setRegistrationData(response.data);
         }
       } catch (err) {
-        console.error('동호회 개설 신청서 로딩 오류:', err);      } 
+        console.error('동호회 개설 신청서 로딩 오류:', err);      
+      } finally {
+        setLoading(false); // 로딩 상태 업데이트
+      }
     };
 
     fetchRegistrationData();
   }, [clubId]);
+
+  // 로딩 중일 때 처리
+  if (loading) {
+      return <div className="text-lg">로딩 중...</div>; // 로딩 메시지 또는 스피너 표시
+  }
 
   return (
     <>
