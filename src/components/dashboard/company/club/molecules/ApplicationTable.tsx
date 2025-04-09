@@ -57,7 +57,7 @@ export default function ApplicationTable({ applications }: ApplicationTableProps
   const handleApprove = async (clubId: number) => {
     const token = await getAccessToken();
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}v1/manager/club/${clubId.toString()}/approve`, {
+      const response = await fetch(`/api/server/v1/manager/club/${clubId.toString()}/approve`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
