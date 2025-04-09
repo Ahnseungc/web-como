@@ -49,20 +49,35 @@ export default function ApplicationTable({ applications }: ApplicationTableProps
   };
 
   const formatAppliedDate = (dateArray: number[]) => {
-    if (!Array.isArray(dateArray) || dateArray.length < 7) return '';
-    const [year, month, day, hour, minute, second] = dateArray;
+    if (!Array.isArray(dateArray) || dateArray.length < 6) {
+      console.error("Invalid dateArray:", dateArray); // 오류 로그 추가
+      return '';
+    }
+
+    const [year, month, day, hour, minute] = dateArray; // second는 기본값으로 처리
+    const second = dateArray.length === 6 ? dateArray[5] : 0; // second가 없으면 0으로 설정
+  
+    // 각 값이 유효한지 확인
+    if (isNaN(year) || isNaN(month) || isNaN(day) || isNaN(hour) || isNaN(minute) || isNaN(second)) {
+      console.error("Invalid date values:", { year, month, day, hour, minute, second });
+      return '';
+    }
     return formatDate(new Date(year, month - 1, day, hour, minute, second));
   };
 
-  const handleApprove = async (clubId: number) => {
+  const handleApprove = async (clubId: number, applicantId: number) => {
     const token = await getAccessToken();
     try {
-      const response = await fetch(`/api/server/v1/manager/club/${clubId.toString()}/approve`, {
+      const response = await fetch(`/api/server/v1/executive/club/accept`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
+        body: JSON.stringify({
+          executiveId: applicantId, // 사용자 ID
+          clubId: clubId, // 클럽 ID
+        }),
       });
 
       if (!response.ok) {
@@ -170,7 +185,7 @@ export default function ApplicationTable({ applications }: ApplicationTableProps
               )}
               onClick={() => {
                 if (i === 1) {
-                  openModal("applicant-profile");
+                  openModal("applicant-profile", { applicantId: application.applicantId });
                 } else if ([3, 4].includes(i)) {
                   push(`${pathname}/${application.clubId}?status=${getStatus(application.status)}`);
                 }
@@ -201,7 +216,7 @@ export default function ApplicationTable({ applications }: ApplicationTableProps
                     className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-point-blue"
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleApprove(application.clubId);
+                      handleApprove(application.clubId, application.applicantId);
                     }}
                   >
                     {"승인"}
