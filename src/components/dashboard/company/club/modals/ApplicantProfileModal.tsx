@@ -15,7 +15,7 @@ interface ApplicantData {
   managingClubList: string[];
 }
 
-export default function ApplicantProfileModal({ applicantId }: { applicantId: number }) {
+export default function ApplicantProfileModal() {
   const image = null;
   // const clubs = true ? [1, 2, 3] : null;
   const [loading, setLoading] = useState(true);
