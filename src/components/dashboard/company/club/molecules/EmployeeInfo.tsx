@@ -48,7 +48,7 @@ export default function EmployeeInfo({ memberId }: { memberId: string }) {
         <Input 
           readOnly 
           name="date" 
-          label="입사일" 
+          label="가입일" 
           value={memberData?.createdDate ? formatDate(convertArrayToDate(memberData.createdDate)) : ''} 
         />
       </div>
