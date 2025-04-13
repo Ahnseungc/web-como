@@ -25,88 +25,88 @@ const tableHeadings = [
   "상태",
 ];
 
-const clubs = [
-  {
-    id: 1,
-    applicant: "신청자",
-    department: "경영팀",
-    title: "동호회명",
-    date: "2024-07-04 12:33:57",
-    status: "active",
-  },
-  {
-    id: 2,
-    applicant: "신청자",
-    department: "경영팀",
-    title: "동호회명",
-    date: "2024-07-04 12:33:57",
-    status: "active",
-  },
-  {
-    id: 3,
-    applicant: "신청자",
-    department: "경영팀",
-    title: "동호회명",
-    date: "2024-07-04 12:33:57",
-    status: "disband",
-  },
-  {
-    id: 4,
-    applicant: "신청자",
-    department: "경영팀",
-    title: "동호회명",
-    date: "2024-07-04 12:33:57",
-    status: "active",
-  },
-  {
-    id: 5,
-    applicant: "신청자",
-    department: "경영팀",
-    title: "동호회명",
-    date: "2024-07-04 12:33:57",
-    status: "disband",
-  },
-  {
-    id: 6,
-    applicant: "신청자",
-    department: "경영팀",
-    title: "동호회명",
-    date: "2024-07-04 12:33:57",
-    status: "active",
-  },
-  {
-    id: 7,
-    applicant: "신청자",
-    department: "경영팀",
-    title: "동호회명",
-    date: "2024-07-04 12:33:57",
-    status: "active",
-  },
-  {
-    id: 8,
-    applicant: "신청자",
-    department: "경영팀",
-    title: "동호회명",
-    date: "2024-07-04 12:33:57",
-    status: "disband",
-  },
-  {
-    id: 9,
-    applicant: "신청자",
-    department: "경영팀",
-    title: "동호회명",
-    date: "2024-07-04 12:33:57",
-    status: "active",
-  },
-  {
-    id: 10,
-    applicant: "신청자",
-    department: "경영팀",
-    title: "동호회명",
-    date: "2024-07-04 12:33:57",
-    status: "active",
-  },
-];
+// const clubs = [
+//   {
+//     id: 1,
+//     applicant: "신청자",
+//     department: "경영팀",
+//     title: "동호회명",
+//     date: "2024-07-04 12:33:57",
+//     status: "active",
+//   },
+//   {
+//     id: 2,
+//     applicant: "신청자",
+//     department: "경영팀",
+//     title: "동호회명",
+//     date: "2024-07-04 12:33:57",
+//     status: "active",
+//   },
+//   {
+//     id: 3,
+//     applicant: "신청자",
+//     department: "경영팀",
+//     title: "동호회명",
+//     date: "2024-07-04 12:33:57",
+//     status: "disband",
+//   },
+//   {
+//     id: 4,
+//     applicant: "신청자",
+//     department: "경영팀",
+//     title: "동호회명",
+//     date: "2024-07-04 12:33:57",
+//     status: "active",
+//   },
+//   {
+//     id: 5,
+//     applicant: "신청자",
+//     department: "경영팀",
+//     title: "동호회명",
+//     date: "2024-07-04 12:33:57",
+//     status: "disband",
+//   },
+//   {
+//     id: 6,
+//     applicant: "신청자",
+//     department: "경영팀",
+//     title: "동호회명",
+//     date: "2024-07-04 12:33:57",
+//     status: "active",
+//   },
+//   {
+//     id: 7,
+//     applicant: "신청자",
+//     department: "경영팀",
+//     title: "동호회명",
+//     date: "2024-07-04 12:33:57",
+//     status: "active",
+//   },
+//   {
+//     id: 8,
+//     applicant: "신청자",
+//     department: "경영팀",
+//     title: "동호회명",
+//     date: "2024-07-04 12:33:57",
+//     status: "disband",
+//   },
+//   {
+//     id: 9,
+//     applicant: "신청자",
+//     department: "경영팀",
+//     title: "동호회명",
+//     date: "2024-07-04 12:33:57",
+//     status: "active",
+//   },
+//   {
+//     id: 10,
+//     applicant: "신청자",
+//     department: "경영팀",
+//     title: "동호회명",
+//     date: "2024-07-04 12:33:57",
+//     status: "active",
+//   },
+// ];
 
 interface ClubTableProps {
   clubs: Club[];
@@ -196,7 +196,7 @@ export default function ClubTable({ clubs }: ClubTableProps) {
                   if (getStatus(club.status) === "active") {
                     push(`${pathname}/detail/${club.clubId}`);
                   } else {
-					openModal('disband-info')
+					          openModal('disband-info')
                   }
                 }
               }}
