@@ -204,12 +204,15 @@ export default function ApplicationTable({ applications }: ApplicationTableProps
               ) : data === "active" ? (
                 "활동중"
               ) : data === "reject" ? (
-                <button
-                  className="py-1 px-4 rounded border border-point-red body-1 font-medium text-point-red bg-gray-0"
-                  onClick={() => openModal("revert-rejection")}
-                >
-                  {"반려 취소"}
-                </button>
+                // <button
+                //   className="py-1 px-4 rounded border border-point-red body-1 font-medium text-point-red bg-gray-0"
+                //   onClick={() => openModal("revert-rejection")}
+                // >
+                //   {"반려 취소"}
+                // </button>
+                <span className="text-point-red body-1 font-medium">
+                {"반려됨"}
+              </span>
               ) : data === "new" ? (
                 <>
                   <button 
@@ -225,7 +228,8 @@ export default function ApplicationTable({ applications }: ApplicationTableProps
                     className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-gray-600"
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleReject(application.clubId);
+                      openModal("reject-application", { clubId: application.clubId, clubName: application.clubName });
+                      // handleReject(application.clubId);
                     }}
                   >
                     {"반려"}
