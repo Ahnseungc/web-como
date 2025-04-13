@@ -66,9 +66,9 @@ export default function ApplicantProfileModal() {
         <div className="flex items-start justify-between">
           <div className="flex space-x-7">
             <div className="relative object-cover w-[200px] h-[200px] rounded-xl bg-brand-black">
-              {image && (
+              {applicantData?.profileImage && (
                 <Image
-                  src={ applicantData?.profileImage || image}
+                  src={applicantData?.profileImage}
                   alt="직원 사진"
                   fill
                   sizes="15vw"
