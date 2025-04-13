@@ -5,12 +5,23 @@ import { cn, formatDate, openModal } from "@/lib/utils";
 
 type ClubStatus = "active" | "disband";
 
+interface Club {
+  applicantId: number;
+  applicantName: string;
+  department: string;
+  clubId: number;
+  clubName: string;
+  createdAt: string;
+  status: 'APPROVED' | 'SIGNOUT';
+}
+
 const tableHeadings = [
   "순번",
   "신청자",
   "부서",
   "동호회명",
-  "최근 활동일",
+  // "최근 활동일",
+  "동호회 개설일",
   "상태",
 ];
 
@@ -97,10 +108,40 @@ const clubs = [
   },
 ];
 
-export default function ClubTable() {
+interface ClubTableProps {
+  clubs: Club[];
+}
+export default function ClubTable({ clubs }: ClubTableProps) {
   const pathname = usePathname();
   const { push } = useRouter();
 
+  console.log("clubs", clubs);
+
+  const getStatus = (status: string): ClubStatus => {
+    switch (status) {
+      case 'APPROVED': return 'active';
+      case 'SIGNOUT': return 'disband';
+      default: return 'active';
+    }
+  };
+
+  const formatAppliedDate = (dateArray: number[]) => {
+    if (!Array.isArray(dateArray) || dateArray.length < 6) {
+      console.error("Invalid dateArray:", dateArray); // 오류 로그 추가
+      return '';
+    }
+
+    const [year, month, day, hour, minute] = dateArray; // second는 기본값으로 처리
+    const second = dateArray.length === 6 ? dateArray[5] : 0; // second가 없으면 0으로 설정
+  
+    // 각 값이 유효한지 확인
+    if (isNaN(year) || isNaN(month) || isNaN(day) || isNaN(hour) || isNaN(minute) || isNaN(second)) {
+      console.error("Invalid date values:", { year, month, day, hour, minute, second });
+      return '';
+    }
+    return formatDate(new Date(year, month - 1, day, hour, minute, second));
+  };
+  
   return (
     <ul className="flex flex-col gap-1">
       <li className="flex border-y border-gray-400 bg-gray-200">
@@ -119,15 +160,15 @@ export default function ClubTable() {
           </div>
         ))}
       </li>
-      {clubs.map((club, idx) => (
-        <li key={club.id} className="flex border-b border-gray-400 bg-gray-0">
+      {clubs && clubs.length > 0 && clubs.map((club, idx) => (
+        <li key={club.clubId} className="flex border-b border-gray-400 bg-gray-0">
           {[
-            club.id,
-            club.applicant,
+            club.clubId,
+            club.applicantName,
             club.department,
-            club.title,
-            club.date,
-            club.status,
+            club.clubName,
+            formatAppliedDate(club.createdAt as unknown as number[]),
+            getStatus(club.status),
           ].map((data, i) => (
             <div
               key={data}
@@ -150,10 +191,10 @@ export default function ClubTable() {
               )}
               onClick={() => {
                 if (i === 1) {
-                  openModal("applicant-profile");
+                  openModal("applicant-profile", { applicantId: club.applicantId });
                 } else if (i === 3) {
-                  if (club.status === "active") {
-                    push(`${pathname}/detail/${club.id}`);
+                  if (getStatus(club.status) === "active") {
+                    push(`${pathname}/detail/${club.clubId}`);
                   } else {
 					openModal('disband-info')
                   }
