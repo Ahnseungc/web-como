@@ -74,7 +74,7 @@ export default function RejectApplicationModal() {
         }, 2000);
       }
     } catch (error) {
-      alert("동호회 반려 처리 오류"); 
+      // alert("동호회 반려 처리 오류"); 
       console.error('동호회 반려 처리 오류:', error);
     }
   };
