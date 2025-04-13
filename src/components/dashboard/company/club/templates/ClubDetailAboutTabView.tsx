@@ -9,7 +9,7 @@ export default function ClubDetailAboutTabView() {
   return (
     <>
       <ClubDetailInfo clubId={clubId} />
-      <ClubMemberList />
+      <ClubMemberList clubId={clubId} />
     </>
   );
 }
