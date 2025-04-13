@@ -65,9 +65,16 @@ export default function RejectApplicationModal() {
 
       const data = await response.json();
       if (data.resultCode === 'OK') {
-        window.location.reload(); // 성공 시 페이지 새로고침
+        // 성공 메시지 표시
+        alert("신청이 성공적으로 반려되었습니다."); 
+        
+        // 2초 후에 페이지를 새로고침
+        setTimeout(() => {
+          window.location.reload(); // 페이지 새로고침
+        }, 2000);
       }
     } catch (error) {
+      alert("동호회 반려 처리 오류"); 
       console.error('동호회 반려 처리 오류:', error);
     }
   };
