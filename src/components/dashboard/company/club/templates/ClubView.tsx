@@ -24,11 +24,11 @@ export default function ClubView() {
 
   return (
     <>
-      <ClubSearch
+      {/* <ClubSearch
         currentSearchValue={currentSearchValue}
         setCurrentSearchValue={setCurrentSearchValue}
         handleSearch={handleSearch}
-      />
+      /> */}
       <ClubList
         currentSearchFilter={currentSearchValue.filter!}
         currentSearchTerm={searchTerm}
