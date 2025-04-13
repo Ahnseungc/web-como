@@ -50,7 +50,7 @@ export default function RejectApplicationModal() {
     }
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}v1/manager/club/${modalParams.clubId}/reject`, {
+      const response = await fetch(`/api/server/v1/manager/club/${modalParams.clubId}/reject`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
