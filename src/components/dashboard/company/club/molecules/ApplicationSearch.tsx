@@ -13,9 +13,10 @@ const filterList = [
 interface Props {
   onSearch: (searchValue: SearchValue) => void;
   currentDateRange: DateRange;
+  currentPage: number;
 }
 
-export default function ApplicationSearch({ onSearch, currentDateRange }: Props) {
+export default function ApplicationSearch({ onSearch, currentDateRange, currentPage }: Props) {
   const [currentSearchValue, setCurrentSearchValue] = useState<SearchValue>({
     term: "",
     field: "all",
@@ -23,6 +24,7 @@ export default function ApplicationSearch({ onSearch, currentDateRange }: Props)
   
   const handleSearch = async () => {
     console.log("=== 검색 실행 ===");
+    console.log("현재 페이지:", currentPage);
     console.log("검색어:", currentSearchValue.term);
     console.log("필터 값:", currentSearchValue.field);
     console.log("날짜 범위:", currentDateRange);
@@ -30,7 +32,7 @@ export default function ApplicationSearch({ onSearch, currentDateRange }: Props)
 
     try {
       const response = await getData(
-        `v1/manager/club?page=1&search=${currentSearchValue.term}&filter=${currentSearchValue.field}&startDate=${currentDateRange.startDate?.toISOString().split('T')[0]}&endDate=${currentDateRange.endDate?.toISOString().split('T')[0]}`,
+        `v1/manager/club?page=${currentPage}&search=${currentSearchValue.term}&filter=${currentSearchValue.field}&startDate=${currentDateRange.startDate?.toISOString().split('T')[0]}&endDate=${currentDateRange.endDate?.toISOString().split('T')[0]}`,
         true
       );
 

@@ -73,6 +73,7 @@ export default function ClubMemberList({ clubId }: Props) {
 
   const handleSearch  = async () => {
     console.log("=== 검색 실행 ===");
+    console.log("현재 페이지:", currentPage);
     console.log("검색어:", currentSearchValue.term);
     console.log("필터:", fieldList.find(f => f.value === currentSearchValue.field)?.name);
     console.log("필터 값:", currentSearchValue.field);
@@ -80,7 +81,7 @@ export default function ClubMemberList({ clubId }: Props) {
 
     try {
       const response = await getData(
-        `v1/manager/club/${clubId}/member?page=1&search=${currentSearchValue.term}&filter=${currentSearchValue.field}`,
+        `v1/manager/club/${clubId}/member?page=${currentPage}&search=${currentSearchValue.term}&filter=${currentSearchValue.field}`,
         true
       );
 

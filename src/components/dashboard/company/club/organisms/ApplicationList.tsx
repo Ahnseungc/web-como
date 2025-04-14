@@ -69,6 +69,7 @@ export default function ApplicationList(props: Props) {
       <ApplicationSearch
          onSearch={handleSearch}
           currentDateRange={currentDateRange}
+          currentPage={currentPage}
       />
       <DateFilter
         currentDateRange={currentDateRange}

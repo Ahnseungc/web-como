@@ -67,6 +67,7 @@ export default function EmployeeList() {
         <EmployeeSearch
           onSearch={handleSearch}
           currentDateRange={currentDateRange}
+          currentPage={currentPage}
         />
       <div className="flex items-center justify-between gap-6">
         <DateFilter
