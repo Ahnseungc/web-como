@@ -20,7 +20,7 @@ export default function EditEmployeeInfoModal() {
     email: '',
     phoneNumber: '',
   });
-  const [role, setRole] = useState<'MEMBER' | 'EXECUTIVE' | 'ADMIN'>('MEMBER');
+  const [role, setRole] = useState<'MEMBER' | 'EXECUTIVE' | 'MANAGER' | 'ADMIN'>('MEMBER');
 
   useEffect(() => {
     const modal = document.getElementById('employee-edit');
@@ -187,7 +187,7 @@ export default function EditEmployeeInfoModal() {
             <Checkbox
               name="executive"
               content="동호회 관리자 권한"
-              checked={role === 'EXECUTIVE' || role === 'ADMIN'}
+              checked={role === 'EXECUTIVE' || role === 'MANAGER' || role === 'ADMIN'}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 console.log('관리자 권한 클릭됨 - 체크상태:', e.target.checked);
                 if (e.target.checked) {
