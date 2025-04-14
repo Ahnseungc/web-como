@@ -5,6 +5,11 @@ import Backdrop from "@/components/common/Backdrop";
 import Button from "@/components/common/Button";
 
 export default function DeleteSuccessModal() {
+  const closeModal = () => {
+    // 페이지 새로고침
+    window.location.reload();
+  };
+
   return (
     <div id="delete-success" className="hidden modal">
       <Backdrop />

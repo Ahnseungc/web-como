@@ -14,6 +14,7 @@ export default function DeleteReasonModal() {
   const [modalParams, setModalParams] = useState<any>(null);
   const [memberData, setMemberData] = useState<any>(null);
   const [deleteReason, setDeleteReason] = useState('');
+  const [errorMessage, setErrorMessage] = useState(""); // 에러 메시지 상태
 
   useEffect(() => {
     const modal = document.getElementById('delete-reason');
@@ -66,6 +67,11 @@ export default function DeleteReasonModal() {
   // console.log('현재 memberData:', memberData); // 현재 memberData 확인
 
   const handleDelete = async () => {
+    if (!deleteReason) {
+      setErrorMessage("삭제 사유를 입력해주세요.");
+      return;
+    }
+
     try {
       const token = await getAccessToken();
       const response = await fetch(`/api/server/v1/manager/member/${modalParams.memberId}`, {
@@ -88,6 +94,8 @@ export default function DeleteReasonModal() {
     } catch (error) {
       console.error("삭제 요청 오류:", error);
     }
+
+    setErrorMessage(""); // 삭제 후 에러 메시지 초기화
   };
 
   return (
@@ -107,9 +115,13 @@ export default function DeleteReasonModal() {
             <Input
               label={`${memberData?.name || '김오모'}님의 회원 삭제 사유`}
               value={deleteReason}
-              onChange={(e) => setDeleteReason(e.target.value)}
+              onChange={(e) => {
+                setDeleteReason(e.target.value);
+                setErrorMessage(""); // 입력값이 변경될 때 에러 메시지 초기화
+              }}
               placeholder="삭제 사유를 입력해주세요"
             />
+            {errorMessage && <p className="mt-2 text-[16px] font-[500]" style={{ color: "#FF3D00" }}>{errorMessage}</p>} {/* 에러 메시지 표시 */}
           </div>
           <div className="flex items-center justify-between text-gray-900 cursor-pointer select-none">
             <div className="h3 font-semibold">

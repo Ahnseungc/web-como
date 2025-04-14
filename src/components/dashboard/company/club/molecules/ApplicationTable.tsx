@@ -94,30 +94,6 @@ export default function ApplicationTable({ applications }: ApplicationTableProps
     }
   };
 
-  const handleReject = async (clubId: number) => {
-    const token = await getAccessToken();
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}v1/manager/club/${clubId.toString()}/reject`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error('반려 처리 실패');
-      }
-
-      const data = await response.json();
-      if (data.resultCode === 'OK') {
-        window.location.reload();
-      }
-    } catch (error) {
-      console.error('동호회 반려 처리 오류:', error);
-    }
-  };
-
   return (
     <ul className="flex flex-col gap-1">
       <li className="flex border-y border-gray-400 bg-gray-200">
