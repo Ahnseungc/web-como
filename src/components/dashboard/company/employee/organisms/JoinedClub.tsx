@@ -11,7 +11,7 @@ export default function JoinedClub({ memberId }: { memberId: string }) {
     try {
       const response = await getData(`v1/manager/member/${memberId}/clubs`); // API 호출
       console.log("response", response);
-      setClubs(response.data); // 클럽 데이터 설정
+      setClubs(response.data);
     } catch (error) {
       console.error('클럽 데이터 로딩 오류:', error);
     }
