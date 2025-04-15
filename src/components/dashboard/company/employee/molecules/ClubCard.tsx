@@ -1,7 +1,7 @@
 "use client";
 
 import { openModal } from "@/lib/utils";
-import ClubProfileInfo, { ClubProfileCategoryInfo } from "@/components/dashboard/club/common/ClubProfileInfo";
+import { ClubProfileCategoryInfo } from "@/components/dashboard/club/common/ClubProfileInfo";
 
 export default function ClubCard({ club }: { club: any }) {
   console.log("club", club);
@@ -20,7 +20,6 @@ export default function ClubCard({ club }: { club: any }) {
             {club.intro || "동호회 설명"} {/* description이 없을 경우 기본값 표시 */}
           </div>
         </div>
-        <ClubProfileInfo club={club}/>
         <ClubProfileCategoryInfo club={club}/>
       </div>
     </div>
