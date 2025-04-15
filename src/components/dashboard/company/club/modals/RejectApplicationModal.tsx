@@ -64,14 +64,13 @@ export default function RejectApplicationModal() {
       }
 
       const data = await response.json();
+      console.log("data", data);
+
       if (data.resultCode === 'OK') {
-        // 성공 메시지 표시
         alert("신청이 성공적으로 반려되었습니다."); 
-        
-        // 2초 후에 페이지를 새로고침
         setTimeout(() => {
-          window.location.reload(); // 페이지 새로고침
-        }, 2000);
+          window.location.reload(); // 1초 후에 페이지 새로고침
+        }, 1000); // 1000ms = 1초
       }
     } catch (error) {
       // alert("동호회 반려 처리 오류"); 
@@ -108,7 +107,7 @@ export default function RejectApplicationModal() {
         </div>
         <div className="flex space-x-3">
           <Button content="닫기" onClick={() => closeModal()} type="button" />
-          <Button content="반려하기" primary type="submit" onClick={handleReject} />
+          <Button content="반려하기" primary type="button" onClick={handleReject} />
         </div>
       </form>
     </div>
