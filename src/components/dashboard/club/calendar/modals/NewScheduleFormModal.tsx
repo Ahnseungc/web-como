@@ -78,7 +78,7 @@ export default function NewScheduleFormModal() {
                   </div>
                 </div>
                 <div className="body-1 font-medium text-gray-500">
-                  <ClubProfileInfo />
+                  {/* <ClubProfileInfo /> */}
                   <span>{"회장_김오모 / 부회장_박오모 / 총무_문오모 "}</span>
                 </div>
               </div>
