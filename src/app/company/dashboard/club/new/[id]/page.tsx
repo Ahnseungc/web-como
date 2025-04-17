@@ -51,7 +51,7 @@ export default function ApplicationDetailPage() {
     detail: "주요 운영 계획",
     calculationBasis: "산출 기초",
     businessItem: "사업 항목 및 내용",
-    bank: "회비 관리 통장",
+    bank: "동호회 회칙",
     signature : "서명 이미지"
   };
 
