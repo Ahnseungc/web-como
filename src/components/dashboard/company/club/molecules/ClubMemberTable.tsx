@@ -95,7 +95,7 @@ interface ClubMember {
   department: string;
   profileMessage: string;
   createdDate: string;
-  role: string;
+  status: string;
 }
 
 interface ClubMemberTableProps {
@@ -107,11 +107,8 @@ export default function ClubMemberTable({ clubMembers }: ClubMemberTableProps) {
   
   const getStatus = (status: string): MemberStatus => {
     switch (status) {
-      case 'MEMBER':
-        case 'MANAGER':
-          case 'EXECUTIVE':
-            case 'ADMIN':
-              return 'active';
+      case 'APPROVED':
+        return 'active';
       case 'SIGNOUT': return 'leave';
       default: return "";
     }
@@ -165,7 +162,7 @@ export default function ClubMemberTable({ clubMembers }: ClubMemberTableProps) {
             member.department,
             member.profileMessage,
             formatAppliedDate(member.createdDate as unknown as number[]),
-            getStatus(member.role),
+            getStatus(member.status),
           ].map((data, i) => (
             <div
               key={i}
