@@ -52,10 +52,11 @@ export default function ApplicationSearch({ onSearch, currentDateRange, currentP
     }
 
   }
+  
   return (
     <Search
       // filterList={filterList}
-       currentValue={currentSearchValue}
+      currentValue={currentSearchValue}
       handleChange={({ term, field }) => {
         setCurrentSearchValue((prev) => {
           const newValue = { term: term || '', field: field !== undefined ? field : prev.field };
