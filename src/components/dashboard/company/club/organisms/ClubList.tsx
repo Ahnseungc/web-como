@@ -9,6 +9,8 @@ import ClubTable from "@/components/dashboard/company/club/molecules/ClubTable";
 import { startOfToday } from "date-fns";
 import { getData } from "@/api/action";
 import { useEffect } from "react";
+import ClubSearch from "../molecules/ClubSearch";
+import { SearchValue } from "@/lib/types/search";
 
 interface Props {
   currentSearchTerm: string;
@@ -30,9 +32,9 @@ export default function ClubList(props: Props) {
     return koreaDate.toISOString().split('T')[0];
   };
 
-  const loadClubs = async () => {
+  const loadClubs = async (searchValue: SearchValue = { term: "", field: "all" }) => {
     try {
-      const response = await getData(`v1/manager/club/manage-list?page=${currentPage}&startDate=${formatDateToString(currentDateRange.startDate)}&endDate=${formatDateToString(currentDateRange.endDate)}`, true);
+      const response = await getData(`v1/manager/club/manage-list?page=${currentPage}&search=${searchValue.term}&filter=${searchValue.field}&startDate=${formatDateToString(currentDateRange.startDate)}&endDate=${formatDateToString(currentDateRange.endDate)}`, true);
       console.log(response.data)
       if (response.resultCode === 'OK') {
         console.log("Club Data:", response.data); // 데이터 확인
@@ -58,8 +60,17 @@ export default function ClubList(props: Props) {
     }
   };
 
+  const handleSearch = (searchValue: SearchValue) => {
+    loadClubs(searchValue);
+  };
+
   return (
     <div className="space-y-4 p-8 rounded-2xl bg-gray-0">
+      <ClubSearch
+        onSearch={handleSearch} 
+        currentDateRange={currentDateRange}
+        currentPage={currentPage}
+      />
       <DateFilter
         currentDateRange={currentDateRange}
         handleDateRangeChange={handleDateRangeChange}
