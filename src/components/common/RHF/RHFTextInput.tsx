@@ -78,7 +78,7 @@ export default function RHFTextInput<T extends FieldValues>({
               />
               {maxLength && (
                 <span className="text-base font-medium text-gray-600">
-                  {value.length}자/{maxLength}자
+                  {value?.length ?? 0}자/{maxLength}자
                 </span>
               )}
             </div>

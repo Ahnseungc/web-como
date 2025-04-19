@@ -22,7 +22,6 @@ export default function DashboardSchedule() {
     const loadSchedules = async () => {
       try {
         const res = await getData("v1/executive/club/{clubId}/dashboard/schedules/upcoming", true);
-        console.log("스케줄 응답:", res); // 디버깅용
         
         if (res.resultCode === 'OK' && res.data) {
           setScheduleData(res.data);

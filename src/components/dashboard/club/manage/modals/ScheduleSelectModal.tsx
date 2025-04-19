@@ -17,7 +17,7 @@ export default function ScheduleSelectModal({ handleModalOpen }: Props) {
   const activityPlanFrequency = useWatch({ name: "activityPlanFrequency" });
 
   // 요일 선택 state
-  const [selectedDays, setSelectedDays] = useState<string[]>(activityPlanDays);
+  const [selectedDays, setSelectedDays] = useState<string[]>(activityPlanDays ?? []);
 
   // 요일 선택 함수
   const handleDayClick = (e: React.MouseEvent) => {
@@ -27,7 +27,7 @@ export default function ScheduleSelectModal({ handleModalOpen }: Props) {
     const clickedDay = target.dataset.day as string;
 
     // 현재 데이터셋에 클릭된 요일이 있다면 제거
-    if (selectedDays.includes(clickedDay)) {
+    if (Array.isArray(selectedDays) && selectedDays.includes(clickedDay)) {
       setSelectedDays((prev) => prev.filter((day) => day !== clickedDay));
     }
     // 현재 데이터셋에 클릭된 요일이 없다면 추가
@@ -68,7 +68,7 @@ export default function ScheduleSelectModal({ handleModalOpen }: Props) {
               key={day}
               className={cn(
                 "flex h-[34px] w-[34px] cursor-pointer items-center justify-center rounded-full border border-gray-300 text-base font-medium transition-colors duration-100",
-                selectedDays.includes(day) && "bg-brand-orange text-gray-50"
+                selectedDays?.includes(day) && "bg-brand-orange text-gray-50"
               )}
               onClick={handleDayClick}
               data-day={day}

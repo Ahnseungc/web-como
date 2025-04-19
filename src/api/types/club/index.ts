@@ -2,7 +2,7 @@ import { CATEGORY } from "@/lib/types/enum";
 
 export interface ClubIndexData {
   clubImage: string;
-  name: string;
+  clubName: string;
   companyName: string;
   category: keyof typeof CATEGORY;
   goal: string;

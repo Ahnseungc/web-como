@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { formatTime } from "@/lib/utils";
 import { ClubIndexSchemaType } from "@/lib/types/schema";
 import ScheduleSelectModal from "../modals/ScheduleSelectModal";
+import RHFTextInput from "@/components/common/RHF/RHFTextInput";
 
 export default function ActivitySchedule() {
   const activityPlanDays = useWatch<ClubIndexSchemaType>({
@@ -17,6 +18,11 @@ export default function ActivitySchedule() {
   const activityTime = useWatch<ClubIndexSchemaType>({
     name: "activityTime",
   }) as string;
+  const activityPlan = useWatch<ClubIndexSchemaType>({
+    name: "activityPlan",
+  }) as string; 
+  console.log("6. ActivitySchedule 실행됨");
+
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [formattedActivityPlan, setFormattedActivityPlan] =
     useState<string>("활동 일정을 선택해주세요");
@@ -25,25 +31,37 @@ export default function ActivitySchedule() {
     setModalIsOpen((prev) => !prev);
   };
 
+  // useEffect(() => {
+  //   if (
+  //     !activityPlanDays || activityPlanDays.length === 0 ||
+  //     !activityPlanFrequency ||
+  //     !activityTime
+  //   ) {
+  //     setFormattedActivityPlan("활동 일정을 선택해주세요");
+  //     return;
+  //   }
+
+  //   const now = new Date();
+  //   const [hours, mins] = activityTime.split(":");
+  //   now.setHours(Number(hours) || 0);
+  //   now.setMinutes(Number(mins) || 0);
+
+  //   setFormattedActivityPlan(
+  //     `${activityPlanDays.map((day) => day + "요일").join(", ")} / ${activityPlanFrequency} / ${formatTime(now, true)}`
+  //   );
+  // }, [activityPlanDays, activityPlanFrequency, activityTime]);
+
   useEffect(() => {
-    if (
-      activityPlanDays.length === 0 ||
-      !activityPlanFrequency ||
-      !activityTime
-    ) {
+    if (typeof activityPlan === "string") { 
+      // activityPlan 파싱
+      const [days, frequency, time] = activityPlan.split('/').map(item => item.trim());
+
+      // 포맷된 활동 일정 설정
+      setFormattedActivityPlan(`${days} / ${frequency} / ${time}`);
+    } else {
       setFormattedActivityPlan("활동 일정을 선택해주세요");
-      return;
     }
-
-    const now = new Date();
-    const [hours, mins] = activityTime.split(":");
-    now.setHours(Number(hours) || 0);
-    now.setMinutes(Number(mins) || 0);
-
-    setFormattedActivityPlan(
-      `${activityPlanDays.map((day) => day + "요일").join(", ")} / ${activityPlanFrequency} / ${formatTime(now, true)}`
-    );
-  }, [activityPlanDays, activityPlanFrequency, activityTime]);
+  }, [activityPlan]);
 
   return (
     <div className="space-y-4">
@@ -65,6 +83,16 @@ export default function ActivitySchedule() {
           <ScheduleSelectModal handleModalOpen={handleModalOpen} />
         )}
       </button>
+      <div>
+        <RHFTextInput<ClubIndexSchemaType>
+          id="location"
+          name="location" 
+          labelText="활동 장소"
+          autoComplete="off"
+          maxLength={18}
+          inputStyle="resize-y"
+        />
+      </div>
     </div>
   );
 }

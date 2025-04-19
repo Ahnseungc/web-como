@@ -39,7 +39,9 @@ export const ClubIndexSchema = z.object({
     .max(18, { message: "한줄 소개는 최대 18자까지 가능합니다" }),
   roadAddress: z.string(),
   placeName: z.string(),
-  name: z.string(),
+  clubName: z.string(),
+  location: z.string(),
+  activityPlan: z.string(),
 });
 
 export type ClubIndexSchemaType = z.infer<typeof ClubIndexSchema>;
@@ -56,5 +58,7 @@ export const ClubIndexDefaultValues: ClubIndexSchemaType = {
   intro: "",
   roadAddress: "",
   placeName: "",
-  name: "",
+  clubName: "",
+  location: "",
+  activityPlan: "",
 };
