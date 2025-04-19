@@ -3,8 +3,27 @@
 
 import RHFTextInput from "@/components/common/RHF/RHFTextInput";
 import { ClubIndexSchemaType } from "@/lib/types/schema";
+import { useEffect, useState } from "react";
+import { getData } from "@/api/action";
+import { ClubIndexData } from "@/api/types/club";
 
-export default function ClubBasicInfo() {
+export default function ClubBasicInfo({ clubId }: { clubId: string | null }) {
+  console.log("4. ClubBasicInfo 실행됨");
+  const [clubBasicInfo, setClubBasicInfo] = useState<ClubIndexData | null>(null);
+
+  useEffect(() => {
+    const fetchClubBasicInfo = async () => {
+      try {
+        const res = await getData(`v1/manager/club/${clubId}`);
+        setClubBasicInfo(res.data);
+      } catch (error) {
+        console.error("동호회 기본 정보 로딩 오류:", error);
+      }
+    };
+
+    fetchClubBasicInfo();
+  }, [clubId]);
+
   return (
     <div className="flex w-full flex-col gap-6 rounded-xl bg-gray-0 p-8">
       <h2 className="font-bold text-gray-900">기본 정보</h2>
@@ -19,7 +38,7 @@ export default function ClubBasicInfo() {
 
       <RHFTextInput<ClubIndexSchemaType>
         id="clubName"
-        name="name"
+        name="clubName"
         labelText="동호회명"
         placeholder="예) 에너제틱 산악 동호회"
         autoComplete="off"
@@ -62,7 +81,7 @@ export default function ClubBasicInfo() {
         inputStyle="resize-y"
       />
 
-      <div className="flex items-center gap-3">
+      {/* <div className="flex items-center gap-3">
         <h2 className="font-bold text-gray-900">동호회 정보</h2>
         <button
           type="button"
@@ -70,7 +89,7 @@ export default function ClubBasicInfo() {
         >
           강제해체
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }
