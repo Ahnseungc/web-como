@@ -51,15 +51,15 @@ const menuList: MenuItem[] = [
         routes: ["/manage/calendar"],
       },
       {
-        name: "자동 보고서 작성",
+        name: "활동 결과 보고 작성",
         link: "/manage/report",
         routes: ["/manage/report"],
       },
-      {
-        name: "비품 관리",
-        link: "/manage/supply",
-        routes: ["/manage/supply"],
-      },
+      // {
+      //   name: "비품 관리",
+      //   link: "/manage/supply",
+      //   routes: ["/manage/supply"],
+      // },
       {
         name: "공지사항 관리",
         link: "/manage/announcement",
