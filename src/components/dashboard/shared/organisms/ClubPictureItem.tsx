@@ -11,23 +11,31 @@ interface Props {
 }
 
 export default function ClubPictureItem({ item, readonly }: Props) {
+  console.log("ClubPictureItem 실행됨")
+  console.log("ClubPictureItem 에서 item", item);
+
+  const handleDeleteClick = () => {
+    console.log("삭제 버튼이 클릭되었습니다:", item.id); // 클릭 추적
+    openModal("delete-picture", { activityId: item.id });
+  };
+
   return (
     <div className="space-y-6 p-8 rounded-2xl bg-gray-0">
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-4">
-          <Avatar size="w-[60px] h-[60px]" src={item.profile} />
+          <Avatar size="w-[60px] h-[60px]" src={item.writerProfileImage} />
           <div className="flex flex-col">
-            <span className="h4 font-bold text-gray-900">{item.nickName}</span>
+            <span className="h4 font-bold text-gray-900">{item.writerNickname}</span>
             <div className="space-x-2 body-1 font-medium text-gray-500">
-              <span>{item.department}</span>
-              <span>{formatDate(new Date(item.createDate))}</span>
+              <span>{item.writerDepartment}</span>
+              <span>{formatDate(new Date(item.date))}</span>
             </div>
           </div>
         </div>
         {!readonly && (
           <button
             className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-gray-800"
-            onClick={() => openModal("delete-picture")}
+            onClick={handleDeleteClick}
           >
             {"삭제"}
           </button>
@@ -35,7 +43,7 @@ export default function ClubPictureItem({ item, readonly }: Props) {
       </div>
       <p className="h3 font-medium text-gray-900">{item.content}</p>
       <div className="flex gap-4 flex-nowrap w-[75vw] pb-4 overflow-x-auto scrollbar-custom">
-        {item.activityImages.map((picture, i) => (
+        {item.photos.map((picture, i) => (
           <div key={i} className="relative w-80 h-80 bg-gray-300">
             <Image
               src={picture}
