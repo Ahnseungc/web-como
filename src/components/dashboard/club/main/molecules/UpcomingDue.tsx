@@ -76,11 +76,12 @@ export default function DashboardUpcomingDue() {
       </div>
       <div className="space-y-1">
         <div className="space-x-2 h3 font-bold">
-          <span className="text-brand-orange">{"일정 모집 마감"}</span>
-          <span className="text-gray-900">{"~8/12(금)18시"}</span>
+          {/* <span className="text-brand-orange">{"일정 모집 마감"}</span> */}
+          <span className="text-brand-orange">{"다가오는 마감이 없습니다."}</span>
+          {/* <span className="text-gray-900">{"~8/12(금)18시"}</span> */}
         </div>
         <div className="h3 font-medium text-gray-600">
-          {"동호회 관리비 제출 및 등등"}
+          {/* {"동호회 관리비 제출 및 등등"} */}
         </div>
       </div>
     </div>
