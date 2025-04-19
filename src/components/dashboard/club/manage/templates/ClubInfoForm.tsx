@@ -21,8 +21,8 @@ const categoryObject: Record<string, any> = {
 };
 
 export default function ClubInfoForm({ clubId }: { clubId: string | null }) {
-  console.log("1. ClubInfoForm 실행됨");
   const [clubInfo, setClubInfo] = useState<ClubIndexData | null>(null);
+  console.log("2. ClubInfoForm 실행됨");
 
   // const { data, isLoading } = useQuery({
   //   queryKey: ["club-manage", "info"],
@@ -31,7 +31,9 @@ export default function ClubInfoForm({ clubId }: { clubId: string | null }) {
   // });
 
   // 이후 이 데이터도 api 명세서에 맞게 바꿔야함
-  const { data, isLoading } = useGetClubIndexData();
+  // const { data, isLoading } = useGetClubIndexData();
+  // console.log("3. ClubInfoForm 에서 data", data);
+  // console.log("3. ClubInfoForm 에서 clubImage", data?.data?.clubImage);
 
   const {
     handleSubmit,
@@ -39,15 +41,15 @@ export default function ClubInfoForm({ clubId }: { clubId: string | null }) {
     formState: { errors },
   } = useFormContext<ClubIndexSchemaType>();
 
-  useEffect(() => {
-    if (data) {
-      const transformedData: ClubIndexSchemaType = {
-        ...data.data,
-        category: categoryObject[data.data.category],
-      };
-      reset(transformedData);
-    }
-  }, [data, reset]);
+  // useEffect(() => {
+  //   if (data) {
+  //     const transformedData: ClubIndexSchemaType = {
+  //       ...data.data,
+  //       category: categoryObject[data?.data?.category ?? ""], // 기본값 설정
+  //     };
+  //     reset(transformedData);
+  //   }
+  // }, [data, reset]);
 
   // 제출 함수 data들을 기반으로 통신을 해주세요.
   const onSubmit: SubmitHandler<ClubIndexSchemaType> = (data) => {
@@ -58,9 +60,25 @@ export default function ClubInfoForm({ clubId }: { clubId: string | null }) {
     console.log("에러: ", errors);
   }, [errors]);
 
-  if (isLoading) {
-    return <ClubIndexLoading />;
-  }
+  // if (isLoading) {
+  //   return <ClubIndexLoading />;
+  // }
+
+  useEffect(() => {
+    const fetchClubInfo = async () => {
+      if (!clubId) return; // clubId가 없으면 호출하지 않음
+  
+      try {
+        const response = await getData(`v1/executive/club/${clubId}`, true);
+        setClubInfo(response.data); // clubInfo 설정
+        console.log("clubInfo", response.data); // API 응답 확인
+      } catch (error) {
+        console.error("클럽 정보를 가져오는 데 실패했습니다.", error);
+      }
+    };
+  
+    fetchClubInfo(); // 비동기 함수 호출
+  }, [clubId]); // clubId가 변경될 때마다 호출
 
   return (
     <form className="flex gap-3" onSubmit={handleSubmit(onSubmit)}>
