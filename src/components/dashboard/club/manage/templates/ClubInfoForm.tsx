@@ -1,15 +1,18 @@
 "use client";
 
 import { SubmitHandler, useFormContext } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useGetClubIndexData } from "@/app/club/dashboard/manage/_lib/queries";
 import { ClubIndexSchemaType } from "@/lib/types/schema";
 import ClubIndexLoading from "./ClubIndexLoading";
 import ClubIndexImageSection from "../organisms/ClubIndexImageSection";
 import ClubIndexInfoSection from "../organisms/ClubIndexInfoSection";
+import { getClubId } from "@/lib/cookies";
+import { getData } from "@/api/action";
+import { ClubIndexData } from "@/api/types/club";
 
 const categoryObject: Record<string, any> = {
-  "ART/CULTURE": "문화/예술",
+  "ART_CULTURE": "문화/예술",
   "ACTIVITY": "액티비티",
   "CREATIVE": "크리에이티브",
   "FOODBEVERAGE": "F&B",
@@ -17,7 +20,10 @@ const categoryObject: Record<string, any> = {
   "STUDY": "스터디",
 };
 
-export default function ClubInfoForm() {
+export default function ClubInfoForm({ clubId }: { clubId: string | null }) {
+  console.log("1. ClubInfoForm 실행됨");
+  const [clubInfo, setClubInfo] = useState<ClubIndexData | null>(null);
+
   // const { data, isLoading } = useQuery({
   //   queryKey: ["club-manage", "info"],
   //   queryFn: async (): Promise<ClubIndexData> =>
@@ -60,9 +66,9 @@ export default function ClubInfoForm() {
     <form className="flex gap-3" onSubmit={handleSubmit(onSubmit)}>
       <ClubIndexImageSection<ClubIndexSchemaType>
         name="clubImage"
-        clubImage={data?.data.clubImage as string}
+        clubImage={clubInfo?.clubImage as string}
       />
-      <ClubIndexInfoSection />
+      <ClubIndexInfoSection clubId={clubId} />
     </form>
   );
 }
