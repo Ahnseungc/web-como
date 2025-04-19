@@ -54,7 +54,6 @@ export default function ClubManagePage() {
     const fetchClubId = async () => {
       const id = await getClubId(); // 비동기적으로 clubId 가져오기
       console.log("0. ClubManagePage 실행됨");
-      console.log("1. ClubManagePage 에서 clubId", id);
       setClubId(id || null);
     };
 
