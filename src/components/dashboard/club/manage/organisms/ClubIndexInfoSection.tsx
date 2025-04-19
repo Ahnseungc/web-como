@@ -10,7 +10,7 @@ interface ClubIndexInfoSectionProps {
 }
 
 export default function ClubIndexInfoSection({ clubId }: ClubIndexInfoSectionProps) {
-  console.log("3. ClubIndexInfoSection 실행됨");
+  console.log("4. ClubIndexInfoSection 실행됨");
 
   return (
     <section className="flex w-full flex-col gap-15">

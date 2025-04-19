@@ -19,7 +19,7 @@ export default function ClubIndexImageSection<T extends FieldValues>({
   // 밑의 previewImage는 미리보기를 위한 상태값
   const [previewImage, setPreviewImage] = useState<string>(clubImage);
 
-  console.log("2. ClubIndexImageSection 실행됨");
+  console.log("3. ClubIndexImageSection 실행됨");
   
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

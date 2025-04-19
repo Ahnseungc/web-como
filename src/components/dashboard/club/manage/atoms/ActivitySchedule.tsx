@@ -21,7 +21,7 @@ export default function ActivitySchedule() {
   const activityPlan = useWatch<ClubIndexSchemaType>({
     name: "activityPlan",
   }) as string; 
-  console.log("5. ActivitySchedule 실행됨");
+  console.log("6. ActivitySchedule 실행됨");
 
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
   const [formattedActivityPlan, setFormattedActivityPlan] =

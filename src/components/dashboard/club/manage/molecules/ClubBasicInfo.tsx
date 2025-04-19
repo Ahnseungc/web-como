@@ -8,7 +8,7 @@ import { getData } from "@/api/action";
 import { ClubIndexData } from "@/api/types/club";
 
 export default function ClubBasicInfo({ clubId }: { clubId: string | null }) {
-  console.log("4. ClubBasicInfo 실행됨");
+  console.log("5. ClubBasicInfo 실행됨");
   const [clubBasicInfo, setClubBasicInfo] = useState<ClubIndexData | null>(null);
 
   useEffect(() => {
