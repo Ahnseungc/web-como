@@ -22,8 +22,8 @@ export interface ClubMenuTab {
 const tabList: ClubMenuTab[] = [
   { name: "기본 정보", value: "info" },
   { name: "활동 사진", value: "picture" },
-  { name: "Q&A 관리", value: "qna" },
-  { name: "신청서 관리", value: "application" },
+  // { name: "Q&A 관리", value: "qna" },
+  // { name: "신청서 관리", value: "application" },
   { name: "동호회 상세 규정", value: "policy" },
 ];
 
@@ -34,10 +34,10 @@ const renderCurrentTabPage = (currentTab: ClubMenu, clubId: string | null) => {
       return <RHFClubIndexFormProvider clubId={clubId} />;
     case "picture":
       return <ClubPictureTab />;
-    case "qna":
-      return <ClubQnaTab />;
-    case "application":
-      return <ClubApplicationTab />;
+    // case "qna":
+    //   return <ClubQnaTab />;
+    // case "application":
+    //   return <ClubApplicationTab />;
     case "policy":
       return <ClubPolicyTab />;
   }
