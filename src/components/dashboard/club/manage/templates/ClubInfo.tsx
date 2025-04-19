@@ -86,13 +86,13 @@ export default function ClubInfoTab() {
               name="clubName"
               label="동호회명"
               type="text"
-              value={data.name}
+              value={data.clubName}
             />
             <Input
               name="category"
               label="카테고리"
               type="text"
-              value={CATEGORY[data.category]}
+              value={CATEGORY[data.category as keyof typeof CATEGORY]}
             />
             <Input
               name="purpose"
