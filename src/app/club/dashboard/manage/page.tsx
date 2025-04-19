@@ -24,7 +24,7 @@ const tabList: ClubMenuTab[] = [
   { name: "활동 사진", value: "picture" },
   // { name: "Q&A 관리", value: "qna" },
   // { name: "신청서 관리", value: "application" },
-  { name: "동호회 상세 규정", value: "policy" },
+  { name: "동호회 회칙", value: "policy" },
 ];
 
 const renderCurrentTabPage = (currentTab: ClubMenu, clubId: string | null) => {
