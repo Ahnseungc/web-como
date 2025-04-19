@@ -3,11 +3,11 @@ export interface ActivityPictureData {
 }
 
 export interface ClubWebActivityInfoDTO {
-  activityImages: string[];
-  nickName: string;
-  profile: string;
-  department: string;
-  createDate: string;
   id: number;
+  writerNickname: string;
+  writerDepartment: string;
+  writerProfileImage: string;
   content: string;
+  date: string;
+  photos: string[];
 }

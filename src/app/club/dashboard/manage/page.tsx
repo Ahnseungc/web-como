@@ -33,7 +33,7 @@ const renderCurrentTabPage = (currentTab: ClubMenu, clubId: string | null) => {
       // ClubInfoTab은 읽기 전용으로 이루어진 컴포넌트이기 때문에 react-hook-form으로 이루어진 컴포넌트를 만들었습니다.
       return <RHFClubIndexFormProvider clubId={clubId} />;
     case "picture":
-      return <ClubPictureTab />;
+      return <ClubPictureTab clubId={clubId} />;
     // case "qna":
     //   return <ClubQnaTab />;
     // case "application":
@@ -54,6 +54,7 @@ export default function ClubManagePage() {
     const fetchClubId = async () => {
       const id = await getClubId(); // 비동기적으로 clubId 가져오기
       console.log("0. ClubManagePage 실행됨");
+      console.log("0. ClubManagePage 에서 clubId", id);
       setClubId(id || null);
     };
 
