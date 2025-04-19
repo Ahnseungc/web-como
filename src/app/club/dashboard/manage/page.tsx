@@ -39,7 +39,7 @@ const renderCurrentTabPage = (currentTab: ClubMenu, clubId: string | null) => {
     // case "application":
     //   return <ClubApplicationTab />;
     case "policy":
-      return <ClubPolicyTab />;
+      return <ClubPolicyTab clubId={clubId} />;
   }
 };
 
