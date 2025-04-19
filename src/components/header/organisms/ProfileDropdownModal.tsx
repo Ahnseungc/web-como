@@ -112,7 +112,8 @@ export default function ProfileDropdownModal({ profileImage }: Props) {
       
       // 모달 닫고 페이지 새로고침
       closeModal();
-      refresh();
+      // refresh();
+      window.location.reload();
     } catch (error) {
       console.error("동호회 전환 오류:", error);
     }
