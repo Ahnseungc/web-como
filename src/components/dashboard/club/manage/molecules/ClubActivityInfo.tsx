@@ -13,10 +13,12 @@ export default function ClubActivityInfo() {
     <div className="space-y-6 rounded-xl bg-gray-0 p-8">
       <h2 className="font-bold text-gray-900">활동 정보</h2>
       <ActivitySchedule />
-      <PlaceSearchWithNaverMap<ClubIndexSchemaType>
-        roadAddressDefaultValue={data?.data.roadAddress}
-        placeNameDefaultValue={data?.data.placeName}
-      />
+      <div>
+      </div>
+        {/* <PlaceSearchWithNaverMap<ClubIndexSchemaType>
+          roadAddressDefaultValue={data?.data.roadAddress}
+          placeNameDefaultValue={data?.data.placeName}
+        /> */}
     </div>
   );
 }
