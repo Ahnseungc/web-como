@@ -6,7 +6,7 @@ import PlaceSearchWithNaverMap from "../organisms/PlaceSearchWithNaverMap";
 import { ClubIndexSchemaType } from "@/lib/types/schema";
 
 // 활동 정보
-export default function ClubActivityInfo() {
+export default function ClubActivityInfo({ clubId }: { clubId: string | null }) {
   const { data } = useGetClubIndexData();
 
   return (
