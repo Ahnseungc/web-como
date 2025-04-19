@@ -19,6 +19,8 @@ export default function ClubIndexImageSection<T extends FieldValues>({
   // 밑의 previewImage는 미리보기를 위한 상태값
   const [previewImage, setPreviewImage] = useState<string>(clubImage);
 
+  console.log("2. ClubIndexImageSection 실행됨");
+  
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -45,9 +47,9 @@ export default function ClubIndexImageSection<T extends FieldValues>({
             {...register(name)}
             onChange={handleFileChange}
           />
-          {previewImage && (
+          {clubImage && (
             <Image
-              src={previewImage as string}
+              src={clubImage}
               alt="대표 이미지"
               fill
               priority
