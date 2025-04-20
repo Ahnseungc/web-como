@@ -45,11 +45,11 @@ const menuList: MenuItem[] = [
         link: "/manage/member",
         routes: ["/manage/member"],
       },
-      {
-        name: "동호회 활동 캘린더",
-        link: "/manage/calendar",
-        routes: ["/manage/calendar"],
-      },
+      // {
+      //   name: "동호회 활동 캘린더",
+      //   link: "/manage/calendar",
+      //   routes: ["/manage/calendar"],
+      // },
       // {
       //   name: "활동 결과 보고 작성",
       //   link: "/manage/report",
@@ -93,48 +93,48 @@ const menuList: MenuItem[] = [
   //     },
   //   ],
   // },
-  {
-    name: "활동비 관리",
-    key: "expense",
-    // subMenuList: [
-    //   {
-    //     name: "활동비 사용내역",
-    //     link: "/expense",
-    //     routes: ["/expense", "/expense/new", "/expense/detail"],
-    //   },
-    //   {
-    //     name: "입출금 내역",
-    //     link: "/expense/transaction",
-    //     routes: ["/expense/transaction"],
-    //   },
-    // ],
-  },
-  {
-    name: "공지 및 문의",
-    key: "announcement",
-    // subMenuList: [
-    //   {
-    //     name: "공지사항",
-    //     link: "/announcement",
-    //     routes: ["/announcement", "/announcement/detail"],
-    //   },
-    //   {
-    //     name: "자주 묻는 질문",
-    //     link: "/announcement/faq",
-    //     routes: ["/announcement/faq"],
-    //   },
-    //   {
-    //     name: "서류 다운로드",
-    //     link: "/announcement/document",
-    //     routes: ["/announcement/document"],
-    //   },
-    // ],
-  },
-  {
-    name: "커뮤니티",
-    key: "community",
-    link: "/community",
-  },
+  // {
+  //   name: "활동비 관리",
+  //   key: "expense",
+  //   subMenuList: [
+  //     {
+  //       name: "활동비 사용내역",
+  //       link: "/expense",
+  //       routes: ["/expense", "/expense/new", "/expense/detail"],
+  //     },
+  //     {
+  //       name: "입출금 내역",
+  //       link: "/expense/transaction",
+  //       routes: ["/expense/transaction"],
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: "공지 및 문의",
+  //   key: "announcement",
+  //   subMenuList: [
+  //     {
+  //       name: "공지사항",
+  //       link: "/announcement",
+  //       routes: ["/announcement", "/announcement/detail"],
+  //     },
+  //     {
+  //       name: "자주 묻는 질문",
+  //       link: "/announcement/faq",
+  //       routes: ["/announcement/faq"],
+  //     },
+  //     {
+  //       name: "서류 다운로드",
+  //       link: "/announcement/document",
+  //       routes: ["/announcement/document"],
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: "커뮤니티",
+  //   key: "community",
+  //   link: "/community",
+  // },
 ];
 
 export default function SideBar() {
