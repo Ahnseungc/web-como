@@ -6,8 +6,9 @@ export default function ClubMemberPage() {
   return (
     <>
       <MemberTitle />
-      <MemberSearch />
+      {/* <MemberSearch /> */}
       <MemberList />
     </>
   );
 }
+// 동호회 임원 - 동호회 회원 관리 페이지
