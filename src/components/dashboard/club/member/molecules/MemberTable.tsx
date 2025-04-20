@@ -13,29 +13,30 @@ interface Props {
 export default function MemberTable({ data }: Props) {
   const [selectedId, setSelectedId] = useState<number>();
   const [selectedName, setSelectedName] = useState<string>("");
+  console.log("memberTable data", data)
 
   return (
     <>
       <div className="m-0">
         <NewMemberDetailModal id={selectedId} />
-        <CancelApplicationModal name={selectedName} />
+        {/* <CancelApplicationModal name={selectedName} /> */}
       </div>
       <ul>
         <li className="flex py-0.5 border-y border-gray-400 bg-gray-200">
-          {["순번", "이름", "부서", "사전 설문", "신청 일시", "상태"].map(
+          {["순번", "이름", "부서", "직급", "가입 일시", "상태"].map(
             (heading, i) => (
               <div
                 key={heading}
                 className={cn(
                   "my-3 mx-6 body-1 font-bold text-gray-900",
-                  i === 0 ? "w-8" : "flex-1",
-                  [1, 2].includes(i)
-                    ? "max-w-24"
-                    : [4, 5].includes(i)
-                      ? "max-w-48"
-                      : "",
-                  i === 3 ? "" : "text-center",
-                  i === 5 ? "flex items-center justify-center m-0" : ""
+                  i === 0 ? "w-[5%] pl-4" : "",
+                  i === 1 ? "w-[19%]" : "",
+                  i === 2 ? "w-[19%]" : "",
+                  i === 3 ? "w-[19%]" : "",
+                  i === 4 ? "w-[19%]" : "",
+                  i === 5 ? "w-[19%] pr-4" : "",
+                  i === 1 ? "group-hover:decoration-gray-800" : "",
+                  i === 5 ? "flex items-center justify-center" : ""
                 )}
               >
                 {heading}
@@ -45,34 +46,42 @@ export default function MemberTable({ data }: Props) {
         </li>
         {data && data.length > 0 ? (
           data.map((item, idx) => (
+            // <li
+            //   key={idx}
+            //   className="flex py-0.5 border-b border-gray-400 bg-gray-0 hover:bg-gray-100 transition duration-200 cursor-pointer"
+            //   onClick={() => {
+            //     setSelectedId(item.id);
+            //     openModal("new-member-detail");
+            //   }}
+            // >
             <li
               key={idx}
-              className="flex py-0.5 border-b border-gray-400 bg-gray-0 hover:bg-gray-100 transition duration-200 cursor-pointer"
-              onClick={() => {
-                setSelectedId(item.id);
-                openModal("new-member-detail");
-              }}
+              className="flex py-0.5 border-b border-gray-400 bg-gray-0"
+              // onClick={() => {
+              //   setSelectedId(item.id);
+              //   openModal("new-member-detail");
+              // }}
             >
               {[
                 item.id,
                 item.name,
                 item.department,
-                item.answer,
-                item.createDate,
-                item.processStatus,
+                item.position,
+                item.requestDate,
+                item.status,
               ].map((data, i) => (
                 <div
                   key={data}
                   className={cn(
-                    "my-3 mx-6 body-1 font-medium underline-offset-2 underline decoration-transparent line-clamp-1 transition duration-200",
-                    i === 0 ? "w-8" : "flex-1",
-                    [1, 2].includes(i)
-                      ? "max-w-24"
-                      : [4, 5].includes(i)
-                        ? "max-w-48"
-                        : "",
-                    i === 3 ? "hover:decoration-gray-800" : "text-center",
-                    i === 5 ? "flex items-center justify-center gap-2 m-0" : "",
+                   "my-3 mx-6 body-1 font-bold text-gray-900",
+                    i === 0 ? "w-[5%] pl-4" : "",
+                    i === 1 ? "w-[19%]" : "",
+                    i === 2 ? "w-[19%]" : "",
+                    i === 3 ? "w-[19%]" : "",
+                    i === 4 ? "w-[19%]" : "",
+                    i === 5 ? "w-[19%] pr-4" : "",
+                    i === 1 ? "group-hover:decoration-gray-800" : "",
+                    i === 5 ? "flex items-center justify-center" : "",
                     data === "SIGNOUT"
                       ? "text-gray-500"
                       : data === "APPROVED"
@@ -88,6 +97,8 @@ export default function MemberTable({ data }: Props) {
                   {i === 0 ? (
                     idx + 1
                   ) : i === 4 ? (
+                    Array.isArray(data) ? 
+                    formatDate(new Date(data[0], data[1]-1, data[2])) : 
                     formatDate(new Date(data))
                   ) : i === 5 ? (
                     data === "SIGNOUT" ? (
@@ -126,3 +137,4 @@ export default function MemberTable({ data }: Props) {
     </>
   );
 }
+// 동호회 임원 - 동호회 회원 테이블 컴포넌트

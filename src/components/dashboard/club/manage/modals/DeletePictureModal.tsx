@@ -19,17 +19,17 @@ export default function DeletePictureModal() {
 
   useEffect(() => {
     const modal = document.getElementById('delete-picture');
-    console.log('모달 엘리먼트:', modal); // 모달 엘리먼트 확인
+    // console.log('모달 엘리먼트:', modal); // 모달 엘리먼트 확인
 
     if (modal) {
       const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
           if (mutation.type === 'attributes' && mutation.attributeName === 'data-modal-params') {
             const newParams = modal.dataset.modalParams;
-            console.log('새로운 모달 파라미터:', newParams); // 파라미터 확인
+            // console.log('새로운 모달 파라미터:', newParams); // 파라미터 확인
 
             if (newParams) {
-              console.log('파라미터 파싱:', JSON.parse(newParams)); // 파싱된 파라미터 확인
+              // console.log('파라미터 파싱:', JSON.parse(newParams)); // 파싱된 파라미터 확인
               setModalParams(JSON.parse(newParams));
             }
           }
@@ -88,7 +88,6 @@ export default function DeletePictureModal() {
   useEffect(() => {
     if (modalParams) {
       console.log("모달 파라미터가 변경되었습니다:", modalParams);
-      // 추가적인 로직을 여기에 작성할 수 있습니다.
     }
   }, [modalParams]); // modalParams가 변경될 때마다 실행
 

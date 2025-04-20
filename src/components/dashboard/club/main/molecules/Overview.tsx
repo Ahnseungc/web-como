@@ -71,11 +71,11 @@ export default async function DashboardOverview() {
       <div className="flex gap-8 truncate">
         <div className="flex-1 flex flex-col gap-4 py-3 px-2">
           <span className="h4 font-medium text-gray-400">
-            {"동호회 신규가입 신청"}
+            {"이번 주 가입 회원"}
           </span>
           <Link href={`${CLUB_DASHBOARD_ENDPOINT}/manage/member?filter=new`}>
             <span className="h1 font-extrabold text-brand-orange underline underline-offset-4 decoration-gray-800 hover:decoration-brand-orange transition duration-300">
-              {`${newJoinRequests}건`}
+              {`${newJoinRequests}명`}
             </span>
           </Link>
         </div>

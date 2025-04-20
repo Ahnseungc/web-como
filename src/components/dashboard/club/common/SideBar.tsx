@@ -45,96 +45,96 @@ const menuList: MenuItem[] = [
         link: "/manage/member",
         routes: ["/manage/member"],
       },
-      {
-        name: "동호회 활동 캘린더",
-        link: "/manage/calendar",
-        routes: ["/manage/calendar"],
-      },
-      {
-        name: "자동 보고서 작성",
-        link: "/manage/report",
-        routes: ["/manage/report"],
-      },
-      {
-        name: "비품 관리",
-        link: "/manage/supply",
-        routes: ["/manage/supply"],
-      },
-      {
-        name: "공지사항 관리",
-        link: "/manage/announcement",
-        routes: ["/manage/announcement"],
-      },
-      {
-        name: "동호회 취소 및 해체",
-        link: "/manage/disband",
-        routes: ["/manage/disband"],
-      },
+      // {
+      //   name: "동호회 활동 캘린더",
+      //   link: "/manage/calendar",
+      //   routes: ["/manage/calendar"],
+      // },
+      // {
+      //   name: "활동 결과 보고 작성",
+      //   link: "/manage/report",
+      //   routes: ["/manage/report"],
+      // },
+      // {
+      //   name: "비품 관리",
+      //   link: "/manage/supply",
+      //   routes: ["/manage/supply"],
+      // },
+      // {
+      //   name: "공지사항 관리",
+      //   link: "/manage/announcement",
+      //   routes: ["/manage/announcement"],
+      // },
+      // {
+      //   name: "동호회 취소 및 해체",
+      //   link: "/manage/disband",
+      //   routes: ["/manage/disband"],
+      // },
     ],
   },
-  {
-    name: "omo 예약 관리",
-    key: "shop",
-    subMenuList: [
-      {
-        name: "동호회 콘텐츠 예약",
-        link: "/shop",
-        routes: ["/shop", "/shop/item", "/shop/host"],
-      },
-      {
-        name: "예약한 콘텐츠 관리",
-        link: "/shop/reservation",
-        routes: ["/shop/reservation", "/shop/review"],
-      },
-      {
-        name: "1:1 문의",
-        link: "/shop/inquiry",
-        routes: ["/shop/inquiry"],
-      },
-    ],
-  },
-  {
-    name: "활동비 관리",
-    key: "expense",
-    subMenuList: [
-      {
-        name: "활동비 사용내역",
-        link: "/expense",
-        routes: ["/expense", "/expense/new", "/expense/detail"],
-      },
-      {
-        name: "입출금 내역",
-        link: "/expense/transaction",
-        routes: ["/expense/transaction"],
-      },
-    ],
-  },
-  {
-    name: "공지 및 문의",
-    key: "announcement",
-    subMenuList: [
-      {
-        name: "공지사항",
-        link: "/announcement",
-        routes: ["/announcement", "/announcement/detail"],
-      },
-      {
-        name: "자주 묻는 질문",
-        link: "/announcement/faq",
-        routes: ["/announcement/faq"],
-      },
-      {
-        name: "서류 다운로드",
-        link: "/announcement/document",
-        routes: ["/announcement/document"],
-      },
-    ],
-  },
-  {
-    name: "커뮤니티",
-    key: "community",
-    link: "/community",
-  },
+  // {
+  //   name: "omo 예약 관리",
+  //   key: "shop",
+  //   subMenuList: [
+  //     {
+  //       name: "동호회 콘텐츠 예약",
+  //       link: "/shop",
+  //       routes: ["/shop", "/shop/item", "/shop/host"],
+  //     },
+  //     {
+  //       name: "예약한 콘텐츠 관리",
+  //       link: "/shop/reservation",
+  //       routes: ["/shop/reservation", "/shop/review"],
+  //     },
+  //     {
+  //       name: "1:1 문의",
+  //       link: "/shop/inquiry",
+  //       routes: ["/shop/inquiry"],
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: "활동비 관리",
+  //   key: "expense",
+  //   subMenuList: [
+  //     {
+  //       name: "활동비 사용내역",
+  //       link: "/expense",
+  //       routes: ["/expense", "/expense/new", "/expense/detail"],
+  //     },
+  //     {
+  //       name: "입출금 내역",
+  //       link: "/expense/transaction",
+  //       routes: ["/expense/transaction"],
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: "공지 및 문의",
+  //   key: "announcement",
+  //   subMenuList: [
+  //     {
+  //       name: "공지사항",
+  //       link: "/announcement",
+  //       routes: ["/announcement", "/announcement/detail"],
+  //     },
+  //     {
+  //       name: "자주 묻는 질문",
+  //       link: "/announcement/faq",
+  //       routes: ["/announcement/faq"],
+  //     },
+  //     {
+  //       name: "서류 다운로드",
+  //       link: "/announcement/document",
+  //       routes: ["/announcement/document"],
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: "커뮤니티",
+  //   key: "community",
+  //   link: "/community",
+  // },
 ];
 
 export default function SideBar() {

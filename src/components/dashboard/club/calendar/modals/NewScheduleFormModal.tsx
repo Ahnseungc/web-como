@@ -14,6 +14,8 @@ import ClubProfileInfo from "@/components/dashboard/club/common/ClubProfileInfo"
 import MapPlaceSearch from "@/components/dashboard/club/manage/organisms/MapPlaceSearch";
 import DateDropdownSelect from "@/components/dashboard/club/calendar/atoms/DateDropdownSelect";
 import { Close } from "@/assets/icons/action";
+import { Calendar } from "@/assets/icons/info";
+import { People } from "@/assets/icons/info";
 
 const image = null;
 const MIN_PEOPLE = 1;
@@ -78,8 +80,19 @@ export default function NewScheduleFormModal() {
                   </div>
                 </div>
                 <div className="body-1 font-medium text-gray-500">
-                  <ClubProfileInfo />
-                  <span>{"회장_김오모 / 부회장_박오모 / 총무_문오모 "}</span>
+                  {/* <ClubProfileInfo /> */}
+                  <div className="flex items-center gap-2 body-1 font-medium text-gray-500">
+                    <span>{"개설일자 2024.05.03"}</span>
+                    <div className="flex items-center gap-0.5">
+                      <People className="w-5 h-5 text-gray-500" />
+                        {"23"}
+                    </div>
+                    <div className="flex items-center gap-0.5">
+                      <Calendar className="w-[18px] h-[18px] text-gray-500" />
+                      {"주 1회"}
+                    </div>
+                  </div>
+                  <span>{"운영장 김오모"}</span>
                 </div>
               </div>
             </div>
@@ -126,7 +139,7 @@ export default function NewScheduleFormModal() {
                       })
                     }
                   />
-                  <DropdownSelect
+                  {/* <DropdownSelect
                     required
                     id="iteration"
                     width="w-52"
@@ -137,7 +150,7 @@ export default function NewScheduleFormModal() {
                         return { ...prev, iteration };
                       })
                     }
-                  />
+                  /> */}
                 </div>
               </div>
               <div className="space-y-2">

@@ -41,16 +41,16 @@ const menuList: MenuItem[] = [
         link: "/employee",
         routes: ["/employee", "/employee/detail"],
       },
-      {
-        name: "공지사항 관리",
-        link: "/employee/announcement",
-        routes: ["/employee/announcement"],
-      },
-      {
-        name: "사내 규정 및 서류",
-        link: "/employee/document",
-        routes: ["/employee/document"],
-      },
+      // {
+      //   name: "공지사항 관리",
+      //   link: "/employee/announcement",
+      //   routes: ["/employee/announcement"],
+      // },
+      // {
+      //   name: "사내 규정 및 서류",
+      //   link: "/employee/document",
+      //   routes: ["/employee/document"],
+      // },
     ],
   },
   {
@@ -67,70 +67,70 @@ const menuList: MenuItem[] = [
         link: "/club",
         routes: ["/club", "/club/detail"],
       },
-      {
-        name: "활동보고서 관리",
-        link: "/club/report",
-        routes: ["/club/report"],
-      },
-      {
-        name: "활동비 관리",
-        link: "/club/expense",
-        routes: ["/club/expense"],
-      },
+      // {
+      //   name: "활동결과 보고 관리",
+      //   link: "/club/report",
+      //   routes: ["/club/report"],
+      // },
+      // {
+      //   name: "활동지원비 신청 관리",
+      //   link: "/club/expense",
+      //   routes: ["/club/expense"],
+      // },
     ],
   },
-  {
-    name: "omo 예약 관리",
-    key: "shop",
-    subMenuList: [
-      {
-        name: "워크샵 예약",
-        link: "/shop",
-        routes: ["/shop", "/shop/item", "/shop/host"],
-      },
-      {
-        name: "예약한 콘텐츠 관리",
-        link: "/shop/reservation",
-        routes: ["/shop/reservation", "/shop/review"],
-      },
-      {
-        name: "1:1 문의",
-        link: "/shop/inquiry",
-        routes: ["/shop/inquiry"],
-      },
-    ],
-  },
-  {
-    name: "코모이용 관리",
-    key: "como",
-    subMenuList: [
-      {
-        name: "구독권 관리",
-        link: "/como/subscription",
-        routes: ["/como/subscription"],
-      },
-      {
-        name: "코모포인트 관리",
-        link: "/como/point",
-        routes: ["/como/point"],
-      },
-      {
-        name: "임직원 사용내역",
-        link: "/como/employee",
-        routes: ["/como/employee"],
-      },
-    ],
-  },
-  {
-    name: "공지사항",
-    key: "announcement",
-    link: "/announcement",
-  },
-  {
-    name: "커뮤니티",
-    key: "community",
-    link: "/community",
-  },
+  // {
+  //   name: "omo 예약 관리",
+  //   key: "shop",
+  //   subMenuList: [
+  //     {
+  //       name: "워크샵 예약",
+  //       link: "/shop",
+  //       routes: ["/shop", "/shop/item", "/shop/host"],
+  //     },
+  //     {
+  //       name: "예약한 콘텐츠 관리",
+  //       link: "/shop/reservation",
+  //       routes: ["/shop/reservation", "/shop/review"],
+  //     },
+  //     {
+  //       name: "1:1 문의",
+  //       link: "/shop/inquiry",
+  //       routes: ["/shop/inquiry"],
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: "코모이용 관리",
+  //   key: "como",
+  //   subMenuList: [
+  //     {
+  //       name: "구독권 관리",
+  //       link: "/como/subscription",
+  //       routes: ["/como/subscription"],
+  //     },
+  //     {
+  //       name: "코모포인트 관리",
+  //       link: "/como/point",
+  //       routes: ["/como/point"],
+  //     },
+  //     {
+  //       name: "임직원 사용내역",
+  //       link: "/como/employee",
+  //       routes: ["/como/employee"],
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: "공지사항",
+  //   key: "announcement",
+  //   link: "/announcement",
+  // },
+  // {
+  //   name: "커뮤니티",
+  //   key: "community",
+  //   link: "/community",
+  // },
 ];
 
 export default function SideBar() {

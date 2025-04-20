@@ -6,7 +6,7 @@ import DateFilter, {
 } from "@/components/dashboard/common/DateFilter";
 import Pagination from "@/components/dashboard/common/Pagination";
 import ApplicationTable from "@/components/dashboard/company/club/molecules/ApplicationTable";
-import { startOfToday } from "date-fns";
+import { startOfToday, subYears } from "date-fns";
 import { getData } from "@/api/action";
 import { useEffect } from "react";
 import ApplicationSearch from "@/components/dashboard/company/club/molecules/ApplicationSearch";
@@ -20,7 +20,7 @@ interface Props {
 export default function ApplicationList(props: Props) {
   const [applications, setApplications] = useState([]);
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
-    startDate: startOfToday(),
+    startDate: subYears(startOfToday(), 1), // 1년 전 날짜
     endDate: startOfToday(),
   });
   const [currentPage, setCurrentPage] = useState(1);

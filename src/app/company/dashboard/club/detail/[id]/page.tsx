@@ -21,8 +21,8 @@ export interface ClubDetailMenuTab {
 
 const tabList: ClubDetailMenuTab[] = [
   { name: "동호회 상세", value: "about" },
-  { name: "활동 내역", value: "activity" },
-  { name: "활동 사진", value: "picture" },
+  // { name: "활동 내역", value: "activity" },
+  // { name: "활동 사진", value: "picture" },
   // { name: "출석부", value: "attendance" },
 ];
 

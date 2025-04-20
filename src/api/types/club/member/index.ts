@@ -3,10 +3,10 @@ export interface MemberListData {
 }
 
 export interface ClubWebMemberDTO {
+  id: number;
   name: string;
   department: string;
-  answer: string;
-  createDate: string;
-  processStatus: string;
-  id: number;
+  position: string;
+  requestDate: string;
+  status: string;
 }

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { SearchValue } from "@/lib/types/search";
 import Search from "@/components/dashboard/common/Search";
+import { getData } from "@/api/action";
 
 const fieldList = [
   { name: "부서", value: "dept" },
@@ -14,30 +15,62 @@ const filterList = [
   { name: "기존회원", value: "member" },
 ];
 
-export default function MemberSearch() {
+interface Props {
+  onSearch: (searchValue: SearchValue) => void;
+  currentPage: number;
+}
+
+export default function MemberSearch({ onSearch, currentPage }: Props) {
   const [currentSearchValue, setCurrentSearchValue] = useState<SearchValue>({
-    field: "dept",
+    // field: "dept",
     term: "",
-    filter: "all",
+    // filter: "all",
   });
 
-  const handleSearch = () => {};
+  const handleSearch = async () => {
+    console.log("=== 검색 실행 ===");
+    console.log("현재 페이지:", currentPage);
+    console.log("검색어:", currentSearchValue.term);
+    console.log("================");
+
+    try {
+      const response = await getData(
+        `v1/executive/club/{clubId}/member/list?page=${currentPage}&search=${currentSearchValue.term}`,
+        true
+      );
+
+      if (response.data) {
+        onSearch(currentSearchValue);
+        // 검색 후 검색어 초기화
+        setCurrentSearchValue((prev) => ({
+          ...prev,
+          term: "",
+        }));
+      } else {
+        console.error("검색 실패");
+      }
+    } catch (error) {
+      console.error("검색 중 오류 발생:", error);
+    }
+  };
 
   return (
     <Search
-      fieldList={fieldList}
-      filterList={filterList}
+      // fieldList={fieldList}
+      // filterList={filterList}
       currentValue={currentSearchValue}
-      handleChange={({ field, term, filter }) =>
+      handleChange={({ term }) => {
         setCurrentSearchValue((prev) => {
-          return {
-            field: field || prev.field,
-            term: term || prev.term,
-            filter: filter || prev.filter,
-          };
-        })
-      }
+          const newValue = { term: term || '' };
+          console.log("=== 입력값 변경 ===");
+          console.log("이전 값:", prev);
+          console.log("새로운 값:", newValue);
+          console.log("=================");
+          return newValue;
+        });
+      }}
       handleSearch={handleSearch}
     />
   );
 }
+// 동호회 임원 - 동호회 회원 검색 컴포넌트
