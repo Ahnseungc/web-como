@@ -41,16 +41,16 @@ const menuList: MenuItem[] = [
         link: "/employee",
         routes: ["/employee", "/employee/detail"],
       },
-      {
-        name: "공지사항 관리",
-        link: "/employee/announcement",
-        routes: ["/employee/announcement"],
-      },
-      {
-        name: "사내 규정 및 서류",
-        link: "/employee/document",
-        routes: ["/employee/document"],
-      },
+      // {
+      //   name: "공지사항 관리",
+      //   link: "/employee/announcement",
+      //   routes: ["/employee/announcement"],
+      // },
+      // {
+      //   name: "사내 규정 및 서류",
+      //   link: "/employee/document",
+      //   routes: ["/employee/document"],
+      // },
     ],
   },
   {
@@ -67,16 +67,16 @@ const menuList: MenuItem[] = [
         link: "/club",
         routes: ["/club", "/club/detail"],
       },
-      {
-        name: "활동보고서 관리",
-        link: "/club/report",
-        routes: ["/club/report"],
-      },
-      {
-        name: "활동비 관리",
-        link: "/club/expense",
-        routes: ["/club/expense"],
-      },
+      // {
+      //   name: "활동결과 보고 관리",
+      //   link: "/club/report",
+      //   routes: ["/club/report"],
+      // },
+      // {
+      //   name: "활동지원비 신청 관리",
+      //   link: "/club/expense",
+      //   routes: ["/club/expense"],
+      // },
     ],
   },
   // {
@@ -121,16 +121,16 @@ const menuList: MenuItem[] = [
   //     },
   //   ],
   // },
-  {
-    name: "공지사항",
-    key: "announcement",
-    link: "/announcement",
-  },
-  {
-    name: "커뮤니티",
-    key: "community",
-    link: "/community",
-  },
+  // {
+  //   name: "공지사항",
+  //   key: "announcement",
+  //   link: "/announcement",
+  // },
+  // {
+  //   name: "커뮤니티",
+  //   key: "community",
+  //   link: "/community",
+  // },
 ];
 
 export default function SideBar() {
