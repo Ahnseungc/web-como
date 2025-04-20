@@ -6,7 +6,7 @@ import DateFilter, {
 } from "@/components/dashboard/common/DateFilter";
 import Pagination from "@/components/dashboard/common/Pagination";
 import ClubTable from "@/components/dashboard/company/club/molecules/ClubTable";
-import { startOfToday } from "date-fns";
+import { startOfToday, subYears } from "date-fns";
 import { getData } from "@/api/action";
 import { useEffect } from "react";
 import ClubSearch from "../molecules/ClubSearch";
@@ -20,7 +20,7 @@ interface Props {
 export default function ClubList(props: Props) {
   const [clubs, setClubs] = useState([]);
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
-    startDate: startOfToday(),
+    startDate: subYears(startOfToday(), 1), // 1년 전 날짜
     endDate: startOfToday(),
   });
   const [currentPage, setCurrentPage] = useState(1);

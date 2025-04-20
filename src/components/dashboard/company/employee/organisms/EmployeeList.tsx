@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { startOfToday } from "date-fns";
+import { startOfToday, subYears } from "date-fns";
 import { getData } from "@/api/action";
 import DateFilter, {
   type DateRange,
@@ -14,7 +14,7 @@ import type { SearchValue } from "@/lib/types/search";
 
 export default function EmployeeList() {
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
-    startDate: startOfToday(),
+    startDate: subYears(startOfToday(), 1), // 1년 전 날짜
     endDate: startOfToday(),
   });
   const [currentPage, setCurrentPage] = useState(1);
