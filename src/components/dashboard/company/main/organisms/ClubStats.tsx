@@ -44,7 +44,7 @@ export default function ClubStats() {
           content={CLUB_STATS_TOOLTIP_CONTENT}
         />
       </div>
-      <ul className="flex mt-5">
+      {/* <ul className="flex mt-5">
         {tabs.map((tab, i) => (
           <li
             key={tab.key}
@@ -64,11 +64,12 @@ export default function ClubStats() {
             </div>
           </li>
         ))}
-      </ul>
+      </ul> */}
       <div className="mt-5 body-2 font-bold text-gray-500">
         {`${formatDateTime(new Date())} 기준`}
       </div>
-      <div className="flex-1 mt-2.5">{currentTab.component}</div>
+      <div className="flex-1 mt-2.5">데이터가 없습니다.</div>
+      {/* <div className="flex-1 mt-2.5">{currentTab.component}</div> */}
     </div>
   );
 }

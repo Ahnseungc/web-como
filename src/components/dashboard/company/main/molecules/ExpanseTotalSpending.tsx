@@ -43,9 +43,11 @@ export default function ExpanseTotalSpending() {
             </button>
           ))}
         </div>
-        <div className="mt-4 h1 font-extrabold text-brand-orange truncate">
+        <div className="flex-1 mt-2.5">데이터가 없습니다.</div>
+
+        {/* <div className="mt-4 h1 font-extrabold text-brand-orange truncate">
           {`${getTotal(currentRange).toLocaleString()}원`}
-        </div>
+        </div> */}
       </div>
     </div>
   );

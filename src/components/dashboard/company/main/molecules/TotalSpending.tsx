@@ -5,25 +5,28 @@ export default function TotalSpending() {
         <div className="h4 font-medium text-gray-700 truncate">
           {"주무부서 사용 총액"}
         </div>
-        <div className="h1 font-extrabold text-gray-900 truncate">
+        <div className="flex-1 mt-2.5">데이터가 없습니다.</div>
+        {/* <div className="h1 font-extrabold text-gray-900 truncate">
           {"2,000,000원"}
-        </div>
+        </div> */}
       </div>
       <div className="flex-1 space-y-4">
         <div className="h4 font-medium text-gray-700 truncate">
           {"동호회 사용 총액"}
         </div>
-        <div className="h1 font-extrabold text-gray-900 truncate">
+        <div className="flex-1 mt-2.5">데이터가 없습니다.</div>
+        {/* <div className="h1 font-extrabold text-gray-900 truncate">
           {"1,000,000원"}
-        </div>
+        </div> */}
       </div>
       <div className="flex-1 space-y-4">
         <div className="h4 font-medium text-gray-700 truncate">
           {"개인 사용 총액"}
         </div>
-        <div className="h1 font-extrabold text-gray-900 truncate">
+        <div className="flex-1 mt-2.5">데이터가 없습니다.</div>
+        {/* <div className="h1 font-extrabold text-gray-900 truncate">
           {"7,000,000원"}
-        </div>
+        </div> */}
       </div>
     </div>
   );
