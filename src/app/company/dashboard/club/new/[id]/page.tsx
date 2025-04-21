@@ -35,7 +35,7 @@ export default function ApplicationDetailPage() {
     goal: "개설 목적",
     operationPlan: "운영 방침",
     duePerMonth: "월회비",
-    headName: "운영진 이름",
+    headName: "운영장 이름",
     headPosition: "운영장 직책",
     headDepartment: "운영장 부서",
     deputyName: "부운영장 이름",
