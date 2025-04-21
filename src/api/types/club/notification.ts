@@ -1,6 +1,6 @@
 export interface NotificationData {
-  newClubApplications: number;
-  newClubInquiry: number;
-  unreadExecutiveNotice: number;
-  unreadOmoNotice: number;
+  clubName: string;
+  newJoinRequests: number;
+  recentManagerNotices: number;
+  recentOmoNotices: number;
 }

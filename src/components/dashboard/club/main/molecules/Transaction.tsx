@@ -13,9 +13,10 @@ export default async function DashboardTransaction() {
     <div className="flex flex-col gap-3 p-8 rounded-xl bg-gray-0">
       <div className="flex justify-between">
         <h3 className="h1 font-bold text-gray-900">{"입출금 내역"}</h3>
-        <Link href={`${CLUB_DASHBOARD_ENDPOINT}/expense/transaction`}>
+        {/* <Link href={`${CLUB_DASHBOARD_ENDPOINT}/expense/transaction`}>
           <ChevronRight className="w-9 h-9 text-gray-700" />
-        </Link>
+        </Link> */}
+        <ChevronRight className="w-9 h-9 text-gray-700" />
       </div>
       <hr className="w-full border-gray-300" />
       <div className="flex flex-col gap-6">

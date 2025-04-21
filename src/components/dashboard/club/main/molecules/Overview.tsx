@@ -1,9 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import { getData } from "@/api/action";
 import type { NotificationData } from "@/api/types/club/notification";
 import { LOGIN_ENDPOINT, CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
-import { getAccessToken, getClubId, getClubName } from "@/lib/cookies";
-
+import { useEffect, useState } from "react";
 
 // 개발 중간에 엔드 포인트가 변경되어 getData 사용 시 모든 참조를 찾아서 일일이 수정해야 합니다. 권장 x...
 // const getClubJoinRequest = async () => {
@@ -22,35 +23,8 @@ import { getAccessToken, getClubId, getClubName } from "@/lib/cookies";
 //   return res.json();
 // };
 
-const getDashboardNotifications = async () => {
-  try {
-    const [clubId, token] = await Promise.all([getClubId(), getAccessToken()]);
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}v1/executive/club/${clubId}/dashboard/notifications`,
-      {
-        method: "GET",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        cache: "force-cache"
-      });
-
-    // 다른 에러 처리
-    if (!res.ok) {
-      const errorData = await res.json();
-      console.error('API 응답 에러:', errorData);
-      return;
-    }
-    
-    return res.json();
-  } catch (error) {
-    console.error('알림 카드 목록 조회 에러:', error);
-  }
-};
-
-export default async function DashboardOverview() {
+export default function DashboardOverview() {
   // const res = await getData("v2/club/web/notification/", true);
   // const data: NotificationData = res.data;
 
@@ -58,16 +32,27 @@ export default async function DashboardOverview() {
   // const [clubJoinRequest] = await Promise.all([getClubJoinRequest()]);
   // console.log(clubJoinRequest);
 
-  const [dashboardNotifications, clubName] = await Promise.all([getDashboardNotifications(), getClubName()]);
+  const [dashboardNotifications, setDashboardNotifications] = useState<NotificationData>();
+  const getDashboardNotifications = async () => {
+    try {
+      const response = await getData("v1/executive/club/{clubId}/dashboard/notifications", true);
+      
+      if(response.resultCode === 'OK') {
+        setDashboardNotifications(response.data);
+        console.log("dashboardNotifications", dashboardNotifications)
+      }
+    } catch (error) {
+      console.error('알림 카드 목록 조회 에러:', error);
+    }
+  }
 
-  // API 응답에서 안전하게 데이터 추출
-  const newJoinRequests = dashboardNotifications?.data?.newJoinRequests || 0;
-  const recentManagerNotices = dashboardNotifications?.data?.recentManagerNotices || 0;
-  const recentOmoNotices = dashboardNotifications?.data?.recentOmoNotices || 0;
+  useEffect(() => {
+    getDashboardNotifications();
+  }, []);
 
   return (
     <div className="col-span-4 flex flex-col gap-6 h-fit p-8 rounded-xl bg-gray-800 select-none">
-      <h3 className="h1 font-bold text-gray-0">{`${clubName || '동호회'} 주요 알림`}</h3>
+      <h3 className="h1 font-bold text-gray-0">{`${dashboardNotifications?.clubName || '동호회'} 주요 알림`}</h3>
       <div className="flex gap-8 truncate">
         <div className="flex-1 flex flex-col gap-4 py-3 px-2">
           <span className="h4 font-medium text-gray-400">
@@ -75,7 +60,7 @@ export default async function DashboardOverview() {
           </span>
           <Link href={`${CLUB_DASHBOARD_ENDPOINT}/manage/member?filter=new`}>
             <span className="h1 font-extrabold text-brand-orange underline underline-offset-4 decoration-gray-800 hover:decoration-brand-orange transition duration-300">
-              {`${newJoinRequests}명`}
+              {`${dashboardNotifications?.newJoinRequests || 0}명`}
             </span>
           </Link>
         </div>
@@ -98,7 +83,7 @@ export default async function DashboardOverview() {
           </span>
           <Link href={`${CLUB_DASHBOARD_ENDPOINT}/announcement?filter=company`}>
             <span className="h1 font-extrabold text-gray-0 underline underline-offset-4 decoration-gray-800 hover:decoration-gray-0 transition duration-300">
-              {`${recentManagerNotices}건`}
+              {`${dashboardNotifications?.recentManagerNotices || 0}건`}
             </span>
           </Link>
         </div>
@@ -109,7 +94,7 @@ export default async function DashboardOverview() {
           </span>
           <Link href={`${CLUB_DASHBOARD_ENDPOINT}/announcement?filter=omo`}>
             <span className="h1 font-extrabold text-gray-0 underline underline-offset-4 decoration-gray-800 hover:decoration-gray-0 transition duration-300">
-              {`${recentOmoNotices}건`}
+              {`${dashboardNotifications?.recentOmoNotices || 0}건`}
             </span>
           </Link>
         </div>
