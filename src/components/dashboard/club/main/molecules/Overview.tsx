@@ -96,22 +96,28 @@ export default async function DashboardOverview() {
           <span className="h4 font-medium text-gray-400">
             {"읽지 않은 인사 공지사항"}
           </span>
-          <Link href={`${CLUB_DASHBOARD_ENDPOINT}/announcement?filter=company`}>
+          {/* <Link href={`${CLUB_DASHBOARD_ENDPOINT}/announcement?filter=company`}>
             <span className="h1 font-extrabold text-gray-0 underline underline-offset-4 decoration-gray-800 hover:decoration-gray-0 transition duration-300">
               {`${recentManagerNotices}건`}
             </span>
-          </Link>
+          </Link> */}
+           <span className="h1 font-extrabold text-gray-0">
+              {`${recentManagerNotices}건`}
+            </span>
         </div>
         <span className="h-[104px] border-l border-gray-700" />
         <div className="flex-1 flex flex-col gap-4 py-3 px-2">
           <span className="h4 font-medium text-gray-400">
             {"읽지 않은 omo 공지사항"}
           </span>
-          <Link href={`${CLUB_DASHBOARD_ENDPOINT}/announcement?filter=omo`}>
+          {/* <Link href={`${CLUB_DASHBOARD_ENDPOINT}/announcement?filter=omo`}>
             <span className="h1 font-extrabold text-gray-0 underline underline-offset-4 decoration-gray-800 hover:decoration-gray-0 transition duration-300">
               {`${recentOmoNotices}건`}
             </span>
-          </Link>
+          </Link> */}
+            <span className="h1 font-extrabold text-gray-0">
+              {`${recentOmoNotices}건`}
+            </span>
         </div>
       </div>
     </div>
