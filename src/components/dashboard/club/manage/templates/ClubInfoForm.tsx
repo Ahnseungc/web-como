@@ -52,9 +52,9 @@ export default function ClubInfoForm({ clubId }: { clubId: string | null }) {
   // }, [data, reset]);
 
   // 제출 함수 data들을 기반으로 통신을 해주세요.
-  const onSubmit: SubmitHandler<ClubIndexSchemaType> = (data) => {
-    console.log(data, "데이터 제출됨");
-  };
+  // const onSubmit: SubmitHandler<ClubIndexSchemaType> = (data) => {
+  //   console.log(data, "데이터 제출됨");
+  // };
 
   useEffect(() => {
     console.log("에러: ", errors);
@@ -81,12 +81,19 @@ export default function ClubInfoForm({ clubId }: { clubId: string | null }) {
   }, [clubId]); // clubId가 변경될 때마다 호출
 
   return (
-    <form className="flex gap-3" onSubmit={handleSubmit(onSubmit)}>
-      <ClubIndexImageSection<ClubIndexSchemaType>
-        name="clubImage"
-        clubImage={clubInfo?.clubImage as string}
-      />
-      <ClubIndexInfoSection clubId={clubId} />
-    </form>
+    // <form className="flex gap-3" onSubmit={handleSubmit(onSubmit)}>
+    //   <ClubIndexImageSection<ClubIndexSchemaType>
+    //     name="clubImage"
+    //     clubImage={clubInfo?.clubImage as string}
+    //   />
+    //   <ClubIndexInfoSection clubId={clubId} />
+    // </form>
+       <form className="flex gap-3">
+       <ClubIndexImageSection<ClubIndexSchemaType>
+         name="clubImage"
+         clubImage={clubInfo?.clubImage as string}
+       />
+       <ClubIndexInfoSection clubId={clubId} />
+     </form>
   );
 }
