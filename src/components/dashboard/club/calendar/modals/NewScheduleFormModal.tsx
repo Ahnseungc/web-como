@@ -92,7 +92,7 @@ export default function NewScheduleFormModal() {
                       {"주 1회"}
                     </div>
                   </div>
-                  <span>{"운영장 김오모"}</span>
+                  <span>{"운영장_김오모 / 부운영장_김오모 / 총무_김오모"}</span>
                 </div>
               </div>
             </div>
