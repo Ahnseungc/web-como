@@ -83,7 +83,7 @@ export default function ActivitySchedule() {
           <ScheduleSelectModal handleModalOpen={handleModalOpen} />
         )}
       </button>
-      <div>
+      {/* <div>
         <RHFTextInput<ClubIndexSchemaType>
           id="location"
           name="location" 
@@ -92,7 +92,7 @@ export default function ActivitySchedule() {
           maxLength={18}
           inputStyle="resize-y"
         />
-      </div>
+      </div> */}
     </div>
   );
 }

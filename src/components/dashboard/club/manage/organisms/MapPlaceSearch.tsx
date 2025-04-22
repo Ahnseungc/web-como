@@ -56,7 +56,7 @@ export default function MapPlaceSearch({ value, readonly }: Props) {
       }
     }
     if (geocodeData) {
-      if (geocodeData.meta.totalCount > 0) {
+      if (geocodeData?.meta?.totalCount > 0) {
         return setSearchResult(
           geocodeData.addresses.map((item) => {
             return { roadAddress: item.roadAddress };
@@ -110,7 +110,7 @@ export default function MapPlaceSearch({ value, readonly }: Props) {
               </button>
             )}
           </div>
-          <div className="flex items-center w-2/5 h-[60px] px-3 rounded-md border border-gray-100 has-[:focus-visible]:border-gray-900 bg-gray-100 has-[:focus-visible]:bg-gray-50 transition duration-300">
+          {/* <div className="flex items-center w-2/5 h-[60px] px-3 rounded-md border border-gray-100 has-[:focus-visible]:border-gray-900 bg-gray-100 has-[:focus-visible]:bg-gray-50 transition duration-300">
             <input
               type="text"
               name="detailAddress"
@@ -129,7 +129,7 @@ export default function MapPlaceSearch({ value, readonly }: Props) {
               }}
               readOnly={readonly}
             />
-          </div>
+          </div> */}
         </div>
         {!readonly && searchResult && (
           <div
@@ -172,9 +172,9 @@ export default function MapPlaceSearch({ value, readonly }: Props) {
           </div>
         )}
       </div>
-      <div className="w-full h-[70vh]">
+      {/* <div className="w-full h-[70vh]">
         <NaverMap query={selectedPlace?.roadAddress} />
-      </div>
+      </div> */}
     </div>
   );
 }

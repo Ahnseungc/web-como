@@ -17,7 +17,7 @@ export default function ClubIndexInfoSection({ clubId }: ClubIndexInfoSectionPro
       {/* 기본 정보 */}
       <ClubBasicInfo clubId={clubId} />
       {/* 활동 정보 */}
-      <ClubActivityInfo />
+      <ClubActivityInfo clubId={clubId} />
     </section>
   );
 }

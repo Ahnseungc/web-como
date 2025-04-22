@@ -23,14 +23,14 @@ export default function ReportView() {
 
   return (
     <>
-      <ReportSearch
+      {/* <ReportSearch
         currentSearchValue={currentSearchValue}
         setCurrentSearchValue={setCurrentSearchValue}
         handleSearch={handleSearch}
-      />
+      /> */}
       <ReportList
-        currentSearchFilter={currentSearchValue.filter!}
-        currentSearchTerm={searchTerm}
+        // currentSearchFilter={currentSearchValue.filter!}
+        // currentSearchTerm={searchTerm}
       />
     </>
   );

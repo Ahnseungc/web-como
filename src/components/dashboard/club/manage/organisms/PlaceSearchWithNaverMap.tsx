@@ -32,12 +32,15 @@ export default function PlaceSearchWithNaverMap<T extends FieldValues>({
 }: Props) {
   const { setValue } = useFormContext<T>();
 
-  const roadAddressFieldValue = useWatch({ name: "roadAddress" });
+  const roadAddressFieldValue = useWatch({ name: "location" });
   const placeNameFieldValue = useWatch({ name: "placeName" });
 
   const [searchRoadAddress, setSearchRoadAddress] = useState<string>(
     roadAddressDefaultValue || ""
   );
+  console.log("roadAddressDefaultValue", roadAddressDefaultValue);
+  console.log("searchRoadAddress", searchRoadAddress);
+
   const [searchPlaceName, setSearchPlaceName] = useState<string>(
     placeNameDefaultValue || ""
   );
@@ -77,6 +80,10 @@ export default function PlaceSearchWithNaverMap<T extends FieldValues>({
     }
   }, [roadAddressFieldValue, queryClient]);
 
+  useEffect(() => {
+    setSearchRoadAddress(roadAddressDefaultValue || "");
+  }, [roadAddressDefaultValue]);
+
   return (
     <div className="space-y-4">
       <h3 className="text-xl font-medium text-gray-900">활동 장소</h3>
@@ -98,7 +105,7 @@ export default function PlaceSearchWithNaverMap<T extends FieldValues>({
             onChange={(e) => setSearchRoadAddress(e.target.value)}
             onFocus={() => setIsRoadAddressFocusing(true)}
             onBlur={() => setIsRoadAddressFocusing(false)}
-            placeholder="활동 장소를 검색해주세요"
+            placeholder={"활동 장소를 검색해주세요"}
           />
           <button
             type="button"
@@ -129,19 +136,19 @@ export default function PlaceSearchWithNaverMap<T extends FieldValues>({
             ))}
           </ul>
         </div>
-        <input
+        {/* <input
           type="text"
           className="h-15 flex-1 truncate rounded-[6px] bg-gray-100 px-3 py-[1.13rem] text-lg"
           value={removeHtmlTags(searchPlaceName)}
           readOnly
-        />
+        /> */}
       </div>
 
       {/* 검색하여 선택한 값에 따라서 맵을 로드하는 네이버 맵 섹션 */}
-      <NaverMap
+      {/* <NaverMap
         roadAddress={roadAddressFieldValue}
         placeName={placeNameFieldValue}
-      />
+      /> */}
     </div>
   );
 }
