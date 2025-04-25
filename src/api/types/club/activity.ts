@@ -11,3 +11,17 @@ export interface ClubWebActivityInfoDTO {
   date: string;
   photos: string[];
 }
+
+export interface ClubWebActivityPictureData {
+  ClubWebActivityPictureInfoDTOS: ClubWebActivityPictureInfoDTO[];
+}
+
+export interface ClubWebActivityPictureInfoDTO {
+  activityImages: string[];
+  content: string;
+  createDate: string;
+  department: string;
+  id: number;
+  nickName: string;
+  profile: string;
+}
