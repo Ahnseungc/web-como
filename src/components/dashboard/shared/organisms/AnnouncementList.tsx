@@ -13,6 +13,7 @@ export default function AnnouncementList() {
     endDate: undefined,
   });
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const maxPage = 8;
 
   const handleDateRangeChange = (dateRange: DateRange) => {
     setCurrentDateRange(dateRange);
@@ -34,7 +35,7 @@ export default function AnnouncementList() {
         <AnnouncementTable />
         <Pagination
           currentPage={currentPage}
-          maxPage={8}
+          maxPage={maxPage}
           handlePageChange={handlePageChange}
         />
       </div>
