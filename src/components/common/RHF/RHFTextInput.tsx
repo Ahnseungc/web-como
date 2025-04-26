@@ -17,8 +17,12 @@ import { Remove } from "@/assets/icons/action";
 
 type LabelType = ComponentProps<"label">;
 type InputType = ComponentProps<"input">;
+type TextareaType = ComponentProps<"textarea">;
 
-type Props<T extends FieldValues> = Omit<LabelType & InputType, "className"> & {
+type Props<T extends FieldValues> = Omit<
+  LabelType & InputType & TextareaType,
+  "className"
+> & {
   labelText?: string;
   name: Path<T>;
   id: string;
@@ -88,12 +92,14 @@ export default function RHFTextInput<T extends FieldValues>({
             {/* 최대값이 있을 경우와 없을 경우로 나눔 */}
             {/* 1. 최대값이 있을 경우 100자가 넘는다면 textarea로, 아니라면 input으로 */}
             {/* 2. 최대값이 없을 경우 input으로 렌더링 */}
+
             {maxLength ? (
               maxLength >= 100 ? (
                 <CustomTextarea
                   className={inputStyle}
                   id={name}
                   rows={rows}
+                  {...props}
                   {...field}
                   maxLength={maxLength}
                   onFocus={handleFocus}

@@ -20,7 +20,7 @@ export default function ActivitySchedule() {
   }) as string;
   const activityPlan = useWatch<ClubIndexSchemaType>({
     name: "activityPlan",
-  }) as string; 
+  }) as string;
   console.log("6. ActivitySchedule 실행됨");
 
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
@@ -52,9 +52,11 @@ export default function ActivitySchedule() {
   // }, [activityPlanDays, activityPlanFrequency, activityTime]);
 
   useEffect(() => {
-    if (typeof activityPlan === "string") { 
+    if (typeof activityPlan === "string") {
       // activityPlan 파싱
-      const [days, frequency, time] = activityPlan.split('/').map(item => item.trim());
+      const [days, frequency, time] = activityPlan
+        .split("/")
+        .map((item) => item.trim());
 
       // 포맷된 활동 일정 설정
       setFormattedActivityPlan(`${days} / ${frequency} / ${time}`);

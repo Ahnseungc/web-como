@@ -46,15 +46,18 @@ export function getPageRange(num: number) {
 
 export const formatDate = (date: Date | undefined) => {
   if (!date || isNaN(date.getTime())) {
-    return '';
+    return "";
   }
   // 한국 시간으로 변환
-  const koreaDate = new Date(date.getTime() + (9 * 60 * 60 * 1000));
-  return koreaDate.toLocaleDateString('ko-KR', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
-  }).replace(/\. /g, '-').replace('.', '');
+  const koreaDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
+  return koreaDate
+    .toLocaleDateString("ko-KR", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    })
+    .replace(/\. /g, "-")
+    .replace(".", "");
 };
 
 export function formatTime(date: Date | undefined, withIndicator?: boolean) {
