@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useParams } from "next/navigation";
 import BackButton from "@/components/dashboard/common/BackButton";
@@ -15,7 +15,7 @@ export default function Page() {
     <>
       <BackButton />
       <EmployeeInfo memberId={memberId} />
-      <JoinedClub memberId={memberId}/>
+      <JoinedClub memberId={memberId} />
       {/* <OmoHistoryList /> */}
       <div className="m-0">
         <ClubInfoModal />
