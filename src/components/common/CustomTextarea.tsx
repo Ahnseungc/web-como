@@ -9,7 +9,7 @@ export const CustomTextarea = forwardRef<
     id: string;
     name: string;
   }
->(({ name, id, className, rows, maxLength, ...props }, ref) => {
+>(({ name, id, className, rows, maxLength, readOnly, ...props }, ref) => {
   return (
     <textarea
       name={name}
@@ -18,6 +18,7 @@ export const CustomTextarea = forwardRef<
       rows={rows}
       className={cn(
         "flex w-full items-center truncate rounded-md border border-transparent bg-gray-100 px-3 py-4 text-lg font-medium outline-none transition duration-300 placeholder:text-gray-400 focus:border-gray-900 focus:bg-gray-50",
+        readOnly && "cursor-not-allowed",
         className
       )}
       {...props}
