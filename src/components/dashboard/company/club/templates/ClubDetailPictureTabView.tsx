@@ -1,6 +1,7 @@
 import { getData } from "@/api/action";
 import { ClubWebActivityPictureInfoDTO } from "@/api/types/club/activity";
 import ClubTitle from "@/components/dashboard/shared/molecules/ClubTitle";
+import ClubPictureDetailItem from "@/components/dashboard/shared/organisms/ClubPictureDetailItem";
 import ClubPictureItem from "@/components/dashboard/shared/organisms/ClubPictureItem";
 import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
@@ -19,11 +20,13 @@ export default function ClubDetailPictureTabView() {
   const pictureData = data.data
     .clubWebActivityInfoDTOS as ClubWebActivityPictureInfoDTO[];
 
+  console.log(pictureData);
+
   return (
     <>
       <ClubTitle />
       {pictureData.map((picture: ClubWebActivityPictureInfoDTO) => (
-        <ClubPictureItem key={picture.id} item={picture} readonly />
+        <ClubPictureDetailItem key={picture.id} item={picture} readonly />
       ))}
     </>
   );
