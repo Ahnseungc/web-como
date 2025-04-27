@@ -4,6 +4,8 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <section className="flex flex-col gap-3 w-full p-8">{children}</section>
+    <section className="flex flex-1 flex-col gap-3 w-full p-8">
+      {children}
+    </section>
   );
 }

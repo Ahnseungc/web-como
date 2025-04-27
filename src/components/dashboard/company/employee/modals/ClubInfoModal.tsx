@@ -33,11 +33,14 @@ export default function ClubInfoModal() {
   const [modalParams, setModalParams] = useState<any>(null);
 
   useEffect(() => {
-    const modal = document.getElementById('club-info');
+    const modal = document.getElementById("club-info");
     if (modal) {
       const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
-          if (mutation.type === 'attributes' && mutation.attributeName === 'data-modal-params') {
+          if (
+            mutation.type === "attributes" &&
+            mutation.attributeName === "data-modal-params"
+          ) {
             const newParams = modal.dataset.modalParams;
             if (newParams) {
               setModalParams(JSON.parse(newParams));
@@ -48,7 +51,7 @@ export default function ClubInfoModal() {
 
       observer.observe(modal, {
         attributes: true,
-        attributeFilter: ['data-modal-params']
+        attributeFilter: ["data-modal-params"],
       });
 
       return () => observer.disconnect();
@@ -61,7 +64,10 @@ export default function ClubInfoModal() {
       console.log("modalParams", modalParams);
 
       try {
-        const res = await getData(`v1/manager/club/${modalParams.clubId}`, true);
+        const res = await getData(
+          `v1/manager/club/${modalParams.clubId}`,
+          true
+        );
         console.log("loadClubData", res);
         setClub(res.data);
       } catch (error) {
@@ -92,36 +98,36 @@ export default function ClubInfoModal() {
                   src={club?.clubImage}
                   alt="동호회 이미지"
                   fill
-                  sizes="15vw"  
+                  sizes="15vw"
                   className="rounded-lg"
                 />
               )}
             </div>
             <div className="flex-1 space-y-6">
-              <Input label="동호회명" value={club?.name || ''} />
+              <Input label="동호회명" value={club?.name || ""} />
               <div className="space-y-2">
                 <InputLabel label="동호회 임원" />
-                <Input value={`동호회 회장 : ${club?.headName || ''} ${club?.headDepartment || ''}`} />
-                <Input value={`동호회 부회장 : ${club?.deputyName || ''} ${club?.deputyDepartment || ''}`} />
-                <Input value={`총무 : ${club?.affairsName || ''} ${club?.affairsDepartment || ''}`} />
+                <Input
+                  value={`동호회 회장 : ${club?.headName || ""} ${club?.headDepartment || ""}`}
+                />
+                <Input
+                  value={`동호회 부회장 : ${club?.deputyName || ""} ${club?.deputyDepartment || ""}`}
+                />
+                <Input
+                  value={`총무 : ${club?.affairsName || ""} ${club?.affairsDepartment || ""}`}
+                />
               </div>
             </div>
           </div>
           <div className="flex gap-4">
-            <Input label="활동 지역" value={club?.location || ''} />
-            <Input label="활동 일정" value={club?.activityPlan || ''} />
+            <Input label="활동 지역" value={club?.location || ""} />
+            <Input label="활동 일정" value={club?.activityPlan || ""} />
             {/* <Input label="회원수" value="최소 3명, 최대 20명" /> */}
             {/* <Input label="월회비" value="150,000원" /> */}
           </div>
-          <Input
-            label="동호회 한줄 소개"
-            value={club?.intro || ''}
-          />
+          <Input label="동호회 한줄 소개" value={club?.intro || ""} />
           {/* <Input label="동호회 상세 소개" value="다양한 오모인들이 모입니다" /> */}
-          <Input
-            label="설립 목적"
-            value={club?.goal || ''}
-          />
+          <Input label="설립 목적" value={club?.goal || ""} />
         </div>
       </div>
     </div>

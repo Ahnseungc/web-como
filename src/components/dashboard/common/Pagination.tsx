@@ -13,18 +13,22 @@ interface Props {
 }
 
 export default function Pagination(props: Props) {
+  const minPage = 1;
+
   return (
     <div className="flex gap-4 w-fit mx-auto select-none">
       <div className="flex gap-2.5">
         <button
           className="cursor-pointer"
-          onClick={() => props.handlePageChange(1)}
+          onClick={() => props.handlePageChange(minPage)}
+          disabled={props.currentPage === minPage}
         >
           <ChevronDoubleLeft />
         </button>
         <button
           className="cursor-pointer"
           onClick={() => props.handlePageChange(props.currentPage - 1)}
+          disabled={props.currentPage === minPage}
         >
           <ChevronLeft />
         </button>
@@ -50,12 +54,14 @@ export default function Pagination(props: Props) {
         <button
           className="cursor-pointer"
           onClick={() => props.handlePageChange(props.currentPage + 1)}
+          disabled={props.currentPage === props.maxPage}
         >
           <ChevronRight />
         </button>
         <button
           className="cursor-pointer"
           onClick={() => props.handlePageChange(props.maxPage)}
+          disabled={props.currentPage === props.maxPage}
         >
           <ChevronDoubleRight />
         </button>
