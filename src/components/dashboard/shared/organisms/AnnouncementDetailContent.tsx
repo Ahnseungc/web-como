@@ -49,7 +49,7 @@ export default function AnnouncementDetailContent({ isEditable }: Props) {
 
   const formatDate = (dateArray: number[]) => {
     const [year, month, day, hour, minute, second] = dateArray;
-    return `${year}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")} ${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
+    return `${year}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
   };
 
   const handlePin = (noticeId: number) => {
