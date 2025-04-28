@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import useNavigationGuard from "@/hooks/navigationGuard";
 import Button from "@/components/common/Button";
 import Checkbox from "@/components/common/Checkbox";
@@ -10,10 +10,16 @@ import Input from "@/components/common/Input";
 import FileDragNDropInput from "@/components/common/FileDragNDropInput";
 import { getClubId, getAccessToken } from "@/lib/cookies";
 
+interface FormValues {
+  title: string;
+  content: string;
+  isPinned: "Y" | "N";
+}
+
 export default function NewAnnouncementForm() {
   useNavigationGuard();
   const pathname = usePathname();
-
+  const router = useRouter();
   const [formValues, setFormValues] = useState<{
     title: string;
     content: string;
@@ -93,13 +99,11 @@ export default function NewAnnouncementForm() {
       }
   
       const data = await response.json();
-      alert('공지사항이 성공적으로 등록되었습니다!');
+      alert('공지사항이 성공적으로 등록되었습니다');
       console.log('공지사항 등록 성공:', data);
-      // 이전 페이지로 돌아가기 
-      window.history.back();
+      router.push("/club/dashboard/notices");
     } catch (error) {
       console.error('등록 실패:', error);
-      // 에러 처리
     }
   };
 
@@ -141,7 +145,10 @@ export default function NewAnnouncementForm() {
           currentValue={formValues.content}
           handleInputChange={(e) =>
             setFormValues((prev) => {
-              return { ...prev, content: e.target.value };
+              return {
+                ...prev,
+                content: e.target.value,
+              };
             })
           }
         />

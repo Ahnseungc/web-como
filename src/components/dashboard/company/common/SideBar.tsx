@@ -67,16 +67,13 @@ const menuList: MenuItem[] = [
         link: "/club",
         routes: ["/club", "/club/detail"],
       },
+      {
+        name: "활동지원비 신청 관리",
+        link: "/club/expense",
+        routes: ["/club/expense"],
+      },
       // {
-      //   name: "활동결과 보고 관리",
-      //   link: "/club/report",
-      //   routes: ["/club/report"],
-      // },
-      // {
-      //   name: "활동지원비 신청 관리",
-      //   link: "/club/expense",
-      //   routes: ["/club/expense"],
-      // },
+      //
     ],
   },
   // {

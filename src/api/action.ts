@@ -8,7 +8,9 @@ export const getData = async (endpoint: string, useClubId?: boolean) => {
   const token = await getAccessToken();
   console.log("현재 clubId", clubId);
 
-  const finalEndpoint = useClubId ? endpoint.replace('{clubId}', clubId || '') : endpoint;
+  const finalEndpoint = useClubId
+    ? endpoint.replace("{clubId}", clubId || "")
+    : endpoint;
   const url = `${process.env.NEXT_PUBLIC_SERVER_URL}${finalEndpoint}`;
 
   const response = await fetch(url, {
