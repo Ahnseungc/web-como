@@ -45,6 +45,11 @@ const menuList: MenuItem[] = [
         link: "/manage/member",
         routes: ["/manage/member"],
       },
+      {
+        name: "동호회 일정 관리",
+        link: "/manage/schedule",
+        routes: ["/manage/schedule"],
+      },
       // {
       //   name: "동호회 활동 캘린더",
       //   link: "/manage/calendar",
