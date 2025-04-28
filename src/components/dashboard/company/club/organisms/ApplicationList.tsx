@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react"; 
+import { useState } from "react";
 import DateFilter, {
   type DateRange,
 } from "@/components/dashboard/common/DateFilter";
@@ -27,22 +27,23 @@ export default function ApplicationList(props: Props) {
   const [maxPage, setMaxPage] = useState(1);
 
   const formatDateToString = (date: Date | undefined) => {
-    if (!date) return '';
-    const koreaDate = new Date(date.getTime() + (9 * 60 * 60 * 1000));
-    return koreaDate.toISOString().split('T')[0];
+    if (!date) return "";
+    const koreaDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
+    return koreaDate.toISOString().split("T")[0];
   };
 
-  const loadApplications = async (searchValue: SearchValue = { term: "", field: "all" }) => {
+  const loadApplications = async (
+    searchValue: SearchValue = { term: "", field: "all" }
+  ) => {
     try {
-      const response = await getData(`v1/manager/club?page=${currentPage}&search=${searchValue.term}&filter=${searchValue.field}&startDate=${formatDateToString(currentDateRange.startDate)}&endDate=${formatDateToString(currentDateRange.endDate)}`, true);
-      console.log(response.data)
-      if (response.resultCode === 'OK') {
-        console.log("Applications Data:", response.data); // 데이터 확인
+      // 목데이터 API 엔드포인트로 변경
+      const response = await getData("/api/company/club/applications");
+      if (response.resultCode === "OK") {
         setApplications(response.data.memberList);
         setMaxPage(response.data.maxPage);
       }
     } catch (error) {
-      console.error("직원 목록 로딩 오류:", error);
+      console.error("동호회 신청 목록 로딩 오류:", error);
     }
   };
 
@@ -76,10 +77,8 @@ export default function ApplicationList(props: Props) {
         handleDateRangeChange={handleDateRangeChange}
       />
       <div className="space-y-10">
-        <ApplicationTable 
-          applications={applications}
-        />
-         {applications && applications.length > 0 && (
+        <ApplicationTable applications={applications} />
+        {applications && applications.length > 0 && (
           <div className="flex justify-center mt-8">
             <Pagination
               currentPage={currentPage}
