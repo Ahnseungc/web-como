@@ -101,8 +101,9 @@ export default function NewAnnouncementForm() {
       const data = await response.json();
       alert('공지사항이 성공적으로 등록되었습니다');
       console.log('공지사항 등록 성공:', data);
-      router.push("/club/dashboard/notices");
+      router.push("/club/dashboard/manage/announcement?page=1");
     } catch (error) {
+      alert('공지사항 등록 중 오류가 발생했습니다. 다시 시도해 주세요.'); // 수정된 부분
       console.error('등록 실패:', error);
     }
   };
