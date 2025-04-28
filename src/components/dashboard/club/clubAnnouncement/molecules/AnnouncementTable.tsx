@@ -28,9 +28,12 @@ function AnnouncementTable({ currentPage }: { currentPage: number }) {
   const [notices, setNotices] = useState<Notice[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const itemsPerPage = 10; // 페이지당 항목 수
+
   useEffect(() => {
     const fetchNotices = async () => {
       const result = await getNotices(currentPage, "");
+      console.log("fetchNotices result", result);
       const { noticeList, currentPage: cur, maxPage } = result.data;
       setNotices(noticeList);
       setIsLoading(false);
@@ -40,7 +43,7 @@ function AnnouncementTable({ currentPage }: { currentPage: number }) {
 
   const formatDate = (dateArray: number[]) => {
     const [year, month, day, hour, minute, second] = dateArray;
-    return `${year}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")} ${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
+    return `${year}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
   };
 
   // 최대 2개까지 고정 가능하도록 pin/unpin 구현
@@ -92,32 +95,23 @@ function AnnouncementTable({ currentPage }: { currentPage: number }) {
   const pinnedNotices = notices.filter((n) => n.isPinned === "Y");
   const normalNotices = notices.filter((n) => n.isPinned !== "Y");
 
+    // pinnedNotices와 normalNotices를 합쳐서 현재 페이지에 맞는 항목만 가져오기
+  const allNotices = [...pinnedNotices, ...normalNotices];
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentNotices = allNotices.slice(startIndex, endIndex); // 현재 페이지에 맞는 항목만 가져오기
+
   return (
     <ul className="flex flex-col gap-1">
       <li className="flex border-y border-gray-400 bg-gray-200">
         {tableHeadings.map((heading, i) => (
-          <div
-            key={heading}
-            className={cn(
-              "my-3 mx-6 body-1 font-bold text-gray-900",
-              i === 0 ? "w-8" : "flex-1",
-              i === 1 ? "" : "text-center",
-              i === 4 ? "max-w-20" : "",
-              [2, 3].includes(i) ? "max-w-36" : "",
-              i === 5
-                ? "flex items-center justify-center min-w-32 max-w-48 m-0"
-                : ""
-            )}
-          >
+          <div key={heading} className={cn("my-3 mx-6 body-1 font-bold text-gray-900", i === 0 ? "w-8" : "flex-1", i === 1 ? "" : "text-center", i === 4 ? "max-w-20" : "", [2, 3].includes(i) ? "max-w-36" : "", i === 5 ? "flex items-center justify-center min-w-32 max-w-48 m-0" : "")}>
             {heading}
           </div>
         ))}
       </li>
-      {pinnedNotices.map((notice, idx) => (
-        <li
-          key={notice.noticeId}
-          className="flex border-b border-gray-400 bg-gray-0"
-        >
+      {currentNotices.map((notice, idx) => (
+        <li key={notice.noticeId} className="flex border-b border-gray-400 bg-gray-0">
           {[
             notice.noticeId,
             notice.title,
@@ -131,14 +125,10 @@ function AnnouncementTable({ currentPage }: { currentPage: number }) {
               className={cn(
                 "my-3 mx-6 body-1 font-medium underline-offset-2 underline decoration-transparent line-clamp-1 transition duration-300",
                 i === 0 ? "w-8" : "flex-1",
-                i === 1
-                  ? "flex items-center hover:decoration-gray-800 cursor-pointer"
-                  : "text-center",
+                i === 1 ? "flex items-center hover:decoration-gray-800 cursor-pointer hover:underline" : "text-center",
                 i === 4 ? "max-w-20" : "",
                 [2, 3].includes(i) ? "max-w-36" : "",
-                i === 5
-                  ? "flex items-center justify-center min-w-32 max-w-48 m-0"
-                  : "",
+                i === 5 ? "flex items-center justify-center gap-2 min-w-32 max-w-48 m-0" : "",
                 "text-gray-800"
               )}
               onClick={() => {
@@ -148,83 +138,44 @@ function AnnouncementTable({ currentPage }: { currentPage: number }) {
               }}
             >
               {i === 0 ? (
-                idx + 1
-              ) : data === "Y" ? (
-                <button
-                  className="py-1 px-4 rounded border border-gray-800 body-1 font-medium text-gray-800 bg-gray-0"
-                  onClick={() => handleUnpin(notice.noticeId)}
-                >
-                  {"고정 해제"}
-                </button>
+                startIndex + idx + 1 // 현재 페이지의 인덱스 계산
               ) : i === 1 ? (
                 <>
-                  <div className="mr-2 px-1">
-                    <Pin />
-                  </div>
+                  {notice.isPinned === "Y" && (
+                    <div className="mr-2 px-1">
+                      <Pin />
+                    </div>
+                  )}
                   <p className="flex-1 line-clamp-1">{data}</p>
                 </>
+              ) : i === 5 ? (
+                notice.isPinned === "Y" ? (
+                  <>
+                    <button
+                      className="py-1 px-4 rounded border border-gray-800 body-1 font-medium text-gray-800 bg-gray-0 mr-2"
+                      onClick={() => handleUnpin(notice.noticeId)}
+                    >
+                      {"고정 해제"}
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-gray-800 mr-2"
+                      onClick={() => handlePin(notice.noticeId)}
+                    >
+                      {"고정"}
+                    </button>
+                    <button
+                      onClick={() => handleDelete(notice.noticeId)}
+                      className="py-1 px-4 rounded border border-point-red body-1 font-medium text-point-red bg-gray-0"
+                    >
+                      {"삭제"}
+                    </button>
+                  </>
+                )
               ) : (
                 data
-              )}
-            </div>
-          ))}
-        </li>
-      ))}
-      {normalNotices.map((notice, idx) => (
-        <li
-          key={notice.noticeId}
-          className="flex border-b border-gray-400 bg-gray-0"
-        >
-          {[
-            notice.noticeId,
-            notice.title,
-            notice.name,
-            formatDate(notice.createdDate),
-            notice.viewCount,
-            notice.isPinned,
-          ].map((data, i) => (
-            <div
-              key={data}
-              className={cn(
-                "my-3 mx-6 body-1 font-medium underline-offset-2 underline decoration-transparent line-clamp-1 transition duration-300",
-                i === 0 ? "w-8" : "flex-1",
-                i === 1
-                  ? "hover:decoration-gray-800 cursor-pointer"
-                  : "text-center",
-                i === 4 ? "max-w-20" : "",
-                [2, 3].includes(i) ? "max-w-36" : "",
-                i === 5
-                  ? "flex items-center justify-center gap-2 min-w-32 max-w-48 m-0"
-                  : "",
-                "text-gray-800"
-              )}
-              onClick={() => {
-                if (i === 1) {
-                  handleTitleClick(notice.noticeId);
-                }
-              }}
-            >
-              {i === 0 ? (
-                pinnedNotices.length + idx + 1
-              ) : i !== 5 ? (
-                data
-              ) : data === "N" ? (
-                <>
-                  <button
-                    className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-gray-800"
-                    onClick={() => handlePin(notice.noticeId)}
-                  >
-                    {"고정"}
-                  </button>
-                  <button
-                    onClick={() => handleDelete(notice.noticeId)}
-                    className="py-1 px-4 rounded border border-point-red body-1 font-medium text-point-red bg-gray-0"
-                  >
-                    {"삭제"}
-                  </button>
-                </>
-              ) : (
-                ""
               )}
             </div>
           ))}
@@ -232,6 +183,6 @@ function AnnouncementTable({ currentPage }: { currentPage: number }) {
       ))}
     </ul>
   );
-}
+};
 
 export default AnnouncementTable;
