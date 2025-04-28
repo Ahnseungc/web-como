@@ -25,7 +25,7 @@ export default function NewAnnouncementForm() {
     content: "",
     isPinned: "N",
   });
-  const [currentImages, setCurrentImages] = useState<Blob[]>([]);
+  const [currentImages, setCurrentImages] = useState<File[]>([]);
   const [files, setFiles] = useState<File[]>([]);
 
   const handleSubmit = async (e: React.FormEvent) => {
