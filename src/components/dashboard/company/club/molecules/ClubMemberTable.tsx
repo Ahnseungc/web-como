@@ -115,7 +115,7 @@ export default function ClubMemberTable({ clubMembers }: ClubMemberTableProps) {
   };
 
   const formatAppliedDate = (dateArray: number[]) => {
-    if (!Array.isArray(dateArray) || dateArray.length < 6) {
+    if (!Array.isArray(dateArray) || dateArray.length < 5) {
       console.error("Invalid dateArray:", dateArray); // 오류 로그 추가
       return '';
     }

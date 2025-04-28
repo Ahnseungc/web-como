@@ -8,6 +8,7 @@ import Checkbox from "@/components/common/Checkbox";
 import ImageInput from "@/components/common/ImageInput";
 import Input from "@/components/common/Input";
 import FileDragNDropInput from "@/components/common/FileDragNDropInput";
+import { getClubId, getAccessToken } from "@/lib/cookies";
 
 interface FormValues {
   title: string;
@@ -19,41 +20,90 @@ export default function NewAnnouncementForm() {
   useNavigationGuard();
   const pathname = usePathname();
   const router = useRouter();
-
-  const [formValues, setFormValues] = useState<FormValues>({
-    title: "",
-    content: "",
-    isPinned: "N",
-  });
+  const [formValues, setFormValues] = useState<{
+    title: string;
+    content: string;
+    isPinned: string;
+  }>({ title: "", content: "", isPinned: 'N' });
   const [currentImages, setCurrentImages] = useState<File[]>([]);
   const [files, setFiles] = useState<File[]>([]);
+  console.log("formValues", formValues);
+  console.log("title:", formValues.title);
+  console.log("content:", formValues.content);
+  console.log("isPinned:", formValues.isPinned);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, type, checked, value } = e.target;
+    setFormValues({
+      ...formValues,
+      [name]: type === 'checkbox' ? (checked ? 'Y' : 'N') : value,
+    });
+    console.log("formValues", formValues);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const formData = new FormData();
-      formData.append("data", JSON.stringify(formValues));
+  
+    const clubId = await getClubId();
+    const token = await getAccessToken();
+    console.log("clubId", clubId);
+    console.log("token", token);
 
-      // 이미지 파일들을 직접 FormData에 추가
-      currentImages.forEach((file, index) => {
-        formData.append("image", file);
+    const formData = new FormData();
+    formData.append(
+      "data",
+      new Blob(
+        [JSON.stringify({
+          title: formValues.title,
+          content: formValues.content,
+          isPinned: formValues.isPinned,
+        })],
+        { type: "application/json" }
+      )
+    );
+
+    // 이미지와 파일 추가
+    // currentImages.forEach(image => {
+    //   formData.append("image", image); // 이미지 파일 추가
+    // });
+
+    if (currentImages.length > 0) {
+      currentImages.forEach(image => {
+        if (image) {
+          formData.append("image", image);
+        }
       });
+    } else {
+      formData.append("image", new Blob(), "empty.jpg");
+    }
 
-      const response = await fetch("/api/notices", {
+   // FormData의 내용을 출력
+  formData.forEach((value, key) => {
+    console.log("formData 내용", key, value);
+  });
+
+    try {
+      const response = await fetch(`/api/server/v1/executive/club/${clubId}/notices`, {
         method: "POST",
         body: formData,
+        headers: new Headers({
+          Authorization: `Bearer ${token}`,
+        }),
       });
-
-      const result = await response.json();
-      if (result.resultCode === "OK") {
-        alert("공지사항 게시 및 업로드 알림이 완료되었습니다.");
-        router.push("/club/dashboard/notices");
-      } else {
-        alert("공지사항 등록에 실패했습니다.");
+  
+      if (!response.ok) {
+        const responseText = await response.text();
+        console.log("API 응답 데이터:", responseText);  
+        alert('공지사항 등록에 실패했습니다. 다시 시도해 주세요.'); // 수정된 부분
+        return;
       }
+  
+      const data = await response.json();
+      alert('공지사항이 성공적으로 등록되었습니다');
+      console.log('공지사항 등록 성공:', data);
+      router.push("/club/dashboard/notices");
     } catch (error) {
-      console.error("공지사항 등록 오류:", error);
-      alert("공지사항 등록 중 오류가 발생했습니다.");
+      console.error('등록 실패:', error);
     }
   };
 
@@ -113,16 +163,11 @@ export default function NewAnnouncementForm() {
           currentImages={currentImages}
           setCurrentImages={setCurrentImages}
         />
-        <Checkbox
-          name="pin"
-          content="공지사항 상단 고정하기"
-          checked={formValues.isPinned === "Y"}
-          onChange={(e) => {
-            setFormValues((prev) => ({
-              ...prev,
-              isPinned: e.target.checked ? "Y" : "N",
-            }));
-          }}
+        <Checkbox 
+          name="isPinned" 
+          content="공지사항 상단 고정하기" 
+          checked={formValues.isPinned === 'Y'} // 'Y'일 때 체크
+          onChange={handleInputChange} // 체크박스 상태 변경 시 호출
         />
       </div>
       <Button
