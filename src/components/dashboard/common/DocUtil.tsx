@@ -8,9 +8,12 @@ export const PrintButton = () => {
   );
 };
 
-export const SaveButton = () => {
+export const SaveButton = ({ onClick }: { onClick?: () => void }) => {
   return (
-    <button className="p-1 rounded bg-point-green">
+    <button
+      className="p-1 rounded bg-point-green"
+      onClick={onClick} // 함수만 전달
+    >
       <Document className="w-6 h-6 text-gray-0" />
     </button>
   );

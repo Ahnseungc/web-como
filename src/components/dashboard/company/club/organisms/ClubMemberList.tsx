@@ -1,13 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react"; 
+import { useState, useEffect } from "react";
 import type { ChangeSearchValue, SearchValue } from "@/lib/types/search";
 import Search from "@/components/dashboard/common/Search";
 import SearchOrder from "@/components/dashboard/common/SearchOrder";
-import DocUtilButtons from "@/components/dashboard/common/DocUtil";
+import DocUtilButtons, {
+  SaveButton,
+} from "@/components/dashboard/common/DocUtil";
 import ClubMemberTable from "@/components/dashboard/company/club/molecules/ClubMemberTable";
 import Pagination from "@/components/dashboard/common/Pagination";
 import { getData } from "@/api/action";
+import * as XLSX from "xlsx";
+import { useQuery } from "@tanstack/react-query";
+import { Copy, Document, Edit, Print } from "@/assets/icons/util";
 
 interface Props {
   clubId: string;
@@ -34,11 +39,16 @@ export default function ClubMemberList({ clubId }: Props) {
   const [maxPage, setMaxPage] = useState(1);
   const [clubMembers, setClubMembers] = useState([]);
 
-  const loadClubMemberList = async (searchValue: SearchValue = { term: "", field: "" }) => {
+  const loadClubMemberList = async (
+    searchValue: SearchValue = { term: "", field: "" }
+  ) => {
     try {
-      const res = await getData(`v1/manager/club/${clubId}/member?page=${currentPage}&search=${searchValue.term}&filter=${searchValue.field}`, true);
-      console.log(res.data)
-      if (res.resultCode === 'OK' && res.data) {
+      const res = await getData(
+        `v1/manager/club/${clubId}/member?page=${currentPage}&search=${searchValue.term}&filter=${searchValue.field}`,
+        true
+      );
+      console.log(res.data);
+      if (res.resultCode === "OK" && res.data) {
         setClubMembers(res.data.memberList);
         setMaxPage(res.data.maxPage);
         console.log("clubMembers", res.data.memberList);
@@ -66,16 +76,19 @@ export default function ClubMemberList({ clubId }: Props) {
       console.log("=================");
       return {
         field: field || prev.field, // 새로운 field가 없으면 이전 field 유지
-        term: term || prev.term,     // 새로운 term이 없으면 이전 term 유지
+        term: term || prev.term, // 새로운 term이 없으면 이전 term 유지
       };
     });
   };
 
-  const handleSearch  = async () => {
+  const handleSearch = async () => {
     console.log("=== 검색 실행 ===");
     console.log("현재 페이지:", currentPage);
     console.log("검색어:", currentSearchValue.term);
-    console.log("필터:", fieldList.find(f => f.value === currentSearchValue.field)?.name);
+    console.log(
+      "필터:",
+      fieldList.find((f) => f.value === currentSearchValue.field)?.name
+    );
     console.log("필터 값:", currentSearchValue.field);
     console.log("================");
 
@@ -100,6 +113,67 @@ export default function ClubMemberList({ clubId }: Props) {
     }
   };
 
+  const { refetch: getExcelData } = useQuery({
+    queryKey: [clubId],
+    queryFn: () => getData(`v1/manager/club/${clubId}/members/excel`, false),
+    enabled: false,
+  });
+
+  const handleExcelDownload = async () => {
+    try {
+      const { data } = await getExcelData(); // react-query에서 엑셀 데이터 가져오기
+      if (data) {
+        const newData = data?.data.map(
+          (
+            item: {
+              id: number;
+              name: string;
+              department: string;
+              profileMessage: string;
+              createdDate: string;
+              status: string;
+            },
+            idx: number
+          ) => {
+            const newItem: Record<string, any> = { ...item };
+
+            const date = newItem.createdDate.slice(0, 3).join("-");
+
+            newItem.id = idx + 1;
+            newItem["이름"] = newItem.name;
+            newItem["부서"] = newItem.department;
+            newItem["직급"] = newItem.profileMessage;
+            newItem["상태"] =
+              newItem.status === "APPROVED" ? "활동중" : "비활동중";
+            newItem["가입일"] = date;
+
+            delete newItem["name"];
+            delete newItem["department"];
+            delete newItem["profileMessage"];
+            delete newItem["status"];
+            delete newItem["createdDate"];
+
+            return newItem;
+          }
+        );
+
+        const wb = XLSX.utils.book_new(); // 새로운 워크북 생성
+
+        // 엑셀 스타일 지정
+        const ws = XLSX.utils.json_to_sheet(newData);
+
+        XLSX.utils.book_append_sheet(wb, ws, "Club Members"); // 시트를 워크북에 추가
+
+        // 엑셀 파일 생성
+        XLSX.writeFile(wb, "club_members.xlsx"); // 엑셀 파일 다운로드
+      } else {
+        console.error("엑셀 데이터가 없습니다.");
+      }
+    } catch (error) {
+      console.error("엑셀 다운로드 중 오류 발생:", error);
+    }
+  };
+
   const handlePageChange = (page: number) => {
     if (page !== currentPage) {
       setCurrentPage(page);
@@ -107,14 +181,16 @@ export default function ClubMemberList({ clubId }: Props) {
   };
   return (
     <div className="space-y-6 p-8 rounded-lg bg-gray-0">
-      <Search
-        withoutWrapper
-        title="동호회원"
-        fieldList={fieldList}
-        currentValue={currentSearchValue}
-        handleChange={handleSearchValueChange}
-        handleSearch={handleSearch}
-      />
+      <div className="flex justify-between items-center">
+        <Search
+          withoutWrapper
+          title="동호회원"
+          fieldList={fieldList}
+          currentValue={currentSearchValue}
+          handleChange={handleSearchValueChange}
+          handleSearch={handleSearch}
+        />
+      </div>
       {/* <div className="flex items-center justify-between">
         <SearchOrder
           orderList={orderList}
@@ -123,9 +199,11 @@ export default function ClubMemberList({ clubId }: Props) {
         />
         <DocUtilButtons />
       </div> */}
+      <div className="flex justify-end">
+        <SaveButton onClick={() => handleExcelDownload()} />
+      </div>
       <div className="space-y-10">
-        <ClubMemberTable 
-          clubMembers={clubMembers} />
+        <ClubMemberTable clubMembers={clubMembers} />
         {clubMembers && clubMembers.length > 0 && (
           <div className="flex justify-center mt-8">
             <Pagination
