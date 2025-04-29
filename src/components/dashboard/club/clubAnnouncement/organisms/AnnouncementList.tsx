@@ -1,21 +1,48 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Pagination from "@/components/dashboard/common/Pagination";
 import AnnouncementTable from "@/components/dashboard/club/clubAnnouncement/molecules/AnnouncementTable";
 import { Plus } from "@/assets/icons/action";
+import { getNotices } from "@/api/actions/club/notice";
 
 export default function AnnouncementList() {
   const pathname = usePathname();
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pageParam = searchParams.get("page");
+  const [currentPage, setCurrentPage] = useState<number>(
+    Number(pageParam) || 1
+  );
+  const [maxPage, setMaxPage] = useState(0);
+
+  useEffect(() => {
+    setCurrentPage(Number(pageParam) || 1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageParam]);
 
   const handlePageChange = (page: number) => {
     if (page !== currentPage) {
-      setCurrentPage(page);
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("page", String(page));
+      router.push(`${pathname}?${params.toString()}`);
     }
   };
+
+  useEffect(() => {
+    const fetchMaxPage = async () => {
+      try {
+        const result = await getNotices(currentPage, "");
+        setMaxPage(result.data.maxPage); // API 응답에서 maxPage 값을 설정합니다.
+      } catch (error) {
+        console.error('Error fetching maxPage:', error);
+      }
+    };
+
+    fetchMaxPage();
+  }, []);
 
   return (
     <div className="space-y-10 p-8 rounded-xl bg-gray-0">
@@ -29,12 +56,12 @@ export default function AnnouncementList() {
             </button>
           </Link>
         </div>
-        <AnnouncementTable />
+        <AnnouncementTable currentPage={currentPage} />
       </div>
       <Pagination
         currentPage={currentPage}
         handlePageChange={handlePageChange}
-        maxPage={6}
+        maxPage={maxPage}
       />
     </div>
   );
