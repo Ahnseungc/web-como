@@ -37,7 +37,8 @@ export default function ApplicationList(props: Props) {
   ) => {
     try {
       // 목데이터 API 엔드포인트로 변경
-      const response = await getData("/api/company/club/applications");
+      const response = await getData(`v1/manager/club?page=${currentPage}&search=${searchValue.term}&startDate=${formatDateToString(currentDateRange.startDate)}&endDate=${formatDateToString(currentDateRange.endDate)}`);
+      console.log(response);
       if (response.resultCode === "OK") {
         setApplications(response.data.memberList);
         setMaxPage(response.data.maxPage);
