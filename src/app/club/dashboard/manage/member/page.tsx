@@ -1,13 +1,16 @@
 import MemberTitle from "@/components/dashboard/club/member/molecules/MemberTitle";
 import MemberSearch from "@/components/dashboard/club/member/organisms/MemberSearch";
 import MemberList from "@/components/dashboard/club/member/organisms/MemberList";
+import { getClubId } from "@/lib/cookies";
 
-export default function ClubMemberPage() {
+export default async function ClubMemberPage() {
+  const clubId = await getClubId();
+  console.log(clubId);
   return (
     <>
       <MemberTitle />
       {/* <MemberSearch /> */}
-      <MemberList />
+      <MemberList clubId={clubId} />
     </>
   );
 }

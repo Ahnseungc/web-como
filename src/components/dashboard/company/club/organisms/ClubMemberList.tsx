@@ -4,7 +4,9 @@ import { useState, useEffect } from "react";
 import type { ChangeSearchValue, SearchValue } from "@/lib/types/search";
 import Search from "@/components/dashboard/common/Search";
 import SearchOrder from "@/components/dashboard/common/SearchOrder";
-import DocUtilButtons from "@/components/dashboard/common/DocUtil";
+import DocUtilButtons, {
+  SaveButton,
+} from "@/components/dashboard/common/DocUtil";
 import ClubMemberTable from "@/components/dashboard/company/club/molecules/ClubMemberTable";
 import Pagination from "@/components/dashboard/common/Pagination";
 import { getData } from "@/api/action";
@@ -198,12 +200,7 @@ export default function ClubMemberList({ clubId }: Props) {
         <DocUtilButtons />
       </div> */}
       <div className="flex justify-end">
-        <button
-          className="w-[32px] h-[32px] px-[8px] py-[6px] rounded-[4px] bg-point-green flex items-center justify-center"
-          onClick={() => handleExcelDownload()}
-        >
-          <Document className="white" />
-        </button>
+        <SaveButton onClick={() => handleExcelDownload()} />
       </div>
       <div className="space-y-10">
         <ClubMemberTable clubMembers={clubMembers} />
