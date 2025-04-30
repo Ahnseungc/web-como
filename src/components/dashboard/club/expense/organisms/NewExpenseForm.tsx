@@ -84,7 +84,11 @@ export default function NewExpenseReportForm({
       [name]: value,
     }));
   };
-  console.log(accessToken);
+  console.log(formValues);
+
+  const a = "100,000,0000";
+
+  console.log(Number(a.split(",").join("")));
 
   const { mutate } = useMutation({
     mutationFn: async () => {
@@ -105,7 +109,7 @@ export default function NewExpenseReportForm({
           note: formValues.note,
           participantsCount: Number(formValues.participantsCount),
           location: formValues.location,
-          amount: Number(formValues.amount),
+          amount: Number(formValues.amount.split(",").join("")),
           details: formValues.details,
         };
         const JsonData = JSON.stringify(data);
@@ -153,6 +157,14 @@ export default function NewExpenseReportForm({
       }
     },
   });
+
+  const formatAmount = (amount: string) => {
+    const numberValue = parseFloat(amount.replace(/,/g, ""));
+    if (!isNaN(numberValue)) {
+      return numberValue.toLocaleString();
+    }
+    return amount;
+  };
 
   return (
     <form className="space-y-3 w-full" onSubmit={handleSubmit}>
@@ -250,10 +262,10 @@ export default function NewExpenseReportForm({
           required
           name="amount"
           label="신청 금액"
-          type="number"
+          type="text"
           placeholder="금액을 입력하세요."
           inputStyle="max-w-[350px]"
-          value={formValues.amount}
+          value={formatAmount(formValues.amount)}
           handleInputChange={(e) => {
             handleInput(e);
           }}
