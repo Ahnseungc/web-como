@@ -36,36 +36,43 @@ export default function ExpenseTable({
   endDate: string;
   expenseList: ExpenseApplicationEntry[];
 }) {
-  const [status, setStatus] = useState<ExpenseApplicationStatus[]>([]);
+  const [status, setStatus] = useState<Map<number, ExpenseApplicationStatus>>(
+    new Map()
+  );
   const router = useRouter();
   useEffect(() => {
     const fetchData = async () => {
-      setStatus(
-        expenseList.map((entry: ExpenseApplicationEntry) => entry.status)
-      );
+      const statusMap = new Map();
+      expenseList.forEach((entry) => {
+        statusMap.set(entry.id, entry.status);
+      });
+      setStatus(statusMap);
     };
     fetchData();
   }, [currentPage, startDate, endDate, expenseList]);
 
-  const handleStatusChange = (id: number, status: "APPROVED" | "REJECTED") => {
+  const handleStatusChange = (
+    id: number,
+    newStatus: "APPROVED" | "REJECTED"
+  ) => {
     setStatus((prev) => {
-      const newStatus = prev.map((s, idx) => {
-        if (idx === id) {
-          return status;
-        }
-        return s;
-      });
-      return newStatus;
+      const newMap = new Map(prev);
+      newMap.set(id, newStatus);
+      return newMap;
     });
-    if (status === "APPROVED") {
+
+    if (newStatus === "APPROVED") {
       pathApprove(id);
-    } else if (status === "REJECTED") {
+    } else if (newStatus === "REJECTED") {
       patchReject(id);
     }
   };
 
-  const getStatusComponent = (id: number, status: ExpenseApplicationStatus) => {
-    switch (status) {
+  const getStatusComponent = (
+    id: number,
+    currentStatus: ExpenseApplicationStatus
+  ) => {
+    switch (currentStatus) {
       case "REJECTED":
         return "반려";
       case "APPROVED":
@@ -104,6 +111,7 @@ export default function ExpenseTable({
         return "text-gray-800";
     }
   };
+
   const handleExpenseDetailClick = (id: number) => {
     router.push(`/company/dashboard/club/expense/${id}`);
   };
@@ -160,10 +168,10 @@ export default function ExpenseTable({
           <div
             className={cn(
               "flex-1 my-3 mx-6 body-1 font-medium text-center min-w-16 max-w-[389px]",
-              getStatusColor(status[idx])
+              getStatusColor(status.get(entry.id) || entry.status)
             )}
           >
-            {getStatusComponent(idx, status[idx])}
+            {getStatusComponent(entry.id, status.get(entry.id) || entry.status)}
           </div>
         </li>
       ))}

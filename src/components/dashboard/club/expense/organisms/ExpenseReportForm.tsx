@@ -2,21 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Input from "@/components/common/Input";
-import { useParams } from "next/navigation";
-import { getExpenseDetail } from "@/api/actions/company/expense/getExpensedetail";
 import { Document } from "@/assets/icons/util";
-import { SaveButton } from "@/components/dashboard/common/DocUtil";
-
-type ExpenseFormValues = {
-  eventName: string;
-  description: string;
-  note: string;
-  location: string;
-  participantCount: number;
-  amount: number;
-  details: string;
-  file: string | null;
-};
+import { ExpenseFormValues } from "@/api/types/company/expense";
 
 const getDecodedFileName = (url: string) => {
   try {
@@ -30,26 +17,25 @@ const getDecodedFileName = (url: string) => {
   }
 };
 
-export default function ExpenseReportForm() {
+export default function ExpenseReportForm({
+  expense,
+}: {
+  expense: ExpenseFormValues;
+}) {
   const [formValues, setFormValues] = useState<ExpenseFormValues | null>(null);
-  const { id } = useParams();
 
   useEffect(() => {
-    const fetchExpense = async () => {
-      const expense = await getExpenseDetail(Number(id));
-      setFormValues({
-        eventName: expense.eventName,
-        description: expense.description,
-        note: expense.note,
-        location: expense.location,
-        participantCount: expense.participantCount,
-        amount: expense.amount,
-        details: expense.details,
-        file: expense.file,
-      });
-    };
-    fetchExpense();
-  }, [id]);
+    setFormValues({
+      eventName: expense.eventName,
+      description: expense.description,
+      note: expense.note,
+      location: expense.location,
+      participantCount: expense.participantCount,
+      amount: expense.amount,
+      details: expense.details,
+      file: expense.file,
+    });
+  }, [expense]);
 
   if (!formValues) {
     return <div>Loading...</div>;

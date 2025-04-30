@@ -1,15 +1,51 @@
-import ClubInfoCard from "@/components/dashboard/club/common/ClubInfoCard";
+"use client";
+import { getExpenseDetail } from "@/api/actions/company/expense/getExpensedetail";
+import {
+  CardInfo,
+  ExpenseDetail,
+  ExpenseFormValues,
+} from "@/api/types/company/expense";
+import ClubInfoCardForExpense from "@/components/dashboard/club/expense/organisms/ClubInfoCardForExpense";
 import ExpenseReportForm from "@/components/dashboard/club/expense/organisms/ExpenseReportForm";
 import BackButton from "@/components/dashboard/common/BackButton";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const Page = () => {
+const Page = ({ params }: { params: { id: string } }) => {
+  const [cardInfo, setCardInfo] = useState<CardInfo | null>(null);
+  const [expense, setExpense] = useState<ExpenseFormValues | null>(null);
+  useEffect(() => {
+    const fetchExpense = async () => {
+      const data = await getExpenseDetail(Number(params.id));
+      setExpense({
+        eventName: data.eventName,
+        description: data.description,
+        note: data.note,
+        location: data.location,
+        participantCount: data.participantCount,
+        amount: data.amount,
+        details: data.details,
+        file: data.file,
+      });
+      setCardInfo({
+        clubId: data.clubId,
+        clubImage: data.clubImage,
+        leadersSummary: data.leadersSummary,
+        activityPlan: data.activityPlan,
+        memberCount: data.memberCount,
+        status: data.status,
+      });
+    };
+    fetchExpense();
+  }, [params.id]);
+  if (!cardInfo || !expense) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
       <BackButton />
       <div className="flex gap-3">
-        <ClubInfoCard />
-        <ExpenseReportForm />
+        <ClubInfoCardForExpense cardInfo={cardInfo} />
+        <ExpenseReportForm expense={expense} />
       </div>
     </>
   );
