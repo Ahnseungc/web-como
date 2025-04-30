@@ -16,6 +16,7 @@ interface Props {
   fieldList?: SearchField[];
   filterList?: SearchFilter[];
   currentValue: SearchValue;
+  className?: string;
   handleChange: ({ field, term, filter }: ChangeSearchValue) => void;
   handleSearch: () => void;
 }
@@ -25,8 +26,8 @@ export default function Search(props: Props) {
     <div
       className={
         props.withoutWrapper
-          ? "space-y-6"
-          : "space-y-6 rounded-2xl bg-gray-0 mb-8"
+          ? `space-y-6 ${props.className}`
+          : `space-y-6 rounded-2xl bg-gray-0 mb-8 ${props.className}`
       }
     >
       <h3 className="h2 font-semibold text-gray-900">

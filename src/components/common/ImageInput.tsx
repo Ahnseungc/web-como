@@ -13,6 +13,7 @@ interface Props {
   readonly?: boolean;
   caption?: string;
   max?: number;
+  acceptDocs?: boolean;
 }
 
 export default function ImageInput(props: Props) {
@@ -60,7 +61,7 @@ export default function ImageInput(props: Props) {
             <Plus className="w-8 h-8 text-gray-50" />
             <input
               type="file"
-              accept="image/*"
+              accept={props.acceptDocs ? ".hwp, .doc, .docx" : "image/*"}
               name={props.name}
               id={props.name}
               onChange={(e) => {

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { getData } from "@/api/action";
 import type { ExpenseListData } from "@/api/types/club/activityExpenses/paymentHistory";
 import DateFilter, {
@@ -12,17 +12,31 @@ import Pagination from "@/components/dashboard/common/Pagination";
 import ExpenseTable from "@/components/dashboard/club/expense/molecules/ExpenseTable";
 import { Plus } from "@/assets/icons/action";
 
-export default function ExpenseList() {
+interface Props {
+  clubId?: string;
+}
+
+export default function ExpenseList({ clubId }: Props) {
   const pathname = usePathname();
   const { push } = useRouter();
 
-  const { data } = useQuery({
-    queryKey: ["club-expense", "list"],
-    queryFn: () =>
-      getData("v2/club/web/activityexpenses/paymenthistory/", true).then(
-        (res) => res.data as ExpenseListData
+  const { data, fetchNextPage, fetchPreviousPage } = useInfiniteQuery({
+    queryKey: [clubId, "expense"],
+    queryFn: ({ pageParam }) =>
+      getData(
+        `v1/executive/club/${clubId}/activity-expenses?page=${pageParam}`,
+        false
       ),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.data.currentPage < lastPage.data.maxPage) {
+        return lastPage.data.currentPage + 1;
+      } else {
+        return false;
+      }
+    },
+    initialPageParam: 1,
   });
+  console.log(data);
 
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
     startDate: undefined,
@@ -37,8 +51,15 @@ export default function ExpenseList() {
   const handlePageChange = (page: number) => {
     if (page !== currentPage) {
       setCurrentPage(page);
+      if (page > currentPage) {
+        fetchNextPage();
+      } else {
+        fetchPreviousPage();
+      }
     }
   };
+
+  const maxPage = data?.pages[0].data.maxPage;
 
   return (
     <div className="space-y-6 p-8 rounded-xl bg-gray-0">
@@ -48,7 +69,7 @@ export default function ExpenseList() {
         </h3>
         {pathname.startsWith("/club") && (
           <button
-            className="flex items-center gap-[3px] py-1 px-3 rounded body-1 font-medium text-gray-50 bg-brand-orange cursor-pointer"
+            className="flex items-center gap-[3px] py-1 px-3 rounded body-1 font-medium text-gray-50 bg-gray-900 cursor-pointer"
             onClick={() => push(`${pathname}/new`)}
           >
             {"지급신청서 작성"}
@@ -57,15 +78,15 @@ export default function ExpenseList() {
         )}
       </div>
       <div className="space-y-4">
-        <DateFilter
+        {/* <DateFilter
           currentDateRange={currentDateRange}
           handleDateRangeChange={handleDateRangeChange}
-        />
+        /> */}
         <div className="space-y-10">
-          <ExpenseTable data={data?.clubActivityExpensePaymentHistories} />
+          <ExpenseTable data={data?.pages} />
           <Pagination
             currentPage={currentPage}
-            maxPage={8}
+            maxPage={maxPage}
             handlePageChange={handlePageChange}
           />
         </div>

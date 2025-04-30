@@ -93,22 +93,23 @@ const menuList: MenuItem[] = [
   //     },
   //   ],
   // },
-  // {
-  //   name: "활동비 관리",
-  //   key: "expense",
-  //   subMenuList: [
-  //     {
-  //       name: "활동비 사용내역",
-  //       link: "/expense",
-  //       routes: ["/expense", "/expense/new", "/expense/detail"],
-  //     },
-  //     {
-  //       name: "입출금 내역",
-  //       link: "/expense/transaction",
-  //       routes: ["/expense/transaction"],
-  //     },
-  //   ],
-  // },
+  {
+    name: "활동비 관리",
+    key: "expense",
+    link: "/expense",
+    // subMenuList: [
+    //   {
+    //     name: "활동비 사용내역",
+    //     link: "/expense",
+    //     routes: ["/expense", "/expense/new", "/expense/detail"],
+    //   },
+    //   {
+    //     name: "입출금 내역",
+    //     link: "/expense/transaction",
+    //     routes: ["/expense/transaction"],
+    //   },
+    // ],
+  },
   // {
   //   name: "공지 및 문의",
   //   key: "announcement",
