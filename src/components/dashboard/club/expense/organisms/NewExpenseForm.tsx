@@ -42,14 +42,9 @@ export default function NewExpenseReportForm({
     amount: "",
     details: "",
   });
-  const [currentImages, setCurrentImages] = useState<File[]>([]);
   const [currentImagesBankAccount, setCurrentImagesBankAccount] = useState<
     File[]
   >([]);
-
-  const handleDateChange = (date: Date) => {
-    setDate(date);
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,14 +59,8 @@ export default function NewExpenseReportForm({
     ) {
       alert("필수 입력란을 입력해주세요.");
     } else {
-      mutate(); // 폼 데이터를 제출하는 함수 호출
+      mutate();
     }
-
-    //   alert(
-    //     "활동비 지급 신청서 (품의서)가 작성 및 담당 부서에게 전달되었습니다."
-    //   );
-    //   replace(`${CLUB_DASHBOARD_ENDPOINT}/expense`);
-    // };
   };
 
   const handleInput = (
@@ -84,11 +73,6 @@ export default function NewExpenseReportForm({
       [name]: value,
     }));
   };
-  console.log(formValues);
-
-  const a = "100,000,0000";
-
-  console.log(Number(a.split(",").join("")));
 
   const { mutate } = useMutation({
     mutationFn: async () => {

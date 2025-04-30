@@ -17,6 +17,7 @@ interface Props {
 }
 
 export default function ImageInput(props: Props) {
+  console.log(props.currentImages);
   return (
     <div className="flex-1 flex flex-col gap-2">
       <span className="h3 font-semibold text-gray-900">
