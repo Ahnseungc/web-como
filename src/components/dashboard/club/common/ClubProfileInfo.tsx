@@ -42,19 +42,45 @@ const categoryMapping = {
   ETC: "기타",
 };
 
-export default function ClubProfileInfo() {
+interface ClubProfileInfoType {
+  createdAt: number[];
+  memberCount: number;
+  activityPlan: string;
+}
+
+export default function ClubProfileInfo({
+  createdAt,
+  memberCount,
+  activityPlan,
+}: ClubProfileInfoType) {
+  const date = new Date(
+    createdAt[0],
+    createdAt[1],
+    createdAt[2],
+    createdAt[3],
+    createdAt[4],
+    createdAt[5]
+  );
+  const formattedDate = new Intl.DateTimeFormat("ko-KR", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  }).format(date);
+
+  const convertDate = formattedDate.replace(/\.$/, "");
+
   return (
     <div className="flex items-center gap-2 body-1 font-medium text-gray-500">
-      <span>{"개설일자 2024.05.03"}</span>
+      <span>{`개설일자 ${convertDate}`}</span>
 
       <div className="flex items-center gap-0.5">
         <People className="w-5 h-5 text-gray-500" />
-        {"23"}
+        {memberCount}
       </div>
-      <div className="flex items-center gap-0.5">
+      {/* <div className="flex items-center gap-0.5">
         <Calendar className="w-[18px] h-[18px] text-gray-500" />
-        {"주 1회"}
-      </div>
+        {activityPlan}
+      </div> */}
     </div>
   );
 }

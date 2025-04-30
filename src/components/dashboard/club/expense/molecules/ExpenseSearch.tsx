@@ -21,6 +21,7 @@ export default function ExpenseSearch() {
 
   return (
     <Search
+      className="p-8"
       filterList={filterList}
       currentValue={currentSearchValue}
       handleChange={({ term, filter }) =>

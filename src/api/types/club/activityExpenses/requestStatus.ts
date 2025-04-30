@@ -1,5 +1,4 @@
 export interface ExpenseOverviewData {
-  pendingPayment: number;
-  paymentCompleted: number;
-  rejected: number;
+  approvedCount: number;
+  rejectedCount: number;
 }

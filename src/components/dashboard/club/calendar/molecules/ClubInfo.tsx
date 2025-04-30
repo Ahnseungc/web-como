@@ -7,7 +7,7 @@ export default function ClubInfo() {
       <h2 className="font-semibold text-gray-900">{"동호회명"}</h2>
       <Chip content="운영 중" orange />
       <span>{"#카테고리"}</span>
-      <ClubProfileInfo />
+      {/* <ClubProfileInfo /> */}
     </div>
   );
 }

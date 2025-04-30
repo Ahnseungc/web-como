@@ -4,23 +4,27 @@ import type { TransactionOverviewData } from "@/api/types/club/activityExpenses/
 import type { ExpenseOverviewData } from "@/api/types/club/activityExpenses/requestStatus";
 import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 import { ChevronRight } from "@/assets/icons/chevron";
+import { useQuery } from "@tanstack/react-query";
+import { getClubId } from "@/lib/cookies";
 
 export default async function ExpenseOverview() {
-  const transactionsRes = await getData(
-    "v2/club/web/activityexpenses/transactions/",
-    true
-  );
-  const transactionsData: TransactionOverviewData = transactionsRes.data;
+  // const transactionsRes = await getData(
+  //   "v2/club/web/activityexpenses/transactions/",
+  //   true
+  // );
+  // const transactionsData: TransactionOverviewData = transactionsRes.data;
+
+  const clubId = await getClubId();
 
   const requestRes = await getData(
-    "v2/club/web/activityexpenses/requeststatus/",
-    true
+    `v1/executive/club/${clubId}/activity-expenses/summary`,
+    false
   );
   const requestData: ExpenseOverviewData = requestRes.data;
-
+  console.log(requestData);
   return (
     <div className="flex gap-3">
-      <div className="flex-1 p-8 rounded-xl bg-gray-800">
+      {/* <div className="flex-1 p-8 rounded-xl bg-gray-800">
         <div className="flex items-center justify-between">
           <h3 className="h1 font-bold text-gray-0">{"입출금 내역"}</h3>
           <Link href={`${CLUB_DASHBOARD_ENDPOINT}/expense/transaction`}>
@@ -43,8 +47,8 @@ export default async function ExpenseOverview() {
             </div>
           </div>
         </div>
-      </div>
-      <div className="flex-1 p-8 rounded-xl bg-gray-800">
+      </div> */}
+      {/* <div className="flex-1 p-8 rounded-xl bg-gray-800">
         <h3 className="h1 font-bold text-gray-0">{"활동비 신청 현황"}</h3>
         <div className="flex mt-8">
           <div className="flex-1 flex flex-col items-center gap-3 border-r border-gray-700">
@@ -64,6 +68,22 @@ export default async function ExpenseOverview() {
               {requestData.rejected || 0}
             </span>
             <span className="h4 font-bold text-gray-500">{"반려"}</span>
+          </div>
+        </div>
+      </div> */}
+      <div className="flex-1 p-8 rounded-xl bg-gray-800">
+        <div className="flex items-center justify-between">
+          <h3 className="h1 font-bold text-gray-0">{"활동비 신청현황"}</h3>
+        </div>
+        <div className="flex items-center  mt-8">
+          <div className="flex-1">
+            <span className="  h4 font-bold text-gray-500">{"승인 완료"}</span>
+            <div className="mt-3 h1 font-extrabold text-brand-orange">{`${requestData.approvedCount}건`}</div>
+          </div>
+          <div className="border-r h-[100px] border-gray-700 mx-8" />
+          <div className="flex-1">
+            <span className=" font-bold text-gray-500">{"반려"}</span>
+            <div className="mt-3 h1 font-extrabold text-gray-0 ">{`${requestData.rejectedCount}건`}</div>
           </div>
         </div>
       </div>

@@ -14,9 +14,9 @@ export default function ApplicationGuide() {
       </div>
       <div className="flex items-end justify-between">
         <p className="h4 font-medium text-gray-900">{INFO}</p>
-        <button className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-gray-900">
+        {/* <button className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-gray-900">
           {"활동비 규정 안내서 다운받기"}
-        </button>
+        </button> */}
       </div>
     </div>
   );
