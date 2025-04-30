@@ -1,219 +1,263 @@
 "use client";
+import { patchReject } from "@/api/actions/company/expense/patchReject";
+import { pathApprove } from "@/api/actions/company/expense/pathApprove";
+import {
+  ExpenseApplicationEntry,
+  ExpenseApplicationStatus,
+} from "@/api/types/company/expense";
+import ApprovalButton from "@/components/dashboard/shared/molecules/ApprovalButton";
+import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-import { usePathname, useRouter } from "next/navigation";
-import { cn, formatDate, openModal } from "@/lib/utils";
+const tableHeadings = {
+  id: "순번",
+  applicant: "신청자",
+  department: "부서",
+  clubName: "동호회명",
+  eventName: "행사명",
+  createdDate: "신청 일자",
+  status: "상태",
+};
 
-const tableHeadings = [
-  "순번",
-  "동호회명",
-  "작성일",
-  "신청자",
-  "담당자",
-  "품의서",
-  "지급 여부",
-  "수령증",
-  "반려사유",
-];
+// const entries: ExpenseApplicationEntry[] = [
+//   {
+//     id: 1,
+//     clubName: "동호회명",
+//     applicant: "김오모",
+//     department: "경영지원팀",
+//     eventName: "행사명",
+//     createdDate: "2024-07-04 12:33:57",
+//     status: "pending",
+//   },
+//   {
+//     id: 2,
+//     clubName: "동호회명",
+//     applicant: "김오모",
+//     department: "경영지원팀",
+//     eventName: "행사명",
+//     createdDate: "2024-07-04 12:33:57",
+//     status: "pending",
+//   },
+//   {
+//     id: 3,
+//     clubName: "동호회명",
+//     applicant: "김오모",
+//     department: "경영지원팀",
+//     eventName: "행사명",
+//     createdDate: "2024-07-04 12:33:57",
+//     status: "completed",
+//   },
+//   {
+//     id: 4,
+//     clubName: "동호회명",
+//     applicant: "김오모",
+//     department: "경영지원팀",
+//     eventName: "행사명",
+//     createdDate: "2024-07-04 12:33:57",
+//     status: "completed",
+//   },
+//   {
+//     id: 5,
+//     clubName: "동호회명",
+//     applicant: "김오모",
+//     department: "경영지원팀",
+//     eventName: "행사명",
+//     createdDate: "2024-07-04 12:33:57",
+//     status: "completed",
+//   },
+//   {
+//     id: 6,
+//     clubName: "동호회명",
+//     applicant: "김오모",
+//     department: "경영지원팀",
+//     eventName: "행사명",
+//     createdDate: "2024-07-04 12:33:57",
+//     status: "completed",
+//   },
+//   {
+//     id: 7,
+//     clubName: "동호회명",
+//     applicant: "김오모",
+//     department: "경영지원팀",
+//     eventName: "행사명",
+//     createdDate: "2024-07-04 12:33:57",
+//     status: "completed",
+//   },
+//   {
+//     id: 8,
+//     clubName: "동호회명",
+//     applicant: "김오모",
+//     department: "경영지원팀",
+//     eventName: "행사명",
+//     createdDate: "2024-07-04 12:33:57",
+//     status: "rejected",
+//   },
+//   {
+//     id: 9,
+//     clubName: "동호회명",
+//     applicant: "김오모",
+//     department: "경영지원팀",
+//     eventName: "행사명",
+//     createdDate: "2024-07-04 12:33:57",
+//     status: "rejected",
+//   },
+//   {
+//     id: 10,
+//     clubName: "동호회명",
+//     applicant: "김오모",
+//     department: "경영지원팀",
+//     eventName: "행사명",
+//     createdDate: "2024-07-04 12:33:57",
+//     status: "rejected",
+//   },
+// ];
 
-type ExpenseApplicationStatus = "pending" | "completed" | "rejected";
+const formatDateFromArray = (dateArray: number[]) => {
+  const [year, month, day] = dateArray;
+  return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+};
 
-interface ExpenseApplicationEntry {
-  id: number;
-  clubName: string;
-  applicant: string;
-  personInCharge: string;
-  expenseReport: string;
-  createdDate: string;
-  status: ExpenseApplicationStatus;
-  receipt?: string;
-}
+export default function ExpenseTable({
+  expenseList,
+  currentPage,
+  startDate,
+  endDate,
+}: {
+  currentPage: number;
+  startDate: string;
+  endDate: string;
+  expenseList: ExpenseApplicationEntry[];
+}) {
+  const [status, setStatus] = useState<ExpenseApplicationStatus[]>([]);
+  const router = useRouter();
+  useEffect(() => {
+    const fetchData = async () => {
+      setStatus(
+        expenseList.map((entry: ExpenseApplicationEntry) => entry.status)
+      );
+    };
+    fetchData();
+  }, [currentPage, startDate, endDate, expenseList]);
 
-const entries: ExpenseApplicationEntry[] = [
-  {
-    id: 1,
-    clubName: "동호회명",
-    applicant: "김오모",
-    personInCharge: "박오모",
-    createdDate: "2024-07-04 12:33:57",
-    expenseReport: "0001-2024-07-016",
-    status: "pending",
-  },
-  {
-    id: 2,
-    clubName: "동호회명",
-    applicant: "김오모",
-    personInCharge: "김오모",
-    createdDate: "2024-07-04 12:33:57",
-    expenseReport: "0001-2024-07-016",
-    status: "pending",
-  },
-  {
-    id: 3,
-    clubName: "동호회명",
-    applicant: "김오모",
-    personInCharge: "서오모",
-    createdDate: "2024-07-04 12:33:57",
-    expenseReport: "0001-2024-07-016",
-    status: "completed",
-    receipt: "0001-2024-07-016",
-  },
-  {
-    id: 4,
-    clubName: "동호회명",
-    applicant: "김오모",
-    personInCharge: "김오모",
-    createdDate: "2024-07-04 12:33:57",
-    expenseReport: "0001-2024-07-016",
-    status: "completed",
-    receipt: "0001-2024-07-016",
-  },
-  {
-    id: 5,
-    clubName: "동호회명",
-    applicant: "김오모",
-    personInCharge: "김오모",
-    createdDate: "2024-07-04 12:33:57",
-    expenseReport: "0001-2024-07-016",
-    status: "completed",
-    receipt: "0001-2024-07-016",
-  },
-  {
-    id: 6,
-    clubName: "동호회명",
-    applicant: "김오모",
-    personInCharge: "김오모",
-    createdDate: "2024-07-04 12:33:57",
-    expenseReport: "0001-2024-07-016",
-    status: "completed",
-    receipt: "0001-2024-07-016",
-  },
-  {
-    id: 7,
-    clubName: "동호회명",
-    applicant: "김오모",
-    personInCharge: "김오모",
-    createdDate: "2024-07-04 12:33:57",
-    expenseReport: "0001-2024-07-016",
-    status: "completed",
-    receipt: "0001-2024-07-016",
-  },
-  {
-    id: 8,
-    clubName: "동호회명",
-    applicant: "김오모",
-    personInCharge: "김오모",
-    createdDate: "2024-07-04 12:33:57",
-    expenseReport: "0001-2024-07-016",
-    status: "completed",
-    receipt: "0001-2024-07-016",
-  },
-  {
-    id: 9,
-    clubName: "동호회명",
-    applicant: "김오모",
-    personInCharge: "김오모",
-    createdDate: "2024-07-04 12:33:57",
-    expenseReport: "0001-2024-07-016",
-    status: "rejected",
-  },
-  {
-    id: 10,
-    clubName: "동호회명",
-    applicant: "김오모",
-    personInCharge: "김오모",
-    createdDate: "2024-07-04 12:33:57",
-    expenseReport: "0001-2024-07-016",
-    status: "rejected",
-  },
-];
+  const handleStatusChange = (id: number, status: "APPROVED" | "REJECTED") => {
+    setStatus((prev) => {
+      const newStatus = prev.map((s, idx) => {
+        if (idx === id) {
+          return status;
+        }
+        return s;
+      });
+      return newStatus;
+    });
+    if (status === "APPROVED") {
+      pathApprove(id);
+    } else if (status === "REJECTED") {
+      patchReject(id);
+    }
+  };
 
-export default function ExpenseTable() {
-  const pathname = usePathname();
-  const { push } = useRouter();
+  const getStatusComponent = (id: number, status: ExpenseApplicationStatus) => {
+    switch (status) {
+      case "REJECTED":
+        return "반려";
+      case "APPROVED":
+        return "승인";
+      case "PENDING":
+        return (
+          <div className="flex gap-2 justify-center">
+            <ApprovalButton
+              onClick={(e) => {
+                e.stopPropagation();
+                handleStatusChange(id, "APPROVED");
+              }}
+              content="승인"
+            />
+            <ApprovalButton
+              onClick={(e) => {
+                e.stopPropagation();
+                handleStatusChange(id, "REJECTED");
+              }}
+              content="반려"
+            />
+          </div>
+        );
+      default:
+        return "";
+    }
+  };
+
+  const getStatusColor = (status: ExpenseApplicationStatus) => {
+    switch (status) {
+      case "REJECTED":
+        return "text-point-red";
+      case "APPROVED":
+        return "text-point-blue";
+      default:
+        return "text-gray-800";
+    }
+  };
+  const handleExpenseDetailClick = (id: number) => {
+    router.push(`/company/dashboard/club/expense/${id}`);
+  };
 
   return (
     <ul className="flex flex-col gap-1">
       <li className="flex border-y border-gray-400 bg-gray-200">
-        {tableHeadings.map((heading, i) => (
+        <div className="w-8 my-3 mx-6 body-1 font-bold text-gray-900 text-center">
+          {tableHeadings.id}
+        </div>
+        <div className="flex-1 my-3 mx-6 body-1 font-bold max-w-[120px] text-center text-gray-900">
+          {tableHeadings.applicant}
+        </div>
+        <div className="flex-1 my-3 mx-6 body-1 font-bold text-center max-w-[160px] text-gray-900">
+          {tableHeadings.department}
+        </div>
+        <div className="flex-1 my-3 mx-6 body-1 font-bold text-center min-w-16 max-w-[220px] text-gray-900">
+          {tableHeadings.clubName}
+        </div>
+        <div className="flex-1 my-3 mx-6 body-1 font-bold text-center min-w-16 max-w-[387px] text-gray-900">
+          {tableHeadings.eventName}
+        </div>
+        <div className="flex-1 my-3 mx-6 body-1 font-bold text-center min-w-32 max-w-[180px] text-gray-900">
+          {tableHeadings.createdDate}
+        </div>
+        <div className="flex-1 my-3 mx-6 body-1 font-bold text-center min-w-16 max-w-[389px] text-gray-900">
+          {tableHeadings.status}
+        </div>
+      </li>
+      {expenseList.map((entry, idx) => (
+        <li
+          key={entry.id}
+          onClick={() => handleExpenseDetailClick(entry.id)}
+          className="flex border-b border-gray-400 bg-gray-0 cursor-pointer hover:bg-gray-100"
+        >
+          <div className="w-8 my-3 mx-6 body-1 font-medium text-gray-800 text-center">
+            {idx + 1}
+          </div>
+          <div className="flex-1 my-3 mx-6 body-1 font-medium max-w-[120px] text-center text-gray-800">
+            {entry.applicantName}
+          </div>
+          <div className="flex-1 my-3 mx-6 body-1 font-medium text-center max-w-[160px] text-gray-800">
+            {entry.department}
+          </div>
+          <div className="flex-1 my-3 mx-6 body-1 font-medium text-center min-w-16 max-w-[220px] text-gray-800">
+            {entry.clubName}
+          </div>
+          <div className="flex-1 my-3 mx-6 body-1 font-medium text-center min-w-16 max-w-[387px] text-gray-800">
+            {entry.eventName}
+          </div>
+          <div className="flex-1 my-3 mx-6 body-1 font-medium text-center min-w-32 max-w-[180px] text-gray-800">
+            {formatDateFromArray(entry.createdDate)}
+          </div>
           <div
-            key={heading}
             className={cn(
-              "my-3 mx-6 body-1 font-bold text-gray-900",
-              i === 0 ? "w-8" : "flex-1",
-              i === 1 ? "" : " text-center",
-              [2, 5, 7].includes(i) ? "min-w-32" : "",
-              [3, 4, 6, 8].includes(i) ? "min-w-16 max-w-28" : "",
-              i === 7 ? "flex items-center justify-center m-0" : ""
+              "flex-1 my-3 mx-6 body-1 font-medium text-center min-w-16 max-w-[389px]",
+              getStatusColor(status[idx])
             )}
           >
-            {heading}
+            {getStatusComponent(idx, status[idx])}
           </div>
-        ))}
-      </li>
-      {entries.map((entry, idx) => (
-        <li key={entry.id} className="flex border-b border-gray-400 bg-gray-0">
-          {[
-            entry.id,
-            entry.clubName,
-            entry.createdDate,
-            entry.applicant,
-            entry.personInCharge,
-            entry.expenseReport,
-            entry.status,
-            entry.receipt,
-            entry.status === "rejected",
-          ].map((data, i) => (
-            <div
-              key={i}
-              className={cn(
-                "my-3 mx-6 body-1 font-medium underline-offset-2 line-clamp-1",
-                i === 0 ? "w-8" : "flex-1",
-                i === 1 ? "" : " text-center",
-                [2, 5, 7].includes(i) ? "min-w-32" : "",
-                [3, 4, 6, 8].includes(i) ? "min-w-16 max-w-28" : "",
-                data && [5, 7, 8].includes(i) ? "underline cursor-pointer" : "",
-                i === 7 ? "flex items-center justify-center m-0" : "",
-                data === "rejected"
-                  ? "text-point-red"
-                  : data === "completed"
-                    ? "text-gray-500"
-                    : data === "pending"
-                      ? "text-point-blue"
-                      : "text-gray-800"
-              )}
-              onClick={() => {
-                if (i === 5) {
-                  push(`${pathname}/detail/report/${entry.expenseReport}`);
-                } else if (i === 7 && entry.receipt) {
-                  push(`${pathname}/detail/receipt/${entry.receipt}`);
-                } else if (i === 8 && data) {
-                  openModal("expense-reject-detail");
-                }
-              }}
-            >
-              {i === 0
-                ? idx + 1
-                : i === 2
-                  ? formatDate(new Date(data as string))
-                  : i === 6
-                    ? data === "rejected"
-                      ? "반려"
-                      : data === "completed"
-                        ? "지급 완료"
-                        : data === "pending"
-                          ? "지급 대기"
-                          : ""
-                    : i === 7
-                      ? data
-                        ? data
-                        : "-"
-                      : i === 8
-                        ? data
-                          ? "상세보기"
-                          : "-"
-                        : data}
-            </div>
-          ))}
         </li>
       ))}
     </ul>

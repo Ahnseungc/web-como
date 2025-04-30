@@ -1,22 +1,46 @@
 "use client";
 
-import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import DateFilter, {
-  type DateRange,
-} from "@/components/dashboard/common/DateFilter";
+import { useEffect, useState } from "react";
 import Pagination from "@/components/dashboard/common/Pagination";
 import ExpenseTable from "@/components/dashboard/company/club/molecules/ExpenseTable";
-import { Plus } from "@/assets/icons/action";
+import DateFilter, {
+  DateRange,
+} from "@/components/dashboard/common/DateFilter";
+import { getExpense } from "@/api/actions/company/expense/getExpense";
+import { ExpenseApplicationEntry } from "@/api/types/company/expense";
+
+const formatDate = (date: Date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
 
 export default function ExpenseList() {
-  const pathname = usePathname();
-  const { push } = useRouter();
-  const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
-    startDate: undefined,
-    endDate: undefined,
-  });
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [expenseList, setExpenseList] = useState<ExpenseApplicationEntry[]>([]);
+  const today = new Date();
+  const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
+    startDate: new Date("2025-01-01"),
+    endDate: today,
+  });
+  const [maxPage, setMaxPage] = useState<number>(5);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!currentDateRange.startDate || !currentDateRange.endDate) return;
+
+      const data = await getExpense(
+        currentPage,
+        formatDate(currentDateRange.startDate),
+        formatDate(currentDateRange.endDate)
+      );
+      setMaxPage(data.maxPage);
+      setExpenseList(data.list);
+      console.log(data);
+    };
+    fetchData();
+  }, [currentPage, currentDateRange]);
 
   const handleDateRangeChange = (dateRange: DateRange) => {
     setCurrentDateRange(dateRange);
@@ -34,24 +58,25 @@ export default function ExpenseList() {
         <h3 className="h2 font-semibold text-gray-900">
           {"활동비 지급 내역 조회"}
         </h3>
-        <button
-          className="flex items-center gap-[3px] py-1 px-3 rounded body-1 font-medium text-gray-50 bg-brand-orange cursor-pointer"
-          onClick={() => push(`${pathname}/new`)}
-        >
-          {"지급신청서 작성"}
-          <Plus className="w-5 h-5 text-gray-50" />
-        </button>
       </div>
+
       <div className="space-y-4">
         <DateFilter
           currentDateRange={currentDateRange}
           handleDateRangeChange={handleDateRangeChange}
         />
         <div className="space-y-10">
-          <ExpenseTable />
+          <ExpenseTable
+            expenseList={expenseList}
+            currentPage={currentPage}
+            startDate={formatDate(
+              currentDateRange.startDate || new Date("2025-01-01")
+            )}
+            endDate={formatDate(currentDateRange.endDate || today)}
+          />
           <Pagination
             currentPage={currentPage}
-            maxPage={8}
+            maxPage={maxPage}
             handlePageChange={handlePageChange}
           />
         </div>
