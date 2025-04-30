@@ -18,28 +18,15 @@ type ExpenseFormValues = {
   file: string | null;
 };
 
-const decodeKoreanFromUrl = (url: string) => {
+const getDecodedFileName = (url: string) => {
   try {
-    return decodeURIComponent(url);
+    // URL을 언더스코어로 분리하고 마지막 부분만 가져옴
+    const encodedFileName = url.split("_").pop() || "";
+    // URL 디코딩
+    return decodeURIComponent(encodedFileName);
   } catch (e) {
-    console.error("URL 디코딩 중 오류 발생:", e);
-    return url;
-  }
-};
-
-const extractKoreanFileName = (url: string) => {
-  try {
-    const decodedUrl = decodeKoreanFromUrl(url);
-    // URL에서 마지막 '/' 이후의 문자열을 가져옴
-    const fileName = decodedUrl.split("/").pop() || "";
-    // 파일 확장자를 제외한 이름만 추출
-    const nameWithoutExtension = fileName.split(".").slice(0, -1).join(".");
-    // 해시값과 한글 사이의 '[', '_', '+' 를 기준으로 분리하여 한글 부분만 추출
-    const koreanName = nameWithoutExtension.split(/[\[_+]/).pop() || "";
-    return koreanName;
-  } catch (e) {
-    console.error("파일명 추출 중 오류 발생:", e);
-    return url;
+    console.error("파일명 디코딩 중 오류 발생:", e);
+    return "첨부파일";
   }
 };
 
@@ -67,15 +54,16 @@ export default function ExpenseReportForm() {
   if (!formValues) {
     return <div>Loading...</div>;
   }
+
   const handleFileDownload = (fileUrl: string) => {
-    //const decodedUrl = decodeKoreanFromUrl(fileUrl);
     const link = document.createElement("a");
     link.href = fileUrl;
-    link.download = ""; // 파일명을 지정하고 싶다면 여기에 입력
+    link.download = "";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
+
   return (
     <form className="space-y-3 w-full">
       <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">
@@ -166,16 +154,18 @@ export default function ExpenseReportForm() {
               onClick={() => {
                 if (formValues.file) handleFileDownload(formValues.file);
               }}
-              className="flex items-center justify-between p-3 rounded-md border border-gray-400 bg-gray-0 cursor-pointer"
+              className="cursor-pointer flex items-center justify-between p-3 rounded-md border border-gray-400 bg-gray-0"
             >
-              <div className="flex gap-2 h4 font-medium text-gray-800">
-                {"첨부파일"}
+              <div className="flex gap-2 h4 font-medium text-gray-800 cursor-pointer hover:text-brand-orange">
+                {getDecodedFileName(formValues.file)}
               </div>
-              <SaveButton />
+              <div className="p-1 rounded bg-point-green">
+                <Document className="w-6 h-6 text-gray-0" />
+              </div>
             </div>
           )}
           {!formValues.file && (
-            <div className="flex items-center justify-between p-3 rounded-md border border-gray-400 bg-gray-0">
+            <div className="flex items-center justify-between p-3 rounded-md border border-gray-400 bg-gray-0 ">
               <div className="flex gap-2 h4 font-medium text-gray-800">
                 첨부 파일이 없습니다.
               </div>
