@@ -68,9 +68,9 @@ export default function ExpenseReportForm() {
     return <div>Loading...</div>;
   }
   const handleFileDownload = (fileUrl: string) => {
-    const decodedUrl = decodeKoreanFromUrl(fileUrl);
+    //const decodedUrl = decodeKoreanFromUrl(fileUrl);
     const link = document.createElement("a");
-    link.href = decodedUrl;
+    link.href = fileUrl;
     link.download = ""; // 파일명을 지정하고 싶다면 여기에 입력
     document.body.appendChild(link);
     link.click();
@@ -169,7 +169,7 @@ export default function ExpenseReportForm() {
               className="flex items-center justify-between p-3 rounded-md border border-gray-400 bg-gray-0 cursor-pointer"
             >
               <div className="flex gap-2 h4 font-medium text-gray-800">
-                {extractKoreanFileName(formValues.file)}
+                {"첨부파일"}
               </div>
               <SaveButton />
             </div>
