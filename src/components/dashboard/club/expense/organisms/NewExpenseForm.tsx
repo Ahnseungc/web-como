@@ -95,14 +95,6 @@ export default function NewExpenseReportForm({
       try {
         const formData = new FormData();
 
-        // formData.append("eventName", formValues.eventName);
-        // formData.append("description", formValues.description);
-        // formData.append("note", formValues.note);
-        // formData.append("participantsCount", formValues.participantsCount);
-        // formData.append("location", formValues.location);
-        // formData.append("amount", formValues.amount);
-        // formData.append("details", formValues.details);
-
         const data = {
           eventName: formValues.eventName,
           description: formValues.description,
