@@ -1,8 +1,11 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import type { ClubExpenseMenu, ClubExpenseMenuTab } from "@/app/company/dashboard/club/expense/page";
-
+export type ClubExpenseMenu = "all" | "club" | "supply";
+export interface ClubExpenseMenuTab {
+  name: string;
+  value: ClubExpenseMenu;
+}
 interface Props {
   tabs: ClubExpenseMenuTab[];
   currentTab: ClubExpenseMenu;
