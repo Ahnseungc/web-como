@@ -99,12 +99,12 @@ export default function ExpenseTable({ data }: Props) {
                     : i === 1
                       ? new Date(
                           item.createdDate[0],
-                          item.createdDate[1],
+                          item.createdDate[1] - 1,
                           item.createdDate[2],
-                          item.createdDate[3],
-                          item.createdDate[4],
-                          item.createdDate[5]
-                        ).toLocaleString()
+                          // item.createdDate[3],
+                          // item.createdDate[4],
+                          // item.createdDate[5]
+                        ).toLocaleDateString()
                       : i === 4
                         ? data === "APPROVED"
                           ? "승인"
