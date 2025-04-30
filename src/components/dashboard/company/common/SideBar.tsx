@@ -72,7 +72,7 @@ const menuList: MenuItem[] = [
       //   link: "/club/expense",
       //   routes: ["/club/expense"],
       // },
-      // {
+      // { 
       //
     ],
   },
