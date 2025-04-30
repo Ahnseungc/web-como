@@ -13,43 +13,59 @@ interface Props {
   id: string;
   currentDate: Date | undefined;
   handleDateChange: (date: Date | undefined) => void;
+  disablePastDates?: boolean;
 }
 
 export default function DatePicker({
   size = "max-w-[390px] h-[38px]",
   textStyle = "body-1 font-semibold",
-  ...props
+  disabled,
+  id,
+  currentDate,
+  handleDateChange,
+  disablePastDates = false,
 }: Props) {
+  const isDisabled = !!disabled;
+
+  const disablePastDatesMatcher: Matcher = (date) => {
+    if (!disablePastDates) return false;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return date < today;
+  };
+
   return (
     <div className={cn("flex-1 relative", size)}>
       <button
         type="button"
         className={cn(
           "flex items-center justify-between w-full h-full px-3 rounded-md border border-gray-400 bg-gray-50",
-          size
+          size,
+          isDisabled && "cursor-not-allowed opacity-50"
         )}
-        onClick={() => openModal(props.id!)}
+        onClick={() => !isDisabled && openModal(id)}
+        disabled={isDisabled}
       >
         <span
           className={cn(
             textStyle,
-            props.currentDate ? "text-gray-900" : "text-gray-400"
+            currentDate ? "text-gray-900" : "text-gray-400"
           )}
         >
-          {formatDate(props.currentDate) || "일자선택"}
+          {formatDate(currentDate) || "일자선택"}
         </span>
-        <ChevronDownFilled className="w-5 h-6 text-gray-500" />
+        {!isDisabled && <ChevronDownFilled className="w-5 h-6 text-gray-500" />}
       </button>
-      <div id={props.id} className="hidden modal">
-        <Backdrop invisible modalId={props.id} />
+      <div id={id} className="hidden modal">
+        <Backdrop invisible modalId={id} />
         <div className="absolute z-40">
           <Calendar
-            selected={props.currentDate}
+            selected={currentDate}
             onSelect={(selected) => {
-              props.handleDateChange(selected);
-              closeModal(props.id);
+              handleDateChange(selected);
+              closeModal(id);
             }}
-            disabled={props.disabled}
+            disabled={disablePastDatesMatcher}
           />
         </div>
       </div>

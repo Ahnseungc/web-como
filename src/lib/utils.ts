@@ -101,7 +101,7 @@ export function generateQuarterHourlyIntervals(
     intervals.push(new Date(currentDate));
     currentDate = new Date(currentDate.getTime() + intervalMillis);
   }
-  console.log(intervals);
+
   return intervals;
 }
 

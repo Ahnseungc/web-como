@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { usePlaceSearch } from "@/app/api/map/hook";
 import { useGeocode } from "@/app/api/map/hook";
 import { cn } from "@/lib/utils";
@@ -11,9 +11,18 @@ import { Remove } from "@/assets/icons/action";
 interface Props {
   value?: string;
   readonly?: boolean;
+  maxWidth?: string;
+  isLabel?: boolean;
+  handleChange?: (newLocation: string) => void;
 }
 
-export default function MapPlaceSearch({ value, readonly }: Props) {
+export default function MapPlaceSearch({
+  value,
+  readonly,
+  isLabel = true,
+  handleChange,
+  maxWidth = "w-3/5",
+}: Props) {
   const [selectedPlace, setSelectedPlace] = useState<{
     roadAddress: string;
     title?: string;
@@ -74,26 +83,46 @@ export default function MapPlaceSearch({ value, readonly }: Props) {
           ?.replaceAll("<b>", "")
           .replaceAll("</b>", ""),
       });
+
       setSearchTerm(searchResult[0].roadAddress);
     }
   }, [readonly, searchResult]);
 
+  useEffect(() => {
+    if (selectedPlace) {
+      handleChange?.(selectedPlace.roadAddress);
+    }
+  }, [selectedPlace]);
+
   return (
     <div className="flex flex-col gap-2">
-      <span className="h3 font-semibold text-gray-900">{"활동 장소"}</span>
+      {isLabel && (
+        <span className="h3 font-semibold text-gray-900">{"활동 장소"}</span>
+      )}
       <div className="relative">
         <div className="flex gap-3">
-          <div className="flex items-center gap-3 w-3/5 h-[60px] px-3 rounded-md border border-gray-100 has-[:focus-visible]:border-gray-900 bg-gray-100 has-[:focus-visible]:bg-gray-50 transition duration-300">
+          <div
+            className={cn(
+              "flex items-center gap-3 w-full h-[60px] px-3 rounded-md border border-gray-100 has-[:focus-visible]:border-gray-900 bg-gray-100 has-[:focus-visible]:bg-gray-50 transition duration-300",
+              readonly &&
+                "cursor-not-allowed has-[:focus-visible]:border-gray-100 has-[:focus-visible]:bg-gray-100",
+              maxWidth
+            )}
+          >
             <Search className="w-5 h-5 text-gray-500" />
             <input
               type="text"
               name="roadAddress"
               id="roadAddress"
-              placeholder="활동 장소를 검색해주세요"
-              className="peer w-full h4 font-medium outline-none placeholder:text-gray-400 text-gray-900 bg-transparent transition duration-300"
+              autoComplete="off"
+              className={cn(
+                "peer w-full h4 font-medium outline-none placeholder:text-gray-400 text-gray-900 bg-transparent transition duration-300",
+                readonly && "cursor-not-allowed"
+              )}
               value={searchTerm}
               onChange={(e) => {
-                setSearchTerm(e.target.value);
+                const value = e.target.value;
+                setSearchTerm(value);
                 setCloseSearchResult(false);
               }}
               readOnly={readonly}
@@ -134,7 +163,8 @@ export default function MapPlaceSearch({ value, readonly }: Props) {
         {!readonly && searchResult && (
           <div
             className={cn(
-              "absolute z-20 flex flex-col gap-3 w-3/5 mt-1 p-6 rounded-xl bg-gray-50 shadow",
+              "absolute z-20 flex flex-col gap-3 w-full mt-1 p-6 rounded-xl bg-gray-50 shadow",
+              maxWidth,
               closeSearchResult ? "hidden" : "block"
             )}
           >
