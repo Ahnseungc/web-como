@@ -3,7 +3,11 @@
 import { getAccessToken, getClubId } from "@/lib/cookies";
 import type { IResponse } from "@/api/types/index";
 
-export const getData = async (endpoint: string, useClubId?: boolean) => {
+export const getData = async (
+  endpoint: string,
+  useClubId?: boolean,
+  params?: { [key: string]: string | number }
+) => {
   const clubId = await getClubId();
   const token = await getAccessToken();
   console.log("현재 clubId", clubId);
@@ -12,6 +16,7 @@ export const getData = async (endpoint: string, useClubId?: boolean) => {
     ? endpoint.replace("{clubId}", clubId || "")
     : endpoint;
   const url = `${process.env.NEXT_PUBLIC_SERVER_URL}${finalEndpoint}`;
+  console.log("url", url);
 
   const response = await fetch(url, {
     headers: {

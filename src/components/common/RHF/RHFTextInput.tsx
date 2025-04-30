@@ -129,18 +129,19 @@ export default function RHFTextInput<T extends FieldValues>({
                 onBlur={handleBlur}
               />
             )}
-
-            <button
-              type="button"
-              className={cn(
-                "absolute right-3 top-2/4 z-10 h-5 w-5 -translate-y-1/2",
-                isFocusing ? "visible" : "hidden"
-              )}
-              onClick={handleDelete}
-              onMouseDown={(e) => e.preventDefault()}
-            >
-              <Remove className="h-full w-full text-gray-500" />
-            </button>
+            {!props.readOnly && (
+              <button
+                type="button"
+                className={cn(
+                  "absolute right-3 top-2/4 z-10 h-5 w-5 -translate-y-1/2",
+                  isFocusing ? "visible" : "hidden"
+                )}
+                onClick={handleDelete}
+                onMouseDown={(e) => e.preventDefault()}
+              >
+                <Remove className="h-full w-full text-gray-500" />
+              </button>
+            )}
           </div>
 
           {errors[name] && (

@@ -85,7 +85,7 @@ export default function NewScheduleFormModal() {
                     <span>{"개설일자 2024.05.03"}</span>
                     <div className="flex items-center gap-0.5">
                       <People className="w-5 h-5 text-gray-500" />
-                        {"23"}
+                      {"23"}
                     </div>
                     <div className="flex items-center gap-0.5">
                       <Calendar className="w-[18px] h-[18px] text-gray-500" />

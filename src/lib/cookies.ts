@@ -71,7 +71,7 @@ export const saveRole = async (role: string) => {
 };
 
 export const getRole = async () => {
-  return  cookies().get('role')?.value;
+  return cookies().get("role")?.value;
 };
 
 export const saveCompanyName = async (companyName: string) => {

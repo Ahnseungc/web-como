@@ -62,3 +62,17 @@ export const ClubIndexDefaultValues: ClubIndexSchemaType = {
   location: "",
   activityPlan: "",
 };
+
+// 동호회 일정 등록 스키마
+export const ScheduleRegisterSchema = z.object({
+  title: z.string().min(1, { message: "제목을 입력해주세요." }),
+  description: z.string().min(1, { message: "설명을 입력해주세요." }),
+  location: z.object({
+    roadAddress: z.string().min(1, { message: "주소를 입력해주세요." }),
+    placeName: z.string().min(1, { message: "장소명을 입력해주세요." }),
+  }),
+  date: z.date(),
+  time: z.string().min(1, { message: "시간을 입력해주세요." }),
+});
+
+export type ScheduleRegisterSchemaType = z.infer<typeof ScheduleRegisterSchema>;

@@ -37,7 +37,6 @@ export default function InquiryForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formValues);
     setFormValues(initialFormValues);
     openModal("submit-success");
   };

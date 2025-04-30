@@ -18,9 +18,11 @@ export const CustomTextarea = forwardRef<
       rows={rows}
       className={cn(
         "flex w-full items-center truncate rounded-md border border-transparent bg-gray-100 px-3 py-4 text-lg font-medium outline-none transition duration-300 placeholder:text-gray-400 focus:border-gray-900 focus:bg-gray-50",
-        readOnly && "cursor-not-allowed",
+        readOnly &&
+          "cursor-not-allowed focus:border-transparent focus:bg-gray-100 focus:outline-none",
         className
       )}
+      readOnly={readOnly}
       {...props}
       maxLength={maxLength}
     />
