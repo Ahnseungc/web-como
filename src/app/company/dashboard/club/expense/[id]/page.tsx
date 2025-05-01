@@ -33,6 +33,7 @@ const Page = ({ params }: { params: { id: string } }) => {
         activityPlan: data.activityPlan,
         memberCount: data.memberCount,
         status: data.status,
+        createdAt: data.createdAt,
       });
     };
     fetchExpense();

@@ -1,12 +1,10 @@
 "use client";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import ClubProfileInfo from "@/components/dashboard/club/common/ClubProfileInfo";
 import {
   CardInfo,
   ExpenseApplicationStatus,
 } from "@/api/types/company/expense";
-import { useState } from "react";
 import ProfileInfoForExpense from "./ProfileInfoForExpense";
 
 interface Props {
@@ -15,8 +13,14 @@ interface Props {
 }
 
 export default function ClubInfoCardForExpense({ padding, cardInfo }: Props) {
-  const { clubImage, leadersSummary, activityPlan, memberCount, status } =
-    cardInfo;
+  const {
+    clubImage,
+    leadersSummary,
+    activityPlan,
+    memberCount,
+    status,
+    createdAt,
+  } = cardInfo;
   const getStatus = (status: ExpenseApplicationStatus) => {
     switch (status) {
       case "PENDING":
@@ -69,6 +73,7 @@ export default function ClubInfoCardForExpense({ padding, cardInfo }: Props) {
           <ProfileInfoForExpense
             activityPlan={activityPlan}
             memberCount={memberCount}
+            createdAt={createdAt}
           />
           <span>{leadersSummary}</span>
         </div>

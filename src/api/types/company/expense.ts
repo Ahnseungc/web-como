@@ -28,6 +28,7 @@ export type CardInfo = {
   activityPlan: string;
   memberCount: number;
   status: ExpenseApplicationStatus;
+  createdAt: number[];
 };
 
 export type ExpenseDetail = CardInfo & ExpenseFormValues;
