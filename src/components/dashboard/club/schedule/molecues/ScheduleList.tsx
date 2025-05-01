@@ -35,6 +35,14 @@ const ScheduleList = ({
     router.replace(`/club/dashboard/manage/schedule?page=${currentPage}`);
   }, [currentPage, router]);
 
+  useEffect(() => {
+    if (sessionStorage.getItem("refresh-on-back") === "true") {
+      sessionStorage.removeItem("refresh-on-back");
+
+      router.refresh();
+    }
+  }, []);
+
   return (
     <div className="space-y-10 p-8 rounded-xl bg-gray-0">
       <div className="space-y-6">

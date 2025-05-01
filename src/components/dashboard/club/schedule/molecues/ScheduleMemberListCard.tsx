@@ -1,14 +1,14 @@
 "use client";
 
 import Card from "@/components/dashboard/common/Card";
-import TitleCard from "../atoms/TilteCard";
+import TitleCard, { ScheduleDetailCardType } from "../atoms/TilteCard";
 import ScheduleMemberListTable from "./ScheduleMemberListTable";
 import Pagination from "@/components/dashboard/common/Pagination";
 
 import { usePathname, useRouter } from "next/navigation";
 
 interface ScheduleMemberListCardProps {
-  type: "DETAIL" | "REGISTER";
+  type: "DETAIL" | "REGISTER" | "EDIT" | "MEMBERS";
   memberList?: any;
 }
 const ScheduleMemberListCard = ({
@@ -22,7 +22,7 @@ const ScheduleMemberListCard = ({
   };
   return (
     <Card>
-      <TitleCard title="참여 회원 명단" />
+      <TitleCard type={"MEMBERS"} />
       {type === "DETAIL" && (
         <>
           <ScheduleMemberListTable
