@@ -8,7 +8,7 @@ export const getExpense = async (
   const token = await getAccessToken();
   if (!token) throw new Error("토큰 정보가 없습니다.");
   const url = `/api/server/v1/manager/activity-expenses?page=${page}&startDate=${startDate}&endDate=${endDate}`;
-  console.log(url);
+
   const response = await fetch(url, {
     method: "GET",
     headers: {

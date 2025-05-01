@@ -9,3 +9,26 @@ export interface ExpenseApplicationEntry {
   createdDate: number[];
   status: ExpenseApplicationStatus;
 }
+
+export type ExpenseFormValues = {
+  eventName: string;
+  description: string;
+  note: string;
+  location: string;
+  participantCount: number;
+  amount: number;
+  details: string;
+  file: string | null;
+};
+
+export type CardInfo = {
+  clubId: number;
+  clubImage: string;
+  leadersSummary: string;
+  activityPlan: string;
+  memberCount: number;
+  status: ExpenseApplicationStatus;
+  createdAt: number[];
+};
+
+export type ExpenseDetail = CardInfo & ExpenseFormValues;
