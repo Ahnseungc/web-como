@@ -99,7 +99,7 @@ const menuList: MenuItem[] = [
   //   ],
   // },
   {
-    name: "활동비 관리",
+    name: "활동지원비 관리",
     key: "expense",
     link: "/expense",
     // subMenuList: [

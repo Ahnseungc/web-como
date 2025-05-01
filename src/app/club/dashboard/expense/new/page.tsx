@@ -7,9 +7,7 @@ import { getAccessToken, getClubId, getClubName } from "@/lib/cookies";
 export default async function NewExpenseReportPage() {
   const clubName = await getClubName();
   const accessToken = await getAccessToken();
-  const clubId = await getClubId()
-
-  console.log(clubName);
+  const clubId = await getClubId();
 
   return (
     <>
@@ -17,7 +15,11 @@ export default async function NewExpenseReportPage() {
 
       <div className="flex gap-3">
         <ClubInfoCard />
-        <NewExpenseReportForm clubName={clubName} accessToken={accessToken} clubId={clubId} />
+        <NewExpenseReportForm
+          clubName={clubName}
+          accessToken={accessToken}
+          clubId={clubId}
+        />
       </div>
     </>
   );

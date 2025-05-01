@@ -42,14 +42,9 @@ export default function NewExpenseReportForm({
     amount: "",
     details: "",
   });
-  const [currentImages, setCurrentImages] = useState<File[]>([]);
   const [currentImagesBankAccount, setCurrentImagesBankAccount] = useState<
     File[]
   >([]);
-
-  const handleDateChange = (date: Date) => {
-    setDate(date);
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,14 +59,8 @@ export default function NewExpenseReportForm({
     ) {
       alert("필수 입력란을 입력해주세요.");
     } else {
-      mutate(); // 폼 데이터를 제출하는 함수 호출
+      mutate();
     }
-
-    //   alert(
-    //     "활동비 지급 신청서 (품의서)가 작성 및 담당 부서에게 전달되었습니다."
-    //   );
-    //   replace(`${CLUB_DASHBOARD_ENDPOINT}/expense`);
-    // };
   };
 
   const handleInput = (
@@ -84,20 +73,11 @@ export default function NewExpenseReportForm({
       [name]: value,
     }));
   };
-  console.log(accessToken);
 
   const { mutate } = useMutation({
     mutationFn: async () => {
       try {
         const formData = new FormData();
-
-        // formData.append("eventName", formValues.eventName);
-        // formData.append("description", formValues.description);
-        // formData.append("note", formValues.note);
-        // formData.append("participantsCount", formValues.participantsCount);
-        // formData.append("location", formValues.location);
-        // formData.append("amount", formValues.amount);
-        // formData.append("details", formValues.details);
 
         const data = {
           eventName: formValues.eventName,
@@ -105,7 +85,7 @@ export default function NewExpenseReportForm({
           note: formValues.note,
           participantsCount: Number(formValues.participantsCount),
           location: formValues.location,
-          amount: Number(formValues.amount),
+          amount: Number(formValues.amount.split(",").join("")),
           details: formValues.details,
         };
         const JsonData = JSON.stringify(data);
@@ -153,6 +133,14 @@ export default function NewExpenseReportForm({
       }
     },
   });
+
+  const formatAmount = (amount: string) => {
+    const numberValue = parseFloat(amount.replace(/,/g, ""));
+    if (!isNaN(numberValue)) {
+      return numberValue.toLocaleString();
+    }
+    return amount;
+  };
 
   return (
     <form className="space-y-3 w-full" onSubmit={handleSubmit}>
@@ -250,10 +238,10 @@ export default function NewExpenseReportForm({
           required
           name="amount"
           label="신청 금액"
-          type="number"
+          type="text"
           placeholder="금액을 입력하세요."
           inputStyle="max-w-[350px]"
-          value={formValues.amount}
+          value={formatAmount(formValues.amount)}
           handleInputChange={(e) => {
             handleInput(e);
           }}
