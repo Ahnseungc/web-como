@@ -3,7 +3,8 @@ import { getAccessToken, getClubId } from "@/lib/cookies";
 export const pathApprove = async (expenseId: number) => {
   const token = await getAccessToken();
   if (!token) throw new Error("토큰 정보가 없습니다.");
-  const url = `${process.env.NEXT_PUBLIC_SERVER_URL}v1/manager/activity-expenses/${expenseId}/approve`;
+  const url = `/api/server/v1/manager/activity-expenses/${expenseId}/approve`;
+  console.log("expenseId", expenseId);
   const response = await fetch(url, {
     method: "PATCH",
     headers: {
