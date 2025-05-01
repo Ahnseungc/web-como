@@ -16,14 +16,14 @@ interface ScheduleListProps {
   schedules: Schedule[];
   currentPage: number;
   maxPage: number;
-  isExist: boolean;
+  // isExist: boolean;
 }
 
 const ScheduleList = ({
   schedules,
   currentPage,
   maxPage,
-  isExist,
+  // isExist,
 }: ScheduleListProps) => {
   const router = useRouter();
 
@@ -41,15 +41,15 @@ const ScheduleList = ({
         <div className="flex justify-between">
           <h3 className="h2 font-semibold text-gray-900">{"전체"}</h3>
 
-          {!isExist && (
-            <button
-              className="flex items-center gap-[3px] py-1 px-3 rounded body-1 font-medium text-gray-50 bg-gray-900"
-              onClick={() => router.push("schedule/register")}
-            >
-              {"동호회 일정 등록하기"}
-              <Plus className="w-5 h-5" />
-            </button>
-          )}
+          {/* {!isExist && ( */}
+          <button
+            className="flex items-center gap-[3px] py-1 px-3 rounded body-1 font-medium text-gray-50 bg-gray-900"
+            onClick={() => router.push("schedule/register")}
+          >
+            {"동호회 일정 등록하기"}
+            <Plus className="w-5 h-5" />
+          </button>
+          {/* )} */}
         </div>
         <ScheduleListTable
           schedules={schedules}

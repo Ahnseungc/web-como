@@ -13,10 +13,10 @@ export default async function ManageSchedulePage({
   );
   const SchedulesList = response.data;
 
-  const isExist = await getData(
-    `v1/executive/club/{clubId}/schedule/existence`,
-    true
-  );
+  // const isExist = await getData(
+  //   `v1/executive/club/{clubId}/schedule/existence`,
+  //   true
+  // );
 
   return (
     <>
@@ -25,7 +25,7 @@ export default async function ManageSchedulePage({
         schedules={SchedulesList.List}
         currentPage={SchedulesList.currentPage}
         maxPage={SchedulesList.maxPage}
-        isExist={isExist.data}
+        // isExist={isExist.data}
       />
     </>
   );

@@ -13,6 +13,7 @@ export type ScheduleDetailCardInitialData = {
   date: string;
   time: string;
   location: string;
+  addressDetail: string;
 };
 interface ScheduleDetailCardProps {
   type: keyof typeof ScheduleDetailCardType;

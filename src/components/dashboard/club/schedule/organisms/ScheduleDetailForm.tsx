@@ -11,6 +11,7 @@ import Button from "@/components/common/Button";
 import { ScheduleDetailCardInitialData } from "../molecues/ScheduleDetail/ScheduleDetailCard";
 import { getAccessToken, getClubId } from "@/lib/cookies";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { formatDate } from "date-fns";
 
 interface ScheduleDetailFormProps {
   type: "REGISTER" | "DETAIL";
@@ -18,6 +19,7 @@ interface ScheduleDetailFormProps {
 }
 
 const ScheduleDetailForm = ({ type, initialData }: ScheduleDetailFormProps) => {
+  console.log(initialData);
   const methods = useForm<ScheduleRegisterSchemaType>({
     resolver: zodResolver(ScheduleRegisterSchema),
     defaultValues:
@@ -27,7 +29,7 @@ const ScheduleDetailForm = ({ type, initialData }: ScheduleDetailFormProps) => {
             description: initialData?.detail,
             location: {
               roadAddress: initialData?.location,
-              placeName: "",
+              placeName: initialData?.addressDetail,
             },
             date: initialData?.date ? new Date(initialData?.date) : new Date(),
             time: initialData?.time,
@@ -73,11 +75,11 @@ const ScheduleDetailForm = ({ type, initialData }: ScheduleDetailFormProps) => {
                 title: data.title,
                 detail: data.description,
                 location: `${data.location.roadAddress} ${data.location.placeName}`,
-                date: data.date,
+                addressDetail: data.location.placeName,
+                date: formatDate(data.date, "yyyy-MM-dd"),
                 time: data.time,
                 latitude: "",
                 longitude: "",
-                maxMember: 10,
               }),
             }
           );
