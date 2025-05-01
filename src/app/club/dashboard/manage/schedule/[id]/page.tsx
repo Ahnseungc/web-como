@@ -7,6 +7,8 @@ import { getData } from "@/api/action";
 const PAGE_TYPES = {
   REGISTER: "REGISTER",
   DETAIL: "DETAIL",
+  EDIT: "EDIT",
+  MEMBERS: "MEMBERS",
 } as const;
 
 const API_ENDPOINTS = {
@@ -15,21 +17,26 @@ const API_ENDPOINTS = {
 } as const;
 
 // Types
-type PageType = (typeof PAGE_TYPES)[keyof typeof PAGE_TYPES];
+export type PageType = (typeof PAGE_TYPES)[keyof typeof PAGE_TYPES];
 
 interface PageProps {
   params: {
     id: string;
+    type?: PageType;
     page?: string;
   };
 }
 
 // Utility functions
 const getPageType = (id: string): PageType => {
-  return id === "register" ? PAGE_TYPES.REGISTER : PAGE_TYPES.DETAIL;
+  if (id === "register") return PAGE_TYPES.REGISTER;
+  if (id.includes("/edit")) {
+    return PAGE_TYPES.EDIT;
+  }
+  return PAGE_TYPES.DETAIL;
 };
 
-const fetchScheduleData = async (id: string, page: string) => {
+export const fetchScheduleData = async (id: string, page: string) => {
   const detailResponse = await getData(`${API_ENDPOINTS.DETAIL}/${id}`, true);
   const memberListResponse = await getData(
     `${API_ENDPOINTS.MEMBERS.replace("{id}", id)}?page=${page}`,
@@ -47,13 +54,19 @@ const ScheduleContent = ({
   type,
   initialData,
   memberList,
+  scheduleId,
 }: {
   type: PageType;
   initialData?: any;
   memberList?: any;
+  scheduleId?: number;
 }) => (
   <div className="flex flex-col gap-3">
-    <ScheduleDetailCard type={type} initialData={initialData} />
+    <ScheduleDetailCard
+      scheduleId={scheduleId}
+      type={type}
+      initialData={initialData}
+    />
     <ScheduleMemberListCard type={type} memberList={memberList} />
   </div>
 );
@@ -65,20 +78,25 @@ export default async function ScheduleDetailPage({
   params: { id, page = "1" },
 }: PageProps) {
   try {
-    const type = getPageType(id);
+    const pageType = getPageType(id);
+    let scheduleId = id;
 
-    if (type === PAGE_TYPES.DETAIL) {
-      const { initialData, memberList } = await fetchScheduleData(id, page);
+    if (pageType === PAGE_TYPES.DETAIL || pageType === PAGE_TYPES.EDIT) {
+      const { initialData, memberList } = await fetchScheduleData(
+        scheduleId,
+        page
+      );
       return (
         <ScheduleContent
-          type={type}
+          type={pageType}
+          scheduleId={Number(scheduleId)}
           initialData={initialData}
           memberList={memberList}
         />
       );
     }
 
-    return <ScheduleContent type={type} />;
+    return <ScheduleContent type={pageType} />;
   } catch (error) {
     console.error("Failed to fetch schedule:", error);
     notFound();

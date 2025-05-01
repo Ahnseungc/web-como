@@ -12,18 +12,34 @@ import { ScheduleDetailCardInitialData } from "../molecues/ScheduleDetail/Schedu
 import { getAccessToken, getClubId } from "@/lib/cookies";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formatDate } from "date-fns";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 interface ScheduleDetailFormProps {
-  type: "REGISTER" | "DETAIL";
+  type: "REGISTER" | "DETAIL" | "EDIT" | "MEMBERS";
   initialData?: ScheduleDetailCardInitialData;
+  scheduleId?: number;
 }
 
-const ScheduleDetailForm = ({ type, initialData }: ScheduleDetailFormProps) => {
-  console.log(initialData);
+const ScheduleDetailForm = ({
+  type,
+  initialData,
+  scheduleId,
+}: ScheduleDetailFormProps) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (sessionStorage.getItem("refresh-on-back") === "true") {
+      sessionStorage.removeItem("refresh-on-back");
+
+      router.refresh();
+    }
+  }, []);
+
   const methods = useForm<ScheduleRegisterSchemaType>({
     resolver: zodResolver(ScheduleRegisterSchema),
     defaultValues:
-      type === "DETAIL"
+      type !== "REGISTER"
         ? {
             title: initialData?.title,
             description: initialData?.detail,
@@ -54,7 +70,7 @@ const ScheduleDetailForm = ({ type, initialData }: ScheduleDetailFormProps) => {
               });
             })(),
           },
-    mode: type === "REGISTER" ? "onChange" : "onSubmit",
+    mode: type !== "DETAIL" ? "onChange" : "onSubmit",
   });
 
   const onSubmit = async (data: ScheduleRegisterSchemaType) => {
@@ -88,9 +104,47 @@ const ScheduleDetailForm = ({ type, initialData }: ScheduleDetailFormProps) => {
             throw new Error("일정 등록에 실패했습니다.");
           }
 
-          window.history.back();
+          sessionStorage.setItem("refresh-on-back", "true");
+          alert("일정이 등록되었습니다.");
+          router.back();
         } catch (error) {
           console.error("일정 처리 실패:", error);
+        }
+      }
+      if (type === "EDIT") {
+        try {
+          const token = await getAccessToken();
+          const clubId = await getClubId();
+
+          const response = await fetch(
+            `/api/server/v1/executive/club/${clubId}/schedule/${scheduleId}`,
+            {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+              },
+              body: JSON.stringify({
+                title: data.title,
+                detail: data.description,
+                location: `${data.location.roadAddress} ${data.location.placeName}`,
+                addressDetail: data.location.placeName,
+                date: formatDate(data.date, "yyyy-MM-dd"),
+                time: data.time,
+                latitude: "",
+                longitude: "",
+              }),
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("일정 수정에 실패했습니다.");
+          }
+          sessionStorage.setItem("refresh-on-back", "true");
+          alert("일정이 수정되었습니다.");
+          router.back();
+        } catch (error) {
+          console.error("일정 수정 실패:", error);
         }
       }
     } catch (error) {
@@ -141,14 +195,21 @@ const ScheduleDetailForm = ({ type, initialData }: ScheduleDetailFormProps) => {
           <ScheduleDetailDate type={type} />
           <ScheduleDetailGeo type={type} />
         </section>
-        {type === "REGISTER" && (
+        {type !== "DETAIL" && (
           <div className="flex justify-end gap-2">
             <Button
               type="button"
               content="취소"
-              onClick={() => window.history.back()}
+              onClick={async () => {
+                await router.back();
+                router.refresh();
+              }}
             />
-            <Button type="submit" primary content={"등록하기"} />
+            <Button
+              type="submit"
+              primary
+              content={type === "REGISTER" ? "등록하기" : "수정하기"}
+            />
           </div>
         )}
       </form>

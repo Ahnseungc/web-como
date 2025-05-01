@@ -1,11 +1,6 @@
 import Card from "@/components/dashboard/common/Card";
-import TitleCard from "../../atoms/TilteCard";
+import TitleCard, { ScheduleDetailCardType } from "../../atoms/TilteCard";
 import ScheduleDetailForm from "../../organisms/ScheduleDetailForm";
-
-enum ScheduleDetailCardType {
-  REGISTER = "일정 등록",
-  DETAIL = "일정 상세 정보",
-}
 
 export type ScheduleDetailCardInitialData = {
   title: string;
@@ -17,17 +12,22 @@ export type ScheduleDetailCardInitialData = {
 };
 interface ScheduleDetailCardProps {
   type: keyof typeof ScheduleDetailCardType;
+  scheduleId?: number;
   initialData?: ScheduleDetailCardInitialData;
 }
 const ScheduleDetailCard = async ({
   type,
+  scheduleId,
   initialData,
 }: ScheduleDetailCardProps) => {
-  const title = ScheduleDetailCardType[type];
   return (
     <Card>
-      <TitleCard title={title} />
-      <ScheduleDetailForm type={type} initialData={initialData} />
+      <TitleCard type={type} scheduleId={scheduleId} />
+      <ScheduleDetailForm
+        type={type}
+        initialData={initialData}
+        scheduleId={scheduleId}
+      />
     </Card>
   );
 };
