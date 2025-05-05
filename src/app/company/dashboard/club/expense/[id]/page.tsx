@@ -1,10 +1,6 @@
 "use client";
-import { getExpenseDetail } from "@/api/actions/company/expense/getExpensedetail";
-import {
-  CardInfo,
-  ExpenseDetail,
-  ExpenseFormValues,
-} from "@/api/types/company/expense";
+import { getExpenseDetail } from "@/api/actions/company/expense/getExpenseDetail";
+import { CardInfo, ExpenseFormValues } from "@/api/types/company/expense";
 import ClubInfoCardForExpense from "@/components/dashboard/club/expense/organisms/ClubInfoCardForExpense";
 import ExpenseReportForm from "@/components/dashboard/club/expense/organisms/ExpenseReportForm";
 import BackButton from "@/components/dashboard/common/BackButton";

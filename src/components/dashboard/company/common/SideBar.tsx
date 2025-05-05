@@ -72,6 +72,11 @@ const menuList: MenuItem[] = [
         link: "/club/expense",
         routes: ["/club/expense"],
       },
+      {
+        name: "활동보고서 관리",
+        link: "/club/report",
+        routes: ["/club/report"],
+      },
     ],
   },
   // {
