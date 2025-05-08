@@ -15,7 +15,7 @@ export default async function ExpenseOverview() {
     false
   );
   const requestData: ExpenseOverviewData = requestRes.data;
-  console.log(requestData);
+
   return (
     <div className="flex gap-3">
       {/* <div className="flex-1 p-8 rounded-xl bg-gray-800">

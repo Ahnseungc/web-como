@@ -28,7 +28,7 @@ export default function ExpenseList({ clubId }: Props) {
         false
       ),
     getNextPageParam: (lastPage) => {
-      if (lastPage.data.currentPage < lastPage.data.maxPage) {
+      if (lastPage.data?.currentPage < lastPage.data?.maxPage) {
         return lastPage.data.currentPage + 1;
       } else {
         return false;
@@ -74,7 +74,7 @@ export default function ExpenseList({ clubId }: Props) {
           handleDateRangeChange={handleDateRangeChange}
         /> */}
         <div className="space-y-10">
-          <ExpenseTable data={data?.pages} />
+          <ExpenseTable data={data?.pages} currentPage={currentPage} />
           <Pagination
             currentPage={currentPage}
             maxPage={maxPage}
