@@ -37,7 +37,6 @@ export default function ExpenseList() {
       );
       setMaxPage(data.maxPage);
       setExpenseList(data.list);
-      console.log(data);
     };
     fetchData();
   }, [currentPage, currentDateRange]);
