@@ -76,3 +76,38 @@ export const ScheduleRegisterSchema = z.object({
 });
 
 export type ScheduleRegisterSchemaType = z.infer<typeof ScheduleRegisterSchema>;
+
+export const ExpenseSchema = z.object({
+  category: z.string(),
+  supportAmount: z.number().or(z.string()),
+  usedAmount: z.number().or(z.string()),
+  remainingAmount: z.number().or(z.string()),
+  usageDetail: z.string(),
+  submittedBy: z.string(),
+  issuedDate: z.date(), // ISO date string
+  vendor: z.string(),
+  amount: z.number().or(z.string()),
+  description: z.string(),
+  // file: z.string().optional(),
+});
+
+export const ActivityFormSchema = z.object({
+  eventName: z.string(),
+  activityDate: z.date(), // ISO date string
+  activityTime: z.string().min(1, { message: "시간을 입력해주세요." }),
+  location: z.string(),
+  locationDetail: z.string(),
+  participantCount: z.number(),
+  activityContent: z.string(),
+  note: z.string().optional(),
+  // photos: z.array(z.string()).optional(),
+  expenses: z.array(ExpenseSchema),
+});
+
+export const ResultReportSchema = z.object({
+  data: ActivityFormSchema,
+  photos: z.array(z.any()),
+  receipts: z.array(z.any()),
+});
+
+export type ResultReportSchemaType = z.infer<typeof ResultReportSchema>;

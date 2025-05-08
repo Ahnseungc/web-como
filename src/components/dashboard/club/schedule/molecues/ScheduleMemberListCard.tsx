@@ -8,7 +8,7 @@ import Pagination from "@/components/dashboard/common/Pagination";
 import { usePathname, useRouter } from "next/navigation";
 
 interface ScheduleMemberListCardProps {
-  type: "DETAIL" | "REGISTER" | "EDIT" | "MEMBERS";
+  type: "DETAIL" | "REGISTER" | "EDIT" | "MEMBERS" | "ACCOUNTS";
   memberList?: any;
 }
 const ScheduleMemberListCard = ({

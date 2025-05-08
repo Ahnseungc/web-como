@@ -5,8 +5,17 @@ import { CustomLabel } from "@/components/common/CustomLabel";
 import TimeSelect from "@/components/common/TimeSelect";
 import { useFormContext } from "react-hook-form";
 import { ScheduleRegisterSchemaType } from "@/lib/types/schema";
+import { cn } from "@/lib/utils";
 
-const ScheduleDetailDate = ({ type }: { type: string }) => {
+const ScheduleDetailDate = ({
+  type,
+  maxWidth,
+  timeSelectWidth = "w-48",
+}: {
+  type: string;
+  maxWidth?: string;
+  timeSelectWidth?: string;
+}) => {
   const { setValue, watch } = useFormContext<ScheduleRegisterSchemaType>();
 
   const date = watch("date");
@@ -19,7 +28,7 @@ const ScheduleDetailDate = ({ type }: { type: string }) => {
         labelText={"활동 일정 설정"}
         required={true}
       />
-      <div className="flex items-center gap-2">
+      <div className={cn("flex items-center gap-2", maxWidth)}>
         <DatePicker
           id="date"
           size="h-[60px]"
@@ -33,7 +42,7 @@ const ScheduleDetailDate = ({ type }: { type: string }) => {
         />
         <TimeSelect
           id="time"
-          width="w-48"
+          width={timeSelectWidth}
           placeholder="시간선택"
           currentValue={time ? time : undefined}
           handleChange={(newTime) => {

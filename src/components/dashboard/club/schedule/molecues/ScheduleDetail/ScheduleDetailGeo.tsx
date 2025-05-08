@@ -3,16 +3,21 @@ import MapPlaceSearch from "../../../manage/organisms/MapPlaceSearch";
 import RHFTextInput from "@/components/common/RHF/RHFTextInput";
 import { ScheduleRegisterSchemaType } from "@/lib/types/schema";
 import { useFormContext } from "react-hook-form";
+import { cn } from "@/lib/utils";
 
-const ScheduleDetailGeo = ({ type }: { type: string }) => {
+const ScheduleDetailGeo = ({
+  type,
+  maxWidth,
+}: {
+  type: string;
+  maxWidth?: string;
+}) => {
   const { setValue, watch } = useFormContext<ScheduleRegisterSchemaType>();
 
   const location = watch("location");
 
-  console.log(location);
-
   return (
-    <div className="flex flex-col gap-2">
+    <div className={cn("flex flex-col gap-2", maxWidth)}>
       <CustomLabel
         htmlFor="location"
         labelText="활동 장소 설정"
@@ -24,7 +29,7 @@ const ScheduleDetailGeo = ({ type }: { type: string }) => {
           <MapPlaceSearch
             maxWidth="w-full"
             isLabel={false}
-            value={location.roadAddress}
+            value={location?.roadAddress}
             handleChange={(newLocation) => {
               setValue("location", {
                 roadAddress: newLocation,
@@ -40,7 +45,7 @@ const ScheduleDetailGeo = ({ type }: { type: string }) => {
             id="location.placeName"
             placeholder="상세 주소를 입력하세요."
             inputStyle="w-full pr-9 h-[60px]"
-            value={location.placeName}
+            value={location?.placeName}
             onChange={(e) => {
               setValue("location", {
                 roadAddress: location.roadAddress,

@@ -136,3 +136,33 @@ export const Star = ({
     </svg>
   );
 };
+
+export const File = ({ className }: Props) => {
+  return (
+    <svg
+      width="20"
+      height="22"
+      viewBox="0 0 20 22"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <g clip-path="url(#clip0_238_290)">
+        <path
+          d="M5.00004 2.66675C4.08337 2.66675 3.34171 3.41675 3.34171 4.33341L3.33337 17.6667C3.33337 18.5834 4.07504 19.3334 4.99171 19.3334H15C15.9167 19.3334 16.6667 18.5834 16.6667 17.6667V7.66675L11.6667 2.66675H5.00004ZM10.8334 8.50008V3.91675L15.4167 8.50008H10.8334Z"
+          fill="currentColor"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_238_290">
+          <rect
+            width="20"
+            height="20"
+            fill="white"
+            transform="translate(0 1)"
+          />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
