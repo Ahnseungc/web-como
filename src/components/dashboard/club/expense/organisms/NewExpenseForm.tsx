@@ -260,16 +260,6 @@ export default function NewExpenseReportForm({
             });
           }}
         />
-        {/* <ImageInput
-          required
-          max={1}
-          acceptDocs
-          name="planFile"
-          label="행사 계획서 첨부"
-          caption="계획서 파일을 첨부하세요."
-          currentImages={currentImagesBankAccount}
-          setCurrentImages={setCurrentImagesBankAccount}
-        /> */}
         <div className="flex flex-col gap-2">
           <span className="h3 font-semibold text-gray-900">
             행사 계획서 첨부
