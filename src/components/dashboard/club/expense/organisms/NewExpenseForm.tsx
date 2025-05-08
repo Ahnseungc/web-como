@@ -47,8 +47,6 @@ export default function NewExpenseReportForm({
     File[]
   >([]);
 
-  console.log(currentImagesBankAccount);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (
@@ -57,8 +55,7 @@ export default function NewExpenseReportForm({
       formValues.location.trim() === "" ||
       formValues.participantsCount.trim() === "" ||
       formValues.amount.trim() === "" ||
-      formValues.details.trim() === "" ||
-      currentImagesBankAccount.length === 0
+      formValues.details.trim() === ""
     ) {
       alert("필수 입력란을 입력해주세요.");
     } else {
@@ -275,7 +272,7 @@ export default function NewExpenseReportForm({
         /> */}
         <div className="flex flex-col gap-2">
           <span className="h3 font-semibold text-gray-900">
-            행사 계획서 첨부<span className=" text-point-red">*</span>
+            행사 계획서 첨부
           </span>
           <label
             htmlFor="fileUpload"
