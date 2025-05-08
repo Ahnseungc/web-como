@@ -3,54 +3,17 @@
 import { usePathname, useRouter } from "next/navigation";
 import { cn, formatDate } from "@/lib/utils";
 import { PrintButton } from "@/components/dashboard/common/DocUtil";
+import { Activity } from "@/api/types/company/report";
 
-const activities = [
-  {
-    id: 1,
-    createdAt: "2024-07-01 10:00:00",
-    club: "어푸어푸 수영 동호회",
-    activity: "2024_05_26 수영 모임 (2)",
-    activityDate: "2024-05-26 14:00:00",
-    status: "pending",
-  },
-  {
-    id: 2,
-    createdAt: "2024-07-02 11:30:00",
-    club: "런런러닝 동호회",
-    activity: "2024_06_01 러닝 모임 (1)",
-    activityDate: "2024-06-01 09:00:00",
-    status: "pending",
-  },
-  {
-    id: 3,
-    createdAt: "2024-07-03 09:20:00",
-    club: "맛집탐방 동호회",
-    activity: "2024_06_10 맛집 투어",
-    activityDate: "2024-06-10 18:00:00",
-    status: "reject",
-  },
-  {
-    id: 4,
-    createdAt: "2024-07-04 15:10:00",
-    club: "어푸어푸 수영 동호회",
-    activity: "2024_06_15 수영 모임 (3)",
-    activityDate: "2024-06-15 14:00:00",
-    status: "pending",
-  },
-  {
-    id: 5,
-    createdAt: "2024-07-05 13:45:00",
-    club: "런런러닝 동호회",
-    activity: "2024_06_20 러닝 모임 (2)",
-    activityDate: "2024-06-20 09:00:00",
-    status: "approved",
-  },
-];
+interface Props {
+  activities: Activity[];
+}
 
-export default function ReportTable() {
+export default function ReportTable({ activities }: Props) {
   const pathname = usePathname();
   const { push } = useRouter();
 
+  if (!activities) return <div>loading...</div>;
   return (
     <ul className="flex flex-col gap-1 w-full">
       <li className="flex border-y border-gray-400 bg-gray-200 w-full">
@@ -76,7 +39,7 @@ export default function ReportTable() {
           인쇄
         </div>
       </li>
-      {activities.map((activity, idx) => (
+      {activities.map((activity: Activity, idx: number) => (
         <li
           key={activity.id}
           className="flex border-b border-gray-400 bg-gray-0 w-full"
@@ -91,14 +54,14 @@ export default function ReportTable() {
           </div>
           {/* 동호회명 */}
           <div className="flex-[2] min-w-[180px] my-3 mx-6 body-1 font-medium text-center text-gray-800">
-            {activity.club}
+            {activity.clubName}
           </div>
           {/* 활동명 */}
           <div
             className="flex-[2] min-w-[250px] my-3 mx-6 body-1 font-medium text-left hover:decoration-gray-800 cursor-pointer underline-offset-2 underline decoration-transparent line-clamp-1 transition duration-300 text-gray-800"
             onClick={() => push(`${pathname}/${activity.id}`)}
           >
-            {activity.activity}
+            {activity.eventName}
           </div>
           {/* 활동일 */}
           <div className="flex-1 min-w-[100px] my-3 mx-6 body-1 font-medium text-center text-gray-800">
@@ -108,24 +71,24 @@ export default function ReportTable() {
           <div
             className={cn(
               "flex-1 min-w-[80px] my-3 mx-6 body-1 font-medium text-center",
-              activity.status === "pending"
+              activity.status === "PENDING"
                 ? "text-gray-500"
-                : activity.status === "reject"
+                : activity.status === "REJECT"
                   ? "text-point-red"
                   : "text-point-blue"
             )}
           >
-            {activity.status === "pending"
+            {activity.status === "PENDING"
               ? "미확인"
-              : activity.status === "reject"
+              : activity.status === "REJECT"
                 ? "반려"
-                : activity.status === "approved"
+                : activity.status === "APPROVED"
                   ? "승인"
                   : "-"}
           </div>
           {/* 인쇄 */}
           <div className="flex-[0.7] min-w-[60px] flex items-center justify-center gap-2 m-0 my-3 mx-6">
-            {activity.status === "pending" ? "-" : <PrintButton />}
+            {activity.status === "PENDING" ? "-" : <PrintButton />}
           </div>
         </li>
       ))}
