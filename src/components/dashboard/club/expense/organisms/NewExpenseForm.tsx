@@ -11,6 +11,7 @@ import DropdownSelect from "@/components/common/DropdownSelect";
 import { CustomTextarea } from "@/components/common/CustomTextarea";
 import { useMutation } from "@tanstack/react-query";
 import { format } from "path";
+import { File } from "@/assets/icons/info";
 
 const types = [
   { name: "활동비 지원", value: "activity" },
@@ -45,6 +46,8 @@ export default function NewExpenseReportForm({
   const [currentImagesBankAccount, setCurrentImagesBankAccount] = useState<
     File[]
   >([]);
+
+  console.log(currentImagesBankAccount);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -260,7 +263,7 @@ export default function NewExpenseReportForm({
             });
           }}
         />
-        <ImageInput
+        {/* <ImageInput
           required
           max={1}
           acceptDocs
@@ -269,7 +272,38 @@ export default function NewExpenseReportForm({
           caption="계획서 파일을 첨부하세요."
           currentImages={currentImagesBankAccount}
           setCurrentImages={setCurrentImagesBankAccount}
-        />
+        /> */}
+        <div className="flex flex-col gap-2">
+          <span className="h3 font-semibold text-gray-900">
+            행사 계획서 첨부<span className=" text-point-red">*</span>
+          </span>
+          <label
+            htmlFor="fileUpload"
+            className="py-[18px] px-[20px] bg-gray-100 max-w-[350px] max-h-[60px] text-gray-400 flex items-center justify-between cursor-pointer"
+          >
+            {currentImagesBankAccount.length > 0 ? (
+              <span className=" truncate">
+                {currentImagesBankAccount[0].name}
+              </span>
+            ) : (
+              "계획서 파일을 첨부하세요."
+            )}
+
+            <input
+              type="file"
+              accept=".hwp, .doc, .docx"
+              className="hidden"
+              id="fileUpload"
+              onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                if (e.target.files && e.target.files.length > 0) {
+                  const fileArray = Array.from(e.target.files);
+                  setCurrentImagesBankAccount(fileArray);
+                }
+              }}
+            />
+            <File />
+          </label>
+        </div>
       </div>
       <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">
         <RadioButton

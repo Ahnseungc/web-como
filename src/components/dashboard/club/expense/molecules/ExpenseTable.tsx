@@ -95,7 +95,7 @@ export default function ExpenseTable({ data, currentPage }: Props) {
                         : data === "REJECTED"
                           ? "반려"
                           : data === "PENDING"
-                            ? "-"
+                            ? "결제 대기중"
                             : data
                       : i === 6
                         ? data
