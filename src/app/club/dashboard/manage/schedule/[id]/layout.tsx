@@ -8,7 +8,7 @@ const ScheduleDetailLayout = async ({
   return (
     <>
       <BackButton />
-      {children}
+      <>{children}</>
     </>
   );
 };
