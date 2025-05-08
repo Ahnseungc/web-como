@@ -55,11 +55,11 @@ const menuList: MenuItem[] = [
       //   link: "/manage/calendar",
       //   routes: ["/manage/calendar"],
       // },
-      // {
-      //   name: "활동 결과 보고 작성",
-      //   link: "/manage/report",
-      //   routes: ["/manage/report"],
-      // },
+      {
+        name: "자동 보고서 작성",
+        link: "/manage/report",
+        routes: ["/manage/report"],
+      },
       // {
       //   name: "비품 관리",
       //   link: "/manage/supply",
