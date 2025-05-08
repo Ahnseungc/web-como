@@ -29,6 +29,7 @@ export type CardInfo = {
   memberCount: number;
   status: ExpenseApplicationStatus;
   createdAt: number[];
+  clubName: string;
 };
 
 export type ExpenseDetail = CardInfo & ExpenseFormValues;

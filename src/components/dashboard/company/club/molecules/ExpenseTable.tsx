@@ -112,8 +112,8 @@ export default function ExpenseTable({
     }
   };
 
-  const handleExpenseDetailClick = (id: number) => {
-    router.push(`/company/dashboard/club/expense/${id}`);
+  const handleExpenseDetailClick = (id: number, clubName: string) => {
+    router.push(`/company/dashboard/club/expense/${id}?clubName=${clubName}`);
   };
 
   return (
@@ -144,7 +144,7 @@ export default function ExpenseTable({
       {expenseList.map((entry, idx) => (
         <li
           key={entry.id}
-          onClick={() => handleExpenseDetailClick(entry.id)}
+          onClick={() => handleExpenseDetailClick(entry.id, entry.clubName)}
           className="flex border-b border-gray-400 bg-gray-0 cursor-pointer hover:bg-gray-100"
         >
           <div className="w-8 my-3 mx-6 body-1 font-medium text-gray-800 text-center">
