@@ -7,7 +7,7 @@ export default function Page() {
     <>
       <div className="bg-gray-0 rounded-[16px] py-[38px] px-[32px] flex flex-col gap-[8px]">
         <div className="flex items-center gap-[8px]">
-          <span className="text-[#FD7E2D] font-[700] text-[28px]">
+          <span className="text-[#292726] font-[700] text-[28px]">
             활동보고서 기능 안내
           </span>
           <Image src={"/caution.png"} alt="caution" width={24} height={24} />

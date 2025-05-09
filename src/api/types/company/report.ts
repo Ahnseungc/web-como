@@ -3,7 +3,7 @@ export interface Activity {
   createdAt: string;
   activity: string;
   activityDate: string;
-  status: "PENDING" | "REJECT" | "APPROVED";
+  status: "PENDING" | "REJECTED" | "APPROVED";
   clubName: string;
   eventName: string;
 }

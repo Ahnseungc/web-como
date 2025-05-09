@@ -59,7 +59,9 @@ export default function ReportTable({ activities }: Props) {
           {/* 활동명 */}
           <div
             className="flex-[2] min-w-[250px] my-3 mx-6 body-1 font-medium text-left hover:decoration-gray-800 cursor-pointer underline-offset-2 underline decoration-transparent line-clamp-1 transition duration-300 text-gray-800"
-            onClick={() => push(`${pathname}/${activity.id}`)}
+            onClick={() =>
+              push(`${pathname}/${activity.id}?status=${activity.status}`)
+            }
           >
             {activity.eventName}
           </div>
@@ -73,14 +75,14 @@ export default function ReportTable({ activities }: Props) {
               "flex-1 min-w-[80px] my-3 mx-6 body-1 font-medium text-center",
               activity.status === "PENDING"
                 ? "text-gray-500"
-                : activity.status === "REJECT"
+                : activity.status === "REJECTED"
                   ? "text-point-red"
                   : "text-point-blue"
             )}
           >
             {activity.status === "PENDING"
               ? "미확인"
-              : activity.status === "REJECT"
+              : activity.status === "REJECTED"
                 ? "반려"
                 : activity.status === "APPROVED"
                   ? "승인"
