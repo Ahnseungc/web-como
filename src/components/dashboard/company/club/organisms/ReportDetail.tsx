@@ -8,7 +8,6 @@ interface Props {
 }
 
 export default function ReportDetail({ data }: Props) {
-  console.log(data);
   return (
     <div className=" w-full">
       <div className="space-y-2 p-8 rounded-xl bg-gray-0 w-full">
@@ -92,16 +91,17 @@ export default function ReportDetail({ data }: Props) {
         <div className="flex flex-col w-full gap-[8px] pt-[36px]">
           <span className="text-xl font-[600]">지출 증빙용 활동 사진 첨부</span>
           <div className="grid grid-cols-2 gap-[12px] w-full">
-            {data.photos.map((photo) => (
-              <div key={photo.id} className="aspect-[1/1] relative w-full">
-                <Image
-                  src={photo.url}
-                  alt="photo"
-                  fill
-                  className="rounded-[8px] object-cover"
-                />
-              </div>
-            ))}
+            {data.photos &&
+              data.photos.map((photo) => (
+                <div key={photo.id} className="aspect-[1/1] relative w-full">
+                  <Image
+                    src={photo.url}
+                    alt="photo"
+                    fill
+                    className="rounded-[8px] object-cover"
+                  />
+                </div>
+              ))}
           </div>
         </div>
       </div>
@@ -192,19 +192,24 @@ export default function ReportDetail({ data }: Props) {
               <div className="flex flex-col basis-1">
                 <span className=" text-xl font-[600] mb-[8px] ">영수증</span>
                 <div className="grid grid-cols-2 gap-[12px] w-full">
-                  {data.expenses.map((photo, idx) => (
-                    <div
-                      key={idx}
-                      className="aspect-[760/1013] relative min-w-full"
-                    >
-                      <Image
-                        src={photo.file}
-                        alt="photo"
-                        fill
-                        className="rounded-[8px] object-cover"
-                      />
-                    </div>
-                  ))}
+                  {data.expenses &&
+                    data.expenses.map((photo, idx) => {
+                      if (photo.file) {
+                        return (
+                          <div
+                            key={idx}
+                            className="aspect-[760/1013] relative min-w-full"
+                          >
+                            <Image
+                              src={photo.file}
+                              alt="photo"
+                              fill
+                              className="rounded-[8px] object-cover"
+                            />
+                          </div>
+                        );
+                      }
+                    })}
                 </div>
               </div>
             </div>
