@@ -7,8 +7,9 @@ import ResultReportSubmitCard from "./ResultReportSubmitCard";
 import { ResultReportSchema, ResultReportSchemaType } from "@/lib/types/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getAccessToken, getClubId } from "@/lib/cookies";
-
+import { useRouter } from "next/navigation";
 const ResultReportFormProvider = () => {
+  const router = useRouter();
   const methods = useForm<ResultReportSchemaType>({
     resolver: zodResolver(ResultReportSchema),
     mode: "onChange",
@@ -96,10 +97,10 @@ const ResultReportFormProvider = () => {
       }
       alert("일정 등록에 성공했습니다.");
       methods.reset();
+      router.back();
     } catch (error) {
       console.error(error);
     }
-    console.log(data);
   };
   const onError = (errors: FieldErrors<ResultReportSchemaType>) => {
     console.log(errors);

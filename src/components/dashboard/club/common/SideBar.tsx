@@ -70,11 +70,11 @@ const menuList: MenuItem[] = [
         link: "/manage/announcement",
         routes: ["/manage/announcement"],
       },
-      {
-        name: "활동 결과 보고 작성",
-        link: "/manage/result-report",
-        routes: ["/manage/result-report"],
-      },
+      // {
+      //   name: "활동 결과 보고 작성",
+      //   link: "/manage/result-report",
+      //   routes: ["/manage/result-report"],
+      // },
       // {
       //   name: "동호회 취소 및 해체",
       //   link: "/manage/disband",
