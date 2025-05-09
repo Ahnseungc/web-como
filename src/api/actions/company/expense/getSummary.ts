@@ -1,4 +1,4 @@
-import { getAccessToken, getClubId } from "@/lib/cookies";
+import { getAccessToken } from "@/lib/cookies";
 
 export const getSummary = async () => {
   const token = await getAccessToken();
