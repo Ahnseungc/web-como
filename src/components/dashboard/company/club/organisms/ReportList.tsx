@@ -6,31 +6,34 @@ import DateFilter, {
 } from "@/components/dashboard/common/DateFilter";
 import Pagination from "@/components/dashboard/common/Pagination";
 import ReportTable from "@/components/dashboard/company/club/molecules/ReportTable";
-import ReportSearch from "../molecules/ReportSearch";
-import { subYears } from "date-fns";
+import { subDays } from "date-fns";
 import { startOfToday } from "date-fns";
-import { SearchValue } from "@/lib/types/search";
-
-
-interface Props {
-  currentSearchTerm: string;
-  currentSearchFilter: string;
-}
+import { getReports } from "@/api/actions/company/report/getReports";
+import { formatDate } from "@/lib/format";
+import { Activity } from "@/api/types/company/report";
 
 export default function ReportList() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [maxPage, setMaxPage] = useState(1);
+  const [activities, setActivities] = useState<Activity[]>([]);
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
-    startDate: subYears(startOfToday(), 1), // 1년 전 날짜
+    startDate: subDays(startOfToday(), 7),
     endDate: startOfToday(),
   });
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const loadReportList = async (searchValue: SearchValue = { term: "", field: "all" }) => {
-  };
-
   useEffect(() => {
-    loadReportList();
-  }, [currentPage, currentDateRange]);
+    const fetchData = async () => {
+      if (!currentDateRange.startDate || !currentDateRange.endDate) return;
 
+      const data = await getReports(
+        currentPage,
+        formatDate(currentDateRange.startDate),
+        formatDate(currentDateRange.endDate)
+      );
+      setActivities(data.list);
+      setMaxPage(data.maxPage);
+    };
+    fetchData();
+  }, [currentPage, currentDateRange]);
   const handleDateRangeChange = (dateRange: DateRange) => {
     setCurrentDateRange(dateRange);
   };
@@ -38,29 +41,25 @@ export default function ReportList() {
   const handlePageChange = (page: number) => {
     if (page !== currentPage) {
       setCurrentPage(page);
+      if (page > currentPage) {
+        //fetchNextPage();
+      } else {
+        //fetchPreviousPage();
+      }
     }
   };
 
-  const handleSearch = (searchValue: SearchValue) => {
-    loadReportList(searchValue);
-  };
-  
   return (
     <div className="space-y-4 p-8 rounded-2xl bg-gray-0">
-      <ReportSearch
-        onSearch={handleSearch}
-        currentDateRange={currentDateRange}
-        currentPage={currentPage}
-      />
       <DateFilter
         currentDateRange={currentDateRange}
         handleDateRangeChange={handleDateRangeChange}
       />
       <div className="space-y-10">
-        <ReportTable />
+        <ReportTable activities={activities} />
         <Pagination
           currentPage={currentPage}
-          maxPage={8}
+          maxPage={maxPage}
           handlePageChange={handlePageChange}
         />
       </div>

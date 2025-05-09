@@ -14,6 +14,7 @@ const companyDashboardMenus = [
   "como",
   "announcement",
   "community",
+  "report",
 ] as const;
 
 type CompanyDashboardMenu = (typeof companyDashboardMenus)[number];
@@ -71,6 +72,17 @@ const menuList: MenuItem[] = [
         name: "활동지원비 신청 관리",
         link: "/club/expense",
         routes: ["/club/expense"],
+      },
+    ],
+  },
+  {
+    name: "활동 보고서 관리",
+    key: "report",
+    subMenuList: [
+      {
+        name: "활동 보고서 관리",
+        link: "/club/report",
+        routes: ["/club/report"],
       },
     ],
   },

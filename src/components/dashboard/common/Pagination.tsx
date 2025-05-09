@@ -33,7 +33,7 @@ export default function Pagination(props: Props) {
           <ChevronLeft />
         </button>
       </div>
-      <div className="flex gap-2.5">
+      <div className="flex gap-2.5 items-center">
         {getPageRange(props.currentPage).map((page) => (
           <button
             key={page}
@@ -50,7 +50,7 @@ export default function Pagination(props: Props) {
           </button>
         ))}
       </div>
-      <div className="flex gap-2.5">
+      <div className="flex gap-2.5 ">
         <button
           className="cursor-pointer"
           onClick={() => props.handlePageChange(props.currentPage + 1)}

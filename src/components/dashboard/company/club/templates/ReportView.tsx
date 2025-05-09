@@ -29,8 +29,8 @@ export default function ReportView() {
         handleSearch={handleSearch}
       /> */}
       <ReportList
-        // currentSearchFilter={currentSearchValue.filter!}
-        // currentSearchTerm={searchTerm}
+      // currentSearchFilter={currentSearchValue.filter!}
+      // currentSearchTerm={searchTerm}
       />
     </>
   );
