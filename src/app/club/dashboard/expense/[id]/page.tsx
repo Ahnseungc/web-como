@@ -7,6 +7,7 @@ import BackButton from "@/components/dashboard/common/BackButton";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { getClubId } from "@/lib/cookies";
+import { getData } from "@/api/action";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const searchParams = useSearchParams();
@@ -30,7 +31,7 @@ const Page = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     const fetchExpense = async () => {
       if (clubId) {
-      const data = await getExpenseDetail(Number(params.id), Number(clubId));
+      const { data } = await getData(`v1/executive/club/${clubId}/activity-expenses/${params.id}`, true)
       setExpense({
         eventName: data.eventName,
         description: data.description,
