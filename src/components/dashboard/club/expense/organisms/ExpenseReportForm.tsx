@@ -92,7 +92,7 @@ export default function ExpenseReportForm({
           value={formValues.location}
           inputStyle="max-w-[350px]"
           name="location"
-          label="지급 계좌"
+          label="장소(사용처)"
           type="text"
           placeholder="위치를 입력하세요."
           readOnly

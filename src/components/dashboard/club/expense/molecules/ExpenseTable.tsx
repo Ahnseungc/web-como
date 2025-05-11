@@ -23,14 +23,11 @@ interface Props {
 }
 
 export default function ExpenseTable({ data, currentPage }: Props) {
-  const pathname = usePathname();
   const { push } = useRouter();
-
-  // Filter the list for the current page
+  const pathname = usePathname();
   const list =
     data?.find((page) => page.data.currentPage === currentPage)?.data.List ||
     [];
-  console.log(list);
 
   return (
     <ul>
@@ -54,6 +51,9 @@ export default function ExpenseTable({ data, currentPage }: Props) {
       {list && list.length > 0 ? (
         list.map((item, idx) => (
           <li
+            onClick={() =>
+              push(`${pathname}/${item.id}?clubName=${item.clubName}`)
+            }
             key={item.id}
             className="flex py-0.5 border-b border-gray-400 bg-gray-0 hover:bg-gray-100 transition duration-200"
           >
