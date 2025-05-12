@@ -63,7 +63,7 @@ export default function ReportListTable({ data, clubId, currentPage }: Props) {
               "my-3 mx-6 body-1 font-medium text-gray-800 text-center w-[76px]"
             )}
           >
-            {report.id}
+            {i + 1}
           </div>
 
           {/* 활동명 */}
