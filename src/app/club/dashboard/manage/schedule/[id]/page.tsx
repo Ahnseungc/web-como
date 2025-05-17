@@ -25,6 +25,7 @@ interface PageProps {
     type?: PageType;
     page?: string;
   };
+  searchParams: { page?: string };
 }
 
 // Utility functions
@@ -75,17 +76,23 @@ const ScheduleContent = ({
 export const dynamic = "force-dynamic";
 
 export default async function ScheduleDetailPage({
-  params: { id, page = "1" },
-}: PageProps) {
+  params: { id },
+  searchParams,
+}: {
+  params: { id: string };
+  searchParams: { page?: string };
+}) {
   try {
     const pageType = getPageType(id);
     let scheduleId = id;
+    const page = searchParams.page || "1";
 
     if (pageType === PAGE_TYPES.DETAIL || pageType === PAGE_TYPES.EDIT) {
       const { initialData, memberList } = await fetchScheduleData(
         scheduleId,
         page
       );
+
       return (
         <ScheduleContent
           type={pageType}
