@@ -6,6 +6,7 @@ import ScheduleMemberListTable from "./ScheduleMemberListTable";
 import Pagination from "@/components/dashboard/common/Pagination";
 
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 interface ScheduleMemberListCardProps {
   type: "DETAIL" | "REGISTER" | "EDIT" | "MEMBERS" | "ACCOUNTS";
@@ -18,8 +19,17 @@ const ScheduleMemberListCard = ({
   const router = useRouter();
   const pathname = usePathname();
   const handlePageChange = (page: number) => {
-    router.push(`${pathname}?page=${page}`);
+    router.push(`${pathname}?page=${page}`, { scroll: false });
   };
+
+  useEffect(() => {
+    if (memberList?.currentPage) {
+      router.replace(`${pathname}?page=${memberList.currentPage}`, {
+        scroll: false,
+      });
+    }
+  }, [memberList?.currentPage, router, pathname]);
+
   return (
     <Card>
       <TitleCard type={"MEMBERS"} />
