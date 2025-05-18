@@ -179,18 +179,26 @@ export default function NewExpenseReportForm({
           type="text"
           currentValue={formValues.description}
           maxLength={1000}
-          placeholder="활동비의 사용 용도를 입력하세요."
+          placeholder={`(예시)
+1. 일시: 2025. 5. 20. (화) 18:00 ~ 20:00
+2. 대상: 00 동호회 회원 00명
+3. 활동내용: 2025년 5월 정기 연습
+- 입문 및 초급자 레슨 00명
+- 회원 정기 연습 경기 등
+              `}
           handleInputChange={(e) => {
             setFormValues((prev) => {
               return { ...prev, description: e.target.value };
             });
           }}
+          inputStyle="h-[300px] resize-none whitespace-pre-wrap"
         />
+
         <Input
           name="note"
           label="주요 내용"
           type="text"
-          placeholder="내용을 입력하세요."
+          placeholder="(필요한 경우 추가 작성)"
           maxLength={1000}
           currentValue={formValues.note}
           handleInputChange={(e) => {
@@ -198,6 +206,7 @@ export default function NewExpenseReportForm({
               return { ...prev, note: e.target.value };
             });
           }}
+          inputStyle="h-[300px] resize-none whitespace-pre-wrap"
         />
         {/* <ImageInput
           required
@@ -251,7 +260,9 @@ export default function NewExpenseReportForm({
           name="details"
           label="산출 내역"
           type="text"
-          placeholder="산출 내역을 입력하세요."
+          placeholder={`(예시)
+1. 라켓 구입: 000원*00개=000원
+2. 공 구입: 000원*00개=000원`}
           maxLength={1000}
           currentValue={formValues.details}
           handleInputChange={(e) => {
@@ -259,6 +270,7 @@ export default function NewExpenseReportForm({
               return { ...prev, details: e.target.value };
             });
           }}
+          inputStyle="h-[300px] resize-none whitespace-pre-wrap"
         />
         <div className="flex flex-col gap-2">
           <span className="h3 font-semibold text-gray-900">
