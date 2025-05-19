@@ -64,7 +64,7 @@ const ScheduleList = ({
           currentPage={currentPage}
           itemsPerPage={10}
         />
-      </div>
+      </div> 
       <Pagination
         currentPage={currentPage}
         handlePageChange={handlePageChange}
