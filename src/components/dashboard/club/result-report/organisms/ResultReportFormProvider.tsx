@@ -123,5 +123,7 @@ export default ResultReportFormProvider;
 
 function formatDateToString(date: Date | string) {
   if (typeof date === "string") return date;
-  return date.toISOString().slice(0, 10);
+
+  // 'en-CA' 로케일은 'YYYY-MM-DD' 형식을 보장합니다.
+  return date.toLocaleDateString("en-CA"); // 'en-CA'는 'YYYY-MM-DD' 형식
 }
