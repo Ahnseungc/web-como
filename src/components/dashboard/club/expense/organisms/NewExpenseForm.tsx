@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 import Button from "@/components/common/Button";
@@ -33,7 +33,7 @@ export default function NewExpenseReportForm({
 }: Props) {
   const { replace, refresh } = useRouter();
   const [isChecked, setIsChecked] = useState<boolean>(false);
-  const [date, setDate] = useState<Date>();
+  const [allValid, setAllValid] = useState(false);
   const [formValues, setFormValues] = useState({
     eventName: "",
     description: "",
@@ -141,6 +141,21 @@ export default function NewExpenseReportForm({
     }
     return amount;
   };
+
+  useEffect(() => {
+    if (
+      formValues.eventName.trim() !== "" &&
+      formValues.description.trim() !== "" &&
+      formValues.location.trim() !== "" &&
+      formValues.participantsCount.trim() !== "" &&
+      formValues.amount.trim() !== "" &&
+      formValues.details.trim() !== ""
+    ) {
+      setAllValid(true);
+    } else {
+      setAllValid(false);
+    }
+  }, [formValues]);
 
   return (
     <form className="space-y-3 w-full" onSubmit={handleSubmit}>
@@ -304,17 +319,19 @@ export default function NewExpenseReportForm({
           </label>
         </div>
       </div>
-      <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">
-        <RadioButton
-          required
-          type="checkbox"
-          name="check"
-          label={`상기와 같이 해당 ${clubName}의 지원금을 요청합니다.`}
-          checked={isChecked}
-          onChange={() => setIsChecked((prev) => !prev)}
-        />
-        <Button disabled={!isChecked} content="제출하기" primary />
-      </div>
+      {allValid && (
+        <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">
+          <RadioButton
+            required
+            type="checkbox"
+            name="check"
+            label={`상기와 같이 해당 ${clubName}의 지원금을 요청합니다.`}
+            checked={isChecked}
+            onChange={() => setIsChecked((prev) => !prev)}
+          />
+          <Button disabled={!isChecked} content="제출하기" primary />
+        </div>
+      )}
     </form>
   );
 }
