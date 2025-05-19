@@ -38,7 +38,7 @@ const ResultReportDate = ({
           handleDateChange={(newDate) => {
             setValue("data.activityDate", newDate!);
           }}
-          disablePastDates={true}
+          disablePastDates={false}
         />
         <TimeSelect
           id="time"

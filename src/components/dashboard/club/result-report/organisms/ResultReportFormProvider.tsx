@@ -93,9 +93,9 @@ const ResultReportFormProvider = () => {
       );
 
       if (!response.ok) {
-        throw new Error("일정 등록에 실패했습니다.");
+        throw new Error("활동 보고서 작성에 실패했습니다.");
       }
-      alert("일정 등록에 성공했습니다.");
+      alert("활동 보고서 작성에 성공했습니다.");
       methods.reset();
       router.back();
     } catch (error) {
