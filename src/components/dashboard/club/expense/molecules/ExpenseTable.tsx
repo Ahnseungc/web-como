@@ -32,7 +32,7 @@ export default function ExpenseTable({ data, currentPage }: Props) {
   return (
     <ul>
       <li className="flex py-0.5 border-y border-gray-400 bg-gray-200">
-        {["순번", "작성일", "신청자", "동호회명", "구분"].map((heading, i) => (
+        {["순번", "작성일", "신청자", "행사명", "구분"].map((heading, i) => (
           <div
             key={heading}
             className={cn(

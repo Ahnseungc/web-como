@@ -1,7 +1,6 @@
 import BackButton from "@/components/dashboard/common/BackButton";
 import ClubInfoCard from "@/components/dashboard/club/common/ClubInfoCard";
 import NewExpenseReportForm from "@/components/dashboard/club/expense/organisms/NewExpenseForm";
-import { getData } from "@/api/action";
 import { getAccessToken, getClubId, getClubName } from "@/lib/cookies";
 
 export default async function NewExpenseReportPage() {
