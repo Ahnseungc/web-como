@@ -79,7 +79,7 @@ export default function ReportList({ clubId }: Props) {
         <span className="font-[600] text-2xl ">활동보고서 조회</span>
         <button
           className=" text-base px-[12px] py-[4px] bg-gray-900 text-gray-100 rounded-[4px]"
-          onClick={() => router.push(`/club/dashboard/manage/result-report`)}
+          onClick={() => router.push(`/club/dashboard/result-report`)}
         >
           보고서 작성하기 +
         </button>
