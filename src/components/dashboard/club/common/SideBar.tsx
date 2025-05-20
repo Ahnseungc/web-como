@@ -13,6 +13,7 @@ const clubDashboardMenus = [
   "expense",
   "announcement",
   "community",
+  "report",
 ] as const;
 
 type ClubDashboardMenu = (typeof clubDashboardMenus)[number];
@@ -55,11 +56,11 @@ const menuList: MenuItem[] = [
       //   link: "/manage/calendar",
       //   routes: ["/manage/calendar"],
       // },
-      {
-        name: "활동 보고서 작성",
-        link: "/manage/report",
-        routes: ["/manage/report"],
-      },
+      // {
+      //   name: "활동 보고서 작성",
+      //   link: "/manage/report",
+      //   routes: ["/manage/report"],
+      // },
       // {
       //   name: "비품 관리",
       //   link: "/manage/supply",
@@ -103,6 +104,11 @@ const menuList: MenuItem[] = [
   //     },
   //   ],
   // },
+  {
+    name: "활동 보고서 관리",
+    key: "report",
+    link: "/report",
+  },
   {
     name: "활동지원비 관리",
     key: "expense",
