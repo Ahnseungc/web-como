@@ -48,6 +48,9 @@ export default function RHFTextInput<T extends FieldValues>({
     setValue,
     formState: { errors },
   } = useFormContext<T>();
+
+  console.log(errors);
+
   const value = useWatch<T>({ name: name });
 
   // CustomInput의 컴포넌트는 forwardRef를 사용하여 ref가 function으로 할당되었음
@@ -65,6 +68,24 @@ export default function RHFTextInput<T extends FieldValues>({
   const handleDelete = () => {
     setValue(name, "" as PathValue<T, Path<T>>);
   };
+
+  // 에러 메시지 가져오기
+  const getErrorMessage = () => {
+    const nameParts = name.split(".");
+    let currentErrors: any = errors;
+
+    for (const part of nameParts) {
+      if (currentErrors && currentErrors[part]) {
+        currentErrors = currentErrors[part];
+      } else {
+        return undefined;
+      }
+    }
+
+    return currentErrors?.message?.toString();
+  };
+
+  const errorMessage = getErrorMessage();
 
   return (
     <Controller
@@ -147,6 +168,11 @@ export default function RHFTextInput<T extends FieldValues>({
           {errors[name] && (
             <div className="text-base font-medium text-point-red">
               {errors[name].message?.toString()}
+            </div>
+          )}
+          {errorMessage && (
+            <div className="text-base font-medium text-point-red">
+              {errorMessage}
             </div>
           )}
         </div>

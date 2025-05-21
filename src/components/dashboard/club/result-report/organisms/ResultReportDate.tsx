@@ -17,10 +17,30 @@ const ResultReportDate = ({
   maxWidth?: string;
   timeSelectWidth?: string;
 }) => {
-  const { setValue, watch } = useFormContext<ResultReportSchemaType>();
+  const {
+    setValue,
+    watch,
+    formState: { errors },
+  } = useFormContext<ResultReportSchemaType>();
 
   const date = watch("data.activityDate");
   const time = watch("data.activityTime");
+  const getErrorMessage = () => {
+    const nameParts = "data.activityDate".split(".");
+    let currentErrors: any = errors;
+
+    for (const part of nameParts) {
+      if (currentErrors && currentErrors[part]) {
+        currentErrors = currentErrors[part];
+      } else {
+        return undefined;
+      }
+    }
+
+    return currentErrors?.message?.toString();
+  };
+
+  const errorMessage = getErrorMessage();
 
   return (
     <div className="flex flex-col gap-2">
@@ -44,12 +64,17 @@ const ResultReportDate = ({
           id="time"
           width={timeSelectWidth}
           placeholder="시간선택"
-          currentValue={time ? time : undefined}
+          currentValue={time ? time : "00:00"}
           handleChange={(newTime) => {
             setValue("data.activityTime", newTime);
           }}
         />
       </div>
+      {errorMessage && (
+        <div className="text-base font-medium text-point-red">
+          {errorMessage}
+        </div>
+      )}
     </div>
   );
 };

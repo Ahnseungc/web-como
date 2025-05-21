@@ -4,9 +4,16 @@ import Button from "@/components/common/Button";
 import Card from "@/components/dashboard/common/Card";
 import RadioButton from "@/components/common/RadioButton";
 import { useState } from "react";
+import { useFormContext } from "react-hook-form";
+import { ResultReportSchemaType } from "@/lib/types/schema";
 
 const ResultReportSubmitCard = () => {
   const [agree, setAgree] = useState(false);
+  const {
+    formState: { errors, isValid },
+  } = useFormContext<ResultReportSchemaType>();
+
+  console.log(isValid);
 
   return (
     <Card className="!space-y-6">
@@ -25,7 +32,7 @@ const ResultReportSubmitCard = () => {
         content={"제출하기"}
         primary
         type="submit"
-        disabled={!agree}
+        disabled={!agree || !isValid}
         className="w-full"
       />
     </Card>

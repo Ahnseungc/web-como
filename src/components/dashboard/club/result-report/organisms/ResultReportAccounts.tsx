@@ -9,6 +9,7 @@ import DropdownSelect from "@/components/common/DropdownSelect";
 import RHFTextInput from "@/components/common/RHF/RHFTextInput";
 import { ResultReportSchemaType } from "@/lib/types/schema";
 import ImageInput from "../atom/image-input";
+import { cn } from "@/lib/utils";
 
 const expenseType = [
   { name: "활정책사업: 인적자원운용", value: "activity" },
@@ -24,6 +25,22 @@ const ResultReportAccountsForm = () => {
     control: methods.control,
     name: "data.expenses",
   });
+
+  // 에러 메시지 가져오기
+  const getErrorMessage = (fieldPath: string) => {
+    const nameParts = fieldPath.split(".");
+    let currentErrors: any = methods.formState.errors;
+
+    for (const part of nameParts) {
+      if (currentErrors && currentErrors[part]) {
+        currentErrors = currentErrors[part];
+      } else {
+        return undefined;
+      }
+    }
+
+    return currentErrors?.message?.toString();
+  };
 
   return (
     <section className="flex flex-col gap-3">
@@ -66,7 +83,7 @@ const ResultReportAccountsForm = () => {
                 }
               />
             </div>
-            <div className="w-1/4 h-full">
+            <div className="w-1/4 h-full relative">
               <RHFTextInput
                 name={`data.expenses.${idx}.supportAmount`}
                 id={`data.expenses.${idx}.supportAmount`}
@@ -75,7 +92,13 @@ const ResultReportAccountsForm = () => {
                 inputStyle="pr-9 flex-1"
                 required
                 type="number"
+                inputMode="numeric"
               />
+              {getErrorMessage(`data.expenses[${idx}].supportAmount`) && (
+                <div className="absolute text-base font-medium text-point-red mt-1">
+                  {getErrorMessage(`data.expenses[${idx}].supportAmount`)}
+                </div>
+              )}
             </div>
             <div className="w-1/4">
               <RHFTextInput
@@ -86,6 +109,7 @@ const ResultReportAccountsForm = () => {
                 inputStyle="pr-9 flex-1"
                 required
                 type="number"
+                inputMode="numeric"
               />
             </div>
             <div className="w-1/4 h-full">
@@ -97,6 +121,7 @@ const ResultReportAccountsForm = () => {
                 inputStyle="pr-9 flex-1"
                 required
                 type="number"
+                inputMode="numeric"
               />
             </div>
           </div>
@@ -169,28 +194,34 @@ const ResultReportAccountsForm = () => {
           />
         </Card>
       ))}
-      <Card className="mt-3 border p-4 mb-4 rounded w-full">
-        <Button
-          type="button"
-          primary
-          content="+ 정산서 추가하기"
-          onClick={() =>
-            append({
-              category: "",
-              supportAmount: 0,
-              usedAmount: 0,
-              remainingAmount: 0,
-              usageDetail: "",
-              submittedBy: "",
-              issuedDate: new Date(),
-              vendor: "",
-              amount: 0,
-              description: "",
-            })
-          }
-          disabled={fields.length >= 5}
-        />
-      </Card>
+      {/* <Card className="mt-3 border p-4 mb-4 rounded w-full"> */}
+
+      <button
+        type="button"
+        className="!bg-orange-50 !text-orange-500 !border-none flex items-center justify-center w-full h-[60px] rounded-md border transition duration-200"
+        onClick={() =>
+          append({
+            category: "",
+            supportAmount: "",
+            usedAmount: "",
+            remainingAmount: "",
+            usageDetail: "",
+            submittedBy: "",
+            issuedDate: new Date(),
+            vendor: "",
+            amount: "",
+            description: "",
+          })
+        }
+        disabled={fields.length >= 5}
+      >
+        <span
+          className={cn("h3 font-bold transition duration-200 text-orange-500")}
+        >
+          + 정산서 추가하기
+        </span>
+      </button>
+      {/* </Card> */}
     </section>
   );
 };
