@@ -77,28 +77,80 @@ export const ScheduleRegisterSchema = z.object({
 
 export type ScheduleRegisterSchemaType = z.infer<typeof ScheduleRegisterSchema>;
 
+// export const ExpenseSchema = z.object({
+//   category: z.string().min(1, { message: "카테고리를 입력해주세요." }),
+//   supportAmount: z.union([
+//     z.number().min(1, { message: "지원금액을 입력해주세요." }),
+//     z.string().refine((val) => val === "" || Number(val) >= 0, {
+//       message: "지원금액을 입력해주세요.",
+//     }),
+//   ]),
+//   usedAmount: z.union([
+//     z.number().min(1, { message: "사용금액을 입력해주세요." }),
+//     z.string().refine((val) => val === "" || Number(val) >= 0, {
+//       message: "사용금액을 입력해주세요.",
+//     }),
+//   ]),
+//   remainingAmount: z.union([
+//     z.number().min(1, { message: "잔액을 입력해주세요." }),
+//     z.string().refine((val) => val === "" || Number(val) >= 0, {
+//       message: "잔액을 입력해주세요.",
+//     }),
+//   ]),
+//   usageDetail: z.string().min(1, { message: "사용내역을 입력해주세요." }),
+//   submittedBy: z.string().min(1, { message: "제출자를 입력해주세요." }),
+//   issuedDate: z.date(), // ISO date string
+//   vendor: z.string().min(1, { message: "거래처를 입력해주세요." }),
+//   amount: z.union([
+//     z.number().min(1, { message: "금액을 입력해주세요." }),
+//     z.string().refine((val) => val === "" || Number(val) >= 0, {
+//       message: "금액을 입력해주세요.",
+//     }),
+//   ]),
+//   description: z.string().min(1, { message: "설명을 입력해주세요." }),
+//   // file: z.string().optional(),
+// });
 export const ExpenseSchema = z.object({
-  category: z.string(),
-  supportAmount: z.number().or(z.string()),
-  usedAmount: z.number().or(z.string()),
-  remainingAmount: z.number().or(z.string()),
-  usageDetail: z.string(),
-  submittedBy: z.string(),
-  issuedDate: z.date(), // ISO date string
-  vendor: z.string(),
-  amount: z.number().or(z.string()),
-  description: z.string(),
-  // file: z.string().optional(),
+  category: z.string().min(1, { message: "카테고리를 입력해주세요." }),
+  supportAmount: z
+    .string()
+    .min(1, { message: "지원금액을 입력해주세요." })
+    .refine((val) => val === "" || Number(val) >= 0, {
+      message: "지원금액을 입력해주세요.",
+    }),
+  usedAmount: z
+    .string()
+    .min(1, { message: "사용금액을 입력해주세요." })
+    .refine((val) => val === "" || Number(val) >= 0, {
+      message: "사용금액을 입력해주세요.",
+    }),
+  remainingAmount: z
+    .string()
+    .min(1, { message: "잔액을 입력해주세요." })
+    .refine((val) => val === "" || Number(val) >= 0, {
+      message: "잔액을 입력해주세요.",
+    }),
+  usageDetail: z.string().min(1, { message: "사용내역을 입력해주세요." }),
+  submittedBy: z.string().min(1, { message: "제출자를 입력해주세요." }),
+  issuedDate: z.date(),
+  vendor: z.string().min(1, { message: "거래처를 입력해주세요." }),
+  amount: z
+    .string()
+    .min(1, { message: "금액을 입력해주세요." })
+    .refine((val) => val === "" || Number(val) >= 0, {
+      message: "금액을 입력해주세요.",
+    }),
+  description: z.string().min(1, { message: "설명을 입력해주세요." }),
 });
 
 export const ActivityFormSchema = z.object({
-  eventName: z.string(),
+  eventName: z.string().min(1, { message: "행사명을 입력해주세요." }),
   activityDate: z.date(), // ISO date string
   activityTime: z.string().min(1, { message: "시간을 입력해주세요." }),
-  location: z.string(),
-  locationDetail: z.string(),
-  participantCount: z.number(),
-  activityContent: z.string(),
+  location: z.string().min(1, { message: "장소를 입력해주세요." }),
+  locationDetail: z.string().min(1, { message: "장소 상세를 입력해주세요." }),
+  participantCount: z.number().min(1, { message: "참가자 수를 입력해주세요." }),
+  activityContent: z.string().min(1, { message: "행사 내용을 입력해주세요." }),
   note: z.string().optional(),
   // photos: z.array(z.string()).optional(),
   expenses: z.array(ExpenseSchema),
@@ -106,8 +158,12 @@ export const ActivityFormSchema = z.object({
 
 export const ResultReportSchema = z.object({
   data: ActivityFormSchema,
-  photos: z.array(z.any()),
-  receipts: z.array(z.any()),
+  photos: z
+    .array(z.any())
+    .min(1, { message: "사진을 최소 1개 이상 첨부해주세요." }),
+  receipts: z
+    .array(z.any())
+    .min(1, { message: "영수증을 최소 1개 이상 첨부해주세요." }),
 });
 
 export type ResultReportSchemaType = z.infer<typeof ResultReportSchema>;

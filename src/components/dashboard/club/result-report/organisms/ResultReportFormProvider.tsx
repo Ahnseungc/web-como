@@ -8,11 +8,12 @@ import { ResultReportSchema, ResultReportSchemaType } from "@/lib/types/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getAccessToken, getClubId } from "@/lib/cookies";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 const ResultReportFormProvider = () => {
   const router = useRouter();
   const methods = useForm<ResultReportSchemaType>({
     resolver: zodResolver(ResultReportSchema),
-    mode: "onChange",
+    mode: "all",
     defaultValues: {
       data: {
         eventName: "",
@@ -26,14 +27,14 @@ const ResultReportFormProvider = () => {
         expenses: [
           {
             category: "",
-            supportAmount: 0,
-            usedAmount: 0,
-            remainingAmount: 0,
+            supportAmount: "",
+            usedAmount: "",
+            remainingAmount: "",
             usageDetail: "",
             submittedBy: "",
             issuedDate: new Date(),
             vendor: "",
-            amount: 0,
+            amount: "",
             description: "",
           },
         ],
@@ -105,6 +106,10 @@ const ResultReportFormProvider = () => {
   const onError = (errors: FieldErrors<ResultReportSchemaType>) => {
     console.log(errors);
   };
+
+  useEffect(() => {
+    methods.trigger(); // 모든 필드에 대해 유효성 검사 실행
+  }, []);
 
   return (
     <FormProvider {...methods}>
