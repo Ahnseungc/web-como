@@ -17,7 +17,7 @@ export default async function ManageSchedulePage({
   //   `v1/executive/club/{clubId}/schedule/existence`,
   //   true
   // );
-
+ 
   return (
     <>
       <ScheduleTitle />
