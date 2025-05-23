@@ -103,3 +103,13 @@
     @apply text-2xs tracking-normal;
   }
 }
+
+@media print {
+  .print-page-break {
+    page-break-after: always;
+    break-after: page;
+  }
+  .no-print {
+    display: none !important;
+  }
+}

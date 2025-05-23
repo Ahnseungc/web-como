@@ -9,8 +9,9 @@ interface Props {
 
 export default function ReportDetail({ data }: Props) {
   return (
-    <div className=" w-full">
-      <div className="space-y-2 p-8 rounded-xl bg-gray-0 w-full">
+    <div className="w-full">
+      {/* 1페이지: 활동 사진 첨부까지 */}
+      <div className="space-y-2 p-8 rounded-xl bg-gray-0 w-full print-page-break">
         {" "}
         <div className="flex gap-4 mb-[36px]">
           <div className="relative aspect-[1/1] min-w-[336px]">
@@ -105,8 +106,7 @@ export default function ReportDetail({ data }: Props) {
           </div>
         </div>
       </div>
-
-      {/*활동지원비 정산서 */}
+      {/* 2페이지: 활동 지원비 정산서부터 */}
       {data.expenses.map((item, idx) => {
         return (
           <div

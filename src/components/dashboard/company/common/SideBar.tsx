@@ -15,6 +15,7 @@ const companyDashboardMenus = [
   "announcement",
   "community",
   "report",
+  "expense",
 ] as const;
 
 type CompanyDashboardMenu = (typeof companyDashboardMenus)[number];
@@ -68,8 +69,14 @@ const menuList: MenuItem[] = [
         link: "/club",
         routes: ["/club", "/club/detail"],
       },
+    ],
+  },
+  {
+    name: "활동지원비 관리",
+    key: "expense",
+    subMenuList: [
       {
-        name: "활동지원비 신청 관리",
+        name: "활동지원비 관리",
         link: "/club/expense",
         routes: ["/club/expense"],
       },
@@ -182,7 +189,7 @@ export default function SideBar() {
   };
 
   return (
-    <nav className="relative min-w-[248px] min-h-[1080px] border-r border-gray-300 bg-gray-0">
+    <nav className="relative min-w-[248px] min-h-[1080px] border-r border-gray-300 bg-gray-0 no-print">
       <ul className="sticky py-8" style={{ top: HEADER_HEIGHT }}>
         {menuList.map((menu) => (
           <li
