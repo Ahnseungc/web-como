@@ -21,7 +21,7 @@ export default function Header(props: Props) {
   useResponsiveZoom(props.initialIsMobile);
 
   return (
-    <header className="fixed top-0 inset-x-0 z-20 flex items-center justify-center h-[60px] bg-gray-900">
+    <header className="fixed top-0 inset-x-0 z-20 flex items-center justify-center h-[60px] bg-gray-900 no-print">
       <div
         className={cn(
           "flex items-center justify-between h-9 px-8",
