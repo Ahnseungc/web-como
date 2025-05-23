@@ -75,11 +75,6 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      {status === "REJECTED" && rejectReason && (
-        <div className="w-full bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 text-center font-semibold">
-          반려 사유: {rejectReason}
-        </div>
-      )}
       <div className="flex gap-2 justify-between items-center">
         <BackButton />
         {status !== "REJECTED" && status !== "APPROVED" && (
@@ -101,6 +96,27 @@ const Page = ({ params }: { params: { id: string } }) => {
           </div>
         )}
       </div>
+      {status === "REJECTED" && (
+        <div className="flex items-start gap-3 bg-gray-0 rounded-xl px-6 py-5 my-4 shadow w-full min-h-[100px]">
+          {/* 아이콘 */}
+          <div className="w-8 h-8 rounded-full bg-[#FD7E2D] text-white flex items-center justify-center font-bold text-lg mr-2 shrink-0">
+            !
+          </div>
+          {/* 내용 */}
+          <div className="flex-1">
+            <div className="text-[#FD7E2D] font-bold text-base mb-1">
+              반려 사유
+            </div>
+            <div className="text-gray-500 text-sm mb-2">
+              당사의 활동지원비 규정을 검토한 결과 지원 신청이 반려되었습니다.
+              재작성 부탁드립니다.
+            </div>
+            <div className="text-gray-900 font-medium text-base text-left">
+              {rejectReason || "기타 사유"}
+            </div>
+          </div>
+        </div>
+      )}
       <div className="flex gap-3">
         <ClubInfoCardForExpense cardInfo={cardInfo} />
         <ExpenseReportForm expense={expense} />
