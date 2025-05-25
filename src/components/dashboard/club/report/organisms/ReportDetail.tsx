@@ -43,10 +43,22 @@ interface Props {
   data: ClubData;
 }
 
+const expenseType = [
+  { name: "활정책사업: 인적자원운용", value: "activity" },
+  { name: "단위사업: 교직원 복지와 사기진작", value: "welfare" },
+  { name: "세부사업: 교직원복지지원", value: "support" },
+  { name: "사업 항목: 직장동호회지원", value: "club" },
+  { name: "목(240) : 복리후생비", value: "benefit" },
+] as const;
+
 export default function ReportDetail({ data }: Props) {
   if (!data) return;
-  console.log(data.activityDate);
-  console.log(data.activityTime);
+
+  const findCategory = (item: string) => {
+    const category = expenseType.find((type) => type.value === item);
+    return category?.name;
+  };
+
   return (
     <div className=" w-full">
       <div className="space-y-2 p-8 rounded-xl bg-gray-0 w-full">
@@ -160,7 +172,7 @@ export default function ReportDetail({ data }: Props) {
               <div className="flex flex-col basis-1/4">
                 <span className=" text-xl font-[600] mb-[8px]">과목</span>
                 <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]   ">
-                  {item.category}
+                  {findCategory(item.category)}
                 </div>
               </div>
               <div className="flex flex-col basis-1/4">

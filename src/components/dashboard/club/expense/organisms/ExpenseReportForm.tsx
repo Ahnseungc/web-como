@@ -71,7 +71,7 @@ export default function ExpenseReportForm({
           maxLength={1000}
           placeholder="활동 내용을 입력해주세요."
           readOnly
-          inputStyle="min-h-[200px]"
+          inputStyle="h-[300px] resize-none whitespace-pre-wrap"
           required
         />
         <Input
@@ -81,7 +81,7 @@ export default function ExpenseReportForm({
           type="text"
           maxLength={1000}
           placeholder="주요 내용을 입력하세요."
-          inputStyle="min-h-[200px]"
+          inputStyle="h-[300px] resize-none whitespace-pre-wrap"
           readOnly
         />
       </div>
@@ -126,7 +126,7 @@ export default function ExpenseReportForm({
           placeholder="산출 내역을 입력해주세요."
           readOnly
           maxLength={1000}
-          inputStyle="min-h-[200px]"
+          inputStyle="h-[300px] resize-none whitespace-pre-wrap"
         />
 
         <div className="space-y-2">
