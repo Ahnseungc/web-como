@@ -31,7 +31,7 @@ export default function Page({ params }: { params: { id: string } }) {
     <>
       <div className="no-print">
         <BackButton />
-        <div className="p-8 rounded-xl bg-gray-0 flex justify-between items-center">
+        <div className="p-8 rounded-xl bg-gray-0 flex justify-between items-center mt-4">
           <div
             className={`flex items-center gap-[12px] ${
               status === "APPROVED" || status === "REJECTED"

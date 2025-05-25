@@ -1,6 +1,6 @@
 export interface Activity {
   id: number;
-  createdAt: string;
+  createdDate: number[]; // [YYYY, MM, DD, HH, mm, ss, ms]
   activity: string;
   activityDate: string;
   status: "PENDING" | "REJECTED" | "APPROVED";

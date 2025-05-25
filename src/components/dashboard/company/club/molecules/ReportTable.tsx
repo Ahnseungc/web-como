@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { cn, formatDate } from "@/lib/utils";
+import { cn, formatDate, formatDateArray } from "@/lib/utils";
 import { PrintButton } from "@/components/dashboard/common/DocUtil";
 import { Activity } from "@/api/types/company/report";
 
@@ -50,7 +50,7 @@ export default function ReportTable({ activities }: Props) {
           </div>
           {/* 작성 일자 */}
           <div className="flex-1 min-w-[100px] my-3 mx-6 body-1 font-medium text-center text-gray-800">
-            {formatDate(new Date(activity.createdAt))}
+            {formatDateArray(activity.createdDate)}
           </div>
           {/* 동호회명 */}
           <div className="flex-[2] min-w-[180px] my-3 mx-6 body-1 font-medium text-center text-gray-800">
