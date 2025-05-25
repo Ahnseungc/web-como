@@ -105,7 +105,11 @@
 }
 
 @media print {
-  .print-page-break {
+  .print-page-break-before {
+    page-break-before: always;
+    break-before: page;
+  }
+  .print-page-break-after {
     page-break-after: always;
     break-after: page;
   }
@@ -113,3 +117,4 @@
     display: none !important;
   }
 }
+

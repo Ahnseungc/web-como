@@ -12,7 +12,7 @@ export default function ReportDetail({ data }: Props) {
   return (
     <div className="w-full">
       {/* 1페이지: 활동 사진 첨부까지 */}
-      <div className="space-y-2 p-8 rounded-xl bg-gray-0 w-full print-page-break">
+      <div className="space-y-2 p-8 rounded-xl bg-gray-0 w-full print-page-break-after">
         {" "}
         <div className="flex gap-4 mb-[36px]">
           <div className="relative aspect-[1/1] min-w-[336px]">

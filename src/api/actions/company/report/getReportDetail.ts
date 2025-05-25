@@ -1,7 +1,6 @@
 import { getAccessToken } from "@/lib/cookies";
 
 export const getReportDetail = async (reportId: number) => {
-  console.log(reportId);
   const token = await getAccessToken();
   if (!token) throw new Error("토큰 정보가 없습니다.");
   const url = `/api/server/v1/manager/club/report/${reportId}`;
