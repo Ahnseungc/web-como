@@ -13,7 +13,7 @@ import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import RejectReasonInputModal from "@/components/dashboard/company/club/modals/RejectReasonInputModal";
-import { patchApprove } from "@/api/actions/company/report/patchApprove";
+import { pathApprove } from "@/api/actions/company/expense/pathApprove";
 import { patchReject } from "@/api/actions/company/expense/patchReject";
 import { getRejectionReason } from "@/api/actions/company/expense/getRejectionReason";
 
@@ -64,7 +64,7 @@ const Page = ({ params }: { params: { id: string } }) => {
   ) => {
     if (newStatus === "APPROVED") {
       try {
-        await patchApprove(id);
+        await pathApprove(id);
         setStatus("APPROVED");
       } catch (error) {
         console.error("승인 처리 실패:", error);
