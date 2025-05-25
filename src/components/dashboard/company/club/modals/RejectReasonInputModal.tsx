@@ -3,22 +3,27 @@ import { patchReject } from "@/api/actions/company/expense/patchReject";
 import Button from "@/components/common/Button";
 import { useState } from "react";
 
+interface Props {
+  open: boolean;
+  onClose: () => void;
+  onReject: (reason: string) => void;
+  isRejecting?: boolean;
+}
+
 export default function RejectReasonInputModal({
   open,
   onClose,
-  id,
   onReject,
-}: {
-  open: boolean;
-  onClose: () => void;
-  id: number;
-  onReject: (id: number, reason: string) => void;
-}) {
+  isRejecting = false,
+}: Props) {
   const [reason, setReason] = useState<string>("");
+
   if (!open) return null;
-  const handleConfirm = (id: number) => {
-    onReject(id, reason ?? "기타");
+
+  const handleConfirm = (reason: string) => {
+    onReject(reason || "기타");
   };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div
@@ -33,18 +38,22 @@ export default function RejectReasonInputModal({
           className="w-full text-2xl h-[100px] border border-gray-300 rounded-lg p-2"
           value={reason}
           onChange={(e) => setReason(e.target.value)}
+          disabled={isRejecting}
+          placeholder="반려 사유를 입력해주세요"
         />
         <div className="flex space-x-3">
           <Button
             className="text-[20px] rounded-lg"
             content="닫기"
             onClick={onClose}
+            disabled={isRejecting}
           />
           <Button
             className="text-[20px] rounded-lg"
-            content="반려하기"
+            content={isRejecting ? "반려 중..." : "반려하기"}
             primary
-            onClick={() => handleConfirm(id)}
+            onClick={() => handleConfirm(reason)}
+            disabled={isRejecting || !reason.trim()}
           />
         </div>
       </div>
