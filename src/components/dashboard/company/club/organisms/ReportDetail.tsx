@@ -1,6 +1,7 @@
 import { ActivityReportDetail } from "@/api/types/company/report";
 import { File } from "@/assets/icons/info";
 import Input from "@/components/common/Input";
+import { formatDateArray } from "@/lib/utils";
 import Image from "next/image";
 
 interface Props {
@@ -11,7 +12,7 @@ export default function ReportDetail({ data }: Props) {
   return (
     <div className="w-full">
       {/* 1페이지: 활동 사진 첨부까지 */}
-      <div className="space-y-2 p-8 rounded-xl bg-gray-0 w-full print-page-break">
+      <div className="space-y-2 p-8 rounded-xl bg-gray-0 w-full print-page-break-after">
         {" "}
         <div className="flex gap-4 mb-[36px]">
           <div className="relative aspect-[1/1] min-w-[336px]">
@@ -49,7 +50,7 @@ export default function ReportDetail({ data }: Props) {
               <div className="flex flex-col basis-1/4">
                 <span className=" text-xl font-[600] mb-[8px]">활동 일정</span>
                 <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]   ">
-                  {data.activityDate.join("-")}
+                  {formatDateArray(data.activityDate)}
                 </div>
               </div>
               <div className="flex flex-col basis-1/4">

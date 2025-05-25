@@ -118,3 +118,8 @@ export function formatFileSize(bytes: number) {
 
   return `${number.toLocaleString()} ${text}`;
 }
+
+export const formatDateArray = (dateArray: number[]) => {
+  const [year, month, day] = dateArray;
+  return formatDate(new Date(year, month - 1, day));
+};
