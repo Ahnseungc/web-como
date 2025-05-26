@@ -13,8 +13,6 @@ const ResultReportSubmitCard = () => {
     formState: { errors, isValid },
   } = useFormContext<ResultReportSchemaType>();
 
-  console.log(isValid);
-
   return (
     <Card className="!space-y-6">
       <RadioButton

@@ -16,8 +16,10 @@ const ImageInput = ({ idx }: { idx: number }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     setFileName(e.target.files[0].name);
+    const currentReceipts = watch("receipts") || [];
+
     // setValue(`receipts`, [URL.createObjectURL(e.target.files[0])]);
-    setValue("receipts", [e.target.files[0]]); // File 객체로 저장
+    setValue("receipts", [...currentReceipts, e.target.files[0]]); // File 객체로 저장
   };
 
   return (

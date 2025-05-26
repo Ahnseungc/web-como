@@ -66,6 +66,8 @@ const ResultReportFormProvider = () => {
           })),
         },
       };
+
+      console.log(submitData);
       const formData = new FormData();
       formData.append(
         "data",
@@ -82,6 +84,7 @@ const ResultReportFormProvider = () => {
 
       const token = await getAccessToken();
       const clubId = await getClubId();
+
       const response = await fetch(
         `/api/server/v1/executive/club/${clubId}/reports`,
         {
