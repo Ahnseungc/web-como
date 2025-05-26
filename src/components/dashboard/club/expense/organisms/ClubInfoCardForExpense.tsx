@@ -65,8 +65,10 @@ export default function ClubInfoCardForExpense({ padding, cardInfo }: Props) {
       <div className="space-y-4">
         <div className="flex gap-2 items-center">
           <h3 className="h2 font-bold text-gray-900">{clubName}</h3>
-          <span className={cn("body-1 font-medium", getStatusColor(status))}>
-            {getStatus(status)}
+          <span
+            className={cn("body-1 font-medium", getStatusColor("APPROVED"))}
+          >
+            {getStatus("APPROVED")}
           </span>
         </div>
         <hr />

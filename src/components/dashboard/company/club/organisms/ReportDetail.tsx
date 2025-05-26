@@ -9,6 +9,7 @@ interface Props {
 }
 
 export default function ReportDetail({ data }: Props) {
+  console.log(data.expenses);
   return (
     <div className="w-full">
       {/* 1페이지: 활동 사진 첨부까지 */}
@@ -193,24 +194,16 @@ export default function ReportDetail({ data }: Props) {
               <div className="flex flex-col basis-1">
                 <span className=" text-xl font-[600] mb-[8px] ">영수증</span>
                 <div className="grid grid-cols-2 gap-[12px] w-full">
-                  {data.expenses &&
-                    data.expenses.map((photo, idx) => {
-                      if (photo.file) {
-                        return (
-                          <div
-                            key={idx}
-                            className="aspect-[760/1013] relative min-w-full"
-                          >
-                            <Image
-                              src={photo.file}
-                              alt="photo"
-                              fill
-                              className="rounded-[8px] object-cover"
-                            />
-                          </div>
-                        );
-                      }
-                    })}
+                  {item.file && (
+                    <div className="aspect-[760/1013] relative min-w-full">
+                      <Image
+                        src={item.file}
+                        alt="photo"
+                        fill
+                        className="rounded-[8px] object-cover"
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
