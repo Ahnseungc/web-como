@@ -53,22 +53,22 @@ const TitleCard = ({
   return (
     <header className="flex items-center justify-between">
       <h2 className="h1 font-bold text-black">{title}</h2>
-      {title === ScheduleDetailCardType.EDIT && (
-        <button
-          className="flex items-center gap-[3px] py-1 px-3 rounded body-1 font-medium text-gray-50 bg-gray-900"
-          onClick={handleDelete}
-        >
-          {"삭제"}
-          <Remove className="w-5 h-5" />
-        </button>
-      )}
+
       {title === ScheduleDetailCardType.DETAIL && (
-        <button
-          className="flex items-center gap-[3px] py-1 px-3 rounded body-1 font-medium text-gray-50 bg-gray-900"
-          onClick={handleEdit}
-        >
-          {"수정"}
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            className="flex items-center gap-[3px] py-1 px-3 rounded body-1 font-medium text-gray-50 bg-gray-900"
+            onClick={handleEdit}
+          >
+            {"수정"}
+          </button>
+          <button
+            className="flex items-center gap-[3px] py-1 px-3 rounded body-1 font-medium text-gray-50 bg-gray-900"
+            onClick={handleDelete}
+          >
+            {"삭제"}
+          </button>
+        </div>
       )}
     </header>
   );
