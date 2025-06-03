@@ -16,6 +16,8 @@ import RejectReasonInputModal from "@/components/dashboard/company/club/modals/R
 import { pathApprove } from "@/api/actions/company/expense/pathApprove";
 import { patchReject } from "@/api/actions/company/expense/patchReject";
 import { getRejectionReason } from "@/api/actions/company/expense/getRejectionReason";
+import AlertModal from "@/components/dashboard/company/club/modals/AlertModal";
+import ReportConfirmModal from "@/components/dashboard/company/club/modals/ReportConfirmModal";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const searchParams = useSearchParams();
@@ -27,6 +29,8 @@ const Page = ({ params }: { params: { id: string } }) => {
   const [cardInfo, setCardInfo] = useState<CardInfo | null>(null);
   const [expense, setExpense] = useState<ExpenseFormValues | null>(null);
   const [isRejecting, setIsRejecting] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [approveOpen, setApproveOpen] = useState(false);
 
   useEffect(() => {
     const fetchExpense = async () => {
@@ -81,6 +85,7 @@ const Page = ({ params }: { params: { id: string } }) => {
       setModalOpen(false);
       setStatus("REJECTED");
       setRejectReason(reason || "기타 사유");
+      setAlertOpen(true);
       if (cardInfo) {
         setCardInfo({
           ...cardInfo,
@@ -105,16 +110,14 @@ const Page = ({ params }: { params: { id: string } }) => {
         {status !== "REJECTED" && status !== "APPROVED" && (
           <div className="flex gap-2">
             <ApprovalButton
-              onClick={(e) => {
-                e.stopPropagation();
-                handleStatusChange(Number(params.id), "APPROVED");
+              onClick={() => {
+                setApproveOpen(true);
               }}
               content="승인"
             />
             <ApprovalButton
-              onClick={(e) => {
-                e.stopPropagation();
-                handleStatusChange(Number(params.id), "REJECTED");
+              onClick={() => {
+                setModalOpen(true);
               }}
               content="반려"
             />
@@ -151,6 +154,25 @@ const Page = ({ params }: { params: { id: string } }) => {
         onClose={() => setModalOpen(false)}
         onReject={handleReject}
         isRejecting={isRejecting}
+      />
+      <AlertModal
+        open={alertOpen}
+        type={status || ""}
+        contentType="지원서"
+        onClose={() => setAlertOpen(false)}
+      />
+      <ReportConfirmModal
+        open={approveOpen}
+        type="approve"
+        clubName={cardInfo.clubName}
+        onClose={() => {
+          setApproveOpen(false);
+        }}
+        onConfirm={async () => {
+          await handleStatusChange(Number(params.id), "APPROVED");
+          setApproveOpen(false);
+          setAlertOpen(true);
+        }}
       />
     </div>
   );
