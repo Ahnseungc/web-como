@@ -9,7 +9,6 @@ interface Props {
 }
 
 export default function ReportDetail({ data }: Props) {
-  console.log(data.expenses);
   return (
     <div className="w-full">
       {/* 1페이지: 활동 사진 첨부까지 */}
