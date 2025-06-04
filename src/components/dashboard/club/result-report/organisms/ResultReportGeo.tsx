@@ -74,7 +74,9 @@ const ResultReportGeo = ({
             isLabel={false}
             value={location}
             handleChange={(newLocation: any) => {
-              setValue("data.location", newLocation, { shouldValidate: true });
+              setValue("data.location", newLocation.roadAddress, {
+                shouldValidate: true,
+              });
             }}
             readonly={type === "DETAIL"}
           />

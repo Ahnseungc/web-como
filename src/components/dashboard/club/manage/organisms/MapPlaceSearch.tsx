@@ -13,7 +13,11 @@ interface Props {
   readonly?: boolean;
   maxWidth?: string;
   isLabel?: boolean;
-  handleChange?: (newLocation: string) => void;
+  handleChange?: (newLocation: {
+    roadAddress: string;
+    latitude?: number;
+    longitude?: number;
+  }) => void;
 }
 
 export default function MapPlaceSearch({
@@ -26,12 +30,16 @@ export default function MapPlaceSearch({
   const [selectedPlace, setSelectedPlace] = useState<{
     roadAddress: string;
     title?: string;
+    latitude?: number;
+    longitude?: number;
   }>();
 
   const [searchResult, setSearchResult] = useState<
     {
       roadAddress: string;
       title?: string;
+      latitude?: number;
+      longitude?: number;
     }[]
   >();
   const [closeSearchResult, setCloseSearchResult] = useState<boolean>(false);
@@ -59,18 +67,26 @@ export default function MapPlaceSearch({
       if (placeData.items.length > 0) {
         return setSearchResult(
           placeData.items.map((item) => {
-            return { roadAddress: item.roadAddress, title: item.title };
+            return {
+              roadAddress: item.roadAddress,
+              title: item.title,
+              latitude: parseFloat(item.mapy),
+              longitude: parseFloat(item.mapx),
+            };
           })
         );
       }
     }
     if (geocodeData) {
       if (geocodeData?.meta?.totalCount > 0) {
-        return setSearchResult(
-          geocodeData.addresses.map((item) => {
-            return { roadAddress: item.roadAddress };
-          })
-        );
+        const firstAddress = geocodeData.addresses[0];
+        return setSearchResult([
+          {
+            roadAddress: firstAddress.roadAddress,
+            latitude: parseFloat(firstAddress.y),
+            longitude: parseFloat(firstAddress.x),
+          },
+        ]);
       }
     }
   }, [placeData, geocodeData]);
@@ -82,17 +98,41 @@ export default function MapPlaceSearch({
         title: searchResult[0].title
           ?.replaceAll("<b>", "")
           .replaceAll("</b>", ""),
+        latitude: searchResult[0].latitude,
+        longitude: searchResult[0].longitude,
       });
-
-      setSearchTerm(searchResult[0].roadAddress);
     }
   }, [readonly, searchResult]);
 
   useEffect(() => {
     if (selectedPlace) {
-      handleChange?.(selectedPlace.roadAddress);
+      handleChange?.({
+        roadAddress: selectedPlace.roadAddress,
+        latitude: selectedPlace.latitude,
+        longitude: selectedPlace.longitude,
+      });
+
+      if (selectedPlace) {
+        setSearchTerm(selectedPlace.roadAddress);
+      }
     }
   }, [selectedPlace]);
+
+  const handleSearchResultClick = (item: {
+    roadAddress: string;
+    title?: string;
+    latitude?: number;
+    longitude?: number;
+  }) => {
+    setSelectedPlace({
+      roadAddress: item.roadAddress,
+      title: item.title?.replaceAll("<b>", "").replaceAll("</b>", ""),
+      latitude: item.latitude,
+      longitude: item.longitude,
+    });
+    setCloseSearchResult(true);
+    setSearchTerm(item.roadAddress);
+  };
 
   return (
     <div className="flex flex-col gap-2">
@@ -131,7 +171,12 @@ export default function MapPlaceSearch({
               <button
                 type="button"
                 onClick={() => {
-                  setSelectedPlace({ roadAddress: "", title: "" });
+                  setSelectedPlace({
+                    roadAddress: "",
+                    title: "",
+                    latitude: undefined,
+                    longitude: undefined,
+                  });
                   setSearchTerm("");
                 }}
               >
@@ -175,16 +220,7 @@ export default function MapPlaceSearch({
                   "flex flex-col gap-0.5 border-gray-200 cursor-pointer select-none",
                   i === searchResult.length - 1 ? "" : "pb-3 border-b"
                 )}
-                onClick={() => {
-                  setSelectedPlace({
-                    roadAddress: item.roadAddress,
-                    title: item.title
-                      ?.replaceAll("<b>", "")
-                      .replaceAll("</b>", ""),
-                  });
-                  setCloseSearchResult(true);
-                  setSearchTerm(item.roadAddress);
-                }}
+                onClick={() => handleSearchResultClick(item)}
               >
                 <p
                   className="body-1 font-semibold text-brand-orange"

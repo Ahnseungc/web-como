@@ -13,7 +13,7 @@ import { getAccessToken, getClubId } from "@/lib/cookies";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formatDate } from "date-fns";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 interface ScheduleDetailFormProps {
   type: "REGISTER" | "DETAIL" | "EDIT" | "MEMBERS";
@@ -27,6 +27,7 @@ const ScheduleDetailForm = ({
   scheduleId,
 }: ScheduleDetailFormProps) => {
   const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (sessionStorage.getItem("refresh-on-back") === "true") {
@@ -73,83 +74,96 @@ const ScheduleDetailForm = ({
     mode: type !== "DETAIL" ? "onChange" : "onSubmit",
   });
 
+  const debouncedSubmit = useCallback(
+    async (data: ScheduleRegisterSchemaType) => {
+      if (isSubmitting) return;
+
+      try {
+        setIsSubmitting(true);
+
+        if (type === "REGISTER") {
+          try {
+            const token = await getAccessToken();
+            const clubId = await getClubId();
+            const response = await fetch(
+              `/api/server/v1/executive/club/${clubId}/schedule`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                  title: data.title,
+                  detail: data.description,
+                  location: `${data.location.roadAddress} ${data.location.placeName}`,
+                  addressDetail: data.location.placeName,
+                  date: formatDate(data.date, "yyyy-MM-dd"),
+                  time: data.time,
+                  latitude: data.location.latitude,
+                  longitude: data.location.longitude,
+                }),
+              }
+            );
+
+            if (!response.ok) {
+              throw new Error("일정 등록에 실패했습니다.");
+            }
+
+            sessionStorage.setItem("refresh-on-back", "true");
+            alert("일정이 등록되었습니다.");
+            router.back();
+          } catch (error) {
+            console.error("일정 처리 실패:", error);
+          }
+        }
+        if (type === "EDIT") {
+          try {
+            const token = await getAccessToken();
+            const clubId = await getClubId();
+
+            const response = await fetch(
+              `/api/server/v1/executive/club/${clubId}/schedule/${scheduleId}`,
+              {
+                method: "PATCH",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                  title: data.title,
+                  detail: data.description,
+                  location: `${data.location.roadAddress} ${data.location.placeName}`,
+                  addressDetail: data.location.placeName,
+                  date: formatDate(data.date, "yyyy-MM-dd"),
+                  time: data.time,
+                  latitude: data.location.latitude,
+                  longitude: data.location.longitude,
+                }),
+              }
+            );
+
+            if (!response.ok) {
+              throw new Error("일정 수정에 실패했습니다.");
+            }
+            sessionStorage.setItem("refresh-on-back", "true");
+            alert("일정이 수정되었습니다.");
+            router.back();
+          } catch (error) {
+            console.error("일정 수정 실패:", error);
+          }
+        }
+      } catch (error) {
+        console.error("일정 처리 실패:", error);
+      } finally {
+        setIsSubmitting(false);
+      }
+    },
+    [type, scheduleId, router, isSubmitting]
+  );
+
   const onSubmit = async (data: ScheduleRegisterSchemaType) => {
-    try {
-      if (type === "REGISTER") {
-        try {
-          const token = await getAccessToken();
-          const clubId = await getClubId();
-          const response = await fetch(
-            `/api/server/v1/executive/club/${clubId}/schedule`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
-              },
-              body: JSON.stringify({
-                title: data.title,
-                detail: data.description,
-                location: `${data.location.roadAddress} ${data.location.placeName}`,
-                addressDetail: data.location.placeName,
-                date: formatDate(data.date, "yyyy-MM-dd"),
-                time: data.time,
-                latitude: "",
-                longitude: "",
-              }),
-            }
-          );
-
-          if (!response.ok) {
-            throw new Error("일정 등록에 실패했습니다.");
-          }
-
-          sessionStorage.setItem("refresh-on-back", "true");
-          alert("일정이 등록되었습니다.");
-          router.back();
-        } catch (error) {
-          console.error("일정 처리 실패:", error);
-        }
-      }
-      if (type === "EDIT") {
-        try {
-          const token = await getAccessToken();
-          const clubId = await getClubId();
-
-          const response = await fetch(
-            `/api/server/v1/executive/club/${clubId}/schedule/${scheduleId}`,
-            {
-              method: "PATCH",
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`,
-              },
-              body: JSON.stringify({
-                title: data.title,
-                detail: data.description,
-                location: `${data.location.roadAddress} ${data.location.placeName}`,
-                addressDetail: data.location.placeName,
-                date: formatDate(data.date, "yyyy-MM-dd"),
-                time: data.time,
-                latitude: "",
-                longitude: "",
-              }),
-            }
-          );
-
-          if (!response.ok) {
-            throw new Error("일정 수정에 실패했습니다.");
-          }
-          sessionStorage.setItem("refresh-on-back", "true");
-          alert("일정이 수정되었습니다.");
-          router.back();
-        } catch (error) {
-          console.error("일정 수정 실패:", error);
-        }
-      }
-    } catch (error) {
-      console.error("일정 처리 실패:", error);
-    }
+    await debouncedSubmit(data);
   };
 
   const onError = (errors: FieldErrors<ScheduleRegisterSchemaType>) => {
@@ -209,6 +223,7 @@ const ScheduleDetailForm = ({
               type="submit"
               primary
               content={type === "REGISTER" ? "등록하기" : "수정하기"}
+              disabled={isSubmitting}
             />
           </div>
         )}

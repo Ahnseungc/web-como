@@ -9,6 +9,7 @@ import PDFViewer from "@/components/dashboard/club/common/PDFViewer";
 import RejectApplicationModal from "@/components/dashboard/company/club/modals/RejectApplicationModal";
 import RevertRejectionModal from "@/components/dashboard/company/club/modals/RevertRejectionModal";
 import { getData } from "@/api/action";
+import Image from "next/image";
 
 export default function ApplicationDetailPage() {
   const [registrationData, setRegistrationData] = useState(null);
@@ -18,15 +19,15 @@ export default function ApplicationDetailPage() {
   const clubId = params.id as string;
 
   const categoryMapping = {
-    "ART_CULTURE": "문화/예술",
-    "ACTIVITY": "액티비티",
-    "CREATIVE": "크리에이티브",
-    "FOODBEVERAGE": "F&B",
-    "NETWORKING": "네트워킹",
-    "STUDY": "스터디",
-    "ETC": "기타",
-  }
-  
+    ART_CULTURE: "문화/예술",
+    ACTIVITY: "액티비티",
+    CREATIVE: "크리에이티브",
+    FOODBEVERAGE: "F&B",
+    NETWORKING: "네트워킹",
+    STUDY: "스터디",
+    ETC: "기타",
+  };
+
   const keyMapping = {
     name: "동호회명",
     intro: "동호회 한줄 소개",
@@ -52,19 +53,21 @@ export default function ApplicationDetailPage() {
     calculationBasis: "산출 기초",
     businessItem: "사업 항목 및 내용",
     bank: "동호회 회칙",
-    signature : "서명 이미지"
+    signature: "서명 이미지",
   };
 
   useEffect(() => {
     const fetchRegistrationData = async () => {
       try {
-        const response = await getData(`v1/manager/club/${clubId}/registration`); // API 호출
+        const response = await getData(
+          `v1/manager/club/${clubId}/registration`
+        ); // API 호출
         console.log("response", response);
-        if (response.resultCode === 'OK') {
+        if (response.resultCode === "OK") {
           setRegistrationData(response.data);
         }
       } catch (err) {
-        console.error('동호회 개설 신청서 로딩 오류:', err);      
+        console.error("동호회 개설 신청서 로딩 오류:", err);
       } finally {
         setLoading(false); // 로딩 상태 업데이트
       }
@@ -75,7 +78,7 @@ export default function ApplicationDetailPage() {
 
   // 로딩 중일 때 처리
   if (loading) {
-      return <div className="text-lg">로딩 중...</div>; // 로딩 메시지 또는 스피너 표시
+    return <div className="text-lg">로딩 중...</div>; // 로딩 메시지 또는 스피너 표시
   }
 
   return (
@@ -108,42 +111,76 @@ export default function ApplicationDetailPage() {
           )} */}
         </div>
         {/* <PDFViewer file="../../../../../sample.pdf" /> */}
-        
+
         <div style={{ padding: "20px" }}>
           <div>
             {registrationData ? (
-              <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "15px",
+                }}
+              >
                 {Object.entries(registrationData)
-                  .filter(([key]) => !["id", "longitude", "latitude", "headId", "deputyId", "affairsId", "rule", "thumbnail"].includes(key)) // 제외할 키 목록
+                  .filter(
+                    ([key]) =>
+                      ![
+                        "id",
+                        "longitude",
+                        "latitude",
+                        "headId",
+                        "deputyId",
+                        "affairsId",
+                        "rule",
+                        "thumbnail",
+                      ].includes(key)
+                  ) // 제외할 키 목록
                   .map(([key, value]) => (
-                    <div key={key} style={{ padding: "10px", border: "1px solid #ccc", backgroundColor: "#f9f9f9" }}>
+                    <div
+                      key={key}
+                      style={{
+                        padding: "10px",
+                        border: "1px solid #ccc",
+                        backgroundColor: "#f9f9f9",
+                      }}
+                    >
                       <strong style={{ fontSize: "18px" }}>
-                        {keyMapping[key as keyof typeof keyMapping] || key} : 
+                        {keyMapping[key as keyof typeof keyMapping] || key} :
                       </strong>
-                      
+
                       {/* 빈 값 처리: null, undefined, 빈 문자열 */}
-                      {value === null || value === undefined || value === "" ? null : (
-                        // 이미지 여부 먼저 확인
-                        typeof value === "string" && (value.startsWith("http") || value.startsWith("https")) ? (
-                          <img 
-                            src={value} 
-                            alt={key} 
-                            style={{ maxWidth: "50%", height: "auto", marginTop: "5px" }} 
-                          />
-                        ) : (
-                          // 카테고리일 경우 한글로 변환하여 출력
-                          <span style={{ fontSize: "16px" }}>
-                            {key === "category" && typeof value === "string" && value in categoryMapping 
-                              ? categoryMapping[value as keyof typeof categoryMapping] 
-                              : String(value)}
-                          </span>
-                        )
+                      {value === null ||
+                      value === undefined ||
+                      value === "" ? null : typeof value === "string" && // 이미지 여부 먼저 확인
+                        (value.startsWith("http") ||
+                          value.startsWith("https")) ? (
+                        <Image
+                          src={value}
+                          alt={key}
+                          style={{
+                            maxWidth: "50%",
+                            height: "auto",
+                            marginTop: "5px",
+                          }}
+                        />
+                      ) : (
+                        // 카테고리일 경우 한글로 변환하여 출력
+                        <span style={{ fontSize: "16px" }}>
+                          {key === "category" &&
+                          typeof value === "string" &&
+                          value in categoryMapping
+                            ? categoryMapping[
+                                value as keyof typeof categoryMapping
+                              ]
+                            : String(value)}
+                        </span>
                       )}
                     </div>
-                ))}
+                  ))}
               </div>
             ) : (
-                <p>작성된 신청서가 없습니다.</p>
+              <p>작성된 신청서가 없습니다.</p>
             )}
           </div>
         </div>

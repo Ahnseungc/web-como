@@ -6,10 +6,10 @@ const ResultReportLayout = async ({
   children: React.ReactNode;
 }) => {
   return (
-    <>
+    <main className="flex flex-col gap-3 w-full p-8">
       <BackButton />
       {children}
-    </>
+    </main>
   );
 };
 

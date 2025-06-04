@@ -170,7 +170,7 @@ export default function RHFTextInput<T extends FieldValues>({
               {errors[name].message?.toString()}
             </div>
           )}
-          {errorMessage && (
+          {!errors[name] && errorMessage && (
             <div className="text-base font-medium text-point-red">
               {errorMessage}
             </div>

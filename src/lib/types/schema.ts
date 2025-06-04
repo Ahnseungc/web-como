@@ -70,6 +70,8 @@ export const ScheduleRegisterSchema = z.object({
   location: z.object({
     roadAddress: z.string().min(1, { message: "주소를 입력해주세요." }),
     placeName: z.string().min(1, { message: "장소명을 입력해주세요." }),
+    latitude: z.number().optional(),
+    longitude: z.number().optional(),
   }),
   date: z.date(),
   time: z.string().min(1, { message: "시간을 입력해주세요." }),
