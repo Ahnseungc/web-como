@@ -6,12 +6,20 @@ import RadioButton from "@/components/common/RadioButton";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { ResultReportSchemaType } from "@/lib/types/schema";
+import { useRouter } from "next/navigation";
 
-const ResultReportSubmitCard = () => {
+interface ResultReportSubmitCardProps {
+  isSubmitting: boolean;
+}
+
+const ResultReportSubmitCard = ({
+  isSubmitting,
+}: ResultReportSubmitCardProps) => {
   const [agree, setAgree] = useState(false);
   const {
     formState: { errors, isValid },
   } = useFormContext<ResultReportSchemaType>();
+  const router = useRouter();
 
   return (
     <Card className="!space-y-6">
@@ -26,13 +34,15 @@ const ResultReportSubmitCard = () => {
           setAgree(!agree);
         }}
       />
-      <Button
-        content={"제출하기"}
-        primary
-        type="submit"
-        disabled={!agree || !isValid}
-        className="w-full"
-      />
+      <div className="flex justify-end gap-2">
+        <Button type="button" content="취소" onClick={() => router.back()} />
+        <Button
+          type="submit"
+          primary
+          content="제출하기"
+          disabled={isSubmitting || !agree || !isValid}
+        />
+      </div>
     </Card>
   );
 };

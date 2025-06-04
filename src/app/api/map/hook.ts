@@ -7,8 +7,12 @@ export const useGeocode: (
 ) => UseQueryResult<GeocodeResultType> = (query) => {
   return useQuery({
     queryKey: ["geocode", query],
-    queryFn: () =>
-      fetch(`/api/map/geocode?query=${query}`).then((res) => res.json()),
+    queryFn: async () => {
+      const response = await fetch(`/api/map/geocode?query=${query}`);
+      const data = await response.json();
+
+      return data;
+    },
     enabled: !!query,
   });
 };
@@ -18,8 +22,12 @@ export const usePlaceSearch: (
 ) => UseQueryResult<PlaceSearchResultType> = (query) => {
   return useQuery({
     queryKey: ["place-search", query],
-    queryFn: () =>
-      fetch(`/api/map/search?query=${query}`).then((res) => res.json()),
+    queryFn: async () => {
+      const response = await fetch(`/api/map/search?query=${query}`);
+      const data = await response.json();
+
+      return data;
+    },
     enabled: !!query,
   });
 };

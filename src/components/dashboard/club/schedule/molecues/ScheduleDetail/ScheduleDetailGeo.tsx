@@ -32,7 +32,9 @@ const ScheduleDetailGeo = ({
             value={location?.roadAddress}
             handleChange={(newLocation) => {
               setValue("location", {
-                roadAddress: newLocation,
+                roadAddress: newLocation.roadAddress,
+                latitude: newLocation.latitude,
+                longitude: newLocation.longitude,
                 placeName: "",
               });
             }}
@@ -49,6 +51,8 @@ const ScheduleDetailGeo = ({
             onChange={(e) => {
               setValue("location", {
                 roadAddress: location.roadAddress,
+                latitude: location.latitude,
+                longitude: location.longitude,
                 placeName: (e.target as HTMLInputElement).value,
               });
             }}
