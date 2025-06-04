@@ -56,6 +56,8 @@ export default function ApplicationDetailPage() {
     signature: "서명 이미지",
   };
 
+  //빌드 트리거
+
   useEffect(() => {
     const fetchRegistrationData = async () => {
       try {
