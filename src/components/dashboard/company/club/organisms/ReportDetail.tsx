@@ -8,7 +8,7 @@ interface Props {
 }
 
 const expenseCategory = {
-  activity: "활정책사업: 인적자원운용",
+  activity: "정책사업: 인적자원운용",
   welfare: "단위사업: 교직원 복지와 사기진작",
   support: "세부사업: 교직원복지지원",
   club: "사업 항목: 직장동호회지원",
