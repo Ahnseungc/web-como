@@ -156,23 +156,29 @@ export default function SideBar() {
   useEffect(() => {
     document.documentElement.scrollIntoView();
 
-    const pathList = pathname.split("/");
+    let foundMenu: CompanyDashboardMenu | undefined = undefined;
+    let foundSubMenu: string | undefined = undefined;
 
-    if (pathname === COMPANY_DASHBOARD_ENDPOINT) {
-      setSelectedMenu(undefined);
-      setSelectedSubMenu(undefined);
-    } else {
-      for (const menu of companyDashboardMenus) {
-        if (pathList[3] === menu) {
-          setSelectedMenu(menu);
-          if (pathList[4]) {
-            setSelectedSubMenu(`/${pathList[3]}/${pathList[4]}`);
-          } else {
-            setSelectedSubMenu(`/${pathList[3]}`);
+    for (const menu of menuList) {
+      if (menu.subMenuList) {
+        for (const sub of menu.subMenuList) {
+          // 현재 경로에서 대시보드 prefix 제거
+          const currentPath = pathname.replace(COMPANY_DASHBOARD_ENDPOINT, "");
+          if (sub.routes.includes(currentPath)) {
+            foundMenu = menu.key;
+            foundSubMenu = sub.link;
           }
         }
+      } else if (
+        menu.link &&
+        COMPANY_DASHBOARD_ENDPOINT + menu.link === pathname
+      ) {
+        foundMenu = menu.key;
       }
     }
+
+    setSelectedMenu(foundMenu);
+    setSelectedSubMenu(foundSubMenu);
   }, [pathname]);
 
   const handleMenuClick = (menu: MenuItem) => {
