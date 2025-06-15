@@ -100,8 +100,12 @@ const ScheduleDetailForm = ({
                   addressDetail: data.location.placeName,
                   date: formatDate(data.date, "yyyy-MM-dd"),
                   time: data.time,
-                  latitude: data.location.latitude,
-                  longitude: data.location.longitude,
+                  latitude: data.location.latitude
+                    ? data.location.latitude / 100
+                    : 0,
+                  longitude: data.location.longitude
+                    ? data.location.longitude / 1000
+                    : 0,
                 }),
               }
             );
@@ -137,8 +141,12 @@ const ScheduleDetailForm = ({
                   addressDetail: data.location.placeName,
                   date: formatDate(data.date, "yyyy-MM-dd"),
                   time: data.time,
-                  latitude: data.location.latitude,
-                  longitude: data.location.longitude,
+                  latitude: Number(
+                    (data.location.latitude ?? 0 / 100).toFixed(6)
+                  ),
+                  longitude: Number(
+                    (data.location.longitude ?? 0 / 1000).toFixed(6)
+                  ),
                 }),
               }
             );
