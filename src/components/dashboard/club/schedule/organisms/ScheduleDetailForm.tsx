@@ -15,6 +15,7 @@ import { formatDate } from "date-fns";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
 import ScheduleDetailPeriod from "../molecues/ScheduleDetail/ScheduleDetailPeriod";
+import { useToast } from "@/components/common/ToastContainer";
 
 interface ScheduleDetailFormProps {
   type: "REGISTER" | "DETAIL" | "EDIT" | "MEMBERS";
@@ -29,6 +30,7 @@ const ScheduleDetailForm = ({
 }: ScheduleDetailFormProps) => {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { showToast } = useToast();
 
   useEffect(() => {
     if (sessionStorage.getItem("refresh-on-back") === "true") {
@@ -129,10 +131,11 @@ const ScheduleDetailForm = ({
             }
 
             sessionStorage.setItem("refresh-on-back", "true");
-            alert("일정이 등록되었습니다.");
-            router.back();
+            showToast("일정이 등록되었습니다.", "success");
+            router.replace(`/club/dashboard/manage/schedule`);
           } catch (error) {
             console.error("일정 처리 실패:", error);
+            showToast("일정 등록에 실패했습니다.", "error");
           }
         }
         if (type === "EDIT") {
@@ -174,23 +177,25 @@ const ScheduleDetailForm = ({
             );
 
             if (!response.ok) {
+              showToast("일정 수정에 실패했습니다.", "error");
               throw new Error("일정 수정에 실패했습니다.");
             }
             sessionStorage.setItem("refresh-on-back", "true");
-            alert("일정이 수정되었습니다.");
-            router.back();
-            router.refresh();
+            showToast("일정이 수정되었습니다.", "success");
+            router.replace(`/club/dashboard/manage/schedule`);
           } catch (error) {
             console.error("일정 수정 실패:", error);
+            showToast("일정 수정에 실패했습니다.", "error");
           }
         }
       } catch (error) {
         console.error("일정 처리 실패:", error);
+        showToast("일정 처리에 실패했습니다.", "error");
       } finally {
         setIsSubmitting(false);
       }
     },
-    [type, scheduleId, router, isSubmitting]
+    [type, scheduleId, router, isSubmitting, showToast]
   );
 
   const onSubmit = async (data: ScheduleRegisterSchemaType) => {

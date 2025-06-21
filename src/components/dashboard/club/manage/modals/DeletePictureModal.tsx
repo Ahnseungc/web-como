@@ -5,6 +5,7 @@ import { closeModal, cn } from "@/lib/utils";
 import Backdrop from "@/components/common/Backdrop";
 import Button from "@/components/common/Button";
 import { getAccessToken, getClubId } from "@/lib/cookies";
+import { useToast } from "@/components/common/ToastContainer";
 
 const deleteReasonList = [
   "동호회 활동과 무관한 사진",
@@ -16,15 +17,19 @@ const deleteReasonList = [
 export default function DeletePictureModal() {
   const [deleteReason, setDeleteReason] = useState<string | undefined>();
   const [modalParams, setModalParams] = useState<any>(null);
+  const { showToast } = useToast();
 
   useEffect(() => {
-    const modal = document.getElementById('delete-picture');
+    const modal = document.getElementById("delete-picture");
     // console.log('모달 엘리먼트:', modal); // 모달 엘리먼트 확인
 
     if (modal) {
       const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
-          if (mutation.type === 'attributes' && mutation.attributeName === 'data-modal-params') {
+          if (
+            mutation.type === "attributes" &&
+            mutation.attributeName === "data-modal-params"
+          ) {
             const newParams = modal.dataset.modalParams;
             // console.log('새로운 모달 파라미터:', newParams); // 파라미터 확인
 
@@ -38,7 +43,7 @@ export default function DeletePictureModal() {
 
       observer.observe(modal, {
         attributes: true,
-        attributeFilter: ['data-modal-params']
+        attributeFilter: ["data-modal-params"],
       });
 
       return () => observer.disconnect();
@@ -46,27 +51,32 @@ export default function DeletePictureModal() {
   }, []);
 
   const handleDelete = async () => {
-    try{
+    try {
       const token = await getAccessToken();
       const clubId = await getClubId();
       console.log("clubId", clubId);
 
-      const response = await fetch(`/api/server/v1/executive/club/${clubId}/activity-feed/${modalParams.activityId}`, {
-        method: 'DELETE',
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          reason: deleteReason,
-        }),
-      });
+      const response = await fetch(
+        `/api/server/v1/executive/club/${clubId}/activity-feed/${modalParams.activityId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            reason: deleteReason,
+          }),
+        }
+      );
       if (response.ok) {
-        alert("삭제가 완료되었습니다.");
+        // alert("삭제가 완료되었습니다.");
+        showToast("삭제가 완료되었습니다.", "success");
         closeModal();
         window.location.reload();
       } else {
-        alert("삭제에 실패했습니다.");
+        // alert("삭제에 실패했습니다.");
+        showToast("삭제에 실패했습니다.", "error");
       }
     } catch (error) {
       console.error("삭제 요청 오류:", error);
@@ -74,9 +84,9 @@ export default function DeletePictureModal() {
   };
 
   const handleClose = () => {
-    const modal = document.getElementById('delete-picture');
+    const modal = document.getElementById("delete-picture");
     if (modal) {
-      delete modal.dataset.modalParams;  // params 제거
+      delete modal.dataset.modalParams; // params 제거
     }
     closeModal();
   };

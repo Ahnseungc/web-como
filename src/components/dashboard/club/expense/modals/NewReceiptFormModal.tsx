@@ -7,13 +7,16 @@ import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import ImageInput from "@/components/common/ImageInput";
 import { Close } from "@/assets/icons/action";
+import { useToast } from "@/components/common/ToastContainer";
 
 export default function NewReceiptFormModal() {
   const [currentImages, setCurrentImages] = useState<File[]>([]);
+  const { showToast } = useToast();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert("수령증 작성 완료");
+    // alert("수령증 작성 완료");
+    showToast("수령증 작성 완료", "success");
     closeModal();
   };
 

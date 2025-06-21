@@ -60,7 +60,7 @@ export default function ClubManagePage() {
 
     fetchClubId();
   }, []);
-  
+
   const handleTabChange = (value: ClubMenu) => {
     push(`${pathname}?tab=${value}`);
   };
