@@ -12,6 +12,7 @@ import { CustomTextarea } from "@/components/common/CustomTextarea";
 import { useMutation } from "@tanstack/react-query";
 import { format } from "path";
 import { File } from "@/assets/icons/info";
+import { useToast } from "@/components/common/ToastContainer";
 
 const types = [
   { name: "활동비 지원", value: "activity" },
@@ -47,6 +48,8 @@ export default function NewExpenseReportForm({
     File[]
   >([]);
 
+  const { showToast } = useToast();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (
@@ -57,7 +60,8 @@ export default function NewExpenseReportForm({
       formValues.amount.trim() === "" ||
       formValues.details.trim() === ""
     ) {
-      alert("필수 입력란을 입력해주세요.");
+      // alert("필수 입력란을 입력해주세요.");
+      showToast("필수 입력란을 입력해주세요.", "error");
     } else {
       mutate();
     }
@@ -125,8 +129,12 @@ export default function NewExpenseReportForm({
     },
     onSuccess: (data) => {
       if (data.resultCode === "OK") {
-        alert(
-          "활동비 지급 신청서 (품의서)가 작성 및 담당 부서에게 전달되었습니다."
+        // alert(
+        //   "활동비 지급 신청서 (품의서)가 작성 및 담당 부서에게 전달되었습니다."
+        // );
+        showToast(
+          "활동비 지급 신청서 (품의서)가 작성 및 담당 부서에게 전달되었습니다.",
+          "success"
         );
         refresh();
         replace(`${CLUB_DASHBOARD_ENDPOINT}/expense`);

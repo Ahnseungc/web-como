@@ -17,26 +17,29 @@ export default function ResetPasswordForm() {
   const alertShown = useRef(false);
   // 초기 상태는 빈 값으로 설정
   const [formData, setFormData] = useState<ResetPasswordDto>({
-    email: '',
-    phone: '',
-    newPassword: ''
+    email: "",
+    phone: "",
+    newPassword: "",
   });
 
   const [isAuthorized, setIsAuthorized] = useState(false);
   // 입력값 에러 상태 추가
   const [errors, setErrors] = useState({
-    newPassword: '',
-    confirmPassword: ''
+    newPassword: "",
+    confirmPassword: "",
   });
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [resetPasswordError, setResetPasswordError] = useState(""); // 비밀번호 재설정 에러 메시지를 위한 상태 추가
 
   useEffect(() => {
-    const isVerified = sessionStorage.getItem('isVerified');
-    const verifiedEmail = sessionStorage.getItem('verifiedEmail');
-    const verifiedPhone = sessionStorage.getItem('verifiedPhone');
+    const isVerified = sessionStorage.getItem("isVerified");
+    const verifiedEmail = sessionStorage.getItem("verifiedEmail");
+    const verifiedPhone = sessionStorage.getItem("verifiedPhone");
 
-    if ((!isVerified || !verifiedEmail || !verifiedPhone) && !alertShown.current) {
+    if (
+      (!isVerified || !verifiedEmail || !verifiedPhone) &&
+      !alertShown.current
+    ) {
       alertShown.current = true;
       alert("본인인증이 필요한 페이지입니다.");
       replace(`${LOGIN_ENDPOINT}`);
@@ -48,11 +51,11 @@ export default function ResetPasswordForm() {
       setFormData({
         email: verifiedEmail,
         phone: verifiedPhone,
-        newPassword: ''
+        newPassword: "",
       });
     } else {
       // 세션 스토리지 값이 없는 경우 처리
-      console.error('세션 스토리지에 필요한 값이 없습니다.');
+      console.error("세션 스토리지에 필요한 값이 없습니다.");
       if (!alertShown.current) {
         alertShown.current = true;
         alert("세션 정보가 유효하지 않습니다. 다시 시도해주세요.");
@@ -60,7 +63,7 @@ export default function ResetPasswordForm() {
       }
       return;
     }
-    
+
     setIsAuthorized(true);
   }, [replace]);
 
@@ -68,7 +71,7 @@ export default function ResetPasswordForm() {
   const validateForm = () => {
     const newErrors = {
       newPassword: "",
-      confirmPassword: ""
+      confirmPassword: "",
     };
 
     /**
@@ -79,18 +82,21 @@ export default function ResetPasswordForm() {
      * 3. 최소 하나의 숫자 포함
      * 4. 최소 하나의 특수문자 포함
      */
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=])[^\s]{8,20}$/;
-    
+    const passwordRegex =
+      /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_\-+=])[^\s]{8,20}$/;
+
     // 1. 새 비밀번호 정규식 체크
     if (!passwordRegex.test(formData.newPassword)) {
-      newErrors.newPassword = "영어, 숫자, 특수문자를 조합하여 8자 이상 20자 이하로 입력해주세요.";
+      newErrors.newPassword =
+        "영어, 숫자, 특수문자를 조합하여 8자 이상 20자 이하로 입력해주세요.";
       setErrors(newErrors);
       return false;
     }
 
     // 2. 새 비밀번호 확인 정규식 체크
     if (!passwordRegex.test(confirmPassword)) {
-      newErrors.confirmPassword = "영어, 숫자, 특수문자를 조합하여 8자 이상 20자 이하로 입력해주세요.";
+      newErrors.confirmPassword =
+        "영어, 숫자, 특수문자를 조합하여 8자 이상 20자 이하로 입력해주세요.";
       setErrors(newErrors);
       return false;
     }
@@ -105,19 +111,19 @@ export default function ResetPasswordForm() {
     // 모든 검증을 통과한 경우
     setErrors(newErrors); // 에러 초기화
     return true;
-  }
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === 'rePassword') {
+    if (name === "rePassword") {
       setConfirmPassword(value);
-    } else if (name === 'password') {
+    } else if (name === "password") {
       setFormData({
         ...formData,
-        newPassword: value
+        newPassword: value,
       });
     }
-  }
+  };
 
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -126,7 +132,7 @@ export default function ResetPasswordForm() {
     setResetPasswordError("");
 
     // 폼 데이터 확인을 위한 콘솔 로그
-    // console.log("비밀번호 재설정 시도:", {  
+    // console.log("비밀번호 재설정 시도:", {
     //     이메일: formData.email,
     //     전화번호: formData.phone,
     //     newPassword: formData.newPassword,
@@ -143,7 +149,7 @@ export default function ResetPasswordForm() {
       body: JSON.stringify({
         email: formData.email,
         phoneNumber: formData.phone,
-        password: formData.newPassword
+        password: formData.newPassword,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -162,9 +168,9 @@ export default function ResetPasswordForm() {
 
     if (response.ok) {
       alert("비밀번호 재설정이 완료되었습니다.");
-      sessionStorage.removeItem('isVerified');
-      sessionStorage.removeItem('verifiedEmail');
-      sessionStorage.removeItem('verifiedPhone');
+      sessionStorage.removeItem("isVerified");
+      sessionStorage.removeItem("verifiedEmail");
+      sessionStorage.removeItem("verifiedPhone");
       replace(`${LOGIN_ENDPOINT}`);
     } else {
       refresh();
@@ -191,7 +197,10 @@ export default function ResetPasswordForm() {
             onChange={handleInputChange}
           />
           {errors.newPassword && (
-            <p className="mt-2 text-[16px] font-[500]" style={{ color: "#FF3D00" }}>
+            <p
+              className="mt-2 text-[16px] font-[500]"
+              style={{ color: "#FF3D00" }}
+            >
               {errors.newPassword}
             </p>
           )}
@@ -203,7 +212,10 @@ export default function ResetPasswordForm() {
             onChange={handleInputChange}
           />
           {errors.confirmPassword && (
-            <p className="mt-2 text-[16px] font-[500]" style={{ color: "#FF3D00" }}>
+            <p
+              className="mt-2 text-[16px] font-[500]"
+              style={{ color: "#FF3D00" }}
+            >
               {errors.confirmPassword}
             </p>
           )}

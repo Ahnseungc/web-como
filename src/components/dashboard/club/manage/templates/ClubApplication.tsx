@@ -7,6 +7,7 @@ import type { ApplicationQuestionData } from "@/api/types/club/join/question";
 import type { IResponse } from "@/api/types";
 import { getAccessToken, getClubId } from "@/lib/cookies";
 import Button from "@/components/common/Button";
+import { useToast } from "@/components/common/ToastContainer";
 
 export default function ClubApplicationTab() {
   const { data } = useQuery({
@@ -19,6 +20,7 @@ export default function ClubApplicationTab() {
 
   const [questions, setQuestions] = useState<string[]>([""]);
   const maxChar = 100;
+  const { showToast } = useToast();
 
   useEffect(() => {
     if (data && data.question) {
@@ -62,7 +64,8 @@ export default function ClubApplicationTab() {
     const res: IResponse = await response.json();
 
     if (res.resultCode !== "OK") {
-      alert("저장에 실패했습니다. 다시 시도해 주세요.");
+      // alert("저장에 실패했습니다. 다시 시도해 주세요.");
+      showToast("저장에 실패했습니다. 다시 시도해 주세요.", "error");
     }
   };
 

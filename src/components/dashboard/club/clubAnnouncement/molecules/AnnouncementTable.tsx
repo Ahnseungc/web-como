@@ -12,6 +12,7 @@ import {
   pinNotice,
   unpinNotice,
 } from "@/api/actions/club/notice";
+import { useToast } from "@/components/common/ToastContainer";
 
 const tableHeadings = [
   "순번",
@@ -27,6 +28,7 @@ function AnnouncementTable({ currentPage }: { currentPage: number }) {
   const { push } = useRouter();
   const [notices, setNotices] = useState<Notice[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { showToast } = useToast();
 
   const itemsPerPage = 10; // 페이지당 항목 수
 
@@ -51,7 +53,7 @@ function AnnouncementTable({ currentPage }: { currentPage: number }) {
   const handlePin = (noticeId: number) => {
     const pinnedCount = notices.filter((n) => n.isPinned === "Y").length;
     if (pinnedCount >= 2) {
-      alert("공지사항 상단 고정은 2개까지 가능합니다.");
+      showToast("공지사항 상단 고정은 2개까지 가능합니다.", "error");
       return;
     }
     setNotices((prev) =>
@@ -77,7 +79,8 @@ function AnnouncementTable({ currentPage }: { currentPage: number }) {
       localStorage.setItem("noticeDetail", JSON.stringify(detail));
       push(`${pathname}/${noticeId}`);
     } catch (error) {
-      alert("공지사항 상세 정보를 불러오지 못했습니다.");
+      // alert("공지사항 상세 정보를 불러오지 못했습니다.");
+      showToast("공지사항 상세 정보를 불러오지 못했습니다.", "error");
     }
   };
 
@@ -85,7 +88,8 @@ function AnnouncementTable({ currentPage }: { currentPage: number }) {
     const response = await deleteNotice(noticeId);
     console.log(response);
     if (response.resultCode === "OK") {
-      alert("공지사항이 삭제되었습니다.");
+      // alert("공지사항이 삭제되었습니다.");
+      showToast("공지사항이 삭제되었습니다.", "warning");
       setNotices((prev) => prev.filter((n) => n.noticeId !== noticeId));
     }
   };

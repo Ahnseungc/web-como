@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { getData } from "@/api/action";
 import { getAccessToken } from "@/lib/cookies";
 import ApprovalButton from "@/components/dashboard/shared/molecules/ApprovalButton";
+import { useToast } from "@/components/common/ToastContainer";
 
 type ApplicationStatus = "new" | "active" | "reject" | "revert" | "leave";
 
@@ -39,6 +40,7 @@ export default function ApplicationTable({
 }: ApplicationTableProps) {
   const pathname = usePathname();
   const { push } = useRouter();
+  const { showToast } = useToast();
 
   console.log("applications", applications);
 
@@ -107,7 +109,8 @@ export default function ApplicationTable({
 
       const data = await response.json();
       if (data.resultCode === "OK") {
-        alert("신청이 성공적으로 승인되었습니다."); // 알림 추가
+        // alert("신청이 성공적으로 승인되었습니다."); // 알림 추가
+        showToast("신청이 성공적으로 승인되었습니다.", "success");
         window.location.reload(); // 페이지 새로고침
       }
     } catch (error) {

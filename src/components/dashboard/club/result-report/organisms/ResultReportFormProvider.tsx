@@ -9,11 +9,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { getAccessToken, getClubId } from "@/lib/cookies";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
+import { useToast } from "@/components/common/ToastContainer";
 
 const ResultReportFormProvider = () => {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const { showToast } = useToast();
   const methods = useForm<ResultReportSchemaType>({
     resolver: zodResolver(ResultReportSchema),
     mode: "all",
@@ -106,12 +107,11 @@ const ResultReportFormProvider = () => {
         if (!response.ok) {
           throw new Error("활동 보고서 작성에 실패했습니다.");
         }
-        alert("활동 보고서 작성에 성공했습니다.");
+        showToast("활동 보고서 작성에 성공했습니다.", "success");
         methods.reset();
         router.back();
       } catch (error) {
-        alert("활동 보고서 작성에 실패했습니다.");
-        console.error(error);
+        showToast("활동 보고서 작성에 실패했습니다.", "error");
       } finally {
         setIsSubmitting(false);
       }
