@@ -10,6 +10,7 @@ interface Props {
   onSelect: (selected: Date | undefined) => void;
   disabled?: Matcher;
   wrapperStyle?: string;
+  defaultMonth?: Date;
 }
 
 export default function Calendar({
@@ -17,6 +18,7 @@ export default function Calendar({
   onSelect,
   disabled,
   wrapperStyle,
+  defaultMonth,
 }: Props) {
   return (
     <div
@@ -33,6 +35,7 @@ export default function Calendar({
         selected={selected}
         onSelect={onSelect}
         disabled={disabled}
+        defaultMonth={selected || new Date()}
         classNames={{
           root: "w-[350px] h-fit",
           nav: "absolute w-[350px] flex justify-center gap-[116px]",

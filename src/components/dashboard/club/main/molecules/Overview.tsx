@@ -23,7 +23,6 @@ import { useEffect, useState } from "react";
 //   return res.json();
 // };
 
-
 export default function DashboardOverview() {
   // const res = await getData("v2/club/web/notification/", true);
   // const data: NotificationData = res.data;
@@ -32,19 +31,23 @@ export default function DashboardOverview() {
   // const [clubJoinRequest] = await Promise.all([getClubJoinRequest()]);
   // console.log(clubJoinRequest);
 
-  const [dashboardNotifications, setDashboardNotifications] = useState<NotificationData>();
+  const [dashboardNotifications, setDashboardNotifications] =
+    useState<NotificationData>();
   const getDashboardNotifications = async () => {
     try {
-      const response = await getData("v1/executive/club/{clubId}/dashboard/notifications", true);
-      
-      if(response.resultCode === 'OK') {
+      const response = await getData(
+        "v1/executive/club/{clubId}/dashboard/notifications",
+        true
+      );
+
+      if (response.resultCode === "OK") {
         setDashboardNotifications(response.data);
-        console.log("dashboardNotifications", dashboardNotifications)
+        console.log("dashboardNotifications", dashboardNotifications);
       }
     } catch (error) {
-      console.error('알림 카드 목록 조회 에러:', error);
+      console.error("알림 카드 목록 조회 에러:", error);
     }
-  }
+  };
 
   useEffect(() => {
     getDashboardNotifications();
@@ -52,7 +55,7 @@ export default function DashboardOverview() {
 
   return (
     <div className="col-span-4 flex flex-col gap-6 h-fit p-8 rounded-xl bg-gray-800 select-none">
-      <h3 className="h1 font-bold text-gray-0">{`${dashboardNotifications?.clubName || '동호회'} 주요 알림`}</h3>
+      <h3 className="h1 font-bold text-gray-0">{`${dashboardNotifications?.clubName || "동호회"} 주요 알림`}</h3>
       <div className="flex gap-8 truncate">
         <div className="flex-1 flex flex-col gap-4 py-3 px-2">
           <span className="h4 font-medium text-gray-400">

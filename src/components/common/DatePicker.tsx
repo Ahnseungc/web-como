@@ -14,6 +14,7 @@ interface Props {
   currentDate: Date | undefined;
   handleDateChange: (date: Date | undefined) => void;
   disablePastDates?: boolean;
+  disabledDatesMatcher?: Matcher;
 }
 
 export default function DatePicker({
@@ -23,6 +24,7 @@ export default function DatePicker({
   id,
   currentDate,
   handleDateChange,
+  disabledDatesMatcher,
   disablePastDates = false,
 }: Props) {
   const isDisabled = !!disabled;
@@ -61,11 +63,16 @@ export default function DatePicker({
         <div className="absolute z-40">
           <Calendar
             selected={currentDate}
+            defaultMonth={currentDate}
             onSelect={(selected) => {
               handleDateChange(selected);
               closeModal(id);
             }}
-            disabled={disablePastDatesMatcher}
+            disabled={
+              disabledDatesMatcher
+                ? disabledDatesMatcher
+                : disablePastDatesMatcher
+            }
           />
         </div>
       </div>

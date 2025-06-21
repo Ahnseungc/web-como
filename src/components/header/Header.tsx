@@ -9,6 +9,7 @@ import ProfileDropdown from "@/components/header/atoms/ProfileDropdown";
 import CustomerCenter from "@/components/header/molecules/CustomerCenter";
 import Logo from "@/assets/logos/logo.svg";
 import ComoWhiteLogo from "@/assets/logos/como_logo_white.svg";
+import { Alarm } from "@/assets/icons/alarm";
 
 interface Props {
   initialIsMobile: boolean;
@@ -54,6 +55,9 @@ export default function Header(props: Props) {
           >
             {"고객센터"}
           </div>
+          {/* <div>
+            <Alarm className="text-white" />
+          </div> */}
           {props.isLoggedIn ? (
             <ProfileDropdown />
           ) : (
