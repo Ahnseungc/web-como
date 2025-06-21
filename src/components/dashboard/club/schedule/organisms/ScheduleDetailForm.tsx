@@ -14,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { formatDate } from "date-fns";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
+import ScheduleDetailPeriod from "../molecues/ScheduleDetail/ScheduleDetailPeriod";
 
 interface ScheduleDetailFormProps {
   type: "REGISTER" | "DETAIL" | "EDIT" | "MEMBERS";
@@ -32,10 +33,9 @@ const ScheduleDetailForm = ({
   useEffect(() => {
     if (sessionStorage.getItem("refresh-on-back") === "true") {
       sessionStorage.removeItem("refresh-on-back");
-
       router.refresh();
     }
-  }, []);
+  }, [isSubmitting, router, type, scheduleId]);
 
   const methods = useForm<ScheduleRegisterSchemaType>({
     resolver: zodResolver(ScheduleRegisterSchema),
@@ -50,6 +50,8 @@ const ScheduleDetailForm = ({
             },
             date: initialData?.date ? new Date(initialData?.date) : new Date(),
             time: initialData?.time,
+            recruitStartDate: initialData?.recruitStartDate,
+            recruitEndDate: initialData?.recruitEndDate,
           }
         : {
             title: "",
@@ -70,6 +72,10 @@ const ScheduleDetailForm = ({
                 hour12: false,
               });
             })(),
+            recruitStartDate: new Date().toISOString(),
+            recruitEndDate: new Date(
+              new Date().getTime() + 24 * 60 * 60 * 1000
+            ).toISOString(),
           },
     mode: type !== "DETAIL" ? "onChange" : "onSubmit",
   });
@@ -95,16 +101,24 @@ const ScheduleDetailForm = ({
                 },
                 body: JSON.stringify({
                   title: data.title,
+                  recruitStartDate: formatDate(
+                    new Date(data.recruitStartDate),
+                    "yyyy-MM-dd"
+                  ),
+                  recruitEndDate: formatDate(
+                    new Date(data.recruitEndDate),
+                    "yyyy-MM-dd"
+                  ),
                   detail: data.description,
                   location: `${data.location.roadAddress} ${data.location.placeName}`,
                   addressDetail: data.location.placeName,
                   date: formatDate(data.date, "yyyy-MM-dd"),
                   time: data.time,
                   latitude: data.location.latitude
-                    ? data.location.latitude / 100
+                    ? data.location.latitude / 1e7
                     : 0,
                   longitude: data.location.longitude
-                    ? data.location.longitude / 1000
+                    ? data.location.longitude / 1e7
                     : 0,
                 }),
               }
@@ -136,17 +150,25 @@ const ScheduleDetailForm = ({
                 },
                 body: JSON.stringify({
                   title: data.title,
+                  recruitStartDate: formatDate(
+                    new Date(data.recruitStartDate),
+                    "yyyy-MM-dd"
+                  ),
+                  recruitEndDate: formatDate(
+                    new Date(data.recruitEndDate),
+                    "yyyy-MM-dd"
+                  ),
                   detail: data.description,
                   location: `${data.location.roadAddress} ${data.location.placeName}`,
                   addressDetail: data.location.placeName,
                   date: formatDate(data.date, "yyyy-MM-dd"),
                   time: data.time,
-                  latitude: Number(
-                    (data.location.latitude ?? 0 / 100).toFixed(6)
-                  ),
-                  longitude: Number(
-                    (data.location.longitude ?? 0 / 1000).toFixed(6)
-                  ),
+                  latitude: data.location.latitude
+                    ? data.location.latitude / 1e7
+                    : 0,
+                  longitude: data.location.longitude
+                    ? data.location.longitude / 1e7
+                    : 0,
                 }),
               }
             );
@@ -157,6 +179,7 @@ const ScheduleDetailForm = ({
             sessionStorage.setItem("refresh-on-back", "true");
             alert("일정이 수정되었습니다.");
             router.back();
+            router.refresh();
           } catch (error) {
             console.error("일정 수정 실패:", error);
           }
@@ -214,6 +237,7 @@ const ScheduleDetailForm = ({
             maxLength={300}
             rows={4}
           />
+          <ScheduleDetailPeriod type={type} />
           <ScheduleDetailDate type={type} />
           <ScheduleDetailGeo type={type} />
         </section>

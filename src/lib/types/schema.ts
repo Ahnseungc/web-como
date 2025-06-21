@@ -75,6 +75,10 @@ export const ScheduleRegisterSchema = z.object({
   }),
   date: z.date(),
   time: z.string().min(1, { message: "시간을 입력해주세요." }),
+  recruitStartDate: z
+    .string()
+    .min(1, { message: "모집 시작일을 입력해주세요." }),
+  recruitEndDate: z.string().min(1, { message: "모집 종료일을 입력해주세요." }),
 });
 
 export type ScheduleRegisterSchemaType = z.infer<typeof ScheduleRegisterSchema>;

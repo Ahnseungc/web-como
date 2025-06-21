@@ -6,6 +6,7 @@ import TimeSelect from "@/components/common/TimeSelect";
 import { useFormContext } from "react-hook-form";
 import { ScheduleRegisterSchemaType } from "@/lib/types/schema";
 import { cn } from "@/lib/utils";
+import { useEffect } from "react";
 
 const ScheduleDetailDate = ({
   type,
@@ -19,6 +20,7 @@ const ScheduleDetailDate = ({
   const { setValue, watch } = useFormContext<ScheduleRegisterSchemaType>();
 
   const date = watch("date");
+
   const time = watch("time");
 
   return (
@@ -39,6 +41,7 @@ const ScheduleDetailDate = ({
           }}
           disabled={type === "DETAIL"}
           disablePastDates={true}
+          // disabledDatesMatcher={disabledDatesMatcher}
         />
         <TimeSelect
           id="time"
