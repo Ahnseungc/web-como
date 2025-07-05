@@ -40,7 +40,7 @@ const ResultReportSubmitCard = ({
           type="submit"
           primary
           content="제출하기"
-          disabled={isSubmitting || !agree || !isValid}
+          disabled={!isValid || isSubmitting || !agree}
         />
       </div>
     </Card>

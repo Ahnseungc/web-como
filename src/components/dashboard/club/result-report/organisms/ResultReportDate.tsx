@@ -40,6 +40,19 @@ const ResultReportDate = ({
     return currentErrors?.message?.toString();
   };
 
+  const getErrorMessageTime = () => {
+    const nameParts = "data.activityTime".split(".");
+    let currentErrors: any = errors;
+
+    for (const part of nameParts) {
+      if (currentErrors && currentErrors[part]) {
+        currentErrors = currentErrors[part];
+      } else {
+        return undefined;
+      }
+    }
+  };
+
   const errorMessage = getErrorMessage();
 
   return (

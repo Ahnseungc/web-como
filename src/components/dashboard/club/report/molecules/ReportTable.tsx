@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
-const tableHeadings = ["순번", "활동명", "활동일", "작성 상태"];
+const tableHeadings = ["순번", "활동명", "활동일", "작성 상태", "반려 사유"];
 
 interface Props {
   data?: {
@@ -14,6 +14,7 @@ interface Props {
         eventName: string;
         activityDate: number[];
         status: string;
+        rejectReason?: string;
       }[];
       maxPage: number;
     };
@@ -100,6 +101,17 @@ export default function ReportListTable({ data, clubId, currentPage }: Props) {
             {report.status === "PENDING" && "대기"}
             {report.status === "APPROVED" && "승인"}
             {report.status === "REJECTED" && "반려"}
+          </div>
+
+          {/* 반려 사유 */}
+          <div
+            className={cn(
+              "my-3 mx-6 body-1 font-medium text-center max-w-[180px] flex-1"
+            )}
+          >
+            {report.status === "REJECTED" && report.rejectReason
+              ? report.rejectReason
+              : "-"}
           </div>
         </li>
       ))}

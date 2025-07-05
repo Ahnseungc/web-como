@@ -16,8 +16,15 @@ import ClubDetailAttendanceDetailTabView from "@/components/dashboard/company/cl
 import ForceDisbandClubFormModal from "@/components/dashboard/company/club/modals/ForceDisbandClubFormModal";
 import CancelForceDisbandModal from "@/components/dashboard/company/club/modals/CancelForceDisbandModal";
 import ViewReportModal from "@/components/dashboard/company/club/modals/ViewReportModal";
+import ClubNoticeView from "@/components/dashboard/company/club/templates/ClubNoticeView";
 
-export type ClubDetailMenu = "about" | "activity" | "picture" | "attendance";
+export type ClubDetailMenu =
+  | "about"
+  | "activity"
+  | "picture"
+  | "attendance"
+  | "schedule"
+  | "notice";
 
 export interface ClubDetailMenuTab {
   name: string;
@@ -29,6 +36,8 @@ const tabList: ClubDetailMenuTab[] = [
   // { name: "활동 내역", value: "activity" },
   { name: "활동 사진", value: "picture" },
   // { name: "출석부", value: "attendance" },
+  { name: "일정", value: "schedule" },
+  { name: "공지", value: "notice" },
 ];
 
 const renderCurrentTabPage = (
@@ -46,6 +55,8 @@ const renderCurrentTabPage = (
       return <ClubDetailActivityTabView />;
     case "picture":
       return <ClubDetailPictureTabView />;
+    case "notice":
+      return <ClubNoticeView />;
     // case "attendance":
     //   if (attendanceId) {
     //     return <ClubDetailAttendanceDetailTabView />;
