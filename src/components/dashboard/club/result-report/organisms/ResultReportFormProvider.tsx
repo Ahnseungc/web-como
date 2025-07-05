@@ -10,11 +10,20 @@ import { getAccessToken, getClubId } from "@/lib/cookies";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
 import { useToast } from "@/components/common/ToastContainer";
+import { useAutoSave } from "@/hooks/useAutoSave";
+import { AutoSaveRestoreAlert } from "../molecules/AutoSaveRestoreAlert";
+
+function formatDateToString(date: Date | string) {
+  if (typeof date === "string") return date;
+
+  return date.toLocaleDateString("en-CA");
+}
 
 const ResultReportFormProvider = () => {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { showToast } = useToast();
+
   const methods = useForm<ResultReportSchemaType>({
     resolver: zodResolver(ResultReportSchema),
     mode: "all",
@@ -22,7 +31,7 @@ const ResultReportFormProvider = () => {
       data: {
         eventName: "",
         activityDate: new Date(),
-        activityTime: "",
+        activityTime: "00:00",
         location: "",
         locationDetail: "",
         participantCount: 0,
@@ -48,9 +57,22 @@ const ResultReportFormProvider = () => {
     },
   });
 
+  useEffect(() => {
+    methods.trigger();
+  }, [methods]);
+
+  const { clearSavedData } = useAutoSave({
+    form: methods,
+    storageKey: "result-report-form",
+    debounceMs: 2000,
+    enabled: true,
+    autoRestore: false,
+  });
+
   const debouncedSubmit = useCallback(
     async (data: ResultReportSchemaType) => {
       if (isSubmitting) return;
+      methods.trigger();
 
       try {
         setIsSubmitting(true);
@@ -107,7 +129,9 @@ const ResultReportFormProvider = () => {
         if (!response.ok) {
           throw new Error("활동 보고서 작성에 실패했습니다.");
         }
+        await clearSavedData();
         showToast("활동 보고서 작성에 성공했습니다.", "success");
+
         methods.reset();
         router.back();
       } catch (error) {
@@ -116,7 +140,7 @@ const ResultReportFormProvider = () => {
         setIsSubmitting(false);
       }
     },
-    [isSubmitting, router, methods]
+    [isSubmitting, router, methods, clearSavedData, showToast]
   );
 
   const onSubmit = async (data: ResultReportSchemaType) => {
@@ -127,10 +151,6 @@ const ResultReportFormProvider = () => {
     console.log(errors);
   };
 
-  useEffect(() => {
-    methods.trigger(); // 모든 필드에 대해 유효성 검사 실행
-  }, []);
-
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit, onError)}>
@@ -140,15 +160,9 @@ const ResultReportFormProvider = () => {
           <ResultReportSubmitCard isSubmitting={isSubmitting} />
         </article>
       </form>
+      <AutoSaveRestoreAlert form={methods} storageKey="result-report-form" />
     </FormProvider>
   );
 };
 
 export default ResultReportFormProvider;
-
-function formatDateToString(date: Date | string) {
-  if (typeof date === "string") return date;
-
-  // 'en-CA' 로케일은 'YYYY-MM-DD' 형식을 보장합니다.
-  return date.toLocaleDateString("en-CA"); // 'en-CA'는 'YYYY-MM-DD' 형식
-}

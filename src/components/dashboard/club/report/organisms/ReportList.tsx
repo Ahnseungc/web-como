@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 
-import { addDays, startOfToday, format } from "date-fns";
+import { addDays, startOfToday, format, addYears } from "date-fns";
 import DateFilter, {
   type DateRange,
 } from "@/components/dashboard/common/DateFilter";
 import ReportTable from "@/components/dashboard/club/report/molecules/ReportTable";
+import ReportTableSkeleton from "@/components/dashboard/club/report/molecules/ReportTableSkeleton";
 import Pagination from "@/components/dashboard/common/Pagination";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getData } from "@/api/action";
@@ -20,7 +21,7 @@ export default function ReportList({ clubId }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
-    startDate: addDays(startOfToday(), -7),
+    startDate: addYears(startOfToday(), -1),
     endDate: startOfToday(),
   });
 
@@ -36,29 +37,30 @@ export default function ReportList({ clubId }: Props) {
     }
   };
 
-  const { data, fetchNextPage, fetchPreviousPage } = useInfiniteQuery({
-    queryKey: [
-      clubId,
-      "reportList",
-      currentDateRange.startDate,
-      currentDateRange.endDate,
-    ],
-    queryFn: ({ pageParam }) =>
-      getData(
-        `v1/executive/club/${clubId}/reports?startDate=${formatDate(currentDateRange.startDate)}&endDate=${formatDate(currentDateRange.endDate)}&page=${pageParam}`,
-        false
-      ),
-    getNextPageParam: (lastPage) => {
-      if (lastPage?.data?.currentPage && lastPage?.data?.maxPage) {
-        if (lastPage.data.currentPage < lastPage.data.maxPage) {
-          return lastPage.data.currentPage + 1;
+  const { data, isLoading, fetchNextPage, fetchPreviousPage } =
+    useInfiniteQuery({
+      queryKey: [
+        clubId,
+        "reportList",
+        currentDateRange.startDate,
+        currentDateRange.endDate,
+      ],
+      queryFn: ({ pageParam }) =>
+        getData(
+          `v1/executive/club/${clubId}/reports?startDate=${formatDate(currentDateRange.startDate)}&endDate=${formatDate(currentDateRange.endDate)}&page=${pageParam}`,
+          false
+        ),
+      getNextPageParam: (lastPage) => {
+        if (lastPage?.data?.currentPage && lastPage?.data?.maxPage) {
+          if (lastPage.data.currentPage < lastPage.data.maxPage) {
+            return lastPage.data.currentPage + 1;
+          }
         }
-      }
-      return false;
-    },
+        return false;
+      },
 
-    initialPageParam: 1,
-  });
+      initialPageParam: 1,
+    });
 
   const handlePageChange = (page: number) => {
     if (page !== currentPage) {
@@ -89,11 +91,15 @@ export default function ReportList({ clubId }: Props) {
           currentDateRange={currentDateRange}
           handleDateRangeChange={handleDateRangeChange}
         />
-        <ReportTable
-          data={data?.pages}
-          clubId={clubId}
-          currentPage={currentPage}
-        />
+        {isLoading ? (
+          <ReportTableSkeleton />
+        ) : (
+          <ReportTable
+            data={data?.pages}
+            clubId={clubId}
+            currentPage={currentPage}
+          />
+        )}
       </div>
       <Pagination
         currentPage={currentPage}

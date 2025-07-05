@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { getData } from "@/api/action";
@@ -10,6 +10,7 @@ import DateFilter, {
 } from "@/components/dashboard/common/DateFilter";
 import Pagination from "@/components/dashboard/common/Pagination";
 import ExpenseTable from "@/components/dashboard/club/expense/molecules/ExpenseTable";
+import ExpenseTableSkeleton from "@/components/dashboard/club/expense/molecules/ExpenseTableSkeleton";
 import { Plus } from "@/assets/icons/action";
 
 interface Props {
@@ -19,23 +20,29 @@ interface Props {
 export default function ExpenseList({ clubId }: Props) {
   const pathname = usePathname();
   const { push } = useRouter();
+  const [isClient, setIsClient] = useState(false);
 
-  const { data, fetchNextPage, fetchPreviousPage } = useInfiniteQuery({
-    queryKey: [clubId, "expense"],
-    queryFn: ({ pageParam }) =>
-      getData(
-        `v1/executive/club/${clubId}/activity-expenses?page=${pageParam}`,
-        false
-      ),
-    getNextPageParam: (lastPage) => {
-      if (lastPage.data?.currentPage < lastPage.data?.maxPage) {
-        return lastPage.data.currentPage + 1;
-      } else {
-        return false;
-      }
-    },
-    initialPageParam: 1,
-  });
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const { data, isLoading, fetchNextPage, fetchPreviousPage } =
+    useInfiniteQuery({
+      queryKey: [clubId, "expense"],
+      queryFn: ({ pageParam }) =>
+        getData(
+          `v1/executive/club/${clubId}/activity-expenses?page=${pageParam}`,
+          false
+        ),
+      getNextPageParam: (lastPage) => {
+        if (lastPage.data?.currentPage < lastPage.data?.maxPage) {
+          return lastPage.data.currentPage + 1;
+        } else {
+          return false;
+        }
+      },
+      initialPageParam: 1,
+    });
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -74,7 +81,12 @@ export default function ExpenseList({ clubId }: Props) {
           handleDateRangeChange={handleDateRangeChange}
         /> */}
         <div className="space-y-10">
-          <ExpenseTable data={data?.pages} currentPage={currentPage} />
+          {!isClient ? (
+            <ExpenseTableSkeleton />
+          ) : (
+            <ExpenseTable data={data?.pages} currentPage={currentPage} />
+          )}
+
           <Pagination
             currentPage={currentPage}
             maxPage={maxPage}

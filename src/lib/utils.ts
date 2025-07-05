@@ -45,7 +45,7 @@ export function getPageRange(num: number) {
 }
 
 export const formatDate = (date: Date | undefined) => {
-  if (!date || isNaN(date.getTime())) {
+  if (!date || !(date instanceof Date) || isNaN(date.getTime())) {
     return "";
   }
   // 한국 시간으로 변환
