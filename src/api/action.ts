@@ -1,7 +1,7 @@
 "use server";
 
 import { getAccessToken, getClubId } from "@/lib/cookies";
-import { buildApiUrl } from "@/lib/client-utils";
+import { buildApiUrl } from "@/lib/server-utils";
 import type { IResponse } from "@/api/types/index";
 
 export const getData = async (
