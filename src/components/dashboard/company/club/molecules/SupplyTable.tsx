@@ -11,6 +11,7 @@ const tableHeadings = [
   "품목",
   "금액",
   "현재 상태",
+  // 주석추가, 테스트
 ];
 
 type SupplyStatus = "keep" | "disposed";
