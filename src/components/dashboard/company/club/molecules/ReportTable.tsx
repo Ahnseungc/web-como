@@ -52,7 +52,7 @@ export default function ReportTable({ activities }: Props) {
     setSelectedActivity(activity);
     setIsLoading(true);
     try {
-      const detail = await getReportDetail(activity.id);
+      const detail = await getReportDetail(activity.id.toString());
       setActivityDetail(detail);
     } catch (error) {
       console.error("상세 데이터 조회 실패:", error);

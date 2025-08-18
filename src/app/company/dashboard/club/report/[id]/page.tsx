@@ -25,8 +25,8 @@ export default function Page({ params }: { params: { id: string } }) {
   const [alertOpen, setAlertOpen] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getReportDetail(Number(params.id));
-      const rejectData = await getReportRejectionReason(Number(params.id));
+      const data = await getReportDetail(params.id);
+      const rejectData = await getReportRejectionReason(params.id);
       setRejectReason(rejectData.rejectionReason);
       setReportDetail(data);
     };
@@ -116,7 +116,7 @@ export default function Page({ params }: { params: { id: string } }) {
           setApproveOpen(false);
         }}
         onConfirm={async () => {
-          await patchApprove(Number(params.id));
+          await patchApprove(params.id);
           setApproveOpen(false);
           setStatus("APPROVED");
           setAlertOpen(true);
@@ -132,7 +132,7 @@ export default function Page({ params }: { params: { id: string } }) {
         open={rejectOpen}
         onClose={() => setRejectOpen(false)}
         onReject={async () => {
-          await patchReject(Number(params.id), rejectReason);
+          await patchReject(params.id, rejectReason);
           setRejectOpen(false);
           setStatus("REJECTED");
           setAlertOpen(true);

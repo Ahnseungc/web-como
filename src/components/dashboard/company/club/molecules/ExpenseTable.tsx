@@ -122,7 +122,7 @@ export default function ExpenseTable({
 
   // 상세보기 클릭 핸들러
   const handleRejectDetailClick = async (id: number) => {
-    const data = await getRejectionReason(id);
+    const data = await getRejectionReason(id.toString());
     const rejectionReason = data.rejectionReason;
     setModalReason(rejectionReason ?? "기타");
     setModalOpen(true);
