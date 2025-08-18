@@ -13,7 +13,7 @@ import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import RejectReasonInputModal from "@/components/dashboard/company/club/modals/RejectReasonInputModal";
-import { pathApprove } from "@/api/actions/company/expense/pathApprove";
+import { patchApprove } from "@/api/actions/company/expense/pathApprove";
 import { patchReject } from "@/api/actions/company/expense/patchReject";
 import { getRejectionReason } from "@/api/actions/company/expense/getRejectionReason";
 import AlertModal from "@/components/dashboard/company/club/modals/AlertModal";
@@ -34,8 +34,8 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     const fetchExpense = async () => {
-      const data = await getExpenseDetail(Number(params.id));
-      const reasonData = await getRejectionReason(Number(params.id));
+      const data = await getExpenseDetail(params.id);
+      const reasonData = await getRejectionReason(params.id);
       setExpense({
         eventName: data.eventName,
         description: data.description,
@@ -63,12 +63,12 @@ const Page = ({ params }: { params: { id: string } }) => {
   }, [params.id, status, rejectReason]);
 
   const handleStatusChange = async (
-    id: number,
+    id: string,
     newStatus: "APPROVED" | "REJECTED"
   ) => {
     if (newStatus === "APPROVED") {
       try {
-        await pathApprove(id);
+        await patchApprove(id);
         setStatus("APPROVED");
       } catch (error) {
         console.error("승인 처리 실패:", error);
@@ -81,7 +81,7 @@ const Page = ({ params }: { params: { id: string } }) => {
   const handleReject = async (reason: string) => {
     try {
       setIsRejecting(true);
-      await patchReject(Number(params.id), reason);
+      await patchReject(params.id, reason);
       setModalOpen(false);
       setStatus("REJECTED");
       setRejectReason(reason || "기타 사유");
@@ -169,7 +169,7 @@ const Page = ({ params }: { params: { id: string } }) => {
           setApproveOpen(false);
         }}
         onConfirm={async () => {
-          await handleStatusChange(Number(params.id), "APPROVED");
+          await handleStatusChange(params.id, "APPROVED");
           setApproveOpen(false);
           setAlertOpen(true);
         }}

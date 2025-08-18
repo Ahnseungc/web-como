@@ -62,7 +62,7 @@ export default function AnnouncementDetailContent({ isEditable }: Props) {
           ? { ...prev, data: { ...prev.data, isPinned: "N" } }
           : prev
       );
-      unpinNotice(noticeId);
+      unpinNotice(noticeId.toString());
     } else {
       setIsPinned("Y");
       setDetail((prev) =>
@@ -70,11 +70,11 @@ export default function AnnouncementDetailContent({ isEditable }: Props) {
           ? { ...prev, data: { ...prev.data, isPinned: "Y" } }
           : prev
       );
-      pinNotice(noticeId);
+      pinNotice(noticeId.toString());
     }
   };
   const handleDelete = async (noticeId: number) => {
-    await deleteNotice(noticeId);
+    await deleteNotice(noticeId.toString());
     // alert("공지사항이 삭제되었습니다.");
     showToast("공지사항이 삭제되었습니다.", "warning");
     router.replace("/club/dashboard/manage/announcement");

@@ -59,18 +59,18 @@ function AnnouncementTable({ currentPage }: { currentPage: number }) {
     setNotices((prev) =>
       prev.map((n) => (n.noticeId === noticeId ? { ...n, isPinned: "Y" } : n))
     );
-    pinNotice(noticeId);
+    pinNotice(noticeId.toString());
   };
   const handleUnpin = (noticeId: number) => {
     setNotices((prev) =>
       prev.map((n) => (n.noticeId === noticeId ? { ...n, isPinned: "N" } : n))
     );
-    unpinNotice(noticeId);
+    unpinNotice(noticeId.toString());
   };
 
   const handleTitleClick = async (noticeId: number) => {
     try {
-      let detail = await getNoticeDetail(noticeId);
+      let detail = await getNoticeDetail(noticeId.toString());
       detail = {
         ...detail,
         isPinned: notices.find((n) => n.noticeId === noticeId)?.isPinned,
@@ -85,7 +85,7 @@ function AnnouncementTable({ currentPage }: { currentPage: number }) {
   };
 
   const handleDelete = async (noticeId: number) => {
-    const response = await deleteNotice(noticeId);
+    const response = await deleteNotice(noticeId.toString());
     console.log(response);
     if (response.resultCode === "OK") {
       // alert("공지사항이 삭제되었습니다.");

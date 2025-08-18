@@ -1,9 +1,13 @@
 import { getAccessToken } from "@/lib/cookies";
+import { buildAbsoluteUrl } from "@/lib/client-utils";
 
 export const getSummary = async () => {
   const token = await getAccessToken();
   if (!token) throw new Error("토큰 정보가 없습니다.");
-  const url = `/api/server/v1/manager/activity-expenses/summary`;
+
+  const endpoint = `api/server/v1/manager/activity-expenses/summary`;
+  const url = buildAbsoluteUrl(endpoint);
+
   const response = await fetch(url, {
     method: "GET",
     headers: {
@@ -11,10 +15,5 @@ export const getSummary = async () => {
       accept: "application/json",
     },
   });
-  const result = await response.json();
-  if (result.resultCode === "OK") {
-    return result.data;
-  } else {
-    throw new Error(result.resultMessage);
-  }
+  return response.json();
 };
