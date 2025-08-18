@@ -1,25 +1,19 @@
 import { getAccessToken } from "@/lib/cookies";
+import { buildAbsoluteUrl } from "@/lib/client-utils";
 
-export const patchReject = async (expenseId: number, reason: string) => {
+export const patchReject = async (expenseId: string) => {
   const token = await getAccessToken();
   if (!token) throw new Error("토큰 정보가 없습니다.");
-  const url = `/api/server/v1/manager/activity-expenses/${expenseId}/reject`;
+
+  const endpoint = `api/server/v1/manager/activity-expenses/${expenseId}/reject`;
+  const url = buildAbsoluteUrl(endpoint);
 
   const response = await fetch(url, {
     method: "PATCH",
     headers: {
-      "Authorization": `Bearer ${token}`,
-      "accept": "application/json",
-      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+      accept: "application/json",
     },
-    body: JSON.stringify({
-      reason,
-    }),
   });
-  const result = await response.json();
-  if (result.resultCode === "OK") {
-    return result.data;
-  } else {
-    throw new Error(result.resultMessage);
-  }
+  return response.json();
 };

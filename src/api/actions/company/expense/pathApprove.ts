@@ -1,10 +1,13 @@
-import { getAccessToken, getClubId } from "@/lib/cookies";
+import { getAccessToken } from "@/lib/cookies";
+import { buildAbsoluteUrl } from "@/lib/client-utils";
 
-export const pathApprove = async (expenseId: number) => {
+export const patchApprove = async (expenseId: string) => {
   const token = await getAccessToken();
   if (!token) throw new Error("토큰 정보가 없습니다.");
-  const url = `/api/server/v1/manager/activity-expenses/${expenseId}/approve`;
-  console.log("expenseId", expenseId);
+
+  const endpoint = `api/server/v1/manager/activity-expenses/${expenseId}/approve`;
+  const url = buildAbsoluteUrl(endpoint);
+
   const response = await fetch(url, {
     method: "PATCH",
     headers: {
@@ -12,10 +15,5 @@ export const pathApprove = async (expenseId: number) => {
       accept: "application/json",
     },
   });
-  const result = await response.json();
-  if (result.resultCode === "OK") {
-    return result.data;
-  } else {
-    throw new Error(result.resultMessage);
-  }
+  return response.json();
 };
