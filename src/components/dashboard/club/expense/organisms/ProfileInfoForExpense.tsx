@@ -8,9 +8,13 @@ export default function ProfileInfoForExpense({
 }: {
   activityPlan: string;
   memberCount: number;
-  createdAt: number[];
+  createdAt?: number[];
 }) {
-  const formatCreatedAt = (createdAt: number[]) => {
+  const formatCreatedAt = (createdAt?: number[]) => {
+    if (!createdAt || !Array.isArray(createdAt)) {
+      return "날짜 정보 없음";
+    }
+
     const [year, month, day] = createdAt;
     return `${year}.${month}.${day}`;
   };

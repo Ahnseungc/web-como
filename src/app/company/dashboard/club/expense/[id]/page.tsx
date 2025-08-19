@@ -36,27 +36,30 @@ const Page = ({ params }: { params: { id: string } }) => {
     const fetchExpense = async () => {
       const data = await getExpenseDetail(params.id);
       const reasonData = await getRejectionReason(params.id);
+
+      console.log("reasonData:", reasonData);
+
       setExpense({
-        eventName: data.eventName,
-        description: data.description,
-        note: data.note,
-        location: data.location,
-        participantCount: data.participantCount,
-        amount: data.amount,
-        details: data.details,
-        file: data.file,
+        eventName: data.data.eventName,
+        description: data.data.description,
+        note: data.data.note,
+        location: data.data.location,
+        participantCount: data.data.participantCount,
+        amount: data.data.amount,
+        details: data.data.details,
+        file: data.data.file,
       });
       setCardInfo({
-        clubId: data.clubId,
-        clubImage: data.clubImage,
-        leadersSummary: data.leadersSummary,
-        activityPlan: data.activityPlan,
-        memberCount: data.memberCount,
-        status: data.status,
-        createdAt: data.createdAt,
-        clubName: data.clubName,
+        clubId: data.data.clubId,
+        clubImage: data.data.clubImage,
+        leadersSummary: data.data.leadersSummary,
+        activityPlan: data.data.activityPlan,
+        memberCount: data.data.memberCount,
+        status: data.data.status,
+        createdAt: data.data.createdAt,
+        clubName: data.data.clubName,
       });
-      setStatus(data.status);
+      setStatus(data.data.status);
       setRejectReason(reasonData?.rejectionReason || "기타 사유");
     };
     fetchExpense();

@@ -20,11 +20,13 @@ export default function ExpenseOverview() {
     const loadStats = async () => {
       try {
         const summary = await getSummary();
-        setStats({
-          pending: summary.pendingCount || 0,
-          approved: summary.approvedCount || 0,
-          rejected: summary.rejectedCount || 0,
-        });
+        if (summary.resultCode === "OK" && summary.data) {
+          setStats({
+            pending: summary.data.pendingCount || 0,
+            approved: summary.data.approvedCount || 0,
+            rejected: summary.data.rejectedCount || 0,
+          });
+        }
       } catch (error) {
         console.error("신청 현황 로딩 오류:", error);
       }

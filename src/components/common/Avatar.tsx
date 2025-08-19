@@ -16,7 +16,7 @@ export default function Avatar({ src, size = "w-8 h-8" }: Props) {
           className="rounded-full"
           fill
           sizes="5vw"
-          objectFit="cover"
+          style={{ objectFit: "cover" }}
         />
       )}
     </div>

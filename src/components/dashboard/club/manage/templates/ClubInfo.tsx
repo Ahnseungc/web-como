@@ -59,7 +59,7 @@ export default function ClubInfoTab() {
                 priority
                 sizes="(max-width: 800px) 50vw, (max-width: 1000px) 40vw, (max-width: 1500px) 33vw, 20vw"
                 className="rounded-lg"
-                objectFit="cover"
+                style={{ objectFit: "cover" }}
               />
             )}
           </div>

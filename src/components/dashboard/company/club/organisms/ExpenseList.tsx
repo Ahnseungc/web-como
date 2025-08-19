@@ -24,13 +24,28 @@ export default function ExpenseList() {
     const fetchData = async () => {
       if (!currentDateRange.startDate || !currentDateRange.endDate) return;
 
-      const data = await getExpense(
-        currentPage,
-        formatDate(currentDateRange.startDate),
-        formatDate(currentDateRange.endDate)
-      );
-      setMaxPage(data.maxPage);
-      setExpenseList(data.list);
+      try {
+        const data = await getExpense(
+          currentPage,
+          formatDate(currentDateRange.startDate),
+          formatDate(currentDateRange.endDate)
+        );
+
+        if (data.resultCode === "OK" && data.data) {
+          setMaxPage(data.data.maxPage || 1);
+          setExpenseList(data.data.list || []);
+        } else {
+          setMaxPage(1);
+          setExpenseList([]);
+        }
+      } catch (error) {
+        console.error(
+          "활동비 데이터를 불러오는 중 오류가 발생했습니다:",
+          error
+        );
+        setMaxPage(1);
+        setExpenseList([]);
+      }
     };
     fetchData();
   }, [currentPage, currentDateRange]);

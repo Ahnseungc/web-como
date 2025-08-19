@@ -27,7 +27,7 @@ export default function ImageInput(props: Props) {
         {props.currentImages &&
           props.currentImages.length > 0 &&
           props.currentImages.map((image, i) => (
-            <div key={i} className="relative object-cover w-[100px] h-[100px]">
+            <div key={i} className="relative w-[100px] h-[100px]">
               <Image
                 src={URL.createObjectURL(image)}
                 alt={`사진 ${i}`}
@@ -35,6 +35,7 @@ export default function ImageInput(props: Props) {
                 sizes="10vw"
                 priority
                 className="rounded-lg"
+                style={{ objectFit: "cover" }}
               />
               {!props.readonly && (
                 <button
