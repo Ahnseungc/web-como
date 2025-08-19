@@ -1,13 +1,14 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Pin } from "@/assets/icons/info";
 import Image from "next/image";
 import {
   deleteNotice,
   pinNotice,
   unpinNotice,
+  getNoticeDetail,
 } from "@/api/actions/club/notice";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { useToast } from "@/components/common/ToastContainer";
 
 interface NoticeDetail {
@@ -30,21 +31,47 @@ interface Props {
 export default function AnnouncementDetailContent({ isEditable }: Props) {
   const [detail, setDetail] = useState<NoticeDetail | null>(null);
   const [isPinned, setIsPinned] = useState<"Y" | "N">("N");
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const params = useParams();
   const { showToast } = useToast();
-  useEffect(() => {
-    const stored = localStorage.getItem("noticeDetail");
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      setDetail(parsed);
-      if (parsed?.isPinned) {
-        setIsPinned(parsed.isPinned);
-      }
-    }
-  }, []);
+  const hasFetched = useRef(false);
 
-  if (!detail || !detail.data)
+  useEffect(() => {
+    const fetchNoticeDetail = async () => {
+      // 이미 호출된 경우 중복 호출 방지
+      if (hasFetched.current) return;
+
+      try {
+        const noticeId = params.id as string;
+        if (noticeId) {
+          hasFetched.current = true; // 호출 시작 시 플래그 설정
+          const response = await getNoticeDetail(noticeId);
+          if (response.resultCode === "OK") {
+            setDetail(response);
+            if (response.data?.isPinned) {
+              setIsPinned(response.data.isPinned);
+            }
+          }
+        }
+      } catch (error) {
+        console.error("공지사항 상세 정보 로딩 실패:", error);
+        showToast("공지사항을 불러오는데 실패했습니다.", "error");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNoticeDetail();
+  }, [params.id, showToast]);
+
+  if (loading) {
     return <div className="p-8">상세 정보를 불러오는 중...</div>;
+  }
+
+  if (!detail || !detail.data) {
+    return <div className="p-8">공지사항을 찾을 수 없습니다.</div>;
+  }
 
   const { id, title, writerName, createdDate, viewCount, content, photos } =
     detail.data;

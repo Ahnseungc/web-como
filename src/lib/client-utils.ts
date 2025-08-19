@@ -1,5 +1,7 @@
 "use client";
 
+import { getAccessToken, getClubId } from "@/lib/cookies";
+
 // 문자열에서 html 태그를 모두 제거하는 함수
 export function removeHtmlTags(input: string) {
   return input.replace(/<[^>]*>/g, "");
@@ -35,4 +37,33 @@ export const buildAbsoluteUrl = (path: string): string => {
   const cleanPath = path.replace(/^\//, "");
 
   return `${cleanServerUrl}/${cleanPath}`;
+};
+
+/**
+ * 클라이언트 사이드에서 프록시를 사용하는 getData 함수
+ */
+export const getClientData = async (
+  endpoint: string,
+  useClubId?: boolean,
+  params?: { [key: string]: string | number }
+) => {
+  const clubId = await getClubId();
+  const token = await getAccessToken();
+
+  const finalEndpoint = useClubId
+    ? endpoint.replace("{clubId}", clubId || "")
+    : endpoint;
+
+  // 프록시를 사용하도록 /api/server/ 접두사 추가
+  const url = `/api/server/v1/${finalEndpoint}`;
+
+  const response = await fetch(url, {
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  });
+
+  const res = await response.json();
+  return res;
 };

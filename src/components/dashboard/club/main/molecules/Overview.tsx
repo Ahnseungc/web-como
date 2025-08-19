@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { getData } from "@/api/action";
+import { getClientData } from "@/lib/client-utils";
 import type { NotificationData } from "@/api/types/club/notification";
 import { LOGIN_ENDPOINT, CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 import { useEffect, useState } from "react";
@@ -35,8 +35,8 @@ export default function DashboardOverview() {
     useState<NotificationData>();
   const getDashboardNotifications = async () => {
     try {
-      const response = await getData(
-        "v1/executive/club/{clubId}/dashboard/notifications",
+      const response = await getClientData(
+        "executive/club/{clubId}/dashboard/notifications",
         true
       );
 
