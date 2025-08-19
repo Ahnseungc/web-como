@@ -13,7 +13,7 @@ import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import ExpenseRejectReasonInputModal from "@/components/dashboard/company/club/modals/ExpenseRejectReasonInputModal";
-import { patchApprove } from "@/api/actions/company/expense/pathApprove";
+import { patchApprove } from "@/api/actions/company/expense/patchApprove";
 import { patchReject } from "@/api/actions/company/expense/patchReject";
 import { getRejectionReasonClient } from "@/api/actions/company/expense/getRejectionReasonClient";
 import AlertModal from "@/components/dashboard/company/club/modals/AlertModal";
@@ -179,12 +179,7 @@ const Page = ({ params }: { params: { id: string } }) => {
         contentType="지원서"
         onClose={() => setAlertOpen(false)}
       />
-      {/* 디버깅용 로그 */}
-      {console.log("AlertModal props:", {
-        alertOpen,
-        status,
-        type: status || "",
-      })}
+
       <ReportConfirmModal
         open={approveOpen}
         type="approve"
