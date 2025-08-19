@@ -1,5 +1,4 @@
 "use client";
-import { patchReject } from "@/api/actions/company/expense/patchReject";
 import Button from "@/components/common/Button";
 import { useState } from "react";
 

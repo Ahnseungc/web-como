@@ -1,5 +1,5 @@
 "use client";
-import { getExpenseDetail } from "@/api/actions/company/expense/getExpenseDetail";
+import { getExpenseDetailClient } from "@/api/actions/company/expense/getExpenseDetailClient";
 import {
   CardInfo,
   ExpenseApplicationStatus,
@@ -12,10 +12,10 @@ import ApprovalButton from "@/components/dashboard/shared/molecules/ApprovalButt
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import RejectReasonInputModal from "@/components/dashboard/company/club/modals/RejectReasonInputModal";
+import ExpenseRejectReasonInputModal from "@/components/dashboard/company/club/modals/ExpenseRejectReasonInputModal";
 import { patchApprove } from "@/api/actions/company/expense/pathApprove";
 import { patchReject } from "@/api/actions/company/expense/patchReject";
-import { getRejectionReason } from "@/api/actions/company/expense/getRejectionReason";
+import { getRejectionReasonClient } from "@/api/actions/company/expense/getRejectionReasonClient";
 import AlertModal from "@/components/dashboard/company/club/modals/AlertModal";
 import ReportConfirmModal from "@/components/dashboard/company/club/modals/ReportConfirmModal";
 
@@ -29,13 +29,14 @@ const Page = ({ params }: { params: { id: string } }) => {
   const [cardInfo, setCardInfo] = useState<CardInfo | null>(null);
   const [expense, setExpense] = useState<ExpenseFormValues | null>(null);
   const [isRejecting, setIsRejecting] = useState(false);
+  const [isApproving, setIsApproving] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false);
   const [approveOpen, setApproveOpen] = useState(false);
 
   useEffect(() => {
     const fetchExpense = async () => {
-      const data = await getExpenseDetail(params.id);
-      const reasonData = await getRejectionReason(params.id);
+      const data = await getExpenseDetailClient(params.id);
+      const reasonData = await getRejectionReasonClient(params.id);
 
       console.log("reasonData:", reasonData);
 
@@ -65,16 +66,30 @@ const Page = ({ params }: { params: { id: string } }) => {
     fetchExpense();
   }, [params.id, status, rejectReason]);
 
+  // status 변경 추적
+  useEffect(() => {
+    console.log("status 변경됨:", status);
+  }, [status]);
+
   const handleStatusChange = async (
     id: string,
     newStatus: "APPROVED" | "REJECTED"
   ) => {
+    console.log("handleStatusChange 호출:", { id, newStatus });
+
     if (newStatus === "APPROVED") {
       try {
-        await patchApprove(id);
+        setIsApproving(true);
+        console.log("승인 처리 시작");
+        const result = await patchApprove(id);
+        console.log("승인 처리 결과:", result);
+        console.log("setStatus 호출 전 status:", status);
         setStatus("APPROVED");
+        console.log("setStatus 호출 후 status:", status);
       } catch (error) {
         console.error("승인 처리 실패:", error);
+      } finally {
+        setIsApproving(false);
       }
     } else if (newStatus === "REJECTED") {
       setModalOpen(true);
@@ -152,7 +167,7 @@ const Page = ({ params }: { params: { id: string } }) => {
         <ClubInfoCardForExpense cardInfo={cardInfo} />
         <ExpenseReportForm expense={expense} />
       </div>
-      <RejectReasonInputModal
+      <ExpenseRejectReasonInputModal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         onReject={handleReject}
@@ -164,6 +179,12 @@ const Page = ({ params }: { params: { id: string } }) => {
         contentType="지원서"
         onClose={() => setAlertOpen(false)}
       />
+      {/* 디버깅용 로그 */}
+      {console.log("AlertModal props:", {
+        alertOpen,
+        status,
+        type: status || "",
+      })}
       <ReportConfirmModal
         open={approveOpen}
         type="approve"
@@ -172,10 +193,15 @@ const Page = ({ params }: { params: { id: string } }) => {
           setApproveOpen(false);
         }}
         onConfirm={async () => {
+          console.log("승인 확인 버튼 클릭");
+          console.log("현재 status:", status);
           await handleStatusChange(params.id, "APPROVED");
+          console.log("handleStatusChange 완료 후 status:", status);
           setApproveOpen(false);
           setAlertOpen(true);
+          console.log("승인 완료 후 alertOpen 설정:", true);
         }}
+        isProcessing={isApproving}
       />
     </div>
   );

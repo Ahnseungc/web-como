@@ -8,12 +8,14 @@ export default function ReportConfirmModal({
   clubName,
   onClose,
   onConfirm,
+  isProcessing = false,
 }: {
   open: boolean;
   type: "approve" | "reject";
   clubName: string;
   onClose: () => void;
   onConfirm: () => void;
+  isProcessing?: boolean;
 }) {
   if (!open) return null;
   return (
@@ -32,12 +34,14 @@ export default function ReportConfirmModal({
             className="text-[20px] rounded-lg"
             content="닫기"
             onClick={onClose}
+            disabled={isProcessing}
           />
           <Button
             className="text-[20px] rounded-lg"
-            content="확인완료"
+            content={isProcessing ? "처리 중..." : "확인완료"}
             primary
             onClick={onConfirm}
+            disabled={isProcessing}
           />
         </div>
       </div>
