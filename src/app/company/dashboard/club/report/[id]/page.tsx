@@ -5,6 +5,7 @@ import ReportDetail from "@/components/dashboard/company/club/organisms/ReportDe
 import { useEffect, useState } from "react";
 import { getReportDetail } from "@/api/actions/company/report/getReportDetail";
 import { ActivityReportDetail } from "@/api/types/company/report";
+import { IResponse } from "@/api/types/index";
 import Image from "next/image";
 import ReportConfirmModal from "@/components/dashboard/company/club/modals/ReportConfirmModal";
 import { patchApprove } from "@/api/actions/company/report/patchApprove";
@@ -15,9 +16,7 @@ import AlertModal from "@/components/dashboard/company/club/modals/AlertModal";
 
 export default function Page({ params }: { params: { id: string } }) {
   const initialStatus = useSearchParams().get("status");
-  const [reportDetail, setReportDetail] = useState<ActivityReportDetail | null>(
-    null
-  );
+  const [reportDetail, setReportDetail] = useState<IResponse | null>(null);
   const [approveOpen, setApproveOpen] = useState(false);
   const [rejectOpen, setRejectOpen] = useState(false);
   const [status, setStatus] = useState(initialStatus);
@@ -27,7 +26,7 @@ export default function Page({ params }: { params: { id: string } }) {
     const fetchData = async () => {
       const data = await getReportDetail(params.id);
       const rejectData = await getReportRejectionReason(params.id);
-      setRejectReason(rejectData.rejectionReason);
+      setRejectReason(rejectData.data?.rejectionReason || "");
       setReportDetail(data);
     };
     fetchData();
@@ -111,7 +110,7 @@ export default function Page({ params }: { params: { id: string } }) {
       <ReportConfirmModal
         open={approveOpen}
         type="approve"
-        clubName={reportDetail.clubName}
+        clubName={reportDetail?.data?.clubName || ""}
         onClose={() => {
           setApproveOpen(false);
         }}
