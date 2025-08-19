@@ -8,10 +8,16 @@ export default function ReportOverview() {
   const [rejectedCount, setRejectedCount] = useState(0);
   useEffect(() => {
     const fetchData = async () => {
-      const { pendingCount, approvedCount, rejectedCount } = await getSummary();
-      setPendingCount(pendingCount);
-      setApprovedCount(approvedCount);
-      setRejectedCount(rejectedCount);
+      try {
+        const summary = await getSummary();
+        if (summary.resultCode === "OK" && summary.data) {
+          setPendingCount(summary.data.pendingCount || 0);
+          setApprovedCount(summary.data.approvedCount || 0);
+          setRejectedCount(summary.data.rejectedCount || 0);
+        }
+      } catch (error) {
+        console.error("보고서 현황 로딩 오류:", error);
+      }
     };
     fetchData();
   }, []);

@@ -23,13 +23,28 @@ export default function ReportList() {
     const fetchData = async () => {
       if (!currentDateRange.startDate || !currentDateRange.endDate) return;
 
-      const data = await getReports(
-        currentPage,
-        formatDate(currentDateRange.startDate),
-        formatDate(currentDateRange.endDate)
-      );
-      setActivities(data.list);
-      setMaxPage(data.maxPage);
+      try {
+        const data = await getReports(
+          currentPage,
+          formatDate(currentDateRange.startDate),
+          formatDate(currentDateRange.endDate)
+        );
+
+        if (data.resultCode === "OK" && data.data) {
+          setActivities(data.data.list || []);
+          setMaxPage(data.data.maxPage || 1);
+        } else {
+          setActivities([]);
+          setMaxPage(1);
+        }
+      } catch (error) {
+        console.error(
+          "보고서 데이터를 불러오는 중 오류가 발생했습니다:",
+          error
+        );
+        setActivities([]);
+        setMaxPage(1);
+      }
     };
     fetchData();
   }, [currentPage, currentDateRange]);
