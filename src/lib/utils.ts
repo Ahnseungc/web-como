@@ -119,7 +119,52 @@ export function formatFileSize(bytes: number) {
   return `${number.toLocaleString()} ${text}`;
 }
 
-export const formatDateArray = (dateArray: number[]) => {
+export const formatDateArray = (dateArray: number[] | any) => {
+  // 배열이 아니거나 길이가 3보다 작으면 빈 문자열 반환
+  if (!Array.isArray(dateArray) || dateArray.length < 3) {
+    console.error("Invalid dateArray:", dateArray);
+    return "";
+  }
+
   const [year, month, day] = dateArray;
+
+  // 각 값이 유효한 숫자인지 확인
+  if (isNaN(year) || isNaN(month) || isNaN(day)) {
+    console.error("Invalid date values:", { year, month, day });
+    return "";
+  }
+
   return formatDate(new Date(year, month - 1, day));
+};
+
+// 더 유연한 날짜 포맷팅 함수 추가
+export const formatDateFlexible = (dateInput: any) => {
+  if (!dateInput) {
+    return "";
+  }
+
+  // 배열인 경우
+  if (Array.isArray(dateInput)) {
+    return formatDateArray(dateInput);
+  }
+
+  // 문자열인 경우 (ISO 문자열 등)
+  if (typeof dateInput === "string") {
+    try {
+      const date = new Date(dateInput);
+      if (!isNaN(date.getTime())) {
+        return formatDate(date);
+      }
+    } catch (error) {
+      console.error("Error parsing date string:", error);
+    }
+  }
+
+  // Date 객체인 경우
+  if (dateInput instanceof Date) {
+    return formatDate(dateInput);
+  }
+
+  console.error("Unsupported date format:", dateInput);
+  return "";
 };

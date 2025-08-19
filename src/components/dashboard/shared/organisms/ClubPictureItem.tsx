@@ -52,7 +52,7 @@ export default function ClubPictureItem({ item, readonly }: Props) {
               alt={`사진 ${i}`}
               fill
               sizes="30vw"
-              objectFit="cover"
+              style={{ objectFit: "cover" }}
             />
           </div>
         ))}

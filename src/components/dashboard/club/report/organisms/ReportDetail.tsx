@@ -71,6 +71,7 @@ export default function ReportDetail({ data }: Props) {
                 src={data.clubImage}
                 alt="clubImage"
                 className=" rounded-[8px]"
+                style={{ objectFit: "cover" }}
               />
             )}
           </div>

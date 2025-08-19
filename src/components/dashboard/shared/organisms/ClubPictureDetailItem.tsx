@@ -28,7 +28,9 @@ export default function ClubPictureDetailItem({ item, readonly }: Props) {
         <div className="flex items-center gap-4">
           <Avatar size="w-[60px] h-[60px]" src={item.writerProfileImage} />
           <div className="flex flex-col">
-            <span className="h4 font-bold text-gray-900">{item.writerNickname}</span>
+            <span className="h4 font-bold text-gray-900">
+              {item.writerNickname}
+            </span>
             <div className="space-x-2 body-1 font-medium text-gray-500">
               <span>{item.writerDepartment}</span>
               <span>{formatDate(new Date(item.date))}</span>
@@ -53,7 +55,7 @@ export default function ClubPictureDetailItem({ item, readonly }: Props) {
               alt={`사진 ${i}`}
               fill
               sizes="30vw"
-              objectFit="cover"
+              style={{ objectFit: "cover" }}
             />
           </div>
         ))}

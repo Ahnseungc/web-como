@@ -33,3 +33,30 @@ export const getData = async (
 
   return res;
 };
+
+export const patchData = async (
+  endpoint: string,
+  data?: any,
+  useClubId?: boolean
+) => {
+  const clubId = await getClubId();
+  const token = await getAccessToken();
+
+  const finalEndpoint = useClubId
+    ? endpoint.replace("{clubId}", clubId || "")
+    : endpoint;
+
+  const url = buildApiUrl(finalEndpoint);
+
+  const response = await fetch(url, {
+    method: "PATCH",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: data ? JSON.stringify(data) : undefined,
+  });
+
+  const res: IResponse = await response.json();
+  return res;
+};

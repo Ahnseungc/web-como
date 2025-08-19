@@ -1,6 +1,6 @@
 import { ActivityReportDetail } from "@/api/types/company/report";
 import Input from "@/components/common/Input";
-import { formatDateArray } from "@/lib/utils";
+import { formatDateArray, formatDateFlexible } from "@/lib/utils";
 import Image from "next/image";
 
 interface Props {
@@ -16,6 +16,12 @@ const expenseCategory = {
 };
 
 export default function ReportDetail({ data }: Props) {
+  // 디버깅을 위한 로그 추가
+  console.log("ReportDetail data:", data);
+  console.log("activityTime:", data?.activityTime);
+  console.log("activityTime type:", typeof data?.activityTime);
+  console.log("activityTime isArray:", Array.isArray(data?.activityTime));
+
   return (
     <div className="w-full">
       {/* 1페이지: 활동 사진 첨부까지 */}
@@ -57,7 +63,7 @@ export default function ReportDetail({ data }: Props) {
               <div className="flex flex-col basis-1/4">
                 <span className=" text-xl font-[600] mb-[8px]">활동 일정</span>
                 <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]   ">
-                  {formatDateArray(data.activityDate)}
+                  {formatDateFlexible(data.activityDate)}
                 </div>
               </div>
               <div className="flex flex-col basis-1/4">
@@ -65,7 +71,10 @@ export default function ReportDetail({ data }: Props) {
                   .
                 </span>
                 <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px] ">
-                  {data.activityTime.join(":")}
+                  {Array.isArray(data.activityTime) &&
+                  data.activityTime.length >= 2
+                    ? `${String(data.activityTime[0]).padStart(2, "0")}:${String(data.activityTime[1]).padStart(2, "0")}`
+                    : "-"}
                 </div>
               </div>{" "}
               <div className="flex flex-col basis-1/4">

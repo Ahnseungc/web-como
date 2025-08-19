@@ -1,7 +1,12 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { cn, formatDate, formatDateArray } from "@/lib/utils";
+import {
+  cn,
+  formatDate,
+  formatDateArray,
+  formatDateFlexible,
+} from "@/lib/utils";
 import { PrintButton } from "@/components/dashboard/common/DocUtil";
 import { Activity } from "@/api/types/company/report";
 import { useRef, useState, useEffect } from "react";
@@ -16,6 +21,17 @@ interface Props {
 export default function ReportTable({ activities }: Props) {
   const pathname = usePathname();
   const { push } = useRouter();
+
+  // 디버깅을 위한 로그 추가
+  console.log("ReportTable activities:", activities);
+  if (activities && activities.length > 0) {
+    console.log("First activity createdDate:", activities[0].createdDate);
+    console.log("createdDate type:", typeof activities[0].createdDate);
+    console.log(
+      "createdDate isArray:",
+      Array.isArray(activities[0].createdDate)
+    );
+  }
   const [selectedActivity, setSelectedActivity] = useState<Activity | null>(
     null
   );
@@ -99,7 +115,7 @@ export default function ReportTable({ activities }: Props) {
             </div>
             {/* 작성 일자 */}
             <div className="flex-1 min-w-[100px] my-3 mx-6 body-1 font-medium text-center text-gray-800">
-              {formatDateArray(activity.createdDate)}
+              {formatDateFlexible(activity.createdDate)}
             </div>
             {/* 동호회명 */}
             <div className="flex-[2] min-w-[180px] my-3 mx-6 body-1 font-medium text-center text-gray-800">
