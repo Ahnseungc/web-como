@@ -50,37 +50,57 @@ function AnnouncementTable({ currentPage }: { currentPage: number }) {
   };
 
   // 최대 2개까지 고정 가능하도록 pin/unpin 구현
-  const handlePin = (noticeId: number) => {
-    const pinnedCount = notices.filter((n) => n.isPinned === "Y").length;
-    if (pinnedCount >= 2) {
-      showToast("공지사항 상단 고정은 2개까지 가능합니다.", "error");
-      return;
+  const handlePin = async (noticeId: number) => {
+    try {
+      const pinnedCount = notices.filter((n) => n.isPinned === "Y").length;
+      if (pinnedCount >= 2) {
+        showToast("공지사항 상단 고정은 2개까지 가능합니다.", "error");
+        return;
+      }
+
+      const response = await pinNotice(noticeId.toString());
+      if (response.resultCode === "OK") {
+        setNotices((prev) =>
+          prev.map((n) =>
+            n.noticeId === noticeId ? { ...n, isPinned: "Y" } : n
+          )
+        );
+        showToast("공지사항이 고정되었습니다.", "success");
+      } else {
+        showToast("공지사항 고정에 실패했습니다.", "error");
+      }
+    } catch (error) {
+      console.error("공지사항 고정 실패:", error);
+      showToast("공지사항 고정에 실패했습니다.", "error");
     }
-    setNotices((prev) =>
-      prev.map((n) => (n.noticeId === noticeId ? { ...n, isPinned: "Y" } : n))
-    );
-    pinNotice(noticeId.toString());
   };
-  const handleUnpin = (noticeId: number) => {
-    setNotices((prev) =>
-      prev.map((n) => (n.noticeId === noticeId ? { ...n, isPinned: "N" } : n))
-    );
-    unpinNotice(noticeId.toString());
+
+  const handleUnpin = async (noticeId: number) => {
+    try {
+      const response = await unpinNotice(noticeId.toString());
+      if (response.resultCode === "OK") {
+        setNotices((prev) =>
+          prev.map((n) =>
+            n.noticeId === noticeId ? { ...n, isPinned: "N" } : n
+          )
+        );
+        showToast("공지사항 고정이 해제되었습니다.", "success");
+      } else {
+        showToast("공지사항 고정 해제에 실패했습니다.", "error");
+      }
+    } catch (error) {
+      console.error("공지사항 고정 해제 실패:", error);
+      showToast("공지사항 고정 해제에 실패했습니다.", "error");
+    }
   };
 
   const handleTitleClick = async (noticeId: number) => {
     try {
-      let detail = await getNoticeDetail(noticeId.toString());
-      detail = {
-        ...detail,
-        isPinned: notices.find((n) => n.noticeId === noticeId)?.isPinned,
-      };
-      // 상세 페이지에서 활용할 수 있도록 localStorage에 저장 (또는 필요시 state로 전달)
-      localStorage.setItem("noticeDetail", JSON.stringify(detail));
+      // 상세 페이지에서 직접 API 호출하도록 수정
+      // 조회수 증가는 상세 페이지에서만 발생하도록 함
       push(`${pathname}/${noticeId}`);
     } catch (error) {
-      // alert("공지사항 상세 정보를 불러오지 못했습니다.");
-      showToast("공지사항 상세 정보를 불러오지 못했습니다.", "error");
+      showToast("페이지 이동에 실패했습니다.", "error");
     }
   };
 
@@ -100,11 +120,13 @@ function AnnouncementTable({ currentPage }: { currentPage: number }) {
   const pinnedNotices = notices.filter((n) => n.isPinned === "Y");
   const normalNotices = notices.filter((n) => n.isPinned !== "Y");
 
-  // pinnedNotices와 normalNotices를 합쳐서 현재 페이지에 맞는 항목만 가져오기
-  const allNotices = [...pinnedNotices, ...normalNotices];
+  // 고정된 공지사항은 항상 상단에 표시하고, 일반 공지사항만 페이지네이션 적용
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentNotices = allNotices.slice(startIndex, endIndex); // 현재 페이지에 맞는 항목만 가져오기
+  const currentNormalNotices = normalNotices.slice(startIndex, endIndex);
+
+  // 고정된 공지사항과 현재 페이지의 일반 공지사항을 합침
+  const currentNotices = [...pinnedNotices, ...currentNormalNotices];
 
   return (
     <ul className="flex flex-col gap-1">
@@ -162,7 +184,14 @@ function AnnouncementTable({ currentPage }: { currentPage: number }) {
               }}
             >
               {i === 0 ? (
-                startIndex + idx + 1 // 현재 페이지의 인덱스 계산
+                // 고정된 공지사항은 "고정" 표시, 일반 공지사항은 순번 표시
+                notice.isPinned === "Y" ? (
+                  <span className="text-xs text-gray-500">고정</span>
+                ) : (
+                  startIndex +
+                  (currentNotices.indexOf(notice) - pinnedNotices.length) +
+                  1
+                )
               ) : i === 1 ? (
                 <>
                   {notice.isPinned === "Y" && (
