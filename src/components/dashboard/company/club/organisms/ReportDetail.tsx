@@ -22,12 +22,6 @@ const expenseCategory = {
 export default function ReportDetail({ data }: Props) {
   const reportData = data?.data;
 
-  // 디버깅을 위한 로그 추가
-  console.log("ReportDetail data:", data);
-  console.log("activityTime:", reportData?.activityTime);
-  console.log("activityTime type:", typeof reportData?.activityTime);
-  console.log("activityTime isArray:", Array.isArray(reportData?.activityTime));
-
   return (
     <div className="w-full">
       {/* 1페이지: 활동 사진 첨부까지 */}
