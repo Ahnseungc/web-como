@@ -20,11 +20,13 @@ const expenseCategory = {
 };
 
 export default function ReportDetail({ data }: Props) {
+  const reportData = data?.data;
+
   // 디버깅을 위한 로그 추가
   console.log("ReportDetail data:", data);
-  console.log("activityTime:", data?.data?.activityTime);
-  console.log("activityTime type:", typeof data?.data?.activityTime);
-  console.log("activityTime isArray:", Array.isArray(data?.data?.activityTime));
+  console.log("activityTime:", reportData?.activityTime);
+  console.log("activityTime type:", typeof reportData?.activityTime);
+  console.log("activityTime isArray:", Array.isArray(reportData?.activityTime));
 
   return (
     <div className="w-full">
@@ -33,41 +35,54 @@ export default function ReportDetail({ data }: Props) {
         {" "}
         <div className="flex gap-4 mb-[36px]">
           <div className="relative aspect-[1/1] min-w-[336px]">
-            {data?.data?.clubImage && (
+            {reportData?.clubImage && (
               <Image
                 fill
-                src={data.data.clubImage}
+                src={reportData.clubImage}
                 alt="clubImage"
                 className="rounded-[8px]"
               />
             )}
           </div>
           <div className=" w-full  ">
-            <Input
-              label="행사명"
-              value={data.data.eventName}
-              readOnly
-              inputStyle="w-full"
-            />
+            {reportData?.eventName ? (
+              <Input
+                label="행사명"
+                value={reportData.eventName}
+                readOnly
+                inputStyle="w-full"
+              />
+            ) : (
+              <div className="w-full">
+                <span className="text-xl font-[600] mb-[8px] block">
+                  행사명
+                </span>
+                <div className="text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px] text-gray-400">
+                  행사명 정보를 불러올 수 없습니다.
+                </div>
+              </div>
+            )}
             <div className="flex gap-[12px] mt-[24px]">
               <Input
                 label="동호회명"
                 inputStyle=" basis-1/2"
                 readOnly
-                value={data.data.clubName}
+                value={reportData?.clubName || ""}
               />
               <Input
                 label="작성자"
                 inputStyle="basis-1/2"
                 readOnly
-                value={data.data.writerName}
+                value={reportData?.writerName || ""}
               />
             </div>
             <div className="flex w-full gap-[12px] mt-[24px]">
               <div className="flex flex-col basis-1/4">
                 <span className=" text-xl font-[600] mb-[8px]">활동 일정</span>
                 <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]   ">
-                  {formatDateFlexible(data.data.activityDate)}
+                  {reportData?.activityDate
+                    ? formatDateFlexible(reportData.activityDate)
+                    : "-"}
                 </div>
               </div>
               <div className="flex flex-col basis-1/4">
@@ -75,16 +90,16 @@ export default function ReportDetail({ data }: Props) {
                   .
                 </span>
                 <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px] ">
-                  {Array.isArray(data.data.activityTime) &&
-                  data.data.activityTime.length >= 2
-                    ? `${String(data.data.activityTime[0]).padStart(2, "0")}:${String(data.data.activityTime[1]).padStart(2, "0")}`
+                  {Array.isArray(reportData?.activityTime) &&
+                  reportData.activityTime.length >= 2
+                    ? `${String(reportData.activityTime[0]).padStart(2, "0")}:${String(reportData.activityTime[1]).padStart(2, "0")}`
                     : "-"}
                 </div>
               </div>{" "}
               <div className="flex flex-col basis-1/4">
                 <span className=" text-xl font-[600] mb-[8px]">활동 장소</span>
                 <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]  ">
-                  {data.data.location}
+                  {reportData?.location || "-"}
                 </div>
               </div>{" "}
               <div className="flex flex-col basis-1/4">
@@ -92,7 +107,7 @@ export default function ReportDetail({ data }: Props) {
                   ,
                 </span>
                 <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]  ">
-                  {data.data.locationDetail}
+                  {reportData?.locationDetail || "-"}
                 </div>
               </div>
             </div>
@@ -101,20 +116,20 @@ export default function ReportDetail({ data }: Props) {
         <div className="flex flex-col w-full gap-[8px]">
           <span className="text-xl font-[600]">주요활동 내용</span>
           <div className="bg-gray-100 rounded-[6px] py-[18px] px-[20px] whitespace-pre-line">
-            {data.data.activityContent}
+            {reportData?.activityContent || "-"}
           </div>
         </div>
         <div className="flex flex-col w-full gap-[8px] pt-[36px]">
           <span className="text-xl font-[600]">비고</span>
           <div className="bg-gray-100 rounded-[6px] py-[18px] px-[20px] whitespace-pre-line">
-            {data.data.note}
+            {reportData?.note || "-"}
           </div>
         </div>
         <div className="flex flex-col w-full gap-[8px] pt-[36px]">
           <span className="text-xl font-[600]">지출 증빙용 활동 사진 첨부</span>
           <div className="grid grid-cols-2 gap-[12px] w-full">
-            {data.data.photos &&
-              data.data.photos.map((photo) => (
+            {reportData?.photos &&
+              reportData.photos.map((photo) => (
                 <div key={photo.id} className="aspect-[1/1] relative w-full">
                   <Image
                     src={photo.url}
@@ -128,8 +143,8 @@ export default function ReportDetail({ data }: Props) {
         </div>
       </div>
       {/* 2페이지: 활동 지원비 정산서부터 */}
-      {data.data.expenses && data.data.expenses.length > 0 ? (
-        data.data.expenses.map((item, idx) => {
+      {reportData?.expenses && reportData.expenses.length > 0 ? (
+        reportData.expenses.map((item, idx) => {
           return (
             <div
               key={idx}
@@ -152,26 +167,26 @@ export default function ReportDetail({ data }: Props) {
                 <div className="flex flex-col basis-1/4">
                   <span className=" text-xl font-[600] mb-[8px]">지원액</span>
                   <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px] ">
-                    {item.supportAmount}
+                    {item.supportAmount || "-"}
                   </div>
                 </div>{" "}
                 <div className="flex flex-col basis-1/4">
                   <span className=" text-xl font-[600] mb-[8px]">집행액</span>
                   <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]  ">
-                    {item.usedAmount}
+                    {item.usedAmount || "-"}
                   </div>
                 </div>{" "}
                 <div className="flex flex-col basis-1/4">
                   <span className=" text-xl font-[600] mb-[8px] ">잔액</span>
                   <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]  ">
-                    {item.remainingAmount}
+                    {item.remainingAmount || "-"}
                   </div>
                 </div>
               </div>
               <div className="flex flex-col w-full gap-[8px] pt-[36px]">
                 <span className="text-xl font-[600]">집행내역</span>
                 <div className="bg-gray-100 rounded-[6px] py-[18px] px-[20px] whitespace-pre-line">
-                  {item.usageDetail}
+                  {item.usageDetail || "-"}
                 </div>
               </div>
 
@@ -184,13 +199,13 @@ export default function ReportDetail({ data }: Props) {
                 <div className="flex flex-col basis-1/4">
                   <span className=" text-xl font-[600] mb-[8px]">담당자</span>
                   <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]   ">
-                    {item.submittedBy}
+                    {item.submittedBy || "-"}
                   </div>
                 </div>
                 <div className="flex flex-col basis-1/4">
                   <span className=" text-xl font-[600] mb-[8px] ">일자</span>
                   <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px] ">
-                    {item.issuedDate.join("-")}
+                    {item.issuedDate?.join("-") || "-"}
                   </div>
                 </div>{" "}
               </div>
@@ -198,13 +213,13 @@ export default function ReportDetail({ data }: Props) {
                 <div className="flex flex-col basis-1/2">
                   <span className=" text-xl font-[600] mb-[8px]">사용처</span>
                   <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]   ">
-                    {item.vendor}
+                    {item.vendor || "-"}
                   </div>
                 </div>
                 <div className="flex flex-col basis-1/2">
                   <span className=" text-xl font-[600] mb-[8px] ">금액</span>
                   <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px] ">
-                    {item.usedAmount}
+                    {item.usedAmount || "-"}
                   </div>
                 </div>{" "}
               </div>
@@ -212,7 +227,7 @@ export default function ReportDetail({ data }: Props) {
                 <div className="flex flex-col basis-1">
                   <span className=" text-xl font-[600] mb-[8px]">내용</span>
                   <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]  ">
-                    {item.description}
+                    {item.description || "-"}
                   </div>
                 </div>{" "}
                 <div className="flex flex-col basis-1">
