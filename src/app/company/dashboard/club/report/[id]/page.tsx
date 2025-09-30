@@ -139,7 +139,11 @@ export default function Page({ params }: { params: { id: string } }) {
       </div>
 
       <div className="flex space-x-3">
-        <ReportDetail ref={reportDetailRef} data={reportDetail} />{" "}
+        {reportDetail ? (
+          <ReportDetail ref={reportDetailRef} data={reportDetail} />
+        ) : (
+          <div>loading...</div>
+        )}
       </div>
       <ReportConfirmModal
         open={approveOpen}
