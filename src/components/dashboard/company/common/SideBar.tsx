@@ -76,7 +76,7 @@ const menuList: MenuItem[] = [
     key: "expense",
     subMenuList: [
       {
-        name: "활동지원비 관리",
+        name: "활동지원비 신청서",
         link: "/club/expense",
         routes: ["/club/expense"],
       },
@@ -87,7 +87,7 @@ const menuList: MenuItem[] = [
     key: "report",
     subMenuList: [
       {
-        name: "활동 보고서 관리",
+        name: "활동 보고서",
         link: "/club/report",
         routes: ["/club/report"],
       },
