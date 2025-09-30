@@ -15,6 +15,7 @@ import {
 } from "@react-pdf/renderer";
 import { Download, Print } from "@/assets/icons/util";
 import { usePathname } from "next/navigation";
+
 interface Props {
   data: {
     data: ActivityReportDetail;
@@ -34,6 +35,17 @@ const expenseCategory = {
   support: "세부사업: 교직원복지지원",
   club: "사업 항목: 직장동호회지원",
   benefit: "목(240) : 복리후생비",
+};
+
+// 파일이 PDF인지 확인하는 함수
+const isPDFFile = (url: string): boolean => {
+  if (!url) return false;
+  const lowerUrl = url.toLowerCase();
+  return (
+    lowerUrl.endsWith(".pdf") ||
+    lowerUrl.includes(".pdf?") ||
+    lowerUrl.includes("pdf")
+  );
 };
 
 // 한글 폰트 등록
@@ -215,6 +227,7 @@ const ReportDetail = forwardRef<ReportDetailRef, Props>(({ data }, ref) => {
   const isClubReportPath = pathname?.startsWith(
     "/company/dashboard/club/report/"
   );
+
   // 인쇄 기능
   const handlePrint = useReactToPrint({
     contentRef: printRef,
@@ -230,6 +243,9 @@ const ReportDetail = forwardRef<ReportDetailRef, Props>(({ data }, ref) => {
           color-adjust: exact;
         }
         .no-print {
+          display: none !important;
+        }
+        .pdf-viewer {
           display: none !important;
         }
       }
@@ -303,10 +319,8 @@ const ReportDetail = forwardRef<ReportDetailRef, Props>(({ data }, ref) => {
       )}
 
       <div ref={printRef} className="w-full">
-        {/* 나머지 컴포넌트 내용은 동일 */}
         {/* 1페이지: 활동 사진 첨부까지 */}
         <div className="space-y-2 p-8 rounded-xl bg-gray-0 w-full print-page-break-after">
-          {" "}
           <div className="flex gap-4 mb-[36px]">
             <div className="relative aspect-[1/1] min-w-[336px]">
               {reportData?.clubImage && (
@@ -371,7 +385,7 @@ const ReportDetail = forwardRef<ReportDetailRef, Props>(({ data }, ref) => {
                       ? `${String(reportData.activityTime[0]).padStart(2, "0")}:${String(reportData.activityTime[1]).padStart(2, "0")}`
                       : "-"}
                   </div>
-                </div>{" "}
+                </div>
                 <div className="flex flex-col basis-1/4">
                   <span className=" text-xl font-[600] mb-[8px]">
                     활동 장소
@@ -379,7 +393,7 @@ const ReportDetail = forwardRef<ReportDetailRef, Props>(({ data }, ref) => {
                   <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]  ">
                     {reportData?.location || "-"}
                   </div>
-                </div>{" "}
+                </div>
                 <div className="flex flex-col basis-1/4">
                   <span className=" text-xl font-[600] mb-[8px] text-gray-100">
                     ,
@@ -422,9 +436,12 @@ const ReportDetail = forwardRef<ReportDetailRef, Props>(({ data }, ref) => {
             </div>
           </div>
         </div>
+
         {/* 2페이지: 활동 지원비 정산서부터 */}
         {reportData?.expenses && reportData.expenses.length > 0 ? (
           reportData.expenses.map((item, idx) => {
+            const fileIsPDF = isPDFFile(item.file);
+
             return (
               <div
                 key={idx}
@@ -449,13 +466,13 @@ const ReportDetail = forwardRef<ReportDetailRef, Props>(({ data }, ref) => {
                     <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px] ">
                       {item.supportAmount || "-"}
                     </div>
-                  </div>{" "}
+                  </div>
                   <div className="flex flex-col basis-1/4">
                     <span className=" text-xl font-[600] mb-[8px]">집행액</span>
                     <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]  ">
                       {item.usedAmount || "-"}
                     </div>
-                  </div>{" "}
+                  </div>
                   <div className="flex flex-col basis-1/4">
                     <span className=" text-xl font-[600] mb-[8px] ">잔액</span>
                     <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]  ">
@@ -471,7 +488,6 @@ const ReportDetail = forwardRef<ReportDetailRef, Props>(({ data }, ref) => {
                 </div>
 
                 {/*활동 지원비 영수증 */}
-
                 <div className=" text-2xl font-[700] pt-[36px] pb-[24px]">
                   활동 지원비 영수증
                 </div>
@@ -487,7 +503,7 @@ const ReportDetail = forwardRef<ReportDetailRef, Props>(({ data }, ref) => {
                     <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px] ">
                       {item.issuedDate?.join("-") || "-"}
                     </div>
-                  </div>{" "}
+                  </div>
                 </div>
                 <div className="flex w-full gap-[12px]">
                   <div className="flex flex-col basis-1/2">
@@ -501,7 +517,7 @@ const ReportDetail = forwardRef<ReportDetailRef, Props>(({ data }, ref) => {
                     <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px] ">
                       {item.usedAmount || "-"}
                     </div>
-                  </div>{" "}
+                  </div>
                 </div>
                 <div className="flex w-full gap-[12px] flex-col">
                   <div className="flex flex-col basis-1">
@@ -509,7 +525,7 @@ const ReportDetail = forwardRef<ReportDetailRef, Props>(({ data }, ref) => {
                     <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]  ">
                       {item.description || "-"}
                     </div>
-                  </div>{" "}
+                  </div>
                   <div className="flex flex-col basis-1">
                     <span className=" text-xl font-[600] mb-[8px] ">
                       영수증
@@ -517,12 +533,28 @@ const ReportDetail = forwardRef<ReportDetailRef, Props>(({ data }, ref) => {
                     <div className="grid grid-cols-2 gap-[12px] w-full">
                       {item.file && (
                         <div className="aspect-[760/1013] relative min-w-full">
-                          <Image
-                            src={item.file}
-                            alt="photo"
-                            fill
-                            className="rounded-[8px] object-cover"
-                          />
+                          {fileIsPDF ? (
+                            <div className="w-full h-full border border-gray-300 rounded-[8px] overflow-hidden">
+                              <iframe
+                                src={item.file}
+                                className="w-full h-full pdf-viewer"
+                                title="영수증 PDF"
+                              />
+                              {/* 인쇄 시 PDF 링크 표시 */}
+                              <div className="hidden print:block p-4 bg-gray-100 rounded-[8px]">
+                                <p className="text-sm text-gray-700">
+                                  PDF 영수증: {item.file}
+                                </p>
+                              </div>
+                            </div>
+                          ) : (
+                            <Image
+                              src={item.file}
+                              alt="영수증"
+                              fill
+                              className="rounded-[8px] object-cover"
+                            />
+                          )}
                         </div>
                       )}
                     </div>
