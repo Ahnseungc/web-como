@@ -14,7 +14,7 @@ import {
   Font,
 } from "@react-pdf/renderer";
 import { Download, Print } from "@/assets/icons/util";
-
+import { usePathname } from "next/navigation";
 interface Props {
   data: {
     data: ActivityReportDetail;
@@ -209,7 +209,12 @@ const ReportPDF = ({ reportData }: { reportData: ActivityReportDetail }) => (
 const ReportDetail = forwardRef<ReportDetailRef, Props>(({ data }, ref) => {
   const reportData = data?.data;
   const printRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
+  // /club/report/ 경로인지 확인
+  const isClubReportPath = pathname?.startsWith(
+    "/company/dashboard/club/report/"
+  );
   // 인쇄 기능
   const handlePrint = useReactToPrint({
     contentRef: printRef,
@@ -278,23 +283,24 @@ const ReportDetail = forwardRef<ReportDetailRef, Props>(({ data }, ref) => {
 
   return (
     <div className="w-full">
-      {/* PDF 다운로드/인쇄 버튼 - 왼쪽 정보 카드 아래 */}
-      <div className="flex gap-3 justify-center mb-4 no-print">
-        <button
-          onClick={handlePDFDownload}
-          className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md bg-white hover:bg-gray-50 transition-colors"
-        >
-          <Download className="w-4 h-4" />
-          PDF 다운로드
-        </button>
-        <button
-          onClick={handlePrint}
-          className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md bg-white hover:bg-gray-50 transition-colors"
-        >
-          <Print className="w-4 h-4" />
-          인쇄
-        </button>
-      </div>
+      {!isClubReportPath && (
+        <div className="flex gap-3 justify-center mb-4 no-print">
+          <button
+            onClick={handlePDFDownload}
+            className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md bg-white hover:bg-gray-50 transition-colors"
+          >
+            <Download className="w-4 h-4" />
+            PDF 다운로드
+          </button>
+          <button
+            onClick={handlePrint}
+            className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md bg-white hover:bg-gray-50 transition-colors"
+          >
+            <Print className="w-4 h-4" />
+            인쇄
+          </button>
+        </div>
+      )}
 
       <div ref={printRef} className="w-full">
         {/* 나머지 컴포넌트 내용은 동일 */}
