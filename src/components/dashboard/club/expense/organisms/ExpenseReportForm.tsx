@@ -360,13 +360,16 @@ export default function ExpenseReportForm({
             <Input
               required
               value={formValues.location}
-              inputStyle="max-w-[350px]"
               name="location"
               label="장소(사용처)"
-              type="text"
               placeholder="위치를 입력하세요."
               readOnly
+              className="w-full min-h-[60px] py-4 px-3 rounded-md outline-none border border-gray-100 
+             focus-visible:border-gray-900 h4 font-medium placeholder:text-gray-400 
+             text-gray-900 bg-gray-100 focus-visible:bg-gray-50 
+             transition duration-300 block resize-none whitespace-pre-wrap"
             />
+
             <Input
               required
               value={formValues.participantCount.toString()}
