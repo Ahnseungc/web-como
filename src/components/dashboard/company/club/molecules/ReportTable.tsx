@@ -159,7 +159,7 @@ export default function ReportTable({ activities }: Props) {
                 "-"
               ) : (
                 <button
-                  //onClick={() => handlePrintClick(activity)}
+                  onClick={() => handlePrintClick(activity)}
                   disabled={isLoading}
                   className="disabled:opacity-50"
                 >
