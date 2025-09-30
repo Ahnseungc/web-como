@@ -2,7 +2,7 @@ import { ActivityReportDetail } from "@/api/types/company/report";
 import Input from "@/components/common/Input";
 import { formatDateArray, formatDateFlexible } from "@/lib/utils";
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, forwardRef, useImperativeHandle } from "react";
 import { useReactToPrint } from "react-to-print";
 import {
   pdf,
@@ -21,6 +21,11 @@ interface Props {
     resultCode: string;
     resultMessage: string;
   };
+}
+
+// ReportDetail에서 외부로 노출할 메서드 타입
+export interface ReportDetailRef {
+  handlePDFDownload: () => Promise<void>;
 }
 
 const expenseCategory = {
@@ -201,7 +206,7 @@ const ReportPDF = ({ reportData }: { reportData: ActivityReportDetail }) => (
   </PDFDocument>
 );
 
-export default function ReportDetail({ data }: Props) {
+const ReportDetail = forwardRef<ReportDetailRef, Props>(({ data }, ref) => {
   const reportData = data?.data;
   const printRef = useRef<HTMLDivElement>(null);
 
@@ -266,6 +271,11 @@ export default function ReportDetail({ data }: Props) {
     }
   };
 
+  // 부모 컴포넌트에서 호출할 수 있도록 메서드 노출
+  useImperativeHandle(ref, () => ({
+    handlePDFDownload,
+  }));
+
   return (
     <div className="w-full">
       {/* PDF 다운로드/인쇄 버튼 - 왼쪽 정보 카드 아래 */}
@@ -287,6 +297,7 @@ export default function ReportDetail({ data }: Props) {
       </div>
 
       <div ref={printRef} className="w-full">
+        {/* 나머지 컴포넌트 내용은 동일 */}
         {/* 1페이지: 활동 사진 첨부까지 */}
         <div className="space-y-2 p-8 rounded-xl bg-gray-0 w-full print-page-break-after">
           {" "}
@@ -527,4 +538,8 @@ export default function ReportDetail({ data }: Props) {
       </div>
     </div>
   );
-}
+});
+
+ReportDetail.displayName = "ReportDetail";
+
+export default ReportDetail;
