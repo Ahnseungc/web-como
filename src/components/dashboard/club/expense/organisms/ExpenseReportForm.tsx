@@ -382,14 +382,15 @@ export default function ExpenseReportForm({
             />
             <Input
               required
-              value={formValues.amount.toString()}
+              value={formValues.amount.toLocaleString()}
               inputStyle="max-w-[350px]"
               name="amount"
               label="신청 금액"
-              type="number"
+              type="text"
               placeholder="금액을 입력해주세요."
               readOnly
             />
+
             <Input
               required
               value={formValues.details}
