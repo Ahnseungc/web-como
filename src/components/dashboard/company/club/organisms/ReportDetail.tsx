@@ -2,7 +2,7 @@ import { ActivityReportDetail } from "@/api/types/company/report";
 import Input from "@/components/common/Input";
 import { formatDateArray, formatDateFlexible } from "@/lib/utils";
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, forwardRef, useImperativeHandle } from "react";
 import { useReactToPrint } from "react-to-print";
 import {
   pdf,
@@ -14,6 +14,7 @@ import {
   Font,
 } from "@react-pdf/renderer";
 import { Download, Print } from "@/assets/icons/util";
+import { usePathname } from "next/navigation";
 
 interface Props {
   data: {
@@ -23,12 +24,28 @@ interface Props {
   };
 }
 
+// ReportDetail에서 외부로 노출할 메서드 타입
+export interface ReportDetailRef {
+  handlePDFDownload: () => Promise<void>;
+}
+
 const expenseCategory = {
   activity: "정책사업: 인적자원운용",
   welfare: "단위사업: 교직원 복지와 사기진작",
   support: "세부사업: 교직원복지지원",
   club: "사업 항목: 직장동호회지원",
   benefit: "목(240) : 복리후생비",
+};
+
+// 파일이 PDF인지 확인하는 함수
+const isPDFFile = (url: string): boolean => {
+  if (!url) return false;
+  const lowerUrl = url.toLowerCase();
+  return (
+    lowerUrl.endsWith(".pdf") ||
+    lowerUrl.includes(".pdf?") ||
+    lowerUrl.includes("pdf")
+  );
 };
 
 // 한글 폰트 등록
@@ -201,9 +218,15 @@ const ReportPDF = ({ reportData }: { reportData: ActivityReportDetail }) => (
   </PDFDocument>
 );
 
-export default function ReportDetail({ data }: Props) {
+const ReportDetail = forwardRef<ReportDetailRef, Props>(({ data }, ref) => {
   const reportData = data?.data;
   const printRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+
+  // /club/report/ 경로인지 확인
+  const isClubReportPath = pathname?.startsWith(
+    "/company/dashboard/club/report/"
+  );
 
   // 인쇄 기능
   const handlePrint = useReactToPrint({
@@ -220,6 +243,9 @@ export default function ReportDetail({ data }: Props) {
           color-adjust: exact;
         }
         .no-print {
+          display: none !important;
+        }
+        .pdf-viewer {
           display: none !important;
         }
       }
@@ -266,30 +292,35 @@ export default function ReportDetail({ data }: Props) {
     }
   };
 
+  // 부모 컴포넌트에서 호출할 수 있도록 메서드 노출
+  useImperativeHandle(ref, () => ({
+    handlePDFDownload,
+  }));
+
   return (
     <div className="w-full">
-      {/* PDF 다운로드/인쇄 버튼 - 왼쪽 정보 카드 아래 */}
-      <div className="flex gap-3 justify-center mb-4 no-print">
-        <button
-          onClick={handlePDFDownload}
-          className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md bg-white hover:bg-gray-50 transition-colors"
-        >
-          <Download className="w-4 h-4" />
-          PDF 다운로드
-        </button>
-        <button
-          onClick={handlePrint}
-          className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md bg-white hover:bg-gray-50 transition-colors"
-        >
-          <Print className="w-4 h-4" />
-          인쇄
-        </button>
-      </div>
+      {!isClubReportPath && (
+        <div className="flex gap-3 justify-center mb-4 no-print">
+          <button
+            onClick={handlePDFDownload}
+            className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md bg-white hover:bg-gray-50 transition-colors"
+          >
+            <Download className="w-4 h-4" />
+            PDF 다운로드
+          </button>
+          <button
+            onClick={handlePrint}
+            className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md bg-white hover:bg-gray-50 transition-colors"
+          >
+            <Print className="w-4 h-4" />
+            인쇄
+          </button>
+        </div>
+      )}
 
       <div ref={printRef} className="w-full">
         {/* 1페이지: 활동 사진 첨부까지 */}
         <div className="space-y-2 p-8 rounded-xl bg-gray-0 w-full print-page-break-after">
-          {" "}
           <div className="flex gap-4 mb-[36px]">
             <div className="relative aspect-[1/1] min-w-[336px]">
               {reportData?.clubImage && (
@@ -354,7 +385,7 @@ export default function ReportDetail({ data }: Props) {
                       ? `${String(reportData.activityTime[0]).padStart(2, "0")}:${String(reportData.activityTime[1]).padStart(2, "0")}`
                       : "-"}
                   </div>
-                </div>{" "}
+                </div>
                 <div className="flex flex-col basis-1/4">
                   <span className=" text-xl font-[600] mb-[8px]">
                     활동 장소
@@ -362,7 +393,7 @@ export default function ReportDetail({ data }: Props) {
                   <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]  ">
                     {reportData?.location || "-"}
                   </div>
-                </div>{" "}
+                </div>
                 <div className="flex flex-col basis-1/4">
                   <span className=" text-xl font-[600] mb-[8px] text-gray-100">
                     ,
@@ -405,9 +436,12 @@ export default function ReportDetail({ data }: Props) {
             </div>
           </div>
         </div>
+
         {/* 2페이지: 활동 지원비 정산서부터 */}
         {reportData?.expenses && reportData.expenses.length > 0 ? (
           reportData.expenses.map((item, idx) => {
+            const fileIsPDF = isPDFFile(item.file);
+
             return (
               <div
                 key={idx}
@@ -432,13 +466,13 @@ export default function ReportDetail({ data }: Props) {
                     <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px] ">
                       {item.supportAmount || "-"}
                     </div>
-                  </div>{" "}
+                  </div>
                   <div className="flex flex-col basis-1/4">
                     <span className=" text-xl font-[600] mb-[8px]">집행액</span>
                     <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]  ">
                       {item.usedAmount || "-"}
                     </div>
-                  </div>{" "}
+                  </div>
                   <div className="flex flex-col basis-1/4">
                     <span className=" text-xl font-[600] mb-[8px] ">잔액</span>
                     <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]  ">
@@ -454,7 +488,6 @@ export default function ReportDetail({ data }: Props) {
                 </div>
 
                 {/*활동 지원비 영수증 */}
-
                 <div className=" text-2xl font-[700] pt-[36px] pb-[24px]">
                   활동 지원비 영수증
                 </div>
@@ -470,7 +503,7 @@ export default function ReportDetail({ data }: Props) {
                     <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px] ">
                       {item.issuedDate?.join("-") || "-"}
                     </div>
-                  </div>{" "}
+                  </div>
                 </div>
                 <div className="flex w-full gap-[12px]">
                   <div className="flex flex-col basis-1/2">
@@ -484,7 +517,7 @@ export default function ReportDetail({ data }: Props) {
                     <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px] ">
                       {item.usedAmount || "-"}
                     </div>
-                  </div>{" "}
+                  </div>
                 </div>
                 <div className="flex w-full gap-[12px] flex-col">
                   <div className="flex flex-col basis-1">
@@ -492,7 +525,7 @@ export default function ReportDetail({ data }: Props) {
                     <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]  ">
                       {item.description || "-"}
                     </div>
-                  </div>{" "}
+                  </div>
                   <div className="flex flex-col basis-1">
                     <span className=" text-xl font-[600] mb-[8px] ">
                       영수증
@@ -500,12 +533,28 @@ export default function ReportDetail({ data }: Props) {
                     <div className="grid grid-cols-2 gap-[12px] w-full">
                       {item.file && (
                         <div className="aspect-[760/1013] relative min-w-full">
-                          <Image
-                            src={item.file}
-                            alt="photo"
-                            fill
-                            className="rounded-[8px] object-cover"
-                          />
+                          {fileIsPDF ? (
+                            <div className="w-full h-full border border-gray-300 rounded-[8px] overflow-hidden">
+                              <iframe
+                                src={item.file}
+                                className="w-full h-full pdf-viewer"
+                                title="영수증 PDF"
+                              />
+                              {/* 인쇄 시 PDF 링크 표시 */}
+                              <div className="hidden print:block p-4 bg-gray-100 rounded-[8px]">
+                                <p className="text-sm text-gray-700">
+                                  PDF 영수증: {item.file}
+                                </p>
+                              </div>
+                            </div>
+                          ) : (
+                            <Image
+                              src={item.file}
+                              alt="영수증"
+                              fill
+                              className="rounded-[8px] object-cover"
+                            />
+                          )}
                         </div>
                       )}
                     </div>
@@ -527,4 +576,8 @@ export default function ReportDetail({ data }: Props) {
       </div>
     </div>
   );
-}
+});
+
+ReportDetail.displayName = "ReportDetail";
+
+export default ReportDetail;
