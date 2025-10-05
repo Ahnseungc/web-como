@@ -11,6 +11,8 @@ import Pagination from "@/components/dashboard/common/Pagination";
 import EmployeeTable from "@/components/dashboard/company/employee/molecules/EmployeeTable";
 import EmployeeSearch from "@/components/dashboard/company/employee/molecules/EmployeeSearch";
 import type { SearchValue } from "@/lib/types/search";
+import { useQuery } from "@tanstack/react-query";
+import * as XLSX from "xlsx";
 
 export default function EmployeeList() {
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
@@ -49,6 +51,60 @@ export default function EmployeeList() {
     loadEmployees();
   }, [currentPage, currentDateRange]);
 
+    const { refetch: getExcelData } = useQuery({
+    queryKey: ["employeesExcel", currentDateRange],
+    queryFn: () =>
+      getData(
+        `v1/manager/member/excel?startDate=${formatDateToString(
+          currentDateRange.startDate
+        )}&endDate=${formatDateToString(currentDateRange.endDate)}`,
+        false
+      ),
+    enabled: false,
+  });
+
+  const handleExcelDownload = async () => {
+    try {
+      const { data: excelData } = await getExcelData();
+      if (excelData && excelData.data) {
+        const newData = excelData.data.map(
+          (
+            item: {
+              id: number;
+              name: string;
+              email: string;
+              department: string;
+              jobTitle: string;
+              createdDate: string;
+            },
+            idx: number
+          ) => {
+            const date = item.createdDate
+              ? new Date(item.createdDate).toISOString().split("T")[0]
+              : "";
+
+            return {
+              No: idx + 1,
+              이름: item.name,
+              이메일: item.email,
+              부서: item.department ? item.department.trim() : "",
+              가입일: date,
+            };
+          }
+        );
+
+        const wb = XLSX.utils.book_new();
+        const ws = XLSX.utils.json_to_sheet(newData);
+        XLSX.utils.book_append_sheet(wb, ws, "Employees");
+        XLSX.writeFile(wb, "회원 조회.xlsx");
+      } else {
+        console.error("엑셀 데이터가 없습니다.");
+      }
+    } catch (error) {
+      console.error("엑셀 다운로드 중 오류 발생:", error);
+    }
+  };
+
   const handleDateRangeChange = (dateRange: DateRange) => {
     setCurrentDateRange(dateRange);
     setCurrentPage(1);
@@ -74,7 +130,7 @@ export default function EmployeeList() {
           currentDateRange={currentDateRange}
           handleDateRangeChange={handleDateRangeChange}
         />
-         <DocUtilButtons />
+         <DocUtilButtons onSaveClick={handleExcelDownload} />
       </div>
       <div className="space-y-10">
         <EmployeeTable 

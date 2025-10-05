@@ -19,11 +19,15 @@ export const SaveButton = ({ onClick }: { onClick?: () => void }) => {
   );
 };
 
-export default function DocUtilButtons() {
+export default function DocUtilButtons({
+  onSaveClick,
+}: {
+  onSaveClick?: () => void;
+}) {
   return (
     <div className="flex gap-3">
       <PrintButton />
-      <SaveButton />
+      <SaveButton onClick={onSaveClick} />
     </div>
   );
 }
