@@ -104,6 +104,10 @@
   }
 }
 
+.printable-area {
+  display: none;
+}
+
 @media print {
   .print-page-break-before {
     page-break-before: always;
@@ -115,6 +119,9 @@
   }
   .no-print {
     display: none !important;
+  }
+  .printable-area {
+    display: block !important;
   }
 }
 
