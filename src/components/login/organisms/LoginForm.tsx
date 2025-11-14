@@ -16,8 +16,8 @@ import Input from "@/components/common/Input";
 import RadioSelect from "@/components/login/molecules/RadioSelect";
 import BrandImage from "@/assets/images/brand_image.svg";
 import LogoImage from "@/assets/logos/como_logo.svg";
-import { SHA256 } from 'crypto-js';
-import { enc } from 'crypto-js';
+import { SHA256 } from "crypto-js";
+import { enc } from "crypto-js";
 
 interface UserLoginDto {
   id: string;
@@ -41,11 +41,11 @@ export default function LoginForm() {
   // 로그인 에러 메시지를 위한 상태 추가
   const [loginError, setLoginError] = useState("");
 
-   // RadioSelect에서 role 변경 시 호출되는 handleChange
-   const handleRoleChange = (newValue: string) => {
+  // RadioSelect에서 role 변경 시 호출되는 handleChange
+  const handleRoleChange = (newValue: string) => {
     // role 타입 체크
     if (newValue === "club" || newValue === "company") {
-      setFormData(prev => ({ ...prev, role: newValue }));
+      setFormData((prev) => ({ ...prev, role: newValue }));
       // console.log('선택된 role:', newValue);
     }
   };
@@ -57,13 +57,13 @@ export default function LoginForm() {
       id: "",
       password: "",
     };
-   
+
     // 아이디 체크를 먼저 수행
     if (!formData.id.trim()) {
       newErrors.id = "필수 입력사항입니다.";
       isValid = false;
       setErrors(newErrors);
-      return isValid;  // 아이디가 비어있으면 바로 리턴
+      return isValid; // 아이디가 비어있으면 바로 리턴
     }
 
     // 아이디가 있을 때만 비밀번호 체크
@@ -94,16 +94,19 @@ export default function LoginForm() {
       const hashedPassword = SHA256(formData.password).toString(enc.Hex);
       // console.log("2. 비밀번호 해싱 완료");
 
-      const response = await fetch(`/api/server/login`, {
-        method: "POST",
-        body: JSON.stringify({
-          email: formData.id,
-          password: hashedPassword,  // 해싱된 비밀번호 전송
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/server/login`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            email: formData.id,
+            password: hashedPassword, // 해싱된 비밀번호 전송
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       // console.log("3. API 응답 상태:", response.status);
       // console.log("4. API 응답 헤더:", Object.fromEntries(response.headers.entries()));
