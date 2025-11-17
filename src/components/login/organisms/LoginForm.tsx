@@ -95,7 +95,7 @@ export default function LoginForm() {
       // console.log("2. 비밀번호 해싱 완료");
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/server/login`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/login`,
         {
           method: "POST",
           body: JSON.stringify({
