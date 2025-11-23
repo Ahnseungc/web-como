@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import type { ApplicationQuestionData } from "@/api/types/club/join/question";
 import type { IResponse } from "@/api/types";
 import { getAccessToken, getClubId } from "@/lib/cookies";
@@ -63,7 +64,7 @@ export default function ClubApplicationTab() {
 
     const res: IResponse = await response.json();
 
-    if (res.resultCode !== "OK") {
+    if (String(res.resultCode) === "200" || String(res.resultCode) === "OK") {
       // alert("저장에 실패했습니다. 다시 시도해 주세요.");
       showToast("저장에 실패했습니다. 다시 시도해 주세요.", "error");
     }

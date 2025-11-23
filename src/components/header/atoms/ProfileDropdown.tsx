@@ -4,10 +4,8 @@ import { openModal } from "@/lib/utils";
 import Avatar from "@/components/common/Avatar";
 import ProfileDropdownModal from "@/components/header/organisms/ProfileDropdownModal";
 import { ChevronDown } from "@/assets/icons/chevron";
-import { useState } from "react";
-import { useEffect } from "react";
-import { getData } from "@/api/action";
-import { getRole } from "@/lib/cookies";
+import { useState, useEffect } from "react";
+import { getData, getRole } from "@/lib/client-utils";
 
 interface Props {
   profileImage?: string | null;
@@ -24,7 +22,7 @@ export default function ProfileDropdown({ profileImage }: Props) {
   useEffect(() => {
     const loadProfileData = async () => {
       try {
-        const role = await getRole();
+        const role = getRole();
 
         let res;
         if (role === "club") {
@@ -32,8 +30,7 @@ export default function ProfileDropdown({ profileImage }: Props) {
         } else if (role === "company") {
           res = await getData(`v1/manager/member/my-profile`, true);
         }
-        
-        if (res?.resultCode === 'OK' && res.data) {
+        if (res?.resultCode === "OK" && res.data) {
           setProfileData(res.data);
         } else {
           console.error("API 오류:", res?.resultMessage);

@@ -1,12 +1,10 @@
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import type { TransactionOverviewData } from "@/api/types/club/activityExpenses/transactions";
 import InfoTooltipButton from "@/components/dashboard/common/InfoTooltipButton";
 
 export default async function TransactionOverview() {
-  const res = await getData(
-    "v2/club/web/activityexpenses/transactions/",
-    true
-  );
+  const res = await getData("v2/club/web/activityexpenses/transactions/", true);
   const data: TransactionOverviewData = res.data;
 
   return (

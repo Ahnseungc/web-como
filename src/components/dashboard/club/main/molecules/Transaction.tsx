@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import type { TransactionData } from "@/api/types/club/transactions";
 import { cn, formatDate } from "@/lib/utils";
 import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";

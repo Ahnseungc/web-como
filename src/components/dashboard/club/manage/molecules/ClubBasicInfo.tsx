@@ -4,7 +4,8 @@
 import RHFTextInput from "@/components/common/RHF/RHFTextInput";
 import { ClubIndexSchemaType } from "@/lib/types/schema";
 import { useEffect, useState } from "react";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import { ClubIndexData } from "@/api/types/club";
 
 export default function ClubBasicInfo({ clubId }: { clubId: string | null }) {

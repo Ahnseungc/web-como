@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import type { UpcomingActivityData } from "@/api/types/club/upcoming/activity";
 import { LOGIN_ENDPOINT } from "@/lib/constants";
 import { cn, formatDate } from "@/lib/utils";
@@ -26,7 +27,11 @@ export default function DashboardSchedule() {
           true
         );
 
-        if (res.resultCode === "OK" && res.data) {
+        if (
+          (String(res.resultCode) === "200" ||
+            String(res.resultCode) === "OK") &&
+          res.data
+        ) {
           setScheduleData(res.data);
         }
       } catch (error) {

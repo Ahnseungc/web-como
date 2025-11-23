@@ -1,4 +1,5 @@
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import ScheduleList from "@/components/dashboard/club/schedule/molecues/ScheduleList";
 import ScheduleTitle from "@/components/dashboard/club/schedule/molecues/ScheduleTitle";
 
@@ -17,7 +18,7 @@ export default async function ManageSchedulePage({
   //   `v1/executive/club/{clubId}/schedule/existence`,
   //   true
   // );
- 
+
   return (
     <>
       <ScheduleTitle />

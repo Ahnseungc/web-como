@@ -10,7 +10,8 @@ import ReportTable from "@/components/dashboard/club/report/molecules/ReportTabl
 import ReportTableSkeleton from "@/components/dashboard/club/report/molecules/ReportTableSkeleton";
 import Pagination from "@/components/dashboard/common/Pagination";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import { usePathname, useRouter } from "next/navigation";
 
 interface Props {

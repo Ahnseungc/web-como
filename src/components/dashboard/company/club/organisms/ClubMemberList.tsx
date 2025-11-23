@@ -9,7 +9,8 @@ import DocUtilButtons, {
 } from "@/components/dashboard/common/DocUtil";
 import ClubMemberTable from "@/components/dashboard/company/club/molecules/ClubMemberTable";
 import Pagination from "@/components/dashboard/common/Pagination";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import * as XLSX from "xlsx";
 import { useQuery } from "@tanstack/react-query";
 import { Copy, Document, Edit, Print } from "@/assets/icons/util";
@@ -48,7 +49,10 @@ export default function ClubMemberList({ clubId }: Props) {
         true
       );
       console.log(res.data);
-      if (res.resultCode === "OK" && res.data) {
+      if (
+        (String(res.resultCode) === "200" || String(res.resultCode) === "OK") &&
+        res.data
+      ) {
         setClubMembers(res.data.memberList);
         setMaxPage(res.data.maxPage);
         console.log("clubMembers", res.data.memberList);

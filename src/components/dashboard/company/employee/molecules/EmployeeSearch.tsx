@@ -3,7 +3,8 @@
 import { useState } from "react";
 import type { SearchValue } from "@/lib/types/search";
 import Search from "@/components/dashboard/common/Search";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import type { DateRange } from "@/components/dashboard/common/DateFilter";
 
 const fieldList = [
@@ -18,7 +19,11 @@ interface Props {
   currentPage: number;
 }
 
-export default function EmployeeSearch({ onSearch, currentDateRange, currentPage }: Props) {
+export default function EmployeeSearch({
+  onSearch,
+  currentDateRange,
+  currentPage,
+}: Props) {
   const [currentSearchValue, setCurrentSearchValue] = useState<SearchValue>({
     term: "",
     field: "all",
@@ -28,14 +33,17 @@ export default function EmployeeSearch({ onSearch, currentDateRange, currentPage
     console.log("=== 검색 실행 ===");
     console.log("현재 페이지:", currentPage);
     console.log("검색어:", currentSearchValue.term);
-    console.log("필터:", fieldList.find(f => f.value === currentSearchValue.field)?.name);
+    console.log(
+      "필터:",
+      fieldList.find((f) => f.value === currentSearchValue.field)?.name
+    );
     console.log("필터 값:", currentSearchValue.field);
     console.log("날짜 범위:", currentDateRange);
     console.log("================");
 
     try {
       const response = await getData(
-        `v1/manager/member/list?page=${currentPage}&search=${currentSearchValue.term}&filter=${currentSearchValue.field}&startDate=${currentDateRange.startDate?.toISOString().split('T')[0]}&endDate=${currentDateRange.endDate?.toISOString().split('T')[0]}`,
+        `v1/manager/member/list?page=${currentPage}&search=${currentSearchValue.term}&filter=${currentSearchValue.field}&startDate=${currentDateRange.startDate?.toISOString().split("T")[0]}&endDate=${currentDateRange.endDate?.toISOString().split("T")[0]}`,
         true
       );
 
@@ -60,7 +68,10 @@ export default function EmployeeSearch({ onSearch, currentDateRange, currentPage
       currentValue={currentSearchValue}
       handleChange={({ term, field }) => {
         setCurrentSearchValue((prev) => {
-          const newValue = { term: term || '', field: field !== undefined ? field : prev.field };
+          const newValue = {
+            term: term || "",
+            field: field !== undefined ? field : prev.field,
+          };
           console.log("=== 입력값 변경 ===");
           console.log("이전 값:", prev);
           console.log("새로운 값:", newValue);

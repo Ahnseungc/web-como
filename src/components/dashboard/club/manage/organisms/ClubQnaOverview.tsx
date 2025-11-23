@@ -1,7 +1,8 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import type { QnaNotificationData } from "@/api/types/club/question/notification";
 
 export default function ClubQnaOverview() {

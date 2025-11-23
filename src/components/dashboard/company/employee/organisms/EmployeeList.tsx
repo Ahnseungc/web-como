@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { startOfToday, subYears } from "date-fns";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import DateFilter, {
   type DateRange,
 } from "@/components/dashboard/common/DateFilter";
@@ -30,26 +31,32 @@ export default function EmployeeList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [maxPage, setMaxPage] = useState(1);
   const [employees, setEmployees] = useState([]);
-  const [employeesForPrinting, setEmployeesForPrinting] = useState<PrintableEmployee[]>([]);
+  const [employeesForPrinting, setEmployeesForPrinting] = useState<
+    PrintableEmployee[]
+  >([]);
 
   const formatDateToString = (date: Date | undefined) => {
-    if (!date) return '';
-    const koreaDate = new Date(date.getTime() + (9 * 60 * 60 * 1000));
-    return koreaDate.toISOString().split('T')[0];
+    if (!date) return "";
+    const koreaDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
+    return koreaDate.toISOString().split("T")[0];
   };
 
-  const loadEmployees = async (searchValue: SearchValue = { term: "", field: "all" }) => {
+  const loadEmployees = async (
+    searchValue: SearchValue = { term: "", field: "all" }
+  ) => {
     try {
-      console.log(searchValue.term)
+      console.log(searchValue.term);
       const res = await getData(
         `v1/manager/member/list?page=${currentPage}&search=${searchValue.term}&filter=${searchValue.field}&startDate=${formatDateToString(currentDateRange.startDate)}&endDate=${formatDateToString(currentDateRange.endDate)}`,
         true
       );
-
-      console.log(res.data)
-      if (res.resultCode === 'OK' && res.data) {
-        setEmployees(res.data.memberList);
-        setMaxPage(res.data.maxPage);
+      console.log(res);
+      if (
+        (String(res.resultCode) === "200" || String(res.resultCode) === "OK") &&
+        res.data
+      ) {
+        setEmployees(res.data.list);
+        setMaxPage(res.data.totalPages);
       }
     } catch (error) {
       console.error("직원 목록 로딩 오류:", error);
@@ -60,7 +67,7 @@ export default function EmployeeList() {
     loadEmployees();
   }, [currentPage, currentDateRange]);
 
-    const { refetch: getExcelData } = useQuery({
+  const { refetch: getExcelData } = useQuery({
     queryKey: ["employeesExcel", currentDateRange],
     queryFn: () =>
       getData(

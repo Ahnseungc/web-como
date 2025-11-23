@@ -30,9 +30,14 @@ export default function ReportList() {
           formatDate(currentDateRange.endDate)
         );
 
-        if (data.resultCode === "OK" && data.data) {
+        if (
+          (String(data.resultCode) === "OK" ||
+            String(data.resultCode) === "200") &&
+          data.data
+        ) {
+          console.log(data);
           setActivities(data.data.list || []);
-          setMaxPage(data.data.maxPage || 1);
+          setMaxPage(data.data.totalPages || 1);
         } else {
           setActivities([]);
           setMaxPage(1);

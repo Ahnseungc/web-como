@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import type { QnaListData } from "@/api/types/club/question/index";
 import DateFilter, {
   type DateRange,
@@ -13,7 +14,7 @@ import ClubQnaTable from "@/components/dashboard/club/manage/molecules/ClubQnaTa
 
 export default function ClubQnaList() {
   const { data } = useQuery({
-    queryKey: ["club-manage", "qna", 'list'],
+    queryKey: ["club-manage", "qna", "list"],
     queryFn: () =>
       getData("v2/club/web/question/", true).then(
         (res) => res.data as QnaListData

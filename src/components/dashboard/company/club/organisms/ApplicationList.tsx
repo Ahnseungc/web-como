@@ -7,7 +7,8 @@ import DateFilter, {
 import Pagination from "@/components/dashboard/common/Pagination";
 import ApplicationTable from "@/components/dashboard/company/club/molecules/ApplicationTable";
 import { startOfToday, subYears } from "date-fns";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import { useEffect } from "react";
 import ApplicationSearch from "@/components/dashboard/company/club/molecules/ApplicationSearch";
 import { SearchValue } from "@/lib/types/search";
@@ -37,11 +38,16 @@ export default function ApplicationList(props: Props) {
   ) => {
     try {
       // 목데이터 API 엔드포인트로 변경
-      const response = await getData(`v1/manager/club?page=${currentPage}&search=${searchValue.term}&startDate=${formatDateToString(currentDateRange.startDate)}&endDate=${formatDateToString(currentDateRange.endDate)}`);
+      const response = await getData(
+        `v1/manager/club?page=${currentPage}&search=${searchValue.term}&startDate=${formatDateToString(currentDateRange.startDate)}&endDate=${formatDateToString(currentDateRange.endDate)}`
+      );
       console.log(response);
-      if (response.resultCode === "OK") {
-        setApplications(response.data.memberList);
-        setMaxPage(response.data.maxPage);
+      if (
+        String(response.resultCode === "OK") ||
+        String(response.resultCode === "200")
+      ) {
+        setApplications(response.data.list);
+        setMaxPage(response.data.totalPages);
       }
     } catch (error) {
       console.error("동호회 신청 목록 로딩 오류:", error);

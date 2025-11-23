@@ -142,7 +142,10 @@ export default function NewExpenseReportForm({
       console.error("Mutation error:", e);
     },
     onSuccess: (data) => {
-      if (data.resultCode === "OK") {
+      if (
+        String(data.resultCode) === "OK" ||
+        String(data.resultCode) === "200"
+      ) {
         autoSave.clearSavedData();
         showToast(
           "활동비 지급 신청서 (품의서)가 작성 및 담당 부서에게 전달되었습니다.",

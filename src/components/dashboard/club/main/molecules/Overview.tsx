@@ -1,46 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { getClientData } from "@/lib/client-utils";
+import { getClientData, getData } from "@/lib/client-utils";
 import type { NotificationData } from "@/api/types/club/notification";
 import { LOGIN_ENDPOINT, CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
 import { useEffect, useState } from "react";
 
-// 개발 중간에 엔드 포인트가 변경되어 getData 사용 시 모든 참조를 찾아서 일일이 수정해야 합니다. 권장 x...
-// const getClubJoinRequest = async () => {
-//   const [clubId, token] = await Promise.all([getClubId(), getAccessToken()]);
-
-//   const res = await fetch(
-//     `${process.env.NEXT_PUBLIC_SERVER_URL}/v1/executive/club/${clubId}/count/pending`,
-//     {
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//       cache: "force-cache",
-//     }
-//   );
-
-//   return res.json();
-// };
-
 export default function DashboardOverview() {
-  // const res = await getData("v2/club/web/notification/", true);
-  // const data: NotificationData = res.data;
-
-  // 이후 주무부서 공지사항, 최근 omo 공지사항 연동해야함
-  // const [clubJoinRequest] = await Promise.all([getClubJoinRequest()]);
-  // console.log(clubJoinRequest);
-
   const [dashboardNotifications, setDashboardNotifications] =
     useState<NotificationData>();
   const getDashboardNotifications = async () => {
     try {
-      const response = await getClientData(
-        "executive/club/{clubId}/dashboard/notifications",
+      const response = await getData(
+        "v1/executive/club/{clubId}/dashboard/notifications",
         true
       );
-
-      if (response.resultCode === "OK") {
+      console.log(response);
+      if (String(response.resultCode) === "200") {
         setDashboardNotifications(response.data);
         console.log("dashboardNotifications", dashboardNotifications);
       }

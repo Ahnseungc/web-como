@@ -1,4 +1,5 @@
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 
 export const getRejectionReason = async (expenseId: string) => {
   const response = await getData(

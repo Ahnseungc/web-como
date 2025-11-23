@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import type { ClubIndexData } from "@/api/types/club";
 import { cn, openModal } from "@/lib/utils";
 import { CATEGORY } from "@/lib/types/enum";

@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import type { QnaAnswerData } from "@/api/types/club/question/answer";
 import { formatDate } from "@/lib/utils";
 import Avatar from "@/components/common/Avatar";

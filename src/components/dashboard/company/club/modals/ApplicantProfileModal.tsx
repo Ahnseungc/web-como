@@ -5,7 +5,8 @@ import { closeModal } from "@/lib/utils";
 import Backdrop from "@/components/common/Backdrop";
 import { Close } from "@/assets/icons/action";
 import { useState, useEffect } from "react";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 
 interface ApplicantData {
   name: string;
@@ -19,15 +20,20 @@ export default function ApplicantProfileModal() {
   const image = null;
   // const clubs = true ? [1, 2, 3] : null;
   const [loading, setLoading] = useState(true);
-  const [applicantData, setApplicantData] = useState<ApplicantData | null>(null);
+  const [applicantData, setApplicantData] = useState<ApplicantData | null>(
+    null
+  );
   const [modalParams, setModalParams] = useState<any>(null);
 
   useEffect(() => {
-    const modal = document.getElementById('applicant-profile');
+    const modal = document.getElementById("applicant-profile");
     if (modal) {
       const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
-          if (mutation.type === 'attributes' && mutation.attributeName === 'data-modal-params') {
+          if (
+            mutation.type === "attributes" &&
+            mutation.attributeName === "data-modal-params"
+          ) {
             const newParams = modal.dataset.modalParams;
             if (newParams) {
               setModalParams(JSON.parse(newParams));
@@ -38,7 +44,7 @@ export default function ApplicantProfileModal() {
 
       observer.observe(modal, {
         attributes: true,
-        attributeFilter: ['data-modal-params']
+        attributeFilter: ["data-modal-params"],
       });
 
       return () => observer.disconnect();
@@ -48,7 +54,9 @@ export default function ApplicantProfileModal() {
   useEffect(() => {
     const fetchApplicantData = async () => {
       try {
-        const res = await getData(`v1/manager/member/${modalParams.applicantId}/modal`);
+        const res = await getData(
+          `v1/manager/member/${modalParams.applicantId}/modal`
+        );
         console.log(res.data);
         setApplicantData(res.data);
         setLoading(false);
@@ -115,7 +123,8 @@ export default function ApplicantProfileModal() {
           <div className="body-2 font-medium text-gray-600">
             {"현재 관리중인 동호회"}
           </div>
-          {applicantData?.managingClubList && applicantData.managingClubList.length > 0 ? (
+          {applicantData?.managingClubList &&
+          applicantData.managingClubList.length > 0 ? (
             applicantData.managingClubList.map((club) => (
               <div key={club} className="h4 font-bold text-gray-900">
                 {`${club}`}

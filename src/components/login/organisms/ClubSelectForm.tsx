@@ -15,27 +15,27 @@ export default function ClubSelectForm() {
 
   const [clubOptions, setClubOptions] = useState<LoginClubDTO[]>();
   const [selectedClub, setSelectedClub] = useState<LoginClubDTO>();
-  
+
   let alertShown = false;
-  
+
   const getClubOptions = async () => {
     const token = await getAccessToken();
 
     try {
-      const response = await fetch(`/api/server/v1/executive/club/select`, {
+      const response = await fetch(`/api/v1/executive/club/select`, {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
-      
+      console.log(response);
       // API 응답 확인을 위한 콘솔 로그
       // console.log("API 응답 상태:", response.status);
 
       if (response.status === 400 && !alertShown) {
         alertShown = true;
-        alert('인증이 필요한 서비스입니다. 다시 로그인해 주세요.');
+        alert("인증이 필요한 서비스입니다. 다시 로그인해 주세요.");
         window.location.replace(LOGIN_ENDPOINT);
       }
 
@@ -55,7 +55,7 @@ export default function ClubSelectForm() {
       setClubOptions(clubList);
       // setSelectedClub(clubList[0]);
     } catch (error) {
-      console.error('관리 중인 동호회 목록 조회 에러:', error);
+      console.error("관리 중인 동호회 목록 조회 에러:", error);
     }
   };
 
@@ -73,7 +73,8 @@ export default function ClubSelectForm() {
   //   }
   // }, [selectedClub]);
 
-  if (!clubOptions) {  // 초기 로딩 상태
+  if (!clubOptions) {
+    // 초기 로딩 상태
     return null;
   }
 

@@ -8,7 +8,8 @@ import BackButton from "@/components/dashboard/common/BackButton";
 import PDFViewer from "@/components/dashboard/club/common/PDFViewer";
 import RejectApplicationModal from "@/components/dashboard/company/club/modals/RejectApplicationModal";
 import RevertRejectionModal from "@/components/dashboard/company/club/modals/RevertRejectionModal";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import Image from "next/image";
 
 export default function ApplicationDetailPage() {
@@ -31,32 +32,37 @@ export default function ApplicationDetailPage() {
   const keyMapping = {
     name: "동호회명",
     intro: "동호회 한줄 소개",
+    clubCategory: "카테고리",
+    companyName: "회사명",
     location: "활동 지역",
     activityPlan: "활동 일정",
     goal: "개설 목적",
     operationPlan: "운영 방침",
-    duePerMonth: "월회비",
+    detail: "주요 운영 계획",
+    duesPerMonth: "월회비",
+    duesPerYear: "연회비",
+    minMemberCount: "최소 인원",
+    maxMemberCount: "최대 인원",
+    currentMember: "현재 인원",
     headName: "운영장 이름",
     headPosition: "운영장 직책",
     headDepartment: "운영장 부서",
-    deputyName: "부운영장 이름",
-    deputyPosition: "부운영장 직책",
-    deputyDepartment: "부운영장 부서",
+    subHeadName: "부운영장 이름",
+    subHeadDepartment: "부운영장 부서",
     affairsName: "총무 이름",
     affairsPosition: "총무 직책",
     affairsDepartment: "총무 부서",
-    category: "카테고리",
-    maxMember: "최대 인원",
-    currentMember: "최소 인원",
-    duesPerMonth: "월회비",
-    detail: "주요 운영 계획",
     calculationBasis: "산출 기초",
     businessItem: "사업 항목 및 내용",
-    bank: "동호회 회칙",
+    bank: "은행",
+    clubImage: "동호회 이미지",
+    bankbookImage: "통장 사본",
     signature: "서명 이미지",
+    latitude: "위도",
+    longitude: "경도",
+    createdAt: "생성일",
+    isJoined: "가입 여부",
   };
-
-  //빌드 트리거
 
   useEffect(() => {
     const fetchRegistrationData = async () => {
@@ -64,14 +70,14 @@ export default function ApplicationDetailPage() {
         const response = await getData(
           `v1/manager/club/${clubId}/registration`
         ); // API 호출
-        console.log("response", response);
-        if (response.resultCode === "OK") {
+        // console.log("response", response);
+        if (String(response.resultCode === "200")) {
           setRegistrationData(response.data);
         }
       } catch (err) {
         console.error("동호회 개설 신청서 로딩 오류:", err);
       } finally {
-        setLoading(false); // 로딩 상태 업데이트
+        setLoading(false);
       }
     };
 

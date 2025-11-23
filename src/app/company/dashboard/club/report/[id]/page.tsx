@@ -11,12 +11,10 @@ import ReportDetail, {
 import ReportConfirmModal from "@/components/dashboard/company/club/modals/ReportConfirmModal";
 import RejectReasonInputModal from "@/components/dashboard/company/club/modals/RejectReasonInputModal";
 import AlertModal from "@/components/dashboard/company/club/modals/AlertModal";
-
 import { getReportDetail } from "@/api/actions/company/report/getReportDetail";
 import { getReportRejectionReason } from "@/api/actions/company/report/getReportRejectionReason";
 import { patchApprove } from "@/api/actions/company/report/patchApprove";
 import { patchReject } from "@/api/actions/company/report/patchReject";
-
 import { IResponse } from "@/api/types/index";
 
 export default function Page({ params }: { params: { id: string } }) {
@@ -38,6 +36,7 @@ export default function Page({ params }: { params: { id: string } }) {
     const fetchData = async () => {
       try {
         const data = await getReportDetail(params.id);
+        console.log(data);
 
         // REJECTED 상태일 때만 반려 사유 API 호출
         let rejectData = null;

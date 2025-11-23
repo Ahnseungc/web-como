@@ -7,7 +7,8 @@ import BackButton from "@/components/dashboard/common/BackButton";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { getClubId } from "@/lib/cookies";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const searchParams = useSearchParams();
@@ -31,27 +32,30 @@ const Page = ({ params }: { params: { id: string } }) => {
   useEffect(() => {
     const fetchExpense = async () => {
       if (clubId) {
-      const { data } = await getData(`v1/executive/club/${clubId}/activity-expenses/${params.id}`, true)
-      setExpense({
-        eventName: data.eventName,
-        description: data.description,
-        note: data.note,
-        location: data.location,
-        participantCount: data.participantCount,
-        amount: data.amount,
-        details: data.details,
-        file: data.file,
-      });
-      setCardInfo({
-        clubId: data.clubId,
-        clubImage: data.clubImage,
-        leadersSummary: data.leadersSummary,
-        activityPlan: data.activityPlan,
-        memberCount: data.memberCount,
-        status: data.status,
-        createdAt: data.createdAt,
-        clubName: clubName || "",
-      });
+        const { data } = await getData(
+          `v1/executive/club/${clubId}/activity-expenses/${params.id}`,
+          true
+        );
+        setExpense({
+          eventName: data.eventName,
+          description: data.description,
+          note: data.note,
+          location: data.location,
+          participantCount: data.participantCount,
+          amount: data.amount,
+          details: data.details,
+          file: data.file,
+        });
+        setCardInfo({
+          clubId: data.clubId,
+          clubImage: data.clubImage,
+          leadersSummary: data.leadersSummary,
+          activityPlan: data.activityPlan,
+          memberCount: data.memberCount,
+          status: data.status,
+          createdAt: data.createdAt,
+          clubName: clubName || "",
+        });
       }
     };
     fetchExpense();

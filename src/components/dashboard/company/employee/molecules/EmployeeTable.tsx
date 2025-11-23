@@ -6,10 +6,6 @@ import ApplicationDetailModal from "@/components/dashboard/company/employee/moda
 import EditEmployeeInfoModal from "@/components/dashboard/company/employee/modals/EditEmployeeInfoModal";
 import DeleteEmployeeModal from "@/components/dashboard/company/employee/modals/DeleteEmployeeModal";
 import DeleteReasonModal from "../modals/DeleteReasonModal";
-import { useEffect, useState } from "react";
-import { getData } from "@/api/action";
-import { startOfToday } from "date-fns";
-import { DateRange } from "@/components/dashboard/common/DateFilter";
 
 const tableHeadings = [
   "순번",
@@ -21,16 +17,14 @@ const tableHeadings = [
   "회원 상태 수정",
 ];
 
-type EmployeeStatus = "pending" | "active" | "deleted";
-
 interface Employee {
   memberId: string;
-  memberName: string;
+  name: string;
   department: string;
   position: string;
   clubName: string;
-  joinDate: string;
-  memberStatus: string;
+  createAt: string;
+  status: string;
 }
 
 interface EmployeeTableProps {
@@ -65,7 +59,7 @@ export default function EmployeeTable({ employees }: EmployeeTableProps) {
                 i === 2 ? "w-[19%]" : "",
                 i === 3 ? "w-[19%]" : "",
                 i === 4 ? "w-[19%]" : "",
-                i === 5 ? "w-[19%] pr-4" : "",
+                i === 5 ? "w-[19%] pr-4" : ""
               )}
             >
               {heading}
@@ -77,23 +71,23 @@ export default function EmployeeTable({ employees }: EmployeeTableProps) {
             key={employee.memberId}
             className={cn(
               "flex border-b border-gray-400 bg-gray-0 transition duration-200 h-14 items-center",
-              employee.memberStatus === "Y"
+              employee.status === "ACTIVE"
                 ? "cursor-pointer group hover:bg-gray-200"
                 : ""
             )}
             onClick={() => {
-              if (employee.memberStatus === "Y") {
+              if (employee.status === "ACTIVE") {
                 handleRowClick(employee.memberId);
               }
             }}
           >
             {[
               idx + 1,
-              employee.memberName,
+              employee.name,
               employee.department,
               employee.position,
-              employee.joinDate,
-              employee.memberStatus,
+              employee.createAt,
+              employee.status,
             ].map((data, i) => (
               <div
                 key={i}
@@ -112,11 +106,13 @@ export default function EmployeeTable({ employees }: EmployeeTableProps) {
                 {i === 0 ? (
                   idx + 1
                 ) : i === 4 ? (
-                  Array.isArray(data) ? 
-                    formatDate(new Date(data[0], data[1]-1, data[2])) : 
+                  Array.isArray(data) ? (
+                    formatDate(new Date(data[0], data[1] - 1, data[2]))
+                  ) : (
                     formatDate(new Date(data))
+                  )
                 ) : i === 5 ? (
-                  data === "Y" ? (
+                  data === "ACTIVE" ? (
                     <div
                       className="flex gap-2"
                       onClick={(e) => e.stopPropagation()}
@@ -124,13 +120,21 @@ export default function EmployeeTable({ employees }: EmployeeTableProps) {
                       <button
                         className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-gray-800"
                         // onClick={() => openModal("employee-edit")}
-                        onClick={() => openModal("employee-edit", { memberId: employee.memberId })}
+                        onClick={() =>
+                          openModal("employee-edit", {
+                            memberId: employee.memberId,
+                          })
+                        }
                       >
                         {"수정"}
                       </button>
                       <button
                         className="py-1 px-4 rounded border border-gray-800 body-1 font-medium text-gray-800"
-                        onClick={() => openModal("delete-reason", { memberId: employee.memberId })}
+                        onClick={() =>
+                          openModal("delete-reason", {
+                            memberId: employee.memberId,
+                          })
+                        }
                       >
                         {"삭제"}
                       </button>

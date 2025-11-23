@@ -1,5 +1,9 @@
-import { getData } from "@/api/action";
-import { ClubWebActivityInfoDTO, ClubWebActivityPictureInfoDTO } from "@/api/types/club/activity";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
+import {
+  ClubWebActivityInfoDTO,
+  ClubWebActivityPictureInfoDTO,
+} from "@/api/types/club/activity";
 import ClubTitle from "@/components/dashboard/shared/molecules/ClubTitle";
 import ClubPictureDetailItem from "@/components/dashboard/shared/organisms/ClubPictureDetailItem";
 import ClubPictureItem from "@/components/dashboard/shared/organisms/ClubPictureItem";

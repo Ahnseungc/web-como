@@ -38,6 +38,7 @@ const Page = ({ params }: { params: { id: string } }) => {
       const data = await getExpenseDetailClient(params.id);
       const reasonData = await getRejectionReasonClient(params.id);
 
+      console.log(data);
       console.log("reasonData:", reasonData);
 
       setExpense({

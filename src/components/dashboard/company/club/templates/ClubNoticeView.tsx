@@ -8,7 +8,8 @@ import ClubTitle from "@/components/dashboard/shared/molecules/ClubTitle";
 import { startOfToday, subYears } from "date-fns";
 import { useEffect, useState } from "react";
 import ClubNoticeTable, { ClubNotice } from "../organisms/ClubNoticeTable";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import { useParams } from "next/navigation";
 
 const ClubNoticeView = () => {

@@ -20,7 +20,12 @@ export default function ExpenseOverview() {
     const loadStats = async () => {
       try {
         const summary = await getSummary();
-        if (summary.resultCode === "OK" && summary.data) {
+        console.log(summary);
+        if (
+          (String(summary.resultCode) === "OK" ||
+            String(summary.resultCode) === "200") &&
+          summary.data
+        ) {
           setStats({
             pending: summary.data.pendingCount || 0,
             approved: summary.data.approvedCount || 0,

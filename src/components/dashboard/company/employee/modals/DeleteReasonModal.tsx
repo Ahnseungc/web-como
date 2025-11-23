@@ -7,23 +7,27 @@ import Button from "@/components/common/Button";
 import { Close } from "@/assets/icons/action";
 import { ChevronRight } from "@/assets/icons/chevron";
 import { useState, useEffect } from "react";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import { getAccessToken } from "@/lib/cookies";
 
 export default function DeleteReasonModal() {
   const [modalParams, setModalParams] = useState<any>(null);
   const [memberData, setMemberData] = useState<any>(null);
-  const [deleteReason, setDeleteReason] = useState('');
+  const [deleteReason, setDeleteReason] = useState("");
   const [errorMessage, setErrorMessage] = useState(""); // 에러 메시지 상태
 
   useEffect(() => {
-    const modal = document.getElementById('delete-reason');
+    const modal = document.getElementById("delete-reason");
     // console.log('모달 엘리먼트:', modal); // 모달 엘리먼트 확인
 
     if (modal) {
       const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
-          if (mutation.type === 'attributes' && mutation.attributeName === 'data-modal-params') {
+          if (
+            mutation.type === "attributes" &&
+            mutation.attributeName === "data-modal-params"
+          ) {
             const newParams = modal.dataset.modalParams;
             // console.log('새로운 모달 파라미터:', newParams); // 파라미터 확인
             if (newParams) {
@@ -37,7 +41,7 @@ export default function DeleteReasonModal() {
 
       observer.observe(modal, {
         attributes: true,
-        attributeFilter: ['data-modal-params']
+        attributeFilter: ["data-modal-params"],
       });
 
       return () => observer.disconnect();
@@ -51,9 +55,15 @@ export default function DeleteReasonModal() {
 
       try {
         // console.log('API 호출 시작:', modalParams.memberId); // API 호출 확인
-        const res = await getData(`v1/manager/member/${modalParams.memberId}`, true);
+        const res = await getData(
+          `v1/manager/member/${modalParams.memberId}`,
+          true
+        );
         // console.log('API 응답:', res); // API 응답 확인
-        if (res.resultCode === 'OK') {
+        if (
+          String(res.resultCode) === "200" ||
+          String(res.resultCode) === "OK"
+        ) {
           setMemberData(res.data);
         }
       } catch (error) {
@@ -74,14 +84,17 @@ export default function DeleteReasonModal() {
 
     try {
       const token = await getAccessToken();
-      const response = await fetch(`/api/server/v1/manager/member/${modalParams.memberId}`, {
-        method: 'DELETE',
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify({ reason: deleteReason })
-      });
+      const response = await fetch(
+        `/api/server/v1/manager/member/${modalParams.memberId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+          body: JSON.stringify({ reason: deleteReason }),
+        }
+      );
 
       // console.log('삭제 응답:', response.status);
 
@@ -113,7 +126,7 @@ export default function DeleteReasonModal() {
           </div>
           <div className="pb-8 border-b border-gray-400">
             <Input
-              label={`${memberData?.name || '김오모'}님의 회원 삭제 사유`}
+              label={`${memberData?.name || "김오모"}님의 회원 삭제 사유`}
               value={deleteReason}
               onChange={(e) => {
                 setDeleteReason(e.target.value);
@@ -121,7 +134,15 @@ export default function DeleteReasonModal() {
               }}
               placeholder="삭제 사유를 입력해주세요"
             />
-            {errorMessage && <p className="mt-2 text-[16px] font-[500]" style={{ color: "#FF3D00" }}>{errorMessage}</p>} {/* 에러 메시지 표시 */}
+            {errorMessage && (
+              <p
+                className="mt-2 text-[16px] font-[500]"
+                style={{ color: "#FF3D00" }}
+              >
+                {errorMessage}
+              </p>
+            )}{" "}
+            {/* 에러 메시지 표시 */}
           </div>
           <div className="flex items-center justify-between text-gray-900 cursor-pointer select-none">
             <div className="h3 font-semibold">
@@ -130,11 +151,7 @@ export default function DeleteReasonModal() {
             <ChevronRight className="w-6 h-6" />
           </div>
           <div className="flex gap-2 justify-center">
-            <Button
-              primary
-              content="삭제하기"
-              onClick={handleDelete}
-            />
+            <Button primary content="삭제하기" onClick={handleDelete} />
           </div>
         </div>
       </div>

@@ -31,8 +31,12 @@ export default function ExpenseList() {
           formatDate(currentDateRange.endDate)
         );
 
-        if (data.resultCode === "OK" && data.data) {
-          setMaxPage(data.data.maxPage || 1);
+        if (
+          (String(data.resultCode) === "OK" ||
+            String(data.resultCode) === "200") &&
+          data.data
+        ) {
+          setMaxPage(data.data.totalPages || 1);
           setExpenseList(data.data.list || []);
         } else {
           setMaxPage(1);
