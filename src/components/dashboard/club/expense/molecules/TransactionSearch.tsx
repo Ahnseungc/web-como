@@ -31,3 +31,7 @@
 //     />
 //   );
 // }
+
+export default function TransactionSearch() {
+  return <div>거래 검색 (준비중)</div>;
+}

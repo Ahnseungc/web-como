@@ -34,3 +34,6 @@
 //     </div>
 //   );
 // }
+export default function TransactionOverview() {
+  return <div>(준비중)</div>;
+}
