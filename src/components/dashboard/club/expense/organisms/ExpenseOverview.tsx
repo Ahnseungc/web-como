@@ -12,7 +12,7 @@ export default async function ExpenseOverview() {
   const clubId = await getClubId();
 
   const requestRes = await getData(
-    `v1/executive/club/${clubId}/activity-expenses/summary`,
+    `v1/executive/club/${clubId}/activity-expense/summary`,
     false
   );
   const requestData: ExpenseOverviewData = requestRes.data;

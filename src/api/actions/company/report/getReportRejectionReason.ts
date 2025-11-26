@@ -22,6 +22,5 @@ export const getReportRejectionReason = async (reportId: string) => {
   const response = await getData(
     `v1/manager/club/report/${reportId}/rejection-reason`
   );
-  console.log("123123123", response);
   return response.data;
 };

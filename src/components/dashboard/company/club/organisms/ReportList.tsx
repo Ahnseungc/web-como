@@ -35,7 +35,6 @@ export default function ReportList() {
             String(data.resultCode) === "200") &&
           data.data
         ) {
-          console.log(data);
           setActivities(data.data.list || []);
           setMaxPage(data.data.totalPages || 1);
         } else {

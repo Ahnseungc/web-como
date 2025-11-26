@@ -36,7 +36,6 @@ export default function Page({ params }: { params: { id: string } }) {
     const fetchData = async () => {
       try {
         const data = await getReportDetail(params.id);
-        console.log(data);
 
         // REJECTED 상태일 때만 반려 사유 API 호출
         let rejectData = null;

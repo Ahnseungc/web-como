@@ -18,6 +18,6 @@
 import { getData } from "@/lib/client-utils";
 
 export const getExpenseDetailClient = async (expenseId: string) => {
-  const response = await getData(`v1/manager/activity-expenses/${expenseId}`);
+  const response = await getData(`v1/manager/activity-expense/${expenseId}`);
   return response;
 };

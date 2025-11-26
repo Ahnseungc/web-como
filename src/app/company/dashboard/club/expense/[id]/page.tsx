@@ -38,13 +38,10 @@ const Page = ({ params }: { params: { id: string } }) => {
       const data = await getExpenseDetailClient(params.id);
       const reasonData = await getRejectionReasonClient(params.id);
 
-      console.log(data);
-      console.log("reasonData:", reasonData);
-
       setExpense({
         eventName: data.data.eventName,
         description: data.data.description,
-        note: data.data.note,
+        content: data.data.content,
         location: data.data.location,
         participantCount: data.data.participantCount,
         amount: data.data.amount,
@@ -81,12 +78,12 @@ const Page = ({ params }: { params: { id: string } }) => {
     if (newStatus === "APPROVED") {
       try {
         setIsApproving(true);
-        console.log("승인 처리 시작");
+        // console.log("승인 처리 시작");
         const result = await patchApprove(id);
-        console.log("승인 처리 결과:", result);
-        console.log("setStatus 호출 전 status:", status);
+        // console.log("승인 처리 결과:", result);
+        // console.log("setStatus 호출 전 status:", status);
         setStatus("APPROVED");
-        console.log("setStatus 호출 후 status:", status);
+        // console.log("setStatus 호출 후 status:", status);
       } catch (error) {
         console.error("승인 처리 실패:", error);
       } finally {

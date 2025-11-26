@@ -20,7 +20,7 @@ export default function ExpenseOverview() {
     const loadStats = async () => {
       try {
         const summary = await getSummary();
-        console.log(summary);
+
         if (
           (String(summary.resultCode) === "OK" ||
             String(summary.resultCode) === "200") &&

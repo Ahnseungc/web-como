@@ -143,10 +143,10 @@ const ExpenseReportPDF = ({ expense }: { expense: ExpenseFormValues }) => (
           <Text style={styles.value}>{expense.description}</Text>
         </View>
 
-        {expense.note && (
+        {expense.content && (
           <View style={styles.field}>
             <Text style={styles.label}>주요 내용</Text>
-            <Text style={styles.value}>{expense.note}</Text>
+            <Text style={styles.value}>{expense.content}</Text>
           </View>
         )}
       </View>
@@ -217,7 +217,7 @@ export default function ExpenseReportForm({
     setFormValues({
       eventName: expense.eventName,
       description: expense.description,
-      note: expense.note,
+      content: expense.content,
       location: expense.location,
       participantCount: expense.participantCount,
       amount: expense.amount,
@@ -345,7 +345,7 @@ export default function ExpenseReportForm({
               required
             />
             <Input
-              value={formValues.note}
+              value={formValues.content}
               name="note"
               label="주요 내용"
               type="text"

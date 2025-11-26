@@ -13,7 +13,7 @@ export interface ExpenseApplicationEntry {
 export type ExpenseFormValues = {
   eventName: string;
   description: string;
-  note: string;
+  content: string;
   location: string;
   participantCount: number;
   amount: number;

@@ -130,7 +130,6 @@ export const getData = async (
   }
 
   const res: IResponse = await response.json();
-  console.log(res);
   return res;
 };
 
