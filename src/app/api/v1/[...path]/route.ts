@@ -8,18 +8,14 @@ async function proxyToBackend(
   method: string
 ) {
   const pathSegments = context.params.path;
-
   const backendPath = `api/v1/${pathSegments.join("/")}`;
-
   const accessToken = cookies().get("accessToken")?.value;
   const backendUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/${backendPath}`;
-
   const searchParams = request.nextUrl.searchParams.toString();
   const fullUrl = searchParams ? `${backendUrl}?${searchParams}` : backendUrl;
 
-  console.log(`🔍 ${method} Proxying to:`, fullUrl);
-  console.log("🔑 Token:", accessToken ? "exists" : "missing");
-
+  // console.log(`🔍 ${method} Proxying to:`, fullUrl);
+  // console.log("🔑 Token:", accessToken ? "exists" : "missing");
   const headers: HeadersInit = {
     "Content-Type": "application/json",
   };
@@ -38,7 +34,7 @@ async function proxyToBackend(
       body,
     });
 
-    console.log("📡 Backend response:", response.status);
+    // console.log("📡 Backend response:", response.status);
 
     const contentType = response.headers.get("content-type");
     if (contentType?.includes("text/html")) {

@@ -1,4 +1,3 @@
-// next.config.mjs
 import TerserPlugin from "terser-webpack-plugin";
 
 /** @type {import('next').NextConfig} */
@@ -22,14 +21,6 @@ const nextConfig = {
     ];
     return config;
   },
-  // async rewrites() {
-  //   return [
-  //     {
-  //       source: "/api/v1/:path*",
-  //       destination: `${process.env.NEXT_PUBLIC_SERVER_URL}/v1/:path*`,
-  //     },
-  //   ];
-  // },
 };
 
 export default nextConfig;
