@@ -39,7 +39,7 @@ const Page = ({ params }: { params: { id: string } }) => {
         setExpense({
           eventName: data.eventName,
           description: data.description,
-          note: data.note,
+          content: data.content,
           location: data.location,
           participantCount: data.participantCount,
           amount: data.amount,
