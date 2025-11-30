@@ -21,7 +21,7 @@ interface Props {
 export default function ApplicationList(props: Props) {
   const [applications, setApplications] = useState([]);
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
-    startDate: subYears(startOfToday(), 1), // 1년 전 날짜
+    createdDate: subYears(startOfToday(), 1), // 1년 전 날짜
     endDate: startOfToday(),
   });
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,7 +39,7 @@ export default function ApplicationList(props: Props) {
     try {
       // 목데이터 API 엔드포인트로 변경
       const response = await getData(
-        `v1/manager/club?page=${currentPage}&search=${searchValue.term}&startDate=${formatDateToString(currentDateRange.startDate)}&endDate=${formatDateToString(currentDateRange.endDate)}`
+        `v1/manager/club?page=${currentPage}&search=${searchValue.term}&startDate=${formatDateToString(currentDateRange.createdDate)}&endDate=${formatDateToString(currentDateRange.endDate)}`
       );
       console.log(response);
       if (

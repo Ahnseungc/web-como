@@ -14,7 +14,7 @@ import { Plus } from "@/assets/icons/action";
 export default function SupplyList() {
   const pathname = usePathname();
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
-    startDate: undefined,
+    createdDate: undefined,
     endDate: undefined,
   });
   const [currentPage, setCurrentPage] = useState<number>(1);

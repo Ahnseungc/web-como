@@ -22,7 +22,7 @@ export default function ClubQnaList() {
   });
 
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
-    startDate: undefined,
+    createdDate: undefined,
     endDate: undefined,
   } as DateRange);
   const [currentPage, setCurrentPage] = useState<number>(1);

@@ -22,7 +22,7 @@ export default function ReportList({ clubId }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
-    startDate: addYears(startOfToday(), -1),
+    createdDate: addYears(startOfToday(), -1),
     endDate: startOfToday(),
   });
 
@@ -43,12 +43,12 @@ export default function ReportList({ clubId }: Props) {
       queryKey: [
         clubId,
         "reportList",
-        currentDateRange.startDate,
+        currentDateRange.createdDate,
         currentDateRange.endDate,
       ],
       queryFn: ({ pageParam }) =>
         getData(
-          `v1/executive/club/${clubId}/reports?startDate=${formatDate(currentDateRange.startDate)}&endDate=${formatDate(currentDateRange.endDate)}&page=${pageParam}`,
+          `v1/executive/club/${clubId}/reports?startDate=${formatDate(currentDateRange.createdDate)}&endDate=${formatDate(currentDateRange.endDate)}&page=${pageParam}`,
           false
         ),
       getNextPageParam: (lastPage) => {

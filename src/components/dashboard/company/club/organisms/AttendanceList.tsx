@@ -17,7 +17,7 @@ const orderList = [
 
 export default function AttendanceList() {
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
-    startDate: undefined,
+    createdDate: undefined,
     endDate: undefined,
   });
   const [currentOrder, setCurrentOrder] = useState<string>("date-desc");

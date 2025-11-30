@@ -28,7 +28,7 @@ export default function MemberList({ clubId }: Props) {
   // });
 
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
-    startDate: subYears(startOfToday(), 1), // 1년 전 날짜
+    createdDate: subYears(startOfToday(), 1), // 1년 전 날짜
     endDate: startOfToday(),
   });
   const [currentPage, setCurrentPage] = useState(1);

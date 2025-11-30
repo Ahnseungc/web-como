@@ -21,7 +21,7 @@ interface Props {
 export default function ClubList(props: Props) {
   const [clubs, setClubs] = useState([]);
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
-    startDate: subYears(startOfToday(), 1), // 1년 전 날짜
+    createdDate: subYears(startOfToday(), 1), // 1년 전 날짜
     endDate: startOfToday(),
   });
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,10 +38,10 @@ export default function ClubList(props: Props) {
   ) => {
     try {
       const response = await getData(
-        `v1/manager/club/manage-list?page=${currentPage}&search=${searchValue.term}&filter=${searchValue.field}&startDate=${formatDateToString(currentDateRange.startDate)}&endDate=${formatDateToString(currentDateRange.endDate)}`,
+        `v1/manager/club/manage-list?page=${currentPage}&search=${searchValue.term}&filter=${searchValue.field}&startDate=${formatDateToString(currentDateRange.createdDate)}&endDate=${formatDateToString(currentDateRange.endDate)}`,
         false
       );
-      console.log("1231231231", response);
+
       if (
         (String(response.resultCode) === "200" ||
           String(response.resultCode) === "OK") &&

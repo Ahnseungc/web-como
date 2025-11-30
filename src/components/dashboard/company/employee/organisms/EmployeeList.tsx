@@ -25,7 +25,7 @@ type PrintableEmployee = {
 
 export default function EmployeeList() {
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
-    startDate: subYears(startOfToday(), 1), // 1년 전 날짜
+    createdDate: subYears(startOfToday(), 1), // 1년 전 날짜
     endDate: startOfToday(),
   });
   const [currentPage, setCurrentPage] = useState(1);
@@ -47,7 +47,7 @@ export default function EmployeeList() {
     try {
       console.log(searchValue.term);
       const res = await getData(
-        `v1/manager/member/list?page=${currentPage}&search=${searchValue.term}&filter=${searchValue.field}&startDate=${formatDateToString(currentDateRange.startDate)}&endDate=${formatDateToString(currentDateRange.endDate)}`,
+        `v1/manager/member/list?page=${currentPage}&search=${searchValue.term}&filter=${searchValue.field}&startDate=${formatDateToString(currentDateRange.createdDate)}&endDate=${formatDateToString(currentDateRange.endDate)}`,
         true
       );
       console.log(res);
@@ -72,7 +72,7 @@ export default function EmployeeList() {
     queryFn: () =>
       getData(
         `v1/manager/member/excel?startDate=${formatDateToString(
-          currentDateRange.startDate
+          currentDateRange.createdDate
         )}&endDate=${formatDateToString(currentDateRange.endDate)}`,
         false
       ),

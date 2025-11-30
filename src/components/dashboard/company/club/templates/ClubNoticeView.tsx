@@ -18,7 +18,7 @@ const ClubNoticeView = () => {
 
   const [notices, setNotices] = useState<ClubNotice[]>([]);
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
-    startDate: subYears(startOfToday(), 1), // 1년 전 날짜
+    createdDate: subYears(startOfToday(), 1), // 1년 전 날짜
     endDate: startOfToday(),
   });
   const [maxPage, setMaxPage] = useState(1);
