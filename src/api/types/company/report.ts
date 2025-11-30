@@ -1,6 +1,6 @@
 export interface Activity {
   id: number;
-  createdDate: number[]; // [YYYY, MM, DD, HH, mm, ss, ms]
+  createdDate: string;
   activity: string;
   activityDate: string;
   status: "PENDING" | "REJECTED" | "APPROVED";
@@ -20,11 +20,11 @@ export interface ActivityReportExpense {
   remainingAmount: number;
   usageDetail: string;
   submittedBy: string;
-  issuedDate: number[]; // [YYYY, MM, DD]
+  issuedDate: string;
   vendor: string;
   amount: number;
   description: string;
-  file: string;
+  file: string | null;
 }
 
 export interface ActivityReportDetail {
@@ -34,13 +34,13 @@ export interface ActivityReportDetail {
   writerRole: string;
   writerDepartment: string;
   eventName: string;
-  activityDate: number[]; // [YYYY, MM, DD]
-  activityTime: number[]; // [HH, mm]
+  activityDate: string;
+  activityTime: string;
   location: string;
   locationDetail: string;
   participantCount: number;
   activityContent: string;
   note: string;
   photos: ActivityReportPhoto[];
-  expenses: ActivityReportExpense[];
+  receipts: ActivityReportExpense[];
 }

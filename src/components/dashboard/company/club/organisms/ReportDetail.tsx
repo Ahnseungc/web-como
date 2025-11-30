@@ -189,10 +189,10 @@ const ReportPDF = ({ reportData }: { reportData: ActivityReportDetail }) => (
         )}
       </View>
 
-      {reportData.expenses && reportData.expenses.length > 0 && (
+      {reportData.receipts && reportData.receipts.length > 0 && (
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>활동 지원비 정산서</Text>
-          {reportData.expenses.map((expense, idx) => (
+          {reportData.receipts.map((expense, idx) => (
             <View key={idx} style={styles.field}>
               <Text style={styles.label}>과목</Text>
               <Text style={styles.value}>
@@ -438,9 +438,9 @@ const ReportDetail = forwardRef<ReportDetailRef, Props>(({ data }, ref) => {
         </div>
 
         {/* 2페이지: 활동 지원비 정산서부터 */}
-        {reportData?.expenses && reportData.expenses.length > 0 ? (
-          reportData.expenses.map((item, idx) => {
-            const fileIsPDF = isPDFFile(item.file);
+        {reportData?.receipts && reportData.receipts.length > 0 ? (
+          reportData.receipts.map((item, idx) => {
+            const fileIsPDF = item.file ? isPDFFile(item.file) : false;
 
             return (
               <div
@@ -470,7 +470,7 @@ const ReportDetail = forwardRef<ReportDetailRef, Props>(({ data }, ref) => {
                   <div className="flex flex-col basis-1/4">
                     <span className=" text-xl font-[600] mb-[8px]">집행액</span>
                     <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]  ">
-                      {item.usedAmount || "-"}
+                      {item.amount || "-"}
                     </div>
                   </div>
                   <div className="flex flex-col basis-1/4">
@@ -501,7 +501,7 @@ const ReportDetail = forwardRef<ReportDetailRef, Props>(({ data }, ref) => {
                   <div className="flex flex-col basis-1/4">
                     <span className=" text-xl font-[600] mb-[8px] ">일자</span>
                     <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px] ">
-                      {item.issuedDate?.join("-") || "-"}
+                      {item.issuedDate || "-"}
                     </div>
                   </div>
                 </div>

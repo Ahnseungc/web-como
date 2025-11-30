@@ -87,7 +87,7 @@ export default function LoginForm() {
     try {
       // 비밀번호 해싱
       const hashedPassword = SHA256(formData.password).toString(enc.Hex);
-      // console.log("2. 비밀번호 해싱 완료", hashedPassword);
+      console.log("2. 비밀번호 해싱 완료", hashedPassword);
       // `${process.env.NEXT_PUBLIC_SERVER_URL}/api/login`,
       const response = await fetch(`/api/login`, {
         method: "POST",

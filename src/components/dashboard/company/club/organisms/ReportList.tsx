@@ -16,17 +16,17 @@ export default function ReportList() {
   const [maxPage, setMaxPage] = useState(1);
   const [activities, setActivities] = useState<Activity[]>([]);
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
-    startDate: startOfYear(new Date()),
+    createdDate: startOfYear(new Date()),
     endDate: startOfToday(),
   });
   useEffect(() => {
     const fetchData = async () => {
-      if (!currentDateRange.startDate || !currentDateRange.endDate) return;
+      if (!currentDateRange.createdDate || !currentDateRange.endDate) return;
 
       try {
         const data = await getReports(
           currentPage,
-          formatDate(currentDateRange.startDate),
+          formatDate(currentDateRange.createdDate),
           formatDate(currentDateRange.endDate)
         );
 

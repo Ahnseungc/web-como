@@ -3,10 +3,10 @@ export type ExpenseApplicationStatus = "PENDING" | "APPROVED" | "REJECTED";
 export interface ExpenseApplicationEntry {
   id: number;
   clubName: string;
-  applicantName: string;
+  writerName: string;
   department: string;
   eventName: string;
-  createdDate: number[];
+  createdDate: string | number[];
   status: ExpenseApplicationStatus;
 }
 

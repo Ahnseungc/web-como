@@ -9,25 +9,26 @@ import DateFilter, {
 import { getExpense } from "@/api/actions/company/expense/getExpense";
 import { ExpenseApplicationEntry } from "@/api/types/company/expense";
 import { formatDate } from "@/lib/format";
+import { formatDateFlexible } from "@/lib/utils";
 
 export default function ExpenseList() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [expenseList, setExpenseList] = useState<ExpenseApplicationEntry[]>([]);
   const today = new Date();
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
-    startDate: new Date("2025-01-01"),
+    createdDate: new Date("2025-01-01"),
     endDate: today,
   });
   const [maxPage, setMaxPage] = useState<number>(5);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!currentDateRange.startDate || !currentDateRange.endDate) return;
+      if (!currentDateRange.createdDate || !currentDateRange.endDate) return;
 
       try {
         const data = await getExpense(
           currentPage,
-          formatDate(currentDateRange.startDate),
+          formatDate(currentDateRange.createdDate),
           formatDate(currentDateRange.endDate)
         );
 
@@ -81,10 +82,10 @@ export default function ExpenseList() {
           <ExpenseTable
             expenseList={expenseList}
             currentPage={currentPage}
-            startDate={formatDate(
-              currentDateRange.startDate || new Date("2025-01-01")
+            startDate={formatDateFlexible(
+              currentDateRange.createdDate || new Date("2025-01-01")
             )}
-            endDate={formatDate(currentDateRange.endDate || today)}
+            endDate={formatDateFlexible(currentDateRange.endDate || today)}
           />
           <Pagination
             currentPage={currentPage}
