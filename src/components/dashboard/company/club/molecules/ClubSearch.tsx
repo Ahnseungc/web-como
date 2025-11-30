@@ -47,7 +47,7 @@ export default function ClubSearch({
 
     try {
       const response = await getData(
-        `v1/manager/club/manage-list?page=${currentPage}&search=${currentSearchValue.term}&filter=${currentSearchValue.field}&startDate=${currentDateRange.startDate?.toISOString().split("T")[0]}&endDate=${currentDateRange.endDate?.toISOString().split("T")[0]}`,
+        `v1/manager/club/manage-list?page=${currentPage}&search=${currentSearchValue.term}&filter=${currentSearchValue.field}&startDate=${currentDateRange.createdDate?.toISOString().split("T")[0]}&endDate=${currentDateRange.endDate?.toISOString().split("T")[0]}`,
         true
       );
 
