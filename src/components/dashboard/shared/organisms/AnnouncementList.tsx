@@ -9,7 +9,7 @@ import AnnouncementTable from "@/components/dashboard/shared/molecules/Announcem
 
 export default function AnnouncementList() {
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
-    startDate: undefined,
+    createdDate: undefined,
     endDate: undefined,
   });
   const [currentPage, setCurrentPage] = useState<number>(1);

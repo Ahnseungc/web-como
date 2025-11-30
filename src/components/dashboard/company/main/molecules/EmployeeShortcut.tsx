@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronRight } from "@/assets/icons/chevron";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import { useEffect, useState } from "react";
 
 export default function EmployeeShortcut() {
@@ -13,12 +14,15 @@ export default function EmployeeShortcut() {
   useEffect(() => {
     const loadEmployeeCount = async () => {
       try {
-        const res = await getData('v1/manager/member/dashboard', true);
-        if (res.resultCode === 'OK' && res.data) {
-          setEmployeeCount(res.data || 0);  
+        const res = await getData("v1/manager/member/dashboard", true);
+        if (
+          (String(res.resultCode) === "200" ||
+            String(res.resultCode) === "OK") &&
+          res.data
+        ) {
+          setEmployeeCount(res.data.count || 0);
         }
-        // console.log(res.data);
-      } catch (error) { 
+      } catch (error) {
         console.error("직원 수 로딩 오류:", error);
       }
     };

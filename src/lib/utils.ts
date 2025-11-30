@@ -33,12 +33,15 @@ export const closeModal = (id?: string) => {
   }
 };
 
-export function getPageRange(num: number) {
+export function getPageRange(num: number, maxPage: number) {
   const start = Math.floor((num - 1) / 5) * 5 + 1;
 
   const range = [];
   for (let i = 0; i < 5; i++) {
-    range.push(start + i);
+    const page = start + i;
+    if (page <= maxPage) {
+      range.push(page);
+    }
   }
 
   return range;

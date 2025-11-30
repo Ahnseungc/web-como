@@ -34,15 +34,14 @@ export default function Pagination(props: Props) {
         </button>
       </div>
       <div className="flex gap-2.5 items-center">
-        {getPageRange(props.currentPage).map((page) => (
+        {getPageRange(props.currentPage, props.maxPage).map((page) => (
           <button
             key={page}
             className={cn(
               "w-9 h-9 rounded h4 font-semibold",
               page === props.currentPage
                 ? "border border-brand-orange text-brand-orange"
-                : "text-gray-600",
-              page > props.maxPage ? "hidden" : ""
+                : "text-gray-600"
             )}
             onClick={() => props.handlePageChange(page)}
           >

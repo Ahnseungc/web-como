@@ -1,6 +1,7 @@
 "use client";
 
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import { useQuery } from "@tanstack/react-query";
 
 interface Props {

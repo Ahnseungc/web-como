@@ -1,12 +1,22 @@
-import { Axios } from "axios";
-import { getAccessToken } from "../cookies";
+// lib/api/api.ts
+import axios from "axios";
 
-const api = new Axios({
+const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
 });
 
+function getCookie(name: string): string | undefined {
+  if (typeof window === "undefined") return undefined;
+
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) {
+    return parts.pop()?.split(";").shift();
+  }
+}
+
 api.interceptors.request.use((config) => {
-  const token = getAccessToken();
+  const token = getCookie("accessToken");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

@@ -21,14 +21,6 @@ const nextConfig = {
     ];
     return config;
   },
-  async rewrites() {
-    return [
-      {
-        source: "/api/server/:path*",
-        destination: `${process.env.NEXT_PUBLIC_SERVER_URL}/:path*`,
-      },
-    ];
-  },
 };
 
 export default nextConfig;

@@ -13,15 +13,19 @@ const tableHeadings = {
   id: "순번",
   clubName: "동호회명",
   eventName: "행사명",
-  applicant: "신청자",
+  writerName: "신청자",
   department: "부서",
   createdDate: "신청 일자",
   status: "상태",
   rejectReason: "반려사유",
 };
 
-const formatDateFromArray = (dateArray: number[]) => {
-  const [year, month, day] = dateArray;
+const formatDateFromArray = (date: string | number[]) => {
+  if (typeof date === "string") {
+    return date.split("T")[0];
+  }
+
+  const [year, month, day] = date;
   return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
 };
 
@@ -54,23 +58,6 @@ export default function ExpenseTable({
     fetchData();
   }, [currentPage, startDate, endDate, expenseList]);
 
-  // const handleStatusChange = (
-  //   id: number,
-  //   newStatus: "APPROVED" | "REJECTED"
-  // ) => {
-  //   setStatus((prev) => {
-  //     const newMap = new Map(prev);
-  //     newMap.set(id, newStatus);
-  //     return newMap;
-  //   });
-
-  //   if (newStatus === "APPROVED") {
-  //     pathApprove(id);
-  //   } else if (newStatus === "REJECTED") {
-  //     patchReject(id);
-  //   }
-  // };
-
   const getStatusComponent = (
     id: number,
     currentStatus: ExpenseApplicationStatus
@@ -82,24 +69,6 @@ export default function ExpenseTable({
         return "승인";
       case "PENDING":
         return "대기";
-      // return (
-      //   <div className="flex gap-2 justify-center">
-      //     <ApprovalButton
-      //       onClick={(e) => {
-      //         e.stopPropagation();
-      //         handleStatusChange(id, "APPROVED");
-      //       }}
-      //       content="승인"
-      //     />
-      //     <ApprovalButton
-      //       onClick={(e) => {
-      //         e.stopPropagation();
-      //         handleStatusChange(id, "REJECTED");
-      //       }}
-      //       content="반려"
-      //     />
-      //   </div>
-      // );
       default:
         return "";
     }
@@ -123,7 +92,7 @@ export default function ExpenseTable({
   // 상세보기 클릭 핸들러
   const handleRejectDetailClick = async (id: number) => {
     const data = await getRejectionReason(id.toString());
-    const rejectionReason = data.rejectionReason;
+    const rejectionReason = data.reason;
     setModalReason(rejectionReason ?? "기타");
     setModalOpen(true);
   };
@@ -142,7 +111,7 @@ export default function ExpenseTable({
             {tableHeadings.eventName}
           </div>
           <div className="flex-[100] my-3 body-1 font-bold text-center text-gray-900">
-            {tableHeadings.applicant}
+            {tableHeadings.writerName}
           </div>
           <div className="flex-[220] my-3 body-1 font-bold text-center text-gray-900">
             {tableHeadings.department}
@@ -173,7 +142,7 @@ export default function ExpenseTable({
               {entry.eventName}
             </div>
             <div className="flex-[100] my-3 body-1 font-medium text-center text-gray-800">
-              {entry.applicantName}
+              {entry.writerName}
             </div>
             <div className="flex-[220] my-3 body-1 font-medium text-center text-gray-800">
               {entry.department}

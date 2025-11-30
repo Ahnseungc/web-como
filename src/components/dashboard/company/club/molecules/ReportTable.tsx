@@ -31,7 +31,7 @@ export default function ReportTable({ activities }: Props) {
   const contentRef = useRef<HTMLDivElement>(null);
 
   const handleAfterPrint = () => {
-    console.log("인쇄 완료 또는 취소. 상태를 초기화합니다.");
+    // console.log("인쇄 완료 또는 취소. 상태를 초기화합니다.");
     setActivityDetail(null);
     setSelectedActivity(null);
   };

@@ -1,41 +1,72 @@
 "use client";
 
-import { getAccessToken, getClubId } from "@/lib/cookies";
+/**
+ * 클라이언트에서 쿠키 값을 읽는 헬퍼 함수
+ */
+function getCookie(name: string): string | undefined {
+  if (typeof window === "undefined") return undefined;
+
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) {
+    return parts.pop()?.split(";").shift();
+  }
+}
+
+/**
+ * 클라이언트에서 role 가져오기
+ */
+export function getRole(): string | undefined {
+  return getCookie("role");
+}
+
+/**
+ * 클라이언트에서 clubId 가져오기
+ */
+export function getClubId(): string | undefined {
+  return getCookie("clubId");
+}
+
+/**
+ * 클라이언트에서 clubName 가져오기
+ */
+export function getClubName(): string | undefined {
+  return getCookie("clubName");
+}
+
+/**
+ * 클라이언트에서 companyName 가져오기
+ */
+export function getCompanyName(): string | undefined {
+  return getCookie("companyName");
+}
+
+/**
+ * 클라이언트에서 accessToken 가져오기
+ */
+export function getAccessToken(): string | undefined {
+  return getCookie("accessToken");
+}
 
 // 문자열에서 html 태그를 모두 제거하는 함수
 export function removeHtmlTags(input: string) {
   return input.replace(/<[^>]*>/g, "");
 }
 
-/**
- * 서버 URL과 엔드포인트를 안전하게 결합하는 함수
- * 슬래시 중복을 방지하고 올바른 URL을 생성합니다.
- */
 export const buildApiUrl = (endpoint: string, baseUrl?: string): string => {
   const serverUrl = baseUrl || process.env.NEXT_PUBLIC_SERVER_URL || "";
-
-  // 서버 URL에서 끝의 슬래시 제거
   const cleanServerUrl = serverUrl.replace(/\/$/, "");
-
-  // 엔드포인트에서 시작의 슬래시 제거
   const cleanEndpoint = endpoint.replace(/^\//, "");
-
   return `${cleanServerUrl}/${cleanEndpoint}`;
 };
 
-/**
- * 상대 경로를 절대 URL로 변환하는 함수
- */
 export const buildAbsoluteUrl = (path: string): string => {
-  // path가 이미 http로 시작하면 그대로 반환
   if (path.startsWith("http://") || path.startsWith("https://")) {
     return path;
   }
-
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "";
   const cleanServerUrl = serverUrl.replace(/\/$/, "");
   const cleanPath = path.replace(/^\//, "");
-
   return `${cleanServerUrl}/${cleanPath}`;
 };
 
@@ -47,23 +78,85 @@ export const getClientData = async (
   useClubId?: boolean,
   params?: { [key: string]: string | number }
 ) => {
-  const clubId = await getClubId();
-  const token = await getAccessToken();
+  const clubId = getClubId(); // ✅ 위에서 정의한 함수 사용
 
   const finalEndpoint = useClubId
     ? endpoint.replace("{clubId}", clubId || "")
     : endpoint;
 
-  // 프록시를 사용하도록 /api/server/ 접두사 추가
-  const url = `/api/server/v1/${finalEndpoint}`;
+  const url = `/api/server/${finalEndpoint}`;
 
   const response = await fetch(url, {
     headers: {
-      "Authorization": `Bearer ${token}`,
       "Content-Type": "application/json",
     },
   });
 
   const res = await response.json();
+  return res;
+};
+
+// lib/client-util.ts에 추가
+import type { IResponse } from "@/api/types/index";
+
+/**
+ * 클라이언트에서 사용하는 getData 함수
+ */
+export const getData = async (
+  endpoint: string,
+  useClubId?: boolean,
+  params?: { [key: string]: string | number }
+): Promise<IResponse> => {
+  const clubId = getClubId();
+
+  const finalEndpoint = useClubId
+    ? endpoint.replace("{clubId}", clubId || "")
+    : endpoint;
+
+  // ✅ /api/ 프리픽스 추가
+  const url = `/api/${finalEndpoint}`;
+
+  console.log("🔍 getData URL:", url);
+
+  const response = await fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    console.error("❌ Response not OK:", response.status, response.statusText);
+    throw new Error(`API Error: ${response.status}`);
+  }
+
+  const res: IResponse = await response.json();
+  return res;
+};
+
+/**
+ * 클라이언트에서 사용하는 patchData 함수
+ */
+export const patchData = async (
+  endpoint: string,
+  data?: any,
+  useClubId?: boolean
+): Promise<IResponse> => {
+  const clubId = getClubId();
+
+  const finalEndpoint = useClubId
+    ? endpoint.replace("{clubId}", clubId || "")
+    : endpoint;
+
+  const url = `/api/${finalEndpoint}`;
+
+  const response = await fetch(url, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: data ? JSON.stringify(data) : undefined,
+  });
+
+  const res: IResponse = await response.json();
   return res;
 };

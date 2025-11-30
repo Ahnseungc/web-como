@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, forwardRef, useImperativeHandle } from "react";
 import { useReactToPrint } from "react-to-print";
 import {
   pdf,
@@ -143,10 +143,10 @@ const ExpenseReportPDF = ({ expense }: { expense: ExpenseFormValues }) => (
           <Text style={styles.value}>{expense.description}</Text>
         </View>
 
-        {expense.note && (
+        {expense.content && (
           <View style={styles.field}>
             <Text style={styles.label}>주요 내용</Text>
-            <Text style={styles.value}>{expense.note}</Text>
+            <Text style={styles.value}>{expense.content}</Text>
           </View>
         )}
       </View>
@@ -201,23 +201,21 @@ const getDecodedFileName = (url: string) => {
   }
 };
 
-export default function ExpenseReportForm({
-  expense,
-  onPDFDownload,
-  onPrint,
-}: {
-  expense: ExpenseFormValues;
-  onPDFDownload?: () => void;
-  onPrint?: () => void;
-}) {
-  const [formValues, setFormValues] = useState<ExpenseFormValues | null>(null);
-  const printRef = useRef<HTMLDivElement>(null);
+export interface ExpenseReportFormRef {
+  handlePrint: () => void;
+  handlePDFDownload: () => void;
+}
+
+const ExpenseReportForm = forwardRef<ExpenseReportFormRef, { expense: ExpenseFormValues }>(
+  ({ expense }, ref) => {
+    const [formValues, setFormValues] = useState<ExpenseFormValues | null>(null);
+    const printRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setFormValues({
       eventName: expense.eventName,
       description: expense.description,
-      note: expense.note,
+      content: expense.content,
       location: expense.location,
       participantCount: expense.participantCount,
       amount: expense.amount,
@@ -296,30 +294,18 @@ export default function ExpenseReportForm({
     }
   };
 
+  // ref를 통해 외부에서 함수들을 호출할 수 있도록 노출
+  useImperativeHandle(ref, () => ({
+    handlePrint,
+    handlePDFDownload,
+  }));
+
   if (!formValues) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className="space-y-3 w-full">
-      {/* PDF 다운로드/인쇄 버튼 */}
-      <div className="flex gap-3 justify-end mb-4 no-print">
-        <button
-          onClick={handlePDFDownload}
-          className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md bg-white hover:bg-gray-50 transition-colors"
-        >
-          <Download className="w-4 h-4" />
-          PDF 다운로드
-        </button>
-        <button
-          onClick={handlePrint}
-          className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md bg-white hover:bg-gray-50 transition-colors"
-        >
-          <Print className="w-4 h-4" />
-          인쇄
-        </button>
-      </div>
-
       <div ref={printRef} className="space-y-3 w-full">
         <form className="space-y-3 w-full">
           <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">
@@ -345,7 +331,7 @@ export default function ExpenseReportForm({
               required
             />
             <Input
-              value={formValues.note}
+              value={formValues.content}
               name="note"
               label="주요 내용"
               type="text"
@@ -441,4 +427,8 @@ export default function ExpenseReportForm({
       </div>
     </div>
   );
-}
+});
+
+ExpenseReportForm.displayName = "ExpenseReportForm";
+
+export default ExpenseReportForm;

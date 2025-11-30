@@ -248,8 +248,8 @@ export default function ReportDetailPrint({ data }: Props) {
       </table>
 
       {/* 정산서(활동 지원비 정산서) 테이블 - 각 정산서마다 page break */}
-      {data?.expenses && data.expenses.length > 0 ? (
-        data.expenses.map((item, idx) => (
+      {data?.receipts && data.receipts.length > 0 ? (
+        data.receipts.map((item, idx) => (
           <table
             key={idx}
             style={{

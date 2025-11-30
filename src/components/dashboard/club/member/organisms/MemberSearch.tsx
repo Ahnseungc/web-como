@@ -3,7 +3,8 @@
 import { useState } from "react";
 import type { SearchValue } from "@/lib/types/search";
 import Search from "@/components/dashboard/common/Search";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 
 const fieldList = [
   { name: "부서", value: "dept" },
@@ -61,7 +62,7 @@ export default function MemberSearch({ onSearch, currentPage }: Props) {
       currentValue={currentSearchValue}
       handleChange={({ term }) => {
         setCurrentSearchValue((prev) => {
-          const newValue = { term: term || '' };
+          const newValue = { term: term || "" };
           console.log("=== 입력값 변경 ===");
           console.log("이전 값:", prev);
           console.log("새로운 값:", newValue);

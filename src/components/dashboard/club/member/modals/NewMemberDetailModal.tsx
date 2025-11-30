@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import type { MemberDetailData } from "@/api/types/club/member/detail";
 import { closeModal } from "@/lib/utils";
 import Backdrop from "@/components/common/Backdrop";

@@ -1,7 +1,8 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import type { QnaQuestionDetailData } from "@/api/types/club/question/detail";
 import ClubQnaAnswer from "@/components/dashboard/club/manage/molecules/ClubQnaAnswer";
 import ClubQnaQuestionContent from "@/components/dashboard/club/manage/molecules/ClubQnaQuestionContent";

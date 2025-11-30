@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import type { TransactionOverviewData } from "@/api/types/club/activityExpenses/transactions";
 import type { ExpenseOverviewData } from "@/api/types/club/activityExpenses/requestStatus";
 import { CLUB_DASHBOARD_ENDPOINT } from "@/lib/constants";
@@ -11,7 +12,7 @@ export default async function ExpenseOverview() {
   const clubId = await getClubId();
 
   const requestRes = await getData(
-    `v1/executive/club/${clubId}/activity-expenses/summary`,
+    `v1/executive/club/${clubId}/activity-expense/summary`,
     false
   );
   const requestData: ExpenseOverviewData = requestRes.data;

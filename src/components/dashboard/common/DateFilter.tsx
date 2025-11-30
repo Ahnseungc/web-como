@@ -12,8 +12,8 @@ import { cn } from "@/lib/utils";
 import DatePicker from "@/components/common/DatePicker";
 
 export interface DateRange {
-  startDate: Date | undefined;
-  endDate: Date | undefined;
+  createdDate?: Date;
+  endDate?: Date;
 }
 
 interface Props {
@@ -30,44 +30,47 @@ export default function DateFilter({
   const filterButtons: { name: string; dateRange: DateRange }[] = [
     {
       name: "오늘",
-      dateRange: { startDate: startOfToday(), endDate: startOfToday() },
+      dateRange: { createdDate: startOfToday(), endDate: startOfToday() },
     },
     {
       name: "어제",
-      dateRange: { startDate: startOfYesterday(), endDate: startOfYesterday() },
+      dateRange: {
+        createdDate: startOfYesterday(),
+        endDate: startOfYesterday(),
+      },
     },
     {
       name: "1주",
       dateRange: {
-        startDate: addDays(startOfToday(), -7),
+        createdDate: addDays(startOfToday(), -7),
         endDate: startOfToday(),
       },
     },
     {
       name: "1달",
       dateRange: {
-        startDate: addMonths(startOfToday(), -1),
+        createdDate: addMonths(startOfToday(), -1),
         endDate: startOfToday(),
       },
     },
     {
       name: "3달",
       dateRange: {
-        startDate: addMonths(startOfToday(), -3),
+        createdDate: addMonths(startOfToday(), -3),
         endDate: startOfToday(),
       },
     },
     {
       name: "6달",
       dateRange: {
-        startDate: addMonths(startOfToday(), -6),
+        createdDate: addMonths(startOfToday(), -6),
         endDate: startOfToday(),
       },
     },
     {
       name: "1년",
       dateRange: {
-        startDate: addYears(startOfToday(), -1),
+        createdDate: addYears(startOfToday(), -1),
         endDate: startOfToday(),
       },
     },
@@ -83,8 +86,8 @@ export default function DateFilter({
               className={cn(
                 "flex items-center justify-center w-[60px] h-full rounded-md body-1 font-semibold transition",
                 isSameDay(
-                  filter.dateRange.startDate!,
-                  currentDateRange.startDate!
+                  filter.dateRange.createdDate!,
+                  currentDateRange.createdDate!
                 ) &&
                   isSameDay(
                     filter.dateRange.endDate!,
@@ -105,10 +108,10 @@ export default function DateFilter({
         <div className="flex-1 flex gap-2">
           <DatePicker
             id="date-picker-start-date"
-            currentDate={currentDateRange?.startDate}
+            currentDate={currentDateRange?.createdDate}
             handleDateChange={(date: Date | undefined) =>
               handleDateRangeChange({
-                startDate: date,
+                createdDate: date,
                 endDate: currentDateRange.endDate,
               })
             }
@@ -122,13 +125,13 @@ export default function DateFilter({
             currentDate={currentDateRange?.endDate}
             handleDateChange={(date: Date | undefined) =>
               handleDateRangeChange({
-                startDate: currentDateRange.startDate,
+                createdDate: currentDateRange.createdDate,
                 endDate: date,
               })
             }
             disabled={
-              currentDateRange.startDate && {
-                before: currentDateRange.startDate,
+              currentDateRange.createdDate && {
+                before: currentDateRange.createdDate,
               }
             }
           />

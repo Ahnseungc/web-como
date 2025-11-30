@@ -1,7 +1,8 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import type { PolicyData } from "@/api/types/club/regulation";
 import { POLICY, POLICY_TITLE } from "@/lib/message/policy";
 import { PrintButton } from "@/components/dashboard/common/DocUtil";
@@ -15,7 +16,7 @@ export default function ClubPolicyTab({ clubId }: { clubId: string | null }) {
       ),
   });
 
-  console.log("ClubPolicyTab 실행됨")
+  console.log("ClubPolicyTab 실행됨");
   console.log("ClubPolicyTab 에서 clubId", clubId);
   console.log("📦 data 내용:", data);
 
@@ -26,12 +27,8 @@ export default function ClubPolicyTab({ clubId }: { clubId: string | null }) {
         <PrintButton />
       </div>
       {typeof data === "string" && (
-          <img 
-            src={data} 
-            alt="동호회 회칙 이미지" 
-            className="mt-4" 
-          />
-        )}
+        <img src={data} alt="동호회 회칙 이미지" className="mt-4" />
+      )}
       {/* <p className="overflow-y-auto scrollbar-custom h-full max-h-[70dvh] body-1 font-medium text-gray-700">
         <div className="mb-4 h3 font-bold">{POLICY_TITLE}</div>
         {data && data.content}

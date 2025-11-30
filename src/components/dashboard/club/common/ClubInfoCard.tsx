@@ -2,7 +2,8 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import ClubProfileInfo from "@/components/dashboard/club/common/ClubProfileInfo";
 import { getClubId } from "@/lib/cookies";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 
 interface Props {
   padding?: string;

@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 
 interface ApplicationStats {
   pending: number;
@@ -13,25 +14,25 @@ export default function ApplicationOverview() {
   const [stats, setStats] = useState<ApplicationStats>({
     pending: 0,
     approved: 0,
-    rejected: 0
+    rejected: 0,
   });
 
   useEffect(() => {
     const loadStats = async () => {
       try {
         const [pending, approved, rejected] = await Promise.all([
-          getData('v1/manager/club/pending-count', true),
-          getData('v1/manager/club/approved-count', true),
-          getData('v1/manager/club/rejected-count', true)
+          getData("v1/manager/club/pending-count", true),
+          getData("v1/manager/club/approved-count", true),
+          getData("v1/manager/club/rejected-count", true),
         ]);
 
         setStats({
           pending: pending.data || 0,
           approved: approved.data || 0,
-          rejected: rejected.data || 0
+          rejected: rejected.data || 0,
         });
       } catch (error) {
-        console.error('신청 현황 로딩 오류:', error);
+        console.error("신청 현황 로딩 오류:", error);
       }
     };
 

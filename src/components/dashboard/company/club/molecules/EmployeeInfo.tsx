@@ -2,7 +2,8 @@
 
 import Input from "@/components/common/Input";
 import { useState, useEffect } from "react";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import { formatDate } from "@/lib/utils";
 
 interface MemberDetailDTO {

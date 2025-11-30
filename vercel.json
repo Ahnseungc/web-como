@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/api/server/:path*",
-      "destination": "https://api.omoapp.co.kr/:path*"
-    }
-  ]
-}

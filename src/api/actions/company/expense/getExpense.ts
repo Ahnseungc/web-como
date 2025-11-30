@@ -1,4 +1,5 @@
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 
 export const getExpense = async (
   page: number,
@@ -6,7 +7,7 @@ export const getExpense = async (
   endDate: string
 ) => {
   const response = await getData(
-    `v1/manager/activity-expenses?page=${page}&startDate=${startDate}&endDate=${endDate}`
+    `v1/manager/activity-expenses?page=${page - 1}&startDate=${startDate}&endDate=${endDate}`
   );
   return response;
 };

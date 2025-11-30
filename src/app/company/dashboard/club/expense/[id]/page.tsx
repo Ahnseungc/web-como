@@ -6,11 +6,11 @@ import {
   ExpenseFormValues,
 } from "@/api/types/company/expense";
 import ClubInfoCardForExpense from "@/components/dashboard/club/expense/organisms/ClubInfoCardForExpense";
-import ExpenseReportForm from "@/components/dashboard/club/expense/organisms/ExpenseReportForm";
+import ExpenseReportForm, { ExpenseReportFormRef } from "@/components/dashboard/club/expense/organisms/ExpenseReportForm";
 import BackButton from "@/components/dashboard/common/BackButton";
 import ApprovalButton from "@/components/dashboard/shared/molecules/ApprovalButton";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "next/navigation";
 import ExpenseRejectReasonInputModal from "@/components/dashboard/company/club/modals/ExpenseRejectReasonInputModal";
 import { patchApprove } from "@/api/actions/company/expense/patchApprove";
@@ -18,9 +18,11 @@ import { patchReject } from "@/api/actions/company/expense/patchReject";
 import { getRejectionReasonClient } from "@/api/actions/company/expense/getRejectionReasonClient";
 import AlertModal from "@/components/dashboard/company/club/modals/AlertModal";
 import ReportConfirmModal from "@/components/dashboard/company/club/modals/ReportConfirmModal";
+import { Download, Print } from "@/assets/icons/util";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const searchParams = useSearchParams();
+  const expenseFormRef = useRef<ExpenseReportFormRef>(null);
   const [status, setStatus] = useState<string>(
     searchParams.get("status") || ""
   );
@@ -38,12 +40,10 @@ const Page = ({ params }: { params: { id: string } }) => {
       const data = await getExpenseDetailClient(params.id);
       const reasonData = await getRejectionReasonClient(params.id);
 
-      console.log("reasonData:", reasonData);
-
       setExpense({
         eventName: data.data.eventName,
         description: data.data.description,
-        note: data.data.note,
+        content: data.data.content,
         location: data.data.location,
         participantCount: data.data.participantCount,
         amount: data.data.amount,
@@ -80,12 +80,12 @@ const Page = ({ params }: { params: { id: string } }) => {
     if (newStatus === "APPROVED") {
       try {
         setIsApproving(true);
-        console.log("승인 처리 시작");
+        // console.log("승인 처리 시작");
         const result = await patchApprove(id);
-        console.log("승인 처리 결과:", result);
-        console.log("setStatus 호출 전 status:", status);
+        // console.log("승인 처리 결과:", result);
+        // console.log("setStatus 호출 전 status:", status);
         setStatus("APPROVED");
-        console.log("setStatus 호출 후 status:", status);
+        // console.log("setStatus 호출 후 status:", status);
       } catch (error) {
         console.error("승인 처리 실패:", error);
       } finally {
@@ -125,22 +125,41 @@ const Page = ({ params }: { params: { id: string } }) => {
     <div className="flex flex-col gap-4 p-6">
       <div className="flex justify-between items-center">
         <BackButton />
-        {status !== "REJECTED" && status !== "APPROVED" && (
-          <div className="flex gap-2">
-            <ApprovalButton
-              onClick={() => {
-                setApproveOpen(true);
-              }}
-              content="승인"
-            />
-            <ApprovalButton
-              onClick={() => {
-                setModalOpen(true);
-              }}
-              content="반려"
-            />
-          </div>
-        )}
+        <div className="flex gap-2 items-center">
+          {/* PDF 다운로드/인쇄 버튼 */}
+          <button
+            onClick={() => expenseFormRef.current?.handlePDFDownload()}
+            className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md bg-white hover:bg-gray-50 transition-colors no-print"
+          >
+            <Download className="w-4 h-4" />
+            PDF 다운로드
+          </button>
+          <button
+            onClick={() => expenseFormRef.current?.handlePrint()}
+            className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md bg-white hover:bg-gray-50 transition-colors no-print"
+          >
+            <Print className="w-4 h-4" />
+            인쇄
+          </button>
+
+          {/* 승인/반려 버튼 */}
+          {status !== "REJECTED" && status !== "APPROVED" && (
+            <>
+              <ApprovalButton
+                onClick={() => {
+                  setApproveOpen(true);
+                }}
+                content="승인"
+              />
+              <ApprovalButton
+                onClick={() => {
+                  setModalOpen(true);
+                }}
+                content="반려"
+              />
+            </>
+          )}
+        </div>
       </div>
       {status === "REJECTED" && (
         <div className="flex items-start gap-3 bg-gray-0 rounded-xl px-6 py-5 my-4 shadow w-full min-h-[100px]">
@@ -163,9 +182,9 @@ const Page = ({ params }: { params: { id: string } }) => {
           </div>
         </div>
       )}
-      <div className="flex gap-3">
+      <div className="flex gap-3 items-start">
         <ClubInfoCardForExpense cardInfo={cardInfo} />
-        <ExpenseReportForm expense={expense} />
+        <ExpenseReportForm ref={expenseFormRef} expense={expense} />
       </div>
       <ExpenseRejectReasonInputModal
         open={modalOpen}

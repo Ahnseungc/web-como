@@ -10,7 +10,12 @@ export default function ReportOverview() {
     const fetchData = async () => {
       try {
         const summary = await getSummary();
-        if (summary.resultCode === "OK" && summary.data) {
+        console.log(summary);
+        if (
+          (String(summary.resultCode) === "OK" ||
+            String(summary.resultCode) === "200") &&
+          summary.data
+        ) {
           setPendingCount(summary.data.pendingCount || 0);
           setApprovedCount(summary.data.approvedCount || 0);
           setRejectedCount(summary.data.rejectedCount || 0);

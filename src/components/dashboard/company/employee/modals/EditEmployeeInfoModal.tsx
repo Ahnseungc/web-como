@@ -7,27 +7,33 @@ import Input, { InputLabel } from "@/components/common/Input";
 import Button from "@/components/common/Button";
 import Checkbox from "@/components/common/Checkbox";
 import { Close } from "@/assets/icons/action";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import { getAccessToken } from "@/lib/cookies";
 
 export default function EditEmployeeInfoModal() {
   const [memberData, setMemberData] = useState<any>(null);
   const [modalParams, setModalParams] = useState<any>(null);
   const [formData, setFormData] = useState({
-    name: '',
-    department: '',
-    position: '',
-    email: '',
-    phoneNumber: '',
+    name: "",
+    department: "",
+    position: "",
+    email: "",
+    phoneNumber: "",
   });
-  const [role, setRole] = useState<'MEMBER' | 'EXECUTIVE' | 'MANAGER' | 'ADMIN'>('MEMBER');
+  const [role, setRole] = useState<
+    "MEMBER" | "EXECUTIVE" | "MANAGER" | "ADMIN"
+  >("MEMBER");
 
   useEffect(() => {
-    const modal = document.getElementById('employee-edit');
+    const modal = document.getElementById("employee-edit");
     if (modal) {
       const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
-          if (mutation.type === 'attributes' && mutation.attributeName === 'data-modal-params') {
+          if (
+            mutation.type === "attributes" &&
+            mutation.attributeName === "data-modal-params"
+          ) {
             const newParams = modal.dataset.modalParams;
             if (newParams) {
               setModalParams(JSON.parse(newParams));
@@ -38,7 +44,7 @@ export default function EditEmployeeInfoModal() {
 
       observer.observe(modal, {
         attributes: true,
-        attributeFilter: ['data-modal-params']
+        attributeFilter: ["data-modal-params"],
       });
 
       return () => observer.disconnect();
@@ -50,11 +56,14 @@ export default function EditEmployeeInfoModal() {
       if (!modalParams?.memberId) return;
 
       try {
-        const res = await getData(`v1/manager/member/${modalParams.memberId}`, true);
+        const res = await getData(
+          `v1/manager/member/${modalParams.memberId}`,
+          true
+        );
         // console.log("받아온 회원 데이터:", res.data);  // 데이터 확인용
         setMemberData(res.data);
         // role도 함께 설정
-        setRole(res.data.role || 'MEMBER');
+        setRole(res.data.role || "MEMBER");
       } catch (error) {
         console.error("직원 정보 로딩 오류:", error);
       }
@@ -66,28 +75,28 @@ export default function EditEmployeeInfoModal() {
   useEffect(() => {
     if (memberData) {
       setFormData({
-        name: memberData.name || '',
-        department: memberData.department || '',
-        position: memberData.position || '',
-        email: memberData.email || '',
-        phoneNumber: memberData.phoneNumber || '',
+        name: memberData.name || "",
+        department: memberData.department || "",
+        position: memberData.position || "",
+        email: memberData.email || "",
+        phoneNumber: memberData.phoneNumber || "",
       });
     }
   }, [memberData]);
 
   const handleClose = () => {
-    const modal = document.getElementById('employee-edit');
+    const modal = document.getElementById("employee-edit");
     if (modal) {
-      delete modal.dataset.modalParams;  // params 제거
+      delete modal.dataset.modalParams; // params 제거
     }
     closeModal();
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [id]: value
+      [id]: value,
     }));
   };
 
@@ -96,23 +105,26 @@ export default function EditEmployeeInfoModal() {
       const token = await getAccessToken();
       const submitData = {
         ...formData,
-        role: role  // isAdmin 대신 role 사용
+        role: role, // isAdmin 대신 role 사용
       };
-      
+
       // console.log("수정할 데이터:", submitData);
 
-      const response = await fetch(`/api/server/v1/manager/member/${modalParams.memberId}`, {
-        method: 'PATCH',
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(submitData)
-      }); 
+      const response = await fetch(
+        `/api/server/v1/manager/member/${modalParams.memberId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(submitData),
+        }
+      );
       const result = await response.json();
       // console.log("수정 결과:", result);  // API 응답 확인
 
-      if (result.resultCode === 'OK') {
+      if (result.resultCode === "OK") {
         closeModal("employee-edit");
         openModal("edit-success");
       } else {
@@ -137,21 +149,21 @@ export default function EditEmployeeInfoModal() {
             </button>
           </div>
           <div className="space-y-4">
-            <Input 
-              id="name" 
-              label="이름" 
+            <Input
+              id="name"
+              label="이름"
               value={formData.name}
               onChange={handleChange}
             />
-            <Input 
-              id="department" 
-              label="부서" 
+            <Input
+              id="department"
+              label="부서"
               value={formData.department}
               onChange={handleChange}
             />
-            <Input 
-              id="position" 
-              label="직책" 
+            <Input
+              id="position"
+              label="직책"
               value={formData.position}
               onChange={handleChange}
             />
@@ -162,9 +174,9 @@ export default function EditEmployeeInfoModal() {
               value={formData.email}
               onChange={handleChange}
             />
-            <Input 
-              id="phoneNumber" 
-              label="핸드폰 번호" 
+            <Input
+              id="phoneNumber"
+              label="핸드폰 번호"
               value={formData.phoneNumber}
               onChange={handleChange}
             />
@@ -174,35 +186,33 @@ export default function EditEmployeeInfoModal() {
             <Checkbox
               name="member"
               content="권한 없음"
-              checked={role === 'MEMBER'}
+              checked={role === "MEMBER"}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                console.log('권한 없음 클릭됨 - 체크상태:', e.target.checked);
+                console.log("권한 없음 클릭됨 - 체크상태:", e.target.checked);
                 if (e.target.checked) {
-                  setRole('MEMBER');
+                  setRole("MEMBER");
                 } else {
-                  setRole('EXECUTIVE');
+                  setRole("EXECUTIVE");
                 }
               }}
             />
             <Checkbox
               name="executive"
               content="동호회 관리자 권한"
-              checked={role === 'EXECUTIVE' || role === 'MANAGER' || role === 'ADMIN'}
+              checked={
+                role === "EXECUTIVE" || role === "MANAGER" || role === "ADMIN"
+              }
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                console.log('관리자 권한 클릭됨 - 체크상태:', e.target.checked);
+                console.log("관리자 권한 클릭됨 - 체크상태:", e.target.checked);
                 if (e.target.checked) {
-                  setRole('EXECUTIVE');
+                  setRole("EXECUTIVE");
                 } else {
-                  setRole('MEMBER');
+                  setRole("MEMBER");
                 }
               }}
             />
           </div>
-          <Button
-            primary
-            content="수정하기"
-            onClick={handleSubmit}
-          />
+          <Button primary content="수정하기" onClick={handleSubmit} />
         </div>
       </div>
     </div>

@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import type { MemberListData } from "@/api/types/club/member";
 import DocUtilButtons, {
   SaveButton,
@@ -27,7 +28,7 @@ export default function MemberList({ clubId }: Props) {
   // });
 
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
-    startDate: subYears(startOfToday(), 1), // 1년 전 날짜
+    createdDate: subYears(startOfToday(), 1), // 1년 전 날짜
     endDate: startOfToday(),
   });
   const [currentPage, setCurrentPage] = useState(1);

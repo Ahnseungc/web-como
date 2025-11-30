@@ -10,7 +10,7 @@ import SupplyTable from "@/components/dashboard/company/club/molecules/SupplyTab
 
 export default function SupplyList() {
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
-    startDate: undefined,
+    createdDate: undefined,
     endDate: undefined,
   });
   const [currentPage, setCurrentPage] = useState<number>(1);

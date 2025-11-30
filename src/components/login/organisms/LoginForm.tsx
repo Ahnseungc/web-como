@@ -78,11 +78,6 @@ export default function LoginForm() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // console.log("1. 로그인 시도:", {
-    //   이메일: formData.id,
-    //   역할: formData.role,
-    // });
-
     setLoginError("");
 
     if (!validateForm()) {
@@ -92,28 +87,18 @@ export default function LoginForm() {
     try {
       // 비밀번호 해싱
       const hashedPassword = SHA256(formData.password).toString(enc.Hex);
-      // console.log("2. 비밀번호 해싱 완료");
-
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/login`,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            email: formData.id,
-            password: hashedPassword, // 해싱된 비밀번호 전송
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      // console.log("3. API 응답 상태:", response.status);
-      // console.log("4. API 응답 헤더:", Object.fromEntries(response.headers.entries()));
-
-      const responseText = await response.text();
-      // console.log("5. API 응답 데이터:", responseText);
-
+      console.log("2. 비밀번호 해싱 완료", hashedPassword);
+      // `${process.env.NEXT_PUBLIC_SERVER_URL}/api/login`,
+      const response = await fetch(`/api/login`, {
+        method: "POST",
+        body: JSON.stringify({
+          email: formData.id,
+          password: hashedPassword, // 해싱된 비밀번호 전송
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       if (!response.ok) {
         // console.log("6. 로그인 실패");
         setLoginError("올바른 정보가 아닙니다.");

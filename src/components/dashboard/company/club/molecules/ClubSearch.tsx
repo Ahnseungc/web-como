@@ -2,7 +2,8 @@ import type { SearchValue } from "@/lib/types/search";
 import Search from "@/components/dashboard/common/Search";
 import { DateRange } from "@/components/dashboard/common/DateFilter";
 import { useState } from "react";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 
 const fieldList = [
   { name: "동호회명", value: "club" },
@@ -26,12 +27,16 @@ interface Props {
   currentPage: number;
 }
 
-export default function ClubSearch({ onSearch, currentDateRange, currentPage }: Props) {
+export default function ClubSearch({
+  onSearch,
+  currentDateRange,
+  currentPage,
+}: Props) {
   const [currentSearchValue, setCurrentSearchValue] = useState<SearchValue>({
     term: "",
     field: "all",
   });
-  
+
   const handleSearch = async () => {
     console.log("=== 검색 실행 ===");
     console.log("현재 페이지:", currentPage);
@@ -42,11 +47,11 @@ export default function ClubSearch({ onSearch, currentDateRange, currentPage }: 
 
     try {
       const response = await getData(
-        `v1/manager/club/manage-list?page=${currentPage}&search=${currentSearchValue.term}&filter=${currentSearchValue.field}&startDate=${currentDateRange.startDate?.toISOString().split('T')[0]}&endDate=${currentDateRange.endDate?.toISOString().split('T')[0]}`,
+        `v1/manager/club/manage-list?page=${currentPage}&search=${currentSearchValue.term}&filter=${currentSearchValue.field}&startDate=${currentDateRange.createdDate?.toISOString().split("T")[0]}&endDate=${currentDateRange.endDate?.toISOString().split("T")[0]}`,
         true
       );
 
-      console.log(response.data)
+      console.log(response.data);
       if (response.data) {
         onSearch(currentSearchValue);
         // 검색 후 검색어 초기화
@@ -60,8 +65,7 @@ export default function ClubSearch({ onSearch, currentDateRange, currentPage }: 
     } catch (error) {
       console.error("검색 중 오류 발생:", error);
     }
-
-  }
+  };
 
   return (
     <Search
@@ -70,7 +74,10 @@ export default function ClubSearch({ onSearch, currentDateRange, currentPage }: 
       currentValue={currentSearchValue}
       handleChange={({ term, field }) => {
         setCurrentSearchValue((prev) => {
-          const newValue = { term: term || '', field: field !== undefined ? field : prev.field };
+          const newValue = {
+            term: term || "",
+            field: field !== undefined ? field : prev.field,
+          };
           console.log("=== 입력값 변경 ===");
           console.log("이전 값:", prev);
           console.log("새로운 값:", newValue);

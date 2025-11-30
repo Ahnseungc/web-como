@@ -1,6 +1,7 @@
 import ClubCard from "@/components/dashboard/company/employee/molecules/ClubCard";
 import { useState, useEffect } from "react";
-import { getData } from "@/api/action";
+//import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 
 export default function JoinedClub({ memberId }: { memberId: string }) {
   console.log("memberId", memberId);

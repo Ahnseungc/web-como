@@ -8,16 +8,17 @@ import ClubIndexLoading from "./ClubIndexLoading";
 import ClubIndexImageSection from "../organisms/ClubIndexImageSection";
 import ClubIndexInfoSection from "../organisms/ClubIndexInfoSection";
 import { getClubId } from "@/lib/cookies";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import { ClubIndexData } from "@/api/types/club";
 
 const categoryObject: Record<string, any> = {
-  "ART_CULTURE": "문화/예술",
-  "ACTIVITY": "액티비티",
-  "CREATIVE": "크리에이티브",
-  "FOODBEVERAGE": "F&B",
-  "NETWORKING": "네트워킹",
-  "STUDY": "스터디",
+  ART_CULTURE: "문화/예술",
+  ACTIVITY: "액티비티",
+  CREATIVE: "크리에이티브",
+  FOODBEVERAGE: "F&B",
+  NETWORKING: "네트워킹",
+  STUDY: "스터디",
 };
 
 export default function ClubInfoForm({ clubId }: { clubId: string | null }) {
@@ -67,7 +68,7 @@ export default function ClubInfoForm({ clubId }: { clubId: string | null }) {
   useEffect(() => {
     const fetchClubInfo = async () => {
       if (!clubId) return; // clubId가 없으면 호출하지 않음
-  
+
       try {
         const response = await getData(`v1/executive/club/${clubId}`, true);
         setClubInfo(response.data); // clubInfo 설정
@@ -76,7 +77,7 @@ export default function ClubInfoForm({ clubId }: { clubId: string | null }) {
         console.error("클럽 정보를 가져오는 데 실패했습니다.", error);
       }
     };
-  
+
     fetchClubInfo(); // 비동기 함수 호출
   }, [clubId]); // clubId가 변경될 때마다 호출
 
@@ -88,12 +89,12 @@ export default function ClubInfoForm({ clubId }: { clubId: string | null }) {
     //   />
     //   <ClubIndexInfoSection clubId={clubId} />
     // </form>
-       <form className="flex gap-3">
-       <ClubIndexImageSection<ClubIndexSchemaType>
-         name="clubImage"
-         clubImage={clubInfo?.clubImage as string}
-       />
-       <ClubIndexInfoSection clubId={clubId} />
-     </form>
+    <form className="flex gap-3">
+      <ClubIndexImageSection<ClubIndexSchemaType>
+        name="clubImage"
+        clubImage={clubInfo?.clubImage as string}
+      />
+      <ClubIndexInfoSection clubId={clubId} />
+    </form>
   );
 }

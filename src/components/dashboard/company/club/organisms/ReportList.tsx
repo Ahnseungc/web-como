@@ -16,23 +16,27 @@ export default function ReportList() {
   const [maxPage, setMaxPage] = useState(1);
   const [activities, setActivities] = useState<Activity[]>([]);
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
-    startDate: startOfYear(new Date()),
+    createdDate: startOfYear(new Date()),
     endDate: startOfToday(),
   });
   useEffect(() => {
     const fetchData = async () => {
-      if (!currentDateRange.startDate || !currentDateRange.endDate) return;
+      if (!currentDateRange.createdDate || !currentDateRange.endDate) return;
 
       try {
         const data = await getReports(
           currentPage,
-          formatDate(currentDateRange.startDate),
+          formatDate(currentDateRange.createdDate),
           formatDate(currentDateRange.endDate)
         );
 
-        if (data.resultCode === "OK" && data.data) {
+        if (
+          (String(data.resultCode) === "OK" ||
+            String(data.resultCode) === "200") &&
+          data.data
+        ) {
           setActivities(data.data.list || []);
-          setMaxPage(data.data.maxPage || 1);
+          setMaxPage(data.data.totalPages || 1);
         } else {
           setActivities([]);
           setMaxPage(1);

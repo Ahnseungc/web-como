@@ -71,7 +71,10 @@ export default function RejectApplicationModal() {
       const data = await response.json();
       console.log("data", data);
 
-      if (data.resultCode === "OK") {
+      if (
+        String(data.resultCode) === "OK" ||
+        String(data.resultCode) === "200"
+      ) {
         alert("신청이 성공적으로 반려되었습니다.");
         setTimeout(() => {
           window.location.reload(); // 1초 후에 페이지 새로고침

@@ -5,7 +5,8 @@ import ExpenseSearch from "@/components/dashboard/club/expense/molecules/Expense
 import NewReceiptFormModal from "@/components/dashboard/club/expense/modals/NewReceiptFormModal";
 import ExpenseRejectDetailModal from "@/components/dashboard/club/expense/modals/ExpenseRejectDetailModal";
 import { getClubId } from "@/lib/cookies";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import { ExpenseOverviewData } from "@/api/types/club/activityExpenses/requestStatus";
 import {
   dehydrate,

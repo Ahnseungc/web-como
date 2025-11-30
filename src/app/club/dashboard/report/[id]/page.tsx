@@ -9,7 +9,8 @@ import NewReportForm from "@/components/dashboard/club/report/organisms/NewRepor
 import ReportSubmitSuccessModal from "@/components/dashboard/club/report/modals/ReportSubmitSuccessModal";
 import ReportCancelModal from "@/components/dashboard/club/report/modals/ReportCancelModal";
 import { useQuery } from "@tanstack/react-query";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import ReportDetail from "@/components/dashboard/club/report/organisms/ReportDetail";
 
 interface Photo {

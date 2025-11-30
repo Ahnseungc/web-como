@@ -6,7 +6,8 @@ import Input, { InputLabel } from "@/components/common/Input";
 import { Close } from "@/assets/icons/action";
 import { useEffect } from "react";
 import { useState } from "react";
-import { getData } from "@/api/action";
+// import { getData } from "@/api/action";
+import { getData } from "@/lib/client-utils";
 import Image from "next/image";
 
 export interface Club {
