@@ -12,8 +12,8 @@ import { cn } from "@/lib/utils";
 import DatePicker from "@/components/common/DatePicker";
 
 export interface DateRange {
-  createdDate: Date | undefined;
-  endDate: Date | undefined;
+  createdDate?: Date;
+  endDate?: Date;
 }
 
 interface Props {
