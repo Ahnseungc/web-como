@@ -68,10 +68,10 @@ export const ExpenseReportPDF = ({ expense }: ExpenseFormProps) => {
             <Text style={pdfStyles.infoLabelHighlight}>동호회장</Text>
             <Text style={pdfStyles.infoName}>{leaders["운영장"] || ""}</Text>
           </View>
-          <View style={pdfStyles.infoRow}>
+          {/* <View style={pdfStyles.infoRow}>
             <Text style={pdfStyles.infoLabel}>활동일자: </Text>
             <Text style={pdfStyles.infoValue}>{"2024.06.19"}</Text>
-          </View>
+          </View> */}
           <View style={pdfStyles.infoRow}>
             <Text style={pdfStyles.infoLabel}>작성일자: </Text>
             <Text style={pdfStyles.infoValue}>
