@@ -327,7 +327,7 @@ export const pdfStyles = StyleSheet.create({
     width: "100%",
   },
   fullRowDesc: {
-    fontSize: 12,
+    fontSize: 9,
     fontWeight: 500,
     fontFamily: "SUIT",
     color: "#1A1A1D",

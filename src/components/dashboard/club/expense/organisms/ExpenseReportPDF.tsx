@@ -78,10 +78,10 @@ export const ExpenseReportPDF = ({ expense }: ExpenseFormProps) => {
               {formatDate2(expense.createdAt)}
             </Text>
           </View>
-          <View style={pdfStyles.infoRow}>
+          {/* <View style={pdfStyles.infoRow}>
             <Text style={pdfStyles.infoLabel}>문서번호: </Text>
             <Text style={pdfStyles.infoValue}>{"2407-85-001-1"}</Text>
-          </View>
+          </View> */}
         </View>
 
         <View style={pdfStyles.approvalSection}>
