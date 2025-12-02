@@ -4,17 +4,10 @@ import { formatDateArray, formatDateFlexible } from "@/lib/utils";
 import Image from "next/image";
 import { useRef, forwardRef, useImperativeHandle } from "react";
 import { useReactToPrint } from "react-to-print";
-import {
-  pdf,
-  Document as PDFDocument,
-  Page,
-  Text,
-  View,
-  StyleSheet,
-  Font,
-} from "@react-pdf/renderer";
+import { pdf, Font } from "@react-pdf/renderer";
 import { Download, Print } from "@/assets/icons/util";
 import { usePathname } from "next/navigation";
+import { ReportPDF, expenseCategory } from "./ReportDetailPDF";
 
 interface Props {
   data: {
@@ -29,14 +22,6 @@ export interface ReportDetailRef {
   handlePDFDownload: () => Promise<void>;
 }
 
-const expenseCategory = {
-  activity: "정책사업: 인적자원운용",
-  welfare: "단위사업: 교직원 복지와 사기진작",
-  support: "세부사업: 교직원복지지원",
-  club: "사업 항목: 직장동호회지원",
-  benefit: "목(240) : 복리후생비",
-};
-
 // 파일이 PDF인지 확인하는 함수
 const isPDFFile = (url: string): boolean => {
   if (!url) return false;
@@ -47,176 +32,6 @@ const isPDFFile = (url: string): boolean => {
     lowerUrl.includes("pdf")
   );
 };
-
-// 한글 폰트 등록
-const registerFont = async () => {
-  try {
-    const response = await fetch("/fonts/SUIT/SUIT-Variable.ttf", {
-      method: "HEAD",
-    });
-    if (response.ok) {
-      Font.register({
-        family: "SUIT",
-        src: "/fonts/SUIT/SUIT-Variable.ttf",
-        fontWeight: "normal",
-      });
-      Font.register({
-        family: "SUIT",
-        src: "/fonts/SUIT/SUIT-Variable.ttf",
-        fontWeight: "bold",
-      });
-      console.log("SUIT 폰트 등록 성공");
-    } else {
-      console.error("폰트 파일을 찾을 수 없습니다:", response.status);
-      Font.register({
-        family: "SUIT",
-        src: "https://fonts.gstatic.com/s/notosanskr/v36/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.otf",
-        fontWeight: "normal",
-      });
-      Font.register({
-        family: "SUIT",
-        src: "https://fonts.gstatic.com/s/notosanskr/v36/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.otf",
-        fontWeight: "bold",
-      });
-      console.log("기본 한글 폰트로 대체 등록");
-    }
-  } catch (error) {
-    console.error("폰트 등록 실패:", error);
-  }
-};
-
-// 폰트 등록 실행
-registerFont();
-
-// PDF 스타일 정의
-const styles = StyleSheet.create({
-  page: {
-    flexDirection: "column",
-    backgroundColor: "#FFFFFF",
-    padding: 30,
-    fontFamily: "SUIT",
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-    textAlign: "center",
-    fontWeight: "bold",
-    fontFamily: "SUIT",
-  },
-  section: {
-    marginBottom: 20,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    marginBottom: 10,
-    fontWeight: "bold",
-    borderBottom: "1px solid #000000",
-    paddingBottom: 5,
-    fontFamily: "SUIT",
-  },
-  field: {
-    marginBottom: 10,
-  },
-  label: {
-    fontSize: 12,
-    fontWeight: "bold",
-    marginBottom: 3,
-    fontFamily: "SUIT",
-  },
-  value: {
-    fontSize: 11,
-    padding: 8,
-    border: "1px solid #CCCCCC",
-    backgroundColor: "#F9F9F9",
-    fontFamily: "SUIT",
-  },
-  footer: {
-    marginTop: 30,
-    fontSize: 14,
-    textAlign: "center",
-    fontFamily: "SUIT",
-  },
-});
-
-// PDF 문서 컴포넌트
-const ReportPDF = ({ reportData }: { reportData: ActivityReportDetail }) => (
-  <PDFDocument>
-    <Page size="A4" style={styles.page}>
-      <Text style={styles.title}>활동 보고서</Text>
-
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>기본 정보</Text>
-
-        <View style={styles.field}>
-          <Text style={styles.label}>행사명</Text>
-          <Text style={styles.value}>{reportData.eventName || "-"}</Text>
-        </View>
-
-        <View style={styles.field}>
-          <Text style={styles.label}>동호회명</Text>
-          <Text style={styles.value}>{reportData.clubName || "-"}</Text>
-        </View>
-
-        <View style={styles.field}>
-          <Text style={styles.label}>작성자</Text>
-          <Text style={styles.value}>{reportData.writerName || "-"}</Text>
-        </View>
-
-        <View style={styles.field}>
-          <Text style={styles.label}>활동 일정</Text>
-          <Text style={styles.value}>
-            {reportData.activityDate
-              ? formatDateFlexible(reportData.activityDate)
-              : "-"}
-          </Text>
-        </View>
-
-        <View style={styles.field}>
-          <Text style={styles.label}>활동 장소</Text>
-          <Text style={styles.value}>{reportData.location || "-"}</Text>
-        </View>
-
-        <View style={styles.field}>
-          <Text style={styles.label}>주요활동 내용</Text>
-          <Text style={styles.value}>{reportData.activityContent || "-"}</Text>
-        </View>
-
-        {reportData.note && (
-          <View style={styles.field}>
-            <Text style={styles.label}>비고</Text>
-            <Text style={styles.value}>{reportData.note}</Text>
-          </View>
-        )}
-      </View>
-
-      {reportData.receipts && reportData.receipts.length > 0 && (
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>활동 지원비 정산서</Text>
-          {reportData.receipts.map((expense, idx) => (
-            <View key={idx} style={styles.field}>
-              <Text style={styles.label}>과목</Text>
-              <Text style={styles.value}>
-                {
-                  expenseCategory[
-                    expense.category as keyof typeof expenseCategory
-                  ]
-                }
-              </Text>
-              <Text style={styles.label}>지원액</Text>
-              <Text style={styles.value}>{expense.supportAmount || "-"}</Text>
-              <Text style={styles.label}>집행액</Text>
-              <Text style={styles.value}>{expense.usedAmount || "-"}</Text>
-              <Text style={styles.label}>잔액</Text>
-              <Text style={styles.value}>{expense.remainingAmount || "-"}</Text>
-              <Text style={styles.label}>집행내역</Text>
-              <Text style={styles.value}>{expense.usageDetail || "-"}</Text>
-            </View>
-          ))}
-        </View>
-      )}
-    </Page>
-  </PDFDocument>
-);
 
 const ReportDetail = forwardRef<ReportDetailRef, Props>(({ data }, ref) => {
   const reportData = data?.data;
