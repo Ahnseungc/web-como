@@ -123,7 +123,7 @@ export default function ReportTable({ activities }: Props) {
               {idx + 1}
             </div>
             <div className="flex-1 min-w-[100px] my-3 mx-6 body-1 font-medium text-center text-gray-800">
-              {formatDateFlexible(activity.createdDate)}
+              {formatDateFlexible(activity.createdAt)}
             </div>
             <div className="flex-[2] min-w-[180px] my-3 mx-6 body-1 font-medium text-center text-gray-800">
               {activity.clubName}
