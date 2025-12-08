@@ -41,6 +41,6 @@ export interface ActivityReportDetail {
   participantCount: number;
   activityContent: string;
   note: string;
-  photos: ActivityReportPhoto[];
+  images: ActivityReportPhoto[];
   receipts: ActivityReportExpense[];
 }
