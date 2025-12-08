@@ -92,15 +92,13 @@ export const ReportPDF = ({
             </View>
             <View style={pdfStyles.tableRowDouble}>
               <Text style={pdfStyles.tableLabelHalf}>회장</Text>
-              <Text style={pdfStyles.tableValueHalf}>{["운영장"] || ""}</Text>
+              <Text style={pdfStyles.tableValueHalf}>{"운영장"}</Text>
               <Text style={pdfStyles.tableLabelHalf}>부회장</Text>
-              <Text style={pdfStyles.tableValueHalfLast}>
-                {["부운영장"] || ""}
-              </Text>
+              <Text style={pdfStyles.tableValueHalfLast}>{"부운영장"}</Text>
             </View>
             <View style={pdfStyles.tableRowLast}>
               <Text style={pdfStyles.tableLabelHalf}>총무</Text>
-              <Text style={pdfStyles.tableValueHalf}>{["총무"] || ""}</Text>
+              <Text style={pdfStyles.tableValueHalf}>{"총무"}</Text>
               <Text style={pdfStyles.tableLabelHalf}>.</Text>
               <Text style={pdfStyles.tableValueHalfLast}>.</Text>
             </View>

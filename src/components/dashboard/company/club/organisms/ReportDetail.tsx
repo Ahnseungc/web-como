@@ -237,11 +237,11 @@ const ReportDetail = forwardRef<ReportDetailRef, Props>(({ data }, ref) => {
               지출 증빙용 활동 사진 첨부
             </span>
             <div className="grid grid-cols-2 gap-[12px] w-full">
-              {reportData?.photos &&
-                reportData.photos.map((photo) => (
-                  <div key={photo.id} className="aspect-[1/1] relative w-full">
+              {reportData?.images &&
+                reportData.images.map((image) => (
+                  <div key={image.id} className="aspect-[1/1] relative w-full">
                     <Image
-                      src={photo.url}
+                      src={image.url}
                       alt="photo"
                       fill
                       className="rounded-[8px] object-cover"
