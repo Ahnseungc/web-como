@@ -175,7 +175,7 @@ export const ExpenseReportPDF = ({ expense }: ExpenseFormProps) => {
         <View style={pdfStyles.contentArea}>
           <Text style={pdfStyles.infoName}>품의 정보</Text>
           <View style={pdfStyles.clubInfoTable}>
-            <View style={pdfStyles.tableRowDouble}>
+            <View style={pdfStyles.tableRowDouble2}>
               <Text style={pdfStyles.tableLabelHalf}>사용처</Text>
               <Text style={pdfStyles.tableValueHalf}>{expense.location}</Text>
               <Text style={pdfStyles.tableLabelHalf}>참여인원</Text>

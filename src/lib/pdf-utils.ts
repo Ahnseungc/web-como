@@ -250,10 +250,18 @@ export const pdfStyles = StyleSheet.create({
     marginTop: 30,
     minHeight: 700,
   },
+  contentArea2: {
+    border: "1px solid #000000",
+    padding: 20,
+    marginTop: 30,
+    minHeight: 500,
+  },
   clubInfoTable: {
     width: "100%",
     marginTop: 10,
-    border: "1px solid #C6C6C7",
+    borderLeft: "1px solid #C6C6C7",
+    borderBottom: "1px solid #C6C6C7",
+    borderRight: "1px solid #C6C6C7",
     marginBottom: 14,
   },
   tableRow: {
@@ -281,9 +289,15 @@ export const pdfStyles = StyleSheet.create({
     fontWeight: 500,
     fontFamily: "SUIT",
     color: "#1A1A1D",
+    borderTop: "1px solid #C6C6C7",
   },
   tableRowDouble: {
     flexDirection: "row",
+    borderBottom: "1px solid #C6C6C7",
+  },
+  tableRowDouble2: {
+    flexDirection: "row",
+    borderTop: "1px solid #C6C6C7",
     borderBottom: "1px solid #C6C6C7",
   },
   tableLabelHalf: {
@@ -380,5 +394,30 @@ export const pdfStyles = StyleSheet.create({
     color: "#1A1A1D",
     fontWeight: 500,
     textAlign: "left",
+  },
+  imageGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+  },
+  imageWrapper: {
+    width: "48%",
+    marginBottom: 10,
+  },
+  gridImage: {
+    width: "100%",
+    height: 200,
+    objectFit: "cover",
+  },
+  activityImage: {
+    width: "100%",
+    maxHeight: 400,
+    objectFit: "contain",
+    marginBottom: 10,
+  },
+  receiptImage: {
+    width: "100%",
+    maxHeight: 500,
+    objectFit: "contain",
   },
 });

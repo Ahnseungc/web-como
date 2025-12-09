@@ -211,10 +211,10 @@ export default function ReportDetailPrint({ data }: Props) {
               >
                 <tbody>
                   <tr>
-                    {data.photos &&
-                      data.photos.map((photo) => (
+                    {data.images &&
+                      data.images.map((image) => (
                         <td
-                          key={photo.id}
+                          key={image.id}
                           style={{ padding: 0, verticalAlign: "top" }}
                         >
                           <div
@@ -227,7 +227,7 @@ export default function ReportDetailPrint({ data }: Props) {
                             }}
                           >
                             <img
-                              src={photo.url}
+                              src={image.url}
                               alt="photo"
                               style={{
                                 width: "100%",

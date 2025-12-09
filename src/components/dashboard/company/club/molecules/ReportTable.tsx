@@ -67,7 +67,7 @@ export default function ReportTable({ activities }: Props) {
       console.log("전체 API 응답 데이터:", detail);
 
       if (detail && detail.data) {
-        setActivityDetail(detail.data);
+        setActivityDetail({ ...detail.data, createdDate: activity.createdAt });
       } else {
         console.error(
           "상세 데이터를 받아오지 못했습니다. API 응답에 'data' 속성이 없습니다."
@@ -131,7 +131,7 @@ export default function ReportTable({ activities }: Props) {
             <div
               className="flex-[2] min-w-[250px] my-3 mx-6 body-1 font-medium text-left hover:decoration-gray-800 cursor-pointer underline-offset-2 underline decoration-transparent line-clamp-1 transition duration-300 text-gray-800"
               onClick={() =>
-                push(`${pathname}/${activity.id}?status=${activity.status}`)
+                push(`${pathname}/${activity.id}?status=${activity.status}&createdAt=${activity.createdAt}`)
               }
             >
               {activity.eventName}

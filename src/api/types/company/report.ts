@@ -28,6 +28,7 @@ export interface ActivityReportExpense {
 }
 
 export interface ActivityReportDetail {
+  createdDate?: string;
   clubImage: string;
   clubName: string;
   writerName: string;
@@ -41,6 +42,6 @@ export interface ActivityReportDetail {
   participantCount: number;
   activityContent: string;
   note: string;
-  photos: ActivityReportPhoto[];
+  images: ActivityReportPhoto[];
   receipts: ActivityReportExpense[];
 }
