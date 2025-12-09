@@ -39,11 +39,14 @@ const Page = ({ params }: { params: { id: string } }) => {
         setExpense({
           eventName: data.eventName,
           description: data.description,
+          clubName: data.clubName,
           content: data.content,
           location: data.location,
           participantCount: data.participantCount,
+          leadersSummary: data.leadersSummary,
           amount: data.amount,
           details: data.details,
+          createdAt: data.data.createdAt,
           file: data.file,
         });
         setCardInfo({

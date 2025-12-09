@@ -6,7 +6,9 @@ import {
   ExpenseFormValues,
 } from "@/api/types/company/expense";
 import ClubInfoCardForExpense from "@/components/dashboard/club/expense/organisms/ClubInfoCardForExpense";
-import ExpenseReportForm, { ExpenseReportFormRef } from "@/components/dashboard/club/expense/organisms/ExpenseReportForm";
+import ExpenseReportForm, {
+  ExpenseReportFormRef,
+} from "@/components/dashboard/club/expense/organisms/ExpenseReportForm";
 import BackButton from "@/components/dashboard/common/BackButton";
 import ApprovalButton from "@/components/dashboard/shared/molecules/ApprovalButton";
 import { useSearchParams } from "next/navigation";
@@ -42,12 +44,15 @@ const Page = ({ params }: { params: { id: string } }) => {
 
       setExpense({
         eventName: data.data.eventName,
+        clubName: data.data.clubName,
         description: data.data.description,
         content: data.data.content,
         location: data.data.location,
         participantCount: data.data.participantCount,
         amount: data.data.amount,
         details: data.data.details,
+        leadersSummary: data.data.leadersSummary,
+        createdAt: data.data.createdAt,
         file: data.data.file,
       });
       setCardInfo({

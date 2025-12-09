@@ -12,12 +12,15 @@ export interface ExpenseApplicationEntry {
 
 export type ExpenseFormValues = {
   eventName: string;
+  clubName: string;
+  leadersSummary: string;
   description: string;
   content: string;
   location: string;
   participantCount: number;
   amount: number;
   details: string;
+  createdAt: string;
   file: string | null;
 };
 
