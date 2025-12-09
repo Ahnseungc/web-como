@@ -21,6 +21,7 @@ export default function Page({ params }: { params: { id: string } }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentStatus = searchParams.get("status");
+  const createdAt = searchParams.get("createdAt");
 
   const [reportDetail, setReportDetail] = useState<IResponse | null>(null);
   const [status, setStatus] = useState(currentStatus);
@@ -47,7 +48,11 @@ export default function Page({ params }: { params: { id: string } }) {
         const rejectionReason =
           rejectData?.rejectionReason || prevRejectReasonRef.current || "";
 
-        setReportDetail(data);
+        const reportDataWithCreatedDate = createdAt
+          ? { ...data, data: { ...data.data, createdDate: createdAt } }
+          : data;
+
+        setReportDetail(reportDataWithCreatedDate);
         setRejectReason(rejectionReason);
         prevRejectReasonRef.current = rejectionReason;
 
@@ -154,7 +159,13 @@ export default function Page({ params }: { params: { id: string } }) {
 
           // 승인 후 최신 데이터 다시 가져오기
           const updatedData = await getReportDetail(params.id);
-          setReportDetail(updatedData);
+          const updatedDataWithCreatedDate = createdAt
+            ? {
+                ...updatedData,
+                data: { ...updatedData.data, createdDate: createdAt },
+              }
+            : updatedData;
+          setReportDetail(updatedDataWithCreatedDate);
           const newStatus = updatedData.data?.status || "APPROVED";
           setStatus(newStatus);
 
