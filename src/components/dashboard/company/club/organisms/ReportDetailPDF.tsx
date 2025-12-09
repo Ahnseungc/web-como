@@ -30,6 +30,9 @@ export const ReportPDF = ({
   const comoLogo = "/logo.png";
   const today = new Date();
   const currentDate = `${today.getFullYear()}.${String(today.getMonth() + 1).padStart(2, "0")}.${String(today.getDate()).padStart(2, "0")}`;
+  const createdDate = reportData.createdDate
+    ? formatDate2(reportData.createdDate)
+    : currentDate;
 
   return (
     <PDFDocument>
@@ -72,7 +75,7 @@ export const ReportPDF = ({
           </View>
           <View style={pdfStyles.infoRow}>
             <Text style={pdfStyles.infoLabel}>작성일자: </Text>
-            <Text style={pdfStyles.infoValue}>{currentDate}</Text>
+            <Text style={pdfStyles.infoValue}>{createdDate}</Text>
           </View>
         </View>
       </Page>
@@ -273,13 +276,7 @@ export const ReportPDF = ({
               상기와 같이 {reportData.clubName} 동호회 대표로서 동회 활동 실적을
               보고합니다.
             </Text>
-            <Text style={pdfStyles.bottomText2}>
-              {new Date().toLocaleDateString("ko-KR", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </Text>
+            <Text style={pdfStyles.bottomText2}>{createdDate}</Text>
             <Text style={pdfStyles.bottomText}>
               {reportData.clubName} @{reportData.writerName} (인)
             </Text>
