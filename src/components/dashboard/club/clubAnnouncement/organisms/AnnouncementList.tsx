@@ -37,7 +37,7 @@ export default function AnnouncementList() {
         const result = await getNotices(currentPage, "");
         setMaxPage(result.data.maxPage); // API 응답에서 maxPage 값을 설정합니다.
       } catch (error) {
-        console.error('Error fetching maxPage:', error);
+        console.error("Error fetching maxPage:", error);
       }
     };
 
@@ -61,7 +61,7 @@ export default function AnnouncementList() {
       <Pagination
         currentPage={currentPage}
         handlePageChange={handlePageChange}
-        maxPage={maxPage}
+        totalPages={maxPage}
       />
     </div>
   );

@@ -22,7 +22,7 @@ export default function ClubSelectForm() {
     const token = await getAccessToken();
 
     try {
-      const response = await fetch(`/api/v1/executive/club/select`, {
+      const response = await fetch(`/api/v1/club/my`, {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -99,11 +99,11 @@ export default function ClubSelectForm() {
       return;
     }
 
-    await saveClubId(selectedClub.clubId.toString());
-    // console.log('클럽 ID 저장 완료:', selectedClub.clubId.toString());
+    await saveClubId(selectedClub.id.toString());
+    // console.log('클럽 ID 저장 완료:', selectedClub.id.toString());
 
-    await saveClubName(selectedClub.clubName);
-    // console.log('클럽 이름 저장 완료:', selectedClub.clubName);
+    await saveClubName(selectedClub.name);
+    // console.log('클럽 이름 저장 완료:', selectedClub.name);
 
     // 🚀 100ms 지연 후 refresh() 실행하여 쿠키 반영 대기
     setTimeout(() => {
@@ -120,13 +120,13 @@ export default function ClubSelectForm() {
         {clubOptions &&
           clubOptions.map((option) => (
             <Button
-              key={option.clubId}
-              content={option.clubName}
+              key={option.id}
+              content={option.name}
               onClick={() => setSelectedClub(option)}
-              orange={option.clubId === selectedClub?.clubId}
+              orange={option.id === selectedClub?.id}
               className={cn(
                 "justify-start px-3",
-                option.clubId === selectedClub?.clubId
+                option.id === selectedClub?.id
                   ? ""
                   : "border-gray-100 bg-gray-100"
               )}

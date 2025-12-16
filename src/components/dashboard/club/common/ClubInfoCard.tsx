@@ -1,17 +1,38 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import ClubProfileInfo from "@/components/dashboard/club/common/ClubProfileInfo";
-import { getClubId } from "@/lib/cookies";
-// import { getData } from "@/api/action";
-import { getData } from "@/lib/client-utils";
+import { getData, getClubId } from "@/lib/client-utils";
 
 interface Props {
   padding?: string;
 }
 
-export default async function ClubInfoCard({ padding }: Props) {
-  const clubId = await getClubId();
-  const { data } = await getData(`v1/executive/club/${clubId}/card`, false);
+export default function ClubInfoCard({ padding }: Props) {
+  const clubId = getClubId();
+  const [data, setData] = useState<any>(null);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const response = await getData(
+          `v1/executive/club/${clubId}/card`,
+          false
+        );
+        setData(response.data);
+      } catch (error) {
+        console.error("데이터 로딩 오류:", error);
+      }
+    };
+
+    if (clubId) {
+      loadData();
+    }
+  }, [clubId]);
+
+  if (!data) return null;
 
   return (
     <div
@@ -32,13 +53,7 @@ export default async function ClubInfoCard({ padding }: Props) {
           <h3 className="h2 font-bold text-gray-900 max-w-[300px] truncate ">
             {data.clubName}
           </h3>
-          {/* <span className="body-1 font-medium text-point-blue">{"활동중"}</span> */}
         </div>
-        {/* <div className="flex flex-col body-1 font-medium text-gray-600">
-          <span className="font-bold text-gray-700">{"최근 활동"}</span>
-          <span>{"2024.05.26 (일) 15시"}</span>
-          <span>{"서울시 동대문구 경희대학교 수영장"}</span>
-        </div> */}
 
         <div className="body-1 font-medium text-gray-500">
           <ClubProfileInfo

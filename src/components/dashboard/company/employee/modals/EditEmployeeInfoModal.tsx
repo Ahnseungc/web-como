@@ -111,7 +111,7 @@ export default function EditEmployeeInfoModal() {
       // console.log("수정할 데이터:", submitData);
 
       const response = await fetch(
-        `/api/server/v1/manager/member/${modalParams.memberId}`,
+        `/api/v1/manager/member/${modalParams.memberId}`,
         {
           method: "PATCH",
           headers: {

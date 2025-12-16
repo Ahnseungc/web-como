@@ -10,7 +10,7 @@ import {
   saveRefreshToken,
   saveRole,
 } from "@/lib/cookies";
-import { LOGIN_ENDPOINT } from "@/lib/constants";
+import { LOGIN_ENDPOINT, COMPANY_DASHBOARD_ENDPOINT } from "@/lib/constants";
 import Button from "@/components/common/Button";
 import Input from "@/components/common/Input";
 import RadioSelect from "@/components/login/molecules/RadioSelect";
@@ -40,6 +40,9 @@ export default function LoginForm() {
   });
   // 로그인 에러 메시지를 위한 상태 추가
   const [loginError, setLoginError] = useState("");
+  // ADMIN 계정 여부 상태
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [adminAccessToken, setAdminAccessToken] = useState("");
 
   // RadioSelect에서 role 변경 시 호출되는 handleChange
   const handleRoleChange = (newValue: string) => {
@@ -76,6 +79,22 @@ export default function LoginForm() {
     return isValid;
   };
 
+  // ADMIN이 선택을 완료한 후 처리
+  const handleAdminSelection = async () => {
+    const dashboardType = formData.role; // "club" 또는 "company"
+
+    await saveAccessToken(adminAccessToken);
+    await saveRefreshToken(adminAccessToken);
+    await saveDashboardType(dashboardType);
+    await saveRole("admin"); // role은 "admin"으로 저장하여 middleware에서 양쪽 접근 허용
+
+    if (dashboardType === "club") {
+      replace(`${LOGIN_ENDPOINT}/club`);
+    } else if (dashboardType === "company") {
+      replace(COMPANY_DASHBOARD_ENDPOINT);
+    }
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError("");
@@ -85,45 +104,53 @@ export default function LoginForm() {
     }
 
     try {
-      // 비밀번호 해싱
       const hashedPassword = SHA256(formData.password).toString(enc.Hex);
-      console.log("2. 비밀번호 해싱 완료", hashedPassword);
-      // `${process.env.NEXT_PUBLIC_SERVER_URL}/api/login`,
       const response = await fetch(`/api/login`, {
         method: "POST",
         body: JSON.stringify({
           email: formData.id,
-          password: hashedPassword, // 해싱된 비밀번호 전송
+          password: hashedPassword,
+          // password: formData.password,
         }),
         headers: {
           "Content-Type": "application/json",
         },
       });
       if (!response.ok) {
-        // console.log("6. 로그인 실패");
         setLoginError("올바른 정보가 아닙니다.");
         return;
       }
 
       const accessToken = response.headers.get("Authorization");
-      // console.log("7. 받은 토큰:", accessToken);
 
       if (!accessToken) {
-        // console.log("8. 토큰 없음");
+        return;
+      }
+      const tokenPayload = JSON.parse(atob(accessToken.split(".")[1]));
+      const actualRole = tokenPayload.role;
+      console.log("실제 role:", actualRole);
+
+      // ADMIN인 경우 선택할 수 있도록 RadioSelect 표시
+      if (actualRole === "ROLE_ADMIN") {
+        setAdminAccessToken(accessToken);
+        setIsAdmin(true);
         return;
       }
 
-      // console.log("9. 토큰 저장 시작");
+      // EXECUTIVE 또는 MANAGER는 자동으로 대시보드 타입 결정
+      const dashboardType =
+        actualRole === "ROLE_EXECUTIVE" ? "club" : "company";
+      console.log("대시보드 타입:", dashboardType);
+
       await saveAccessToken(accessToken);
       await saveRefreshToken(accessToken);
-      await saveDashboardType(formData.role);
-      await saveRole(formData.role);
-      // console.log("10. 저장 완료, role:", formData.role);
+      await saveDashboardType(dashboardType);
+      await saveRole(dashboardType);
 
-      if (formData.role === "club") {
+      if (dashboardType === "club") {
         replace(`${LOGIN_ENDPOINT}/club`);
-      } else if (formData.role === "company") {
-        replace(`${LOGIN_ENDPOINT}/company`);
+      } else if (dashboardType === "company") {
+        replace(COMPANY_DASHBOARD_ENDPOINT);
       }
     } catch (error) {
       console.error("에러 발생:", error);
@@ -200,12 +227,23 @@ export default function LoginForm() {
               </p>
             )}
           </div>
-          <RadioSelect
-            currentValue={formData.role}
-            handleChange={handleRoleChange}
-          />
+          {isAdmin && (
+            <RadioSelect
+              currentValue={formData.role}
+              handleChange={handleRoleChange}
+            />
+          )}
         </div>
-        <Button content="로그인" primary />
+        {isAdmin ? (
+          <Button
+            content="확인"
+            primary
+            onClick={handleAdminSelection}
+            type="button"
+          />
+        ) : (
+          <Button content="로그인" primary />
+        )}
         <div className="self-center flex items-center gap-4">
           <span className="body-1 font-normal text-gray-500">
             {"비밀번호가 기억이 나지 않나요?"}

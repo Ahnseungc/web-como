@@ -2,37 +2,32 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import type { IResponse } from "@/api/types/index"; // ✅ import 추가
 
 const tableHeadings = ["순번", "활동명", "활동일", "작성 상태", "반려 사유"];
 
+interface ReportItem {
+  id: number;
+  eventName: string;
+  activityDate: string;
+  status: string;
+  rejectionReason?: string;
+}
+
 interface Props {
-  data?: {
-    data: {
-      currentPage: number;
-      list: {
-        id: number;
-        eventName: string;
-        activityDate: number[];
-        status: string;
-        rejectReason?: string;
-      }[];
-      maxPage: number;
-    };
-    resultCode: string;
-    resultMessage: string;
-  }[];
+  data?: IResponse[]; // ✅ 간단하게 변경
   clubId: string | undefined;
   currentPage: number;
 }
 
-export default function ReportListTable({ data, clubId, currentPage }: Props) {
+export default function ReportTable({ data, clubId, currentPage }: Props) {
   const pathname = usePathname();
   const { push } = useRouter();
 
-  // `currentPage`와 일치하는 데이터만 필터링
+  // ✅ 타입 체크 추가
   const currentPageData = data?.find(
-    (item) => item.data.currentPage === currentPage
-  )?.data.list;
+    (item) => item.data?.currentPage === currentPage
+  )?.data?.list as ReportItem[] | undefined;
 
   return (
     <ul className="flex flex-col gap-1">
@@ -53,68 +48,74 @@ export default function ReportListTable({ data, clubId, currentPage }: Props) {
           </div>
         ))}
       </li>
-      {currentPageData?.map((report, i) => (
-        <li
-          key={report.id}
-          className="flex border-b border-gray-400 bg-gray-0 flex-1"
-        >
-          {/* 순번 */}
-          <div
-            className={cn(
-              "my-3 mx-6 body-1 font-medium text-gray-800 text-center w-[76px]"
-            )}
+      {currentPageData && currentPageData.length > 0 ? (
+        currentPageData.map((report, i) => (
+          <li
+            key={report.id}
+            className="flex border-b border-gray-400 bg-gray-0 flex-1"
           >
-            {i + 1}
-          </div>
+            {/* 순번 */}
+            <div
+              className={cn(
+                "my-3 mx-6 body-1 font-medium text-gray-800 text-center w-[76px]"
+              )}
+            >
+              {(currentPage - 1) * 10 + i + 1}
+            </div>
 
-          {/* 활동명 */}
-          <div
-            className={cn(
-              "my-3 mx-6 body-1 font-medium text-left max-w-[892px] flex-1 cursor-pointer"
-            )}
-            onClick={() => {
-              push(
-                `${pathname}/${report.id}?status=${report.status}&clubId=${clubId}`
-              );
-            }}
-          >
-            {report.eventName}
-          </div>
+            {/* 활동명 */}
+            <div
+              className={cn(
+                "my-3 mx-6 body-1 font-medium text-left max-w-[892px] flex-1 cursor-pointer"
+              )}
+              onClick={() => {
+                push(
+                  `${pathname}/${report.id}?status=${report.status}&clubId=${clubId}`
+                );
+              }}
+            >
+              {report.eventName}
+            </div>
 
-          {/* 활동일 */}
-          <div
-            className={cn(
-              "my-3 mx-6 body-1 font-medium text-center max-w-[220px] flex-1"
-            )}
-          >
-            {report.activityDate.join("-")}
-          </div>
+            {/* 활동일 */}
+            <div
+              className={cn(
+                "my-3 mx-6 body-1 font-medium text-center max-w-[220px] flex-1"
+              )}
+            >
+              {report.activityDate}
+            </div>
 
-          {/* 작성 상태 */}
-          <div
-            className={cn(
-              "my-3 mx-6 body-1 font-medium text-center max-w-[180px] flex-1",
-              report.status === "APPROVED" ? " text-point-blue" : "",
-              report.status === "REJECTED" ? " text-point-red" : ""
-            )}
-          >
-            {report.status === "PENDING" && "대기"}
-            {report.status === "APPROVED" && "승인"}
-            {report.status === "REJECTED" && "반려"}
-          </div>
+            {/* 작성 상태 */}
+            <div
+              className={cn(
+                "my-3 mx-6 body-1 font-medium text-center max-w-[180px] flex-1",
+                report.status === "APPROVED" ? " text-point-blue" : "",
+                report.status === "REJECTED" ? " text-point-red" : ""
+              )}
+            >
+              {report.status === "PENDING" && "대기"}
+              {report.status === "APPROVED" && "승인"}
+              {report.status === "REJECTED" && "반려"}
+            </div>
 
-          {/* 반려 사유 */}
-          <div
-            className={cn(
-              "my-3 mx-6 body-1 font-medium text-center max-w-[180px] flex-1"
-            )}
-          >
-            {report.status === "REJECTED" && report.rejectReason
-              ? report.rejectReason
-              : "-"}
-          </div>
+            {/* 반려 사유 */}
+            <div
+              className={cn(
+                "my-3 mx-6 body-1 font-medium text-center max-w-[180px] flex-1"
+              )}
+            >
+              {report.status === "REJECTED" && report.rejectionReason
+                ? report.rejectionReason
+                : "-"}
+            </div>
+          </li>
+        ))
+      ) : (
+        <li className="flex items-center justify-center h-[200px] text-gray-500">
+          조회된 보고서가 없습니다.
         </li>
-      ))}
+      )}
     </ul>
   );
 }

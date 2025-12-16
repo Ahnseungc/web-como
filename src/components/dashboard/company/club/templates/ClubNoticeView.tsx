@@ -55,7 +55,7 @@ const ClubNoticeView = () => {
           <div className="flex justify-center mt-8">
             <Pagination
               currentPage={currentPage}
-              maxPage={maxPage}
+              totalPages={maxPage}
               handlePageChange={handlePageChange}
             />
           </div>

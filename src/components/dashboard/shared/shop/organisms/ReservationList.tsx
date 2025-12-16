@@ -22,7 +22,7 @@ export default function ReservationList() {
       <Pagination
         currentPage={currentPage}
         handlePageChange={handlePageChange}
-        maxPage={6}
+        totalPages={6}
       />
     </div>
   );

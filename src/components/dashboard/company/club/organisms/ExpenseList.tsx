@@ -89,7 +89,7 @@ export default function ExpenseList() {
           />
           <Pagination
             currentPage={currentPage}
-            maxPage={maxPage}
+            totalPages={maxPage}
             handlePageChange={handlePageChange}
           />
         </div>

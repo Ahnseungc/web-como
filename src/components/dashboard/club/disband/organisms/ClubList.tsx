@@ -21,7 +21,7 @@ export default function ClubList() {
         <Pagination
           currentPage={currentPage}
           handlePageChange={handlePageChange}
-          maxPage={6}
+          totalPages={6}
         />
       </div>
     </div>

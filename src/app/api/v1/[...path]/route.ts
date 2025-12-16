@@ -14,19 +14,36 @@ async function proxyToBackend(
   const searchParams = request.nextUrl.searchParams.toString();
   const fullUrl = searchParams ? `${backendUrl}?${searchParams}` : backendUrl;
 
-  // console.log(`🔍 ${method} Proxying to:`, fullUrl);
-  // console.log("🔑 Token:", accessToken ? "exists" : "missing");
-  const headers: HeadersInit = {
-    "Content-Type": "application/json",
-  };
+  const contentType = request.headers.get("content-type");
+  const isMultipart = contentType?.includes("multipart/form-data");
+
+  console.log(`🔍 ${method} Proxying to:`, fullUrl);
+  console.log("🔑 Token:", accessToken ? "exists" : "missing");
+  console.log("📦 Content-Type:", contentType);
+  console.log("🎯 Is Multipart:", isMultipart);
+
+  const headers: HeadersInit = {};
+
+  // multipart/form-data가 아닌 경우만 Content-Type 설정
+  if (!isMultipart) {
+    headers["Content-Type"] = "application/json";
+  }
 
   if (accessToken) {
     headers["Authorization"] = `Bearer ${accessToken}`;
   }
 
   try {
-    const body =
-      method !== "GET" && method !== "HEAD" ? await request.text() : undefined;
+    let body: FormData | string | undefined;
+
+    if (method !== "GET" && method !== "HEAD") {
+      // multipart/form-data인 경우 FormData로 처리
+      if (isMultipart) {
+        body = await request.formData();
+      } else {
+        body = await request.text();
+      }
+    }
 
     const response = await fetch(fullUrl, {
       method,
@@ -34,12 +51,17 @@ async function proxyToBackend(
       body,
     });
 
-    // console.log("📡 Backend response:", response.status);
+    console.log("📡 Backend response:", response.status);
 
-    const contentType = response.headers.get("content-type");
-    if (contentType?.includes("text/html")) {
-      const htmlText = await response.text();
-      console.error("❌ Backend returned HTML:", htmlText.substring(0, 200));
+    const responseContentType = response.headers.get("content-type");
+    const data = await response.text();
+
+    if (!response.ok) {
+      console.error("❌ Backend error response:", data);
+    }
+
+    if (responseContentType?.includes("text/html")) {
+      console.error("❌ Backend returned HTML:", data.substring(0, 200));
       return NextResponse.json(
         {
           resultCode: "ERROR",
@@ -49,8 +71,6 @@ async function proxyToBackend(
         { status: response.status }
       );
     }
-
-    const data = await response.text();
 
     return new NextResponse(data, {
       status: response.status,

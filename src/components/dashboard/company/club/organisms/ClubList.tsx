@@ -90,7 +90,7 @@ export default function ClubList(props: Props) {
         {clubs && clubs.length > 0 && (
           <Pagination
             currentPage={currentPage}
-            maxPage={maxPage}
+            totalPages={maxPage}
             handlePageChange={handlePageChange}
           />
         )}

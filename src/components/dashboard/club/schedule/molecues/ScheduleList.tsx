@@ -68,7 +68,7 @@ const ScheduleList = ({
       <Pagination
         currentPage={currentPage}
         handlePageChange={handlePageChange}
-        maxPage={maxPage}
+        totalPages={maxPage}
       />
     </div>
   );

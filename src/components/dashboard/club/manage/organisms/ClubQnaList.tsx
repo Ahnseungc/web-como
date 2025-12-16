@@ -50,7 +50,7 @@ export default function ClubQnaList() {
         <ClubQnaTable data={data?.clubWebQuestionInfoDTOS} />
         <Pagination
           currentPage={currentPage}
-          maxPage={8}
+          totalPages={8}
           handlePageChange={handlePageChange}
         />
       </div>

@@ -8,7 +8,7 @@ import {
 
 interface Props {
   currentPage: number;
-  maxPage: number;
+  totalPages: number;
   handlePageChange: (page: number) => void;
 }
 
@@ -34,7 +34,7 @@ export default function Pagination(props: Props) {
         </button>
       </div>
       <div className="flex gap-2.5 items-center">
-        {getPageRange(props.currentPage, props.maxPage).map((page) => (
+        {getPageRange(props.currentPage, props.totalPages).map((page) => (
           <button
             key={page}
             className={cn(
@@ -53,14 +53,14 @@ export default function Pagination(props: Props) {
         <button
           className="cursor-pointer"
           onClick={() => props.handlePageChange(props.currentPage + 1)}
-          disabled={props.currentPage === props.maxPage}
+          disabled={props.currentPage === props.totalPages}
         >
           <ChevronRight />
         </button>
         <button
           className="cursor-pointer"
-          onClick={() => props.handlePageChange(props.maxPage)}
-          disabled={props.currentPage === props.maxPage}
+          onClick={() => props.handlePageChange(props.totalPages)}
+          disabled={props.currentPage === props.totalPages}
         >
           <ChevronDoubleRight />
         </button>

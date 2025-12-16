@@ -3,13 +3,24 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { closeModal, openModal } from "@/lib/utils";
-import { deleteAllCookies } from "@/lib/cookies";
+import {
+  deleteAllCookies,
+  saveClubId,
+  saveClubName,
+  saveCompanyName,
+} from "@/lib/cookies";
 import Avatar from "@/components/common/Avatar";
 import Backdrop from "@/components/common/Backdrop";
 import { Close } from "@/assets/icons/action";
 import { useEffect, useState } from "react";
 // import { getData } from "@/api/action";
-import { getData } from "@/lib/client-utils";
+import {
+  getData,
+  getRole,
+  getClubId,
+  getClubName,
+  getCompanyName,
+} from "@/lib/client-utils";
 import { LOGIN_ENDPOINT } from "@/lib/constants";
 
 interface Props {
@@ -22,8 +33,8 @@ interface ProfileData {
 }
 
 interface ClubData {
-  clubId: string;
-  clubName: string;
+  id: number;
+  name: string;
 }
 
 interface CompanyData {
@@ -49,38 +60,46 @@ export default function ProfileDropdownModal({ profileImage }: Props) {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const userInfoRes = await fetch("/api/auth/user-info");
-        const {
-          role,
-          clubId: savedClubId,
-          clubName,
-          companyName,
-        } = await userInfoRes.json();
-
+        // 쿠키에서 role 읽기
+        const role = getRole();
         if (role) {
           setUserRole(role);
         }
 
+        // 쿠키에서 clubId 읽기
+        const savedClubId = getClubId();
         if (savedClubId) {
           setCurrentClubId(savedClubId);
         }
 
         if (role === "club") {
-          // 동호회 관리자용 API
+          // 동호회 관리자용 API - 가입한 동호회 목록 가져오기
+          const clubsRes = await getData("v1/club/my", false);
+          console.log(clubsRes);
+          if (String(clubsRes.resultCode) === "200" && clubsRes.data) {
+            setClubs(clubsRes.data);
+
+            // 쿠키에 clubId가 없으면 첫 번째 클럽을 기본값으로 설정
+            if (!savedClubId && clubsRes.data.length > 0) {
+              const firstClub = clubsRes.data[0];
+              setCurrentClubId(String(firstClub.id));
+
+              // 쿠키에 저장
+              await saveClubId(String(firstClub.id));
+              await saveClubName(firstClub.name);
+            }
+          }
+
+          // 동호회 프로필 가져오기
           const profileRes = await getData(
-            `v1/executive/club/{clubId}/my-profile`,
+            // `v1/executive/club/{clubId}/my-profile`,
+            `v1/manager/member/my-profile`,
             true
           );
           console.log(profileRes);
           if (String(profileRes.resultCode) === "200" && profileRes.data) {
             setProfileData(profileRes.data);
           }
-
-          const clubsRes = await getData("v1/executive/club/select", true);
-          if (String(clubsRes.resultCode) === "200" && clubsRes.data) {
-            setClubs(clubsRes.data);
-          }
-          console.log(clubsRes);
         } else if (role === "company") {
           // 기업 관리자용 API
           const profileRes = await getData(
@@ -93,11 +112,7 @@ export default function ProfileDropdownModal({ profileImage }: Props) {
             const newCompanyName =
               profileRes.data.departmentName || profileRes.data.companyName;
             if (newCompanyName) {
-              await fetch("/api/auth/user-info", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ companyName: newCompanyName }),
-              });
+              await saveCompanyName(newCompanyName);
 
               setCompanyData({
                 companyName: newCompanyName,
@@ -115,18 +130,12 @@ export default function ProfileDropdownModal({ profileImage }: Props) {
 
   const handleClubChange = async (clubId: string, clubName: string) => {
     try {
-      // 먼저 상태 업데이트
       setCurrentClubId(clubId);
       setIsClubDropdownOpen(false);
 
-      // ✅ API Route로 쿠키 저장
-      await fetch("/api/auth/user-info", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ clubId, clubName }),
-      });
+      await saveClubId(clubId);
+      await saveClubName(clubName);
 
-      // 모달 닫고 페이지 새로고침
       closeModal();
       window.location.reload();
     } catch (error) {
@@ -170,9 +179,8 @@ export default function ProfileDropdownModal({ profileImage }: Props) {
                     <span className="h4 font-bold text-gray-900">
                       {
                         clubs.find(
-                          (club) =>
-                            String(club.clubId) === String(currentClubId)
-                        )?.clubName
+                          (club) => String(club.id) === String(currentClubId)
+                        )?.name
                       }
                     </span>
                     {clubs.length > 1 && (
@@ -195,18 +203,17 @@ export default function ProfileDropdownModal({ profileImage }: Props) {
                     <div className="absolute left-0 right-0 mt-2 bg-gray-0 rounded-md shadow-md z-50 border border-gray-200">
                       {clubs
                         .filter(
-                          (club) =>
-                            String(club.clubId) !== String(currentClubId)
+                          (club) => String(club.id) !== String(currentClubId)
                         )
                         .map((club) => (
                           <div
-                            key={club.clubId}
+                            key={club.id}
                             onClick={() =>
-                              handleClubChange(club.clubId, club.clubName)
+                              handleClubChange(String(club.id), club.name)
                             }
                             className="p-3 h4 font-medium text-gray-700 cursor-pointer hover:bg-gray-100"
                           >
-                            {club.clubName}
+                            {club.name}
                           </div>
                         ))}
                     </div>

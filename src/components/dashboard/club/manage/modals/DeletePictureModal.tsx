@@ -57,7 +57,7 @@ export default function DeletePictureModal() {
       console.log("clubId", clubId);
 
       const response = await fetch(
-        `/api/server/v1/executive/club/${clubId}/activity-feed/${modalParams.activityId}`,
+        `/api/v1/executive/club/${clubId}/activity-feed/${modalParams.activityId}`,
         {
           method: "DELETE",
           headers: {

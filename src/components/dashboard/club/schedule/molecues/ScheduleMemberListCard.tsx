@@ -43,7 +43,7 @@ const ScheduleMemberListCard = ({
           <Pagination
             currentPage={memberList.currentPage}
             handlePageChange={handlePageChange}
-            maxPage={memberList.maxPage}
+            totalPages={memberList.maxPage}
           />
         </>
       )}

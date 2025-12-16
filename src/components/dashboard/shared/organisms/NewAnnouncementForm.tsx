@@ -87,16 +87,13 @@ export default function NewAnnouncementForm() {
     });
 
     try {
-      const response = await fetch(
-        `/api/server/v1/executive/club/${clubId}/notices`,
-        {
-          method: "POST",
-          body: formData,
-          headers: new Headers({
-            Authorization: `Bearer ${token}`,
-          }),
-        }
-      );
+      const response = await fetch(`/api/v1/executive/club/${clubId}/notices`, {
+        method: "POST",
+        body: formData,
+        headers: new Headers({
+          Authorization: `Bearer ${token}`,
+        }),
+      });
 
       if (!response.ok) {
         const responseText = await response.text();

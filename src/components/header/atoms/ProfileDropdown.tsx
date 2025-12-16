@@ -26,7 +26,8 @@ export default function ProfileDropdown({ profileImage }: Props) {
 
         let res;
         if (role === "club") {
-          res = await getData(`v1/executive/club/{clubId}/my-profile`, true);
+          // res = await getData(`v1/executive/club/{clubId}/my-profile`, true);
+          res = await getData(`v1/manager/member/my-profile`, true);
         } else if (role === "company") {
           res = await getData(`v1/manager/member/my-profile`, true);
         }
