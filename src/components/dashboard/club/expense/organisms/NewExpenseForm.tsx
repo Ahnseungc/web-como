@@ -116,12 +116,9 @@ export default function NewExpenseReportForm({
         }
 
         const response = await fetch(
-          `/api/server/v1/executive/club/${clubId}/activity-expenses`,
+          `/api/v1/executive/club/${clubId}/activity-expenses`,
           {
             method: "POST",
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
             body: formData,
           }
         );
@@ -305,7 +302,8 @@ export default function NewExpenseReportForm({
               required
               type="checkbox"
               name="isChecked"
-              label={`상기와 같이 해당 ${clubName}의 지원금을 요청합니다.`}
+              // label={`상기와 같이 해당 ${clubName}의 지원금을 요청합니다.`}
+              label={`상기와 같이 지원금을 요청합니다.`}
               checked={isChecked}
               onChange={() => setIsChecked(!isChecked)}
             />

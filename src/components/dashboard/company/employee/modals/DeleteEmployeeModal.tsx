@@ -11,11 +11,14 @@ export default function DeleteEmployeeModal() {
   const [modalParams, setModalParams] = useState<any>(null);
 
   useEffect(() => {
-    const modal = document.getElementById('employee-delete');
+    const modal = document.getElementById("employee-delete");
     if (modal) {
       const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
-          if (mutation.type === 'attributes' && mutation.attributeName === 'data-modal-params') {
+          if (
+            mutation.type === "attributes" &&
+            mutation.attributeName === "data-modal-params"
+          ) {
             const newParams = modal.dataset.modalParams;
             if (newParams) {
               setModalParams(JSON.parse(newParams));
@@ -26,7 +29,7 @@ export default function DeleteEmployeeModal() {
 
       observer.observe(modal, {
         attributes: true,
-        attributeFilter: ['data-modal-params']
+        attributeFilter: ["data-modal-params"],
       });
 
       return () => observer.disconnect();
@@ -36,17 +39,20 @@ export default function DeleteEmployeeModal() {
   const handleDelete = async () => {
     try {
       const token = await getAccessToken();
-      const response = await fetch(`/api/server/v1/manager/member/${modalParams.memberId}`, {
-        method: 'DELETE',
-        headers: {
-          "Authorization": `Bearer ${token}`,
+      const response = await fetch(
+        `/api/v1/manager/member/${modalParams.memberId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      });
+      );
 
       const result = await response.json();
       console.log("삭제 결과:", result);
 
-      if (result.resultCode === 'OK') {
+      if (result.resultCode === "OK") {
         closeModal("employee-delete");
         openModal("delete-success");
       } else {
@@ -78,11 +84,7 @@ export default function DeleteEmployeeModal() {
               content="취소"
               onClick={() => closeModal("employee-delete")}
             />
-            <Button
-              primary
-              content="삭제"
-              onClick={handleDelete}
-            />
+            <Button primary content="삭제" onClick={handleDelete} />
           </div>
         </div>
       </div>

@@ -3,6 +3,6 @@ export interface LoginClubData {
 }
 
 export interface LoginClubDTO {
-  clubId: number;
-  clubName: string;
+  id: number;
+  name: string;
 }

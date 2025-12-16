@@ -94,7 +94,7 @@ const ScheduleDetailForm = ({
             const token = await getAccessToken();
             const clubId = await getClubId();
             const response = await fetch(
-              `/api/server/v1/executive/club/${clubId}/schedule`,
+              `/api/v1/executive/club/${clubId}/schedule`,
               {
                 method: "POST",
                 headers: {
@@ -144,7 +144,7 @@ const ScheduleDetailForm = ({
             const clubId = await getClubId();
 
             const response = await fetch(
-              `/api/server/v1/executive/club/${clubId}/schedule/${scheduleId}`,
+              `/api/v1/executive/club/${clubId}/schedule/${scheduleId}`,
               {
                 method: "PATCH",
                 headers: {

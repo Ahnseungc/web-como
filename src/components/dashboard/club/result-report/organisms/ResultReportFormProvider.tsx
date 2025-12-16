@@ -116,7 +116,7 @@ const ResultReportFormProvider = () => {
         const clubId = await getClubId();
 
         const response = await fetch(
-          `/api/server/v1/executive/club/${clubId}/reports`,
+          `/api/v1/executive/club/${clubId}/reports`,
           {
             method: "POST",
             headers: {

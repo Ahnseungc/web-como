@@ -35,7 +35,7 @@ export default function AnnouncementList() {
         <AnnouncementTable />
         <Pagination
           currentPage={currentPage}
-          maxPage={maxPage}
+          totalPages={maxPage}
           handlePageChange={handlePageChange}
         />
       </div>

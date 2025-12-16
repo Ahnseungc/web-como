@@ -45,7 +45,7 @@ export default function FAQList() {
       <Pagination
         currentPage={currentPage}
         handlePageChange={handlePageChange}
-        maxPage={8}
+        totalPages={8}
       />
     </div>
   );

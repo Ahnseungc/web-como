@@ -46,7 +46,7 @@ export default function ReviewList(props: Props) {
           <Pagination
             currentPage={currentPage}
             handlePageChange={handlePageChange}
-            maxPage={8}
+            totalPages={8}
           />
         </>
       ) : (

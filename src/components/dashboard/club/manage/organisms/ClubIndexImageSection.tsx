@@ -70,7 +70,7 @@ export default function ClubIndexImageSection<T extends FieldValues>({
       console.log("clubId", clubId);
       console.log("formData", formData);
 
-      const response = await fetch(`/api/server/v1/executive/club/${clubId}`, {
+      const response = await fetch(`/api/v1/executive/club/${clubId}`, {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`,

@@ -49,7 +49,7 @@ export default function RHFTextInput<T extends FieldValues>({
     formState: { errors },
   } = useFormContext<T>();
 
-  console.log(errors);
+  // console.log(errors);
 
   const value = useWatch<T>({ name: name });
 
@@ -165,11 +165,11 @@ export default function RHFTextInput<T extends FieldValues>({
             )}
           </div>
 
-          {errors[name] && (
+          {/* {errors[name] && (
             <div className="text-base font-medium text-point-red">
               {errors[name].message?.toString()}
             </div>
-          )}
+          )} */}
           {!errors[name] && errorMessage && (
             <div className="text-base font-medium text-point-red">
               {errorMessage}

@@ -28,7 +28,7 @@ const TitleCard = ({
       const token = await getAccessToken();
       const clubId = await getClubId();
       const response = await fetch(
-        `/api/server/v1/executive/club/${clubId}/schedule/${scheduleId}`,
+        `/api/v1/executive/club/${clubId}/schedule/${scheduleId}`,
         {
           method: "DELETE",
           headers: {

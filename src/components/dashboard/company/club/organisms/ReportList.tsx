@@ -77,7 +77,7 @@ export default function ReportList() {
         <ReportTable activities={activities} />
         <Pagination
           currentPage={currentPage}
-          maxPage={maxPage}
+          totalPages={maxPage}
           handlePageChange={handlePageChange}
         />
       </div>

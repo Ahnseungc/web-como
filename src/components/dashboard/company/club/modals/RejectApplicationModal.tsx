@@ -53,7 +53,7 @@ export default function RejectApplicationModal() {
 
     try {
       const response = await fetch(
-        `/api/server/v1/manager/club/${modalParams.clubId}/reject`,
+        `/api/v1/manager/club/${modalParams.clubId}/reject`,
         {
           method: "POST",
           headers: {

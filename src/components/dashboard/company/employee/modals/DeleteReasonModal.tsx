@@ -85,7 +85,7 @@ export default function DeleteReasonModal() {
     try {
       const token = await getAccessToken();
       const response = await fetch(
-        `/api/server/v1/manager/member/${modalParams.memberId}`,
+        `/api/v1/manager/member/${modalParams.memberId}`,
         {
           method: "DELETE",
           headers: {

@@ -1,45 +1,50 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import ApplicationGuide from "@/components/dashboard/club/expense/molecules/ApplicationGuide";
 import ExpenseList from "@/components/dashboard/club/expense/organisms/ExpenseList";
 import ExpenseOverview from "@/components/dashboard/club/expense/organisms/ExpenseOverview";
-import ExpenseSearch from "@/components/dashboard/club/expense/molecules/ExpenseSearch";
-import NewReceiptFormModal from "@/components/dashboard/club/expense/modals/NewReceiptFormModal";
-import ExpenseRejectDetailModal from "@/components/dashboard/club/expense/modals/ExpenseRejectDetailModal";
-import { getClubId } from "@/lib/cookies";
-// import { getData } from "@/api/action";
-import { getData } from "@/lib/client-utils";
-import { ExpenseOverviewData } from "@/api/types/club/activityExpenses/requestStatus";
+import { getClubId, getData } from "@/lib/client-utils";
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
+  DehydratedState,
 } from "@tanstack/react-query";
 
-export default async function ExpensePage() {
-  const clubId = await getClubId();
+export default function ExpensePage() {
+  const clubId = getClubId();
+  const [dehydratedState, setDehydratedState] =
+    useState<DehydratedState | null>(null);
 
-  const queryClient = new QueryClient();
-  await queryClient.prefetchInfiniteQuery({
-    queryKey: [clubId, "expense"],
-    queryFn: ({ pageParam }) =>
-      getData(
-        `v1/executive/club/${clubId}/activity-expenses?page=${pageParam}`,
-        false
-      ),
-    initialPageParam: 1,
-  });
+  useEffect(() => {
+    const prefetchData = async () => {
+      const queryClient = new QueryClient();
+      await queryClient.prefetchInfiniteQuery({
+        queryKey: [clubId, "expense"],
+        queryFn: ({ pageParam }) =>
+          getData(
+            `v1/executive/club/${clubId}/activity-expenses?page=${pageParam}`,
+            false
+          ),
+        initialPageParam: 1,
+      });
+      setDehydratedState(dehydrate(queryClient));
+    };
+
+    if (clubId) {
+      prefetchData();
+    }
+  }, [clubId]);
 
   return (
     <>
       <ApplicationGuide />
       <ExpenseOverview />
-      {/* <ExpenseSearch /> */}
-      <HydrationBoundary state={dehydrate(queryClient)}>
+      <HydrationBoundary state={dehydratedState}>
         <ExpenseList clubId={clubId} />
       </HydrationBoundary>
-      <div className="m-0">
-        {/* <NewReceiptFormModal /> */}
-        {/* <ExpenseRejectDetailModal /> */}
-      </div>
+      <div className="m-0"></div>
     </>
   );
 }

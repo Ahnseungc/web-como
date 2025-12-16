@@ -51,7 +51,7 @@ export default function SupplyList() {
         <SupplyTable />
         <Pagination
           currentPage={currentPage}
-          maxPage={8}
+          totalPages={8}
           handlePageChange={handlePageChange}
         />
       </div>

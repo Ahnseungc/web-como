@@ -15,10 +15,9 @@ export default function DashboardOverview() {
         "v1/executive/club/{clubId}/dashboard/notifications",
         true
       );
-      console.log(response);
+
       if (String(response.resultCode) === "200") {
         setDashboardNotifications(response.data);
-        console.log("dashboardNotifications", dashboardNotifications);
       }
     } catch (error) {
       console.error("알림 카드 목록 조회 에러:", error);

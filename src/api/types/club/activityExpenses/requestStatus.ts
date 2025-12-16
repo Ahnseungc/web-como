@@ -1,4 +1,4 @@
 export interface ExpenseOverviewData {
-  approvedCount: number;
+  pendingCount: number;
   rejectedCount: number;
 }
