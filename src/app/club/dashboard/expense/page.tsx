@@ -27,7 +27,7 @@ export default function ExpensePage() {
             `v1/executive/club/${clubId}/activity-expenses?page=${pageParam}`,
             false
           ),
-        initialPageParam: 1,
+        initialPageParam: 0,
       });
       setDehydratedState(dehydrate(queryClient));
     };
@@ -41,9 +41,9 @@ export default function ExpensePage() {
     <>
       <ApplicationGuide />
       <ExpenseOverview />
-      <HydrationBoundary state={dehydratedState}>
-        <ExpenseList clubId={clubId} />
-      </HydrationBoundary>
+      {/* <HydrationBoundary state={dehydratedState}> */}
+      <ExpenseList clubId={clubId} />
+      {/* </HydrationBoundary> */}
       <div className="m-0"></div>
     </>
   );

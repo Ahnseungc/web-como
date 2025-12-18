@@ -18,7 +18,7 @@ interface Expense {
   remainingAmount: number;
   usageDetail: string;
   submittedBy: string;
-  issuedDate: [number, number, number];
+  issuedDate: string;
   vendor: string;
   amount: number;
   description: string;
@@ -32,15 +32,15 @@ interface ClubData {
   writerRole: string;
   writerDepartment: string;
   eventName: string;
-  activityDate: [number, number, number]; // [year, month, day]
-  activityTime: [number, number]; // [hour, minute]
+  activityDate: string;
+  activityTime: string;
   location: string;
   locationDetail: string;
   participantCount: number;
   activityContent: string;
   note: string;
-  photos: Photo[];
-  expenses: Expense[];
+  images: Photo[];
+  receipts: Expense[];
 }
 
 interface Props {

@@ -33,9 +33,10 @@ const Page = ({ params }: { params: { id: string } }) => {
     const fetchExpense = async () => {
       if (clubId) {
         const { data } = await getData(
-          `v1/executive/club/${clubId}/activity-expenses/${params.id}`,
+          `v1/executive/club/${clubId}/activity-expense/${params.id}`,
           true
         );
+
         setExpense({
           eventName: data.eventName,
           description: data.description,
@@ -46,7 +47,7 @@ const Page = ({ params }: { params: { id: string } }) => {
           leadersSummary: data.leadersSummary,
           amount: data.amount,
           details: data.details,
-          createdAt: data.data.createdAt,
+          createdAt: data.createdAt,
           file: data.file,
         });
         setCardInfo({
