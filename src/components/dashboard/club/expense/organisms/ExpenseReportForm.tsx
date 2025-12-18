@@ -221,8 +221,8 @@ const ExpenseReportForm = forwardRef<
 
             <div className="space-y-2">
               <div className="flex">
-                <h3 className="font-semibold text-gray-900">{"첨부 파일"}</h3>
-                <h3 className="text-point-red">{"*"}</h3>
+                <h3 className="font-semibold text-gray-900">첨부 파일</h3>
+                <h3 className="text-point-red">*</h3>
               </div>
 
               {formValues.file && (

@@ -6,18 +6,19 @@ import { usePathname, useRouter } from "next/navigation";
 interface Props {
   data?: {
     data: {
-      List: {
+      list: {
         id: number;
-        applicantName: string;
+        writerName: string;
         status: string;
         clubName: string;
-        createdDate: number[];
+        eventName: string;
+        createdDate: string;
         rejectReason?: string;
       }[];
       currentPage: number;
-      maxPage: number;
+      totalPages: number;
     };
-    resultCode: string;
+    resultCode: number | string;
     resultMessage: string;
   }[];
   currentPage: number;
@@ -27,7 +28,7 @@ export default function ExpenseTable({ data, currentPage }: Props) {
   const { push } = useRouter();
   const pathname = usePathname();
   const list =
-    data?.find((page) => page.data.currentPage === currentPage)?.data.List ||
+    data?.find((page) => page.data.currentPage === currentPage)?.data.list ||
     [];
 
   return (
@@ -61,12 +62,12 @@ export default function ExpenseTable({ data, currentPage }: Props) {
             className="flex py-0.5 border-b border-gray-400 bg-gray-0 hover:bg-gray-100 transition duration-200"
           >
             {[
-              item.id,
-              item.createdDate,
-              item.applicantName,
-              item.clubName,
-              item.status,
-              item.rejectReason,
+              item.id, // 0: 순번
+              item.createdDate, // 1: 작성일
+              item.writerName, // 2: 신청자 (applicantName -> writerName)
+              item.eventName, // 3: 행사명 (clubName -> eventName)
+              item.status, // 4: 구분
+              item.rejectReason, // 5: 반려 사유
             ].map((data, i) => (
               <div
                 key={i}
@@ -88,11 +89,7 @@ export default function ExpenseTable({ data, currentPage }: Props) {
                 {i === 0
                   ? idx + 1
                   : i === 1
-                    ? new Date(
-                        item.createdDate[0],
-                        item.createdDate[1] - 1,
-                        item.createdDate[2]
-                      ).toLocaleDateString()
+                    ? new Date(item.createdDate).toLocaleDateString()
                     : i === 4
                       ? data === "APPROVED"
                         ? "승인"

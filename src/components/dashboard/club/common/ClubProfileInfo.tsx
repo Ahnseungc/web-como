@@ -43,7 +43,7 @@ const categoryMapping = {
 };
 
 interface ClubProfileInfoType {
-  createdAt: number[];
+  createdAt: string;
   memberCount: number;
   activityPlan: string;
 }
@@ -53,14 +53,8 @@ export default function ClubProfileInfo({
   memberCount,
   activityPlan,
 }: ClubProfileInfoType) {
-  const date = new Date(
-    createdAt[0],
-    createdAt[1],
-    createdAt[2],
-    createdAt[3],
-    createdAt[4],
-    createdAt[5]
-  );
+  const date = new Date(createdAt);
+
   const formattedDate = new Intl.DateTimeFormat("ko-KR", {
     year: "numeric",
     month: "short",

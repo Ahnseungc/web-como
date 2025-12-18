@@ -26,24 +26,29 @@ export default function ExpenseList({ clubId }: Props) {
     useInfiniteQuery({
       queryKey: [clubId, "expense"],
       queryFn: ({ pageParam }) =>
-        getData(`v1/executive/club/1/activity-expenses?page=1`, true),
+        getData(
+          `v1/executive/club/${clubId}/activity-expenses?page=${pageParam}`,
+          true
+        ),
+
+      initialPageParam: 0,
+
       getNextPageParam: (lastPage) => {
         const totalPages = lastPage.data?.totalPages;
         const currentPage = lastPage.data?.currentPage;
-
         if (currentPage && totalPages && currentPage < totalPages) {
-          return currentPage + 1;
+          return currentPage;
         }
         return undefined;
       },
       getPreviousPageParam: (firstPage) => {
         const currentPage = firstPage.data?.currentPage;
+
         if (currentPage && currentPage > 1) {
-          return currentPage - 1;
+          return currentPage - 2;
         }
         return undefined;
       },
-      initialPageParam: 1,
     });
 
   const [currentPage, setCurrentPage] = useState<number>(1);
