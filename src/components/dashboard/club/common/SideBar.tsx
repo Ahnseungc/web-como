@@ -66,11 +66,11 @@ const menuList: MenuItem[] = [
       //   link: "/manage/supply",
       //   routes: ["/manage/supply"],
       // },
-      {
-        name: "공지사항 관리",
-        link: "/manage/announcement",
-        routes: ["/manage/announcement"],
-      },
+      // {
+      //   name: "공지사항 관리",
+      //   link: "/manage/announcement",
+      //   routes: ["/manage/announcement"],
+      // },
       // {
       //   name: "활동 결과 보고 작성",
       //   link: "/manage/result-report",

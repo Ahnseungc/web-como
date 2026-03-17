@@ -14,7 +14,7 @@ interface Expense {
   remainingAmount: number;
   usageDetail: string;
   submittedBy: string;
-  issuedDate: [number, number, number]; // [year, month, day]
+  issuedDate: string;
   vendor: string;
   amount: number;
   description: string;
@@ -28,15 +28,15 @@ interface ClubData {
   writerRole: string;
   writerDepartment: string;
   eventName: string;
-  activityDate: [number, number, number]; // [year, month, day]
-  activityTime: [number, number]; // [hour, minute]
+  activityDate: string;
+  activityTime: string;
   location: string;
   locationDetail: string;
   participantCount: number;
   activityContent: string;
   note: string;
-  photos: Photo[];
-  expenses: Expense[];
+  images: Photo[];
+  receipts: Expense[];
 }
 
 interface Props {
@@ -100,7 +100,7 @@ export default function ReportDetail({ data }: Props) {
               <div className="flex flex-col basis-1/4">
                 <span className=" text-xl font-[600] mb-[8px]">활동 일정</span>
                 <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]   ">
-                  {data.activityDate.join("-")}
+                  {data.activityDate}
                 </div>
               </div>
               <div className="flex flex-col basis-1/4">
@@ -108,15 +108,15 @@ export default function ReportDetail({ data }: Props) {
                   .
                 </span>
                 <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px] ">
-                  {data.activityTime.join(":")}
+                  {data.activityTime}
                 </div>
-              </div>{" "}
+              </div>
               <div className="flex flex-col basis-1/4">
                 <span className=" text-xl font-[600] mb-[8px]">활동 장소</span>
                 <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]  ">
                   {data.location}
                 </div>
-              </div>{" "}
+              </div>
               <div className="flex flex-col basis-1/4">
                 <span className=" text-xl font-[600] mb-[8px] text-gray-100">
                   ,
@@ -143,11 +143,11 @@ export default function ReportDetail({ data }: Props) {
         <div className="flex flex-col w-full gap-[8px] pt-[36px]">
           <span className="text-xl font-[600]">지출 증빙용 활동 사진 첨부</span>
           <div className="flex gap-[12px]">
-            {data.photos.map((photo) => {
+            {data.images.map((image) => {
               return (
-                <div key={photo.id} className="w-[374px] aspect-[1/1] relative">
+                <div key={image.id} className="w-[374px] aspect-[1/1] relative">
                   <Image
-                    src={photo.url}
+                    src={image.url}
                     alt="photo"
                     fill
                     className="rounded-[8px]"
@@ -160,7 +160,7 @@ export default function ReportDetail({ data }: Props) {
       </div>
 
       {/*활동지원비 정산서 */}
-      {data.expenses.map((item, idx) => {
+      {data.receipts.map((item, idx) => {
         return (
           <div
             key={idx}
@@ -181,13 +181,13 @@ export default function ReportDetail({ data }: Props) {
                 <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px] ">
                   {item.supportAmount}
                 </div>
-              </div>{" "}
+              </div>
               <div className="flex flex-col basis-1/4">
                 <span className=" text-xl font-[600] mb-[8px]">집행액</span>
                 <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]  ">
                   {item.usedAmount}
                 </div>
-              </div>{" "}
+              </div>
               <div className="flex flex-col basis-1/4">
                 <span className=" text-xl font-[600] mb-[8px] ">잔액</span>
                 <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]  ">
@@ -217,9 +217,9 @@ export default function ReportDetail({ data }: Props) {
               <div className="flex flex-col basis-1/4">
                 <span className=" text-xl font-[600] mb-[8px] ">일자</span>
                 <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px] ">
-                  {item.issuedDate.join("-")}
+                  {item.issuedDate}
                 </div>
-              </div>{" "}
+              </div>
             </div>
             <div className="flex w-full gap-[12px]">
               <div className="flex flex-col basis-1/4">
@@ -233,13 +233,13 @@ export default function ReportDetail({ data }: Props) {
                 <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px] ">
                   {item.usedAmount}
                 </div>
-              </div>{" "}
+              </div>
               <div className="flex flex-col basis-1/4">
                 <span className=" text-xl font-[600] mb-[8px]">내용</span>
                 <div className=" text-lg bg-gray-100 rounded-[6px] py-[18px] px-[20px]  ">
                   {item.description}
                 </div>
-              </div>{" "}
+              </div>
               <div className="flex flex-col basis-1/4">
                 <span className=" text-xl font-[600] mb-[8px] ">
                   영수증 첨부
