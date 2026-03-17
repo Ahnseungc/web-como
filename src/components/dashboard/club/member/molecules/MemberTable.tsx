@@ -4,7 +4,7 @@ import { useState } from "react";
 import type { ClubWebMemberDTO } from "@/api/types/club/member";
 import { cn, formatDate, openModal } from "@/lib/utils";
 import NewMemberDetailModal from "@/components/dashboard/club/member/modals/NewMemberDetailModal";
-import CancelApplicationModal from "@/components/dashboard/club/member/modals/CancelApplicationModal";
+// import CancelApplicationModal from "@/components/dashboard/club/member/modals/CancelApplicationModal";
 
 interface Props {
   data: ClubWebMemberDTO[] | undefined;
@@ -13,7 +13,7 @@ interface Props {
 export default function MemberTable({ data }: Props) {
   const [selectedId, setSelectedId] = useState<number>();
   const [selectedName, setSelectedName] = useState<string>("");
-  console.log("memberTable data", data)
+  console.log("memberTable data", data);
 
   return (
     <>
@@ -73,7 +73,7 @@ export default function MemberTable({ data }: Props) {
                 <div
                   key={data}
                   className={cn(
-                   "my-3 mx-6 body-1 font-bold text-gray-900",
+                    "my-3 mx-6 body-1 font-bold text-gray-900",
                     i === 0 ? "w-[5%] pl-4" : "",
                     i === 1 ? "w-[19%]" : "",
                     i === 2 ? "w-[19%]" : "",
@@ -97,9 +97,11 @@ export default function MemberTable({ data }: Props) {
                   {i === 0 ? (
                     idx + 1
                   ) : i === 4 ? (
-                    Array.isArray(data) ? 
-                    formatDate(new Date(data[0], data[1]-1, data[2])) : 
-                    formatDate(new Date(data))
+                    Array.isArray(data) ? (
+                      formatDate(new Date(data[0], data[1] - 1, data[2]))
+                    ) : (
+                      formatDate(new Date(data))
+                    )
                   ) : i === 5 ? (
                     data === "SIGNOUT" ? (
                       "탈퇴"

@@ -15,7 +15,6 @@ import { removeHtmlTags } from "@/lib/client-utils";
 import { useQueryClient } from "@tanstack/react-query";
 import { useGetPlaceSearch } from "@/app/club/dashboard/manage/_lib/queries";
 import { getGeocode } from "@/app/club/dashboard/manage/_lib/getGeocode";
-import NaverMap from "../atoms/NaverMap";
 import { PlaceSearchItemType } from "@/lib/types/placeSearch";
 
 type Props = {
@@ -33,13 +32,11 @@ export default function PlaceSearchWithNaverMap<T extends FieldValues>({
   const { setValue } = useFormContext<T>();
 
   const roadAddressFieldValue = useWatch({ name: "location" });
-  const placeNameFieldValue = useWatch({ name: "placeName" });
+  // const placeNameFieldValue = useWatch({ name: "placeName" });
 
   const [searchRoadAddress, setSearchRoadAddress] = useState<string>(
     roadAddressDefaultValue || ""
   );
-  console.log("roadAddressDefaultValue", roadAddressDefaultValue);
-  console.log("searchRoadAddress", searchRoadAddress);
 
   const [searchPlaceName, setSearchPlaceName] = useState<string>(
     placeNameDefaultValue || ""

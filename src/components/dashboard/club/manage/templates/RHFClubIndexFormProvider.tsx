@@ -9,11 +9,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import ClubInfoForm from "./ClubInfoForm";
 import { useEffect } from "react";
-// import { getData } from "@/api/action";
 import { getData } from "@/lib/client-utils";
 
 interface RHFClubIndexFormProviderProps {
-  clubId: string | null; // clubId prop 정의
+  clubId: string | null;
 }
 
 const categoryObject: Record<string, any> = {
@@ -28,7 +27,6 @@ const categoryObject: Record<string, any> = {
 export default function RHFClubIndexFormProvider({
   clubId,
 }: RHFClubIndexFormProviderProps) {
-  console.log("1. RHFClubIndexFormProvider 실행됨");
   const method = useForm<ClubIndexSchemaType>({
     mode: "all",
     resolver: zodResolver(ClubIndexSchema),
@@ -39,7 +37,7 @@ export default function RHFClubIndexFormProvider({
     const loadClubData = async () => {
       if (!clubId) return;
 
-      const res = await getData(`v1/executive/club/${clubId}`, true);
+      const res = await getData(`v1/club/${clubId}`, true);
       const { data } = res;
 
       // 📌 API 응답값을 폼에 주입

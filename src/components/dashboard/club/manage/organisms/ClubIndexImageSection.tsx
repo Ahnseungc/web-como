@@ -24,20 +24,18 @@ export default function ClubIndexImageSection<T extends FieldValues>({
   const [file, setFile] = useState<File | null>(null);
   const { showToast } = useToast();
 
-  console.log("3. ClubIndexImageSection 실행됨");
-
   useEffect(() => {
     const fetchClubId = async () => {
       try {
-        const id = await getClubId(); // clubId 가져오기
-        setClubId(id || null); // 상태 업데이트
+        const id = await getClubId();
+        setClubId(id || null);
       } catch (error) {
         console.error("클럽 ID를 가져오는 중 오류 발생:", error);
       }
     };
 
-    fetchClubId(); // 함수 호출
-  }, []); // 컴포넌트가 마운트될 때 한 번만 실행
+    fetchClubId();
+  }, []);
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     console.log("e.target.files", e.target.files);

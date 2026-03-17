@@ -104,13 +104,13 @@ export default function LoginForm() {
     }
 
     try {
-      const hashedPassword = SHA256(formData.password).toString(enc.Hex);
+      // const hashedPassword = SHA256(formData.password).toString(enc.Hex);
       const response = await fetch(`/api/login`, {
         method: "POST",
         body: JSON.stringify({
           email: formData.id,
-          password: hashedPassword,
-          // password: formData.password,
+          // password: hashedPassword,
+          password: formData.password,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -127,19 +127,26 @@ export default function LoginForm() {
         return;
       }
       const tokenPayload = JSON.parse(atob(accessToken.split(".")[1]));
-      const actualRole = tokenPayload.role;
-      console.log("실제 role:", actualRole);
+      const authorities = tokenPayload.role; // This might be an array or a single string
+      const userRoles = Array.isArray(authorities)
+        ? authorities
+        : [authorities];
+      console.log("실제 role:", userRoles);
 
       // ADMIN인 경우 선택할 수 있도록 RadioSelect 표시
-      if (actualRole === "ROLE_ADMIN") {
+      if (userRoles.includes("ROLE_ADMIN")) {
         setAdminAccessToken(accessToken);
         setIsAdmin(true);
         return;
       }
 
       // EXECUTIVE 또는 MANAGER는 자동으로 대시보드 타입 결정
-      const dashboardType =
-        actualRole === "ROLE_EXECUTIVE" ? "club" : "company";
+      let dashboardType = "company"; // 기본값
+      if (userRoles.includes("ROLE_EXECUTIVE")) {
+        dashboardType = "club";
+      } else if (userRoles.includes("ROLE_MANAGER")) {
+        dashboardType = "company";
+      }
       console.log("대시보드 타입:", dashboardType);
 
       await saveAccessToken(accessToken);
@@ -173,7 +180,7 @@ export default function LoginForm() {
           className="hidden md:block self-center"
         />
         <h2 className="hidden md:block h1 text-center font-bold text-gray-1000">
-          {"로그인"}
+          로그인
         </h2>
         <div className="space-y-4">
           <div>
@@ -246,12 +253,12 @@ export default function LoginForm() {
         )}
         <div className="self-center flex items-center gap-4">
           <span className="body-1 font-normal text-gray-500">
-            {"비밀번호가 기억이 나지 않나요?"}
+            비밀번호가 기억이 나지 않나요?
           </span>
           <span className="h-[15px] border-l border-gray-300" />
           <Link href={"/login/identify"}>
             <span className="body-1 font-semibold text-gray-900">
-              {"비밀번호 재설정"}
+              비밀번호 재설정
             </span>
           </Link>
         </div>

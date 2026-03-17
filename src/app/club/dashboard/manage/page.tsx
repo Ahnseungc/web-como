@@ -4,9 +4,9 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ClubMenuTabs from "@/components/dashboard/club/manage/molecules/ClubMenuTabs";
 // import ClubInfoTab from "@/components/dashboard/club/manage/templates/ClubInfo";
 import ClubPictureTab from "@/components/dashboard/club/manage/templates/ClubPicture";
-import ClubQnaTab from "@/components/dashboard/club/manage/templates/ClubQna";
-import ClubApplicationTab from "@/components/dashboard/club/manage/templates/ClubApplication";
-import ClubPolicyTab from "@/components/dashboard/club/manage/templates/ClubPolicy";
+// import ClubQnaTab from "@/components/dashboard/club/manage/templates/ClubQna";
+// import ClubApplicationTab from "@/components/dashboard/club/manage/templates/ClubApplication";
+// import ClubPolicyTab from "@/components/dashboard/club/manage/templates/ClubPolicy";
 import DeletePictureModal from "@/components/dashboard/club/manage/modals/DeletePictureModal";
 import RHFClubIndexFormProvider from "@/components/dashboard/club/manage/templates/RHFClubIndexFormProvider";
 import { getClubId } from "@/lib/cookies";
@@ -24,7 +24,7 @@ const tabList: ClubMenuTab[] = [
   { name: "활동 사진", value: "picture" },
   // { name: "Q&A 관리", value: "qna" },
   // { name: "신청서 관리", value: "application" },
-  { name: "동호회 회칙", value: "policy" },
+  // { name: "동호회 회칙", value: "policy" },
 ];
 
 const renderCurrentTabPage = (currentTab: ClubMenu, clubId: string | null) => {
@@ -38,8 +38,8 @@ const renderCurrentTabPage = (currentTab: ClubMenu, clubId: string | null) => {
     //   return <ClubQnaTab />;
     // case "application":
     //   return <ClubApplicationTab />;
-    case "policy":
-      return <ClubPolicyTab clubId={clubId} />;
+    // case "policy":
+    //   return <ClubPolicyTab clubId={clubId} />;
   }
 };
 
@@ -52,9 +52,7 @@ export default function ClubManagePage() {
 
   useEffect(() => {
     const fetchClubId = async () => {
-      const id = await getClubId(); // 비동기적으로 clubId 가져오기
-      console.log("0. ClubManagePage 실행됨");
-      console.log("0. ClubManagePage 에서 clubId", id);
+      const id = await getClubId();
       setClubId(id || null);
     };
 

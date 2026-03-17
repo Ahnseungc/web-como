@@ -18,7 +18,7 @@ const tableHeadings = [
 ];
 
 interface Employee {
-  memberId: string;
+  id: string;
   name: string;
   department: string;
   position: string;
@@ -34,9 +34,8 @@ interface EmployeeTableProps {
 export default function EmployeeTable({ employees }: EmployeeTableProps) {
   const router = useRouter();
 
-  const handleRowClick = (memberId: string) => {
-    router.push(`./employee/detail/${memberId}`);
-    // console.log("memberId", memberId);
+  const handleRowClick = (id: string) => {
+    router.push(`./employee/detail/${id}`);
   };
 
   return (
@@ -68,7 +67,7 @@ export default function EmployeeTable({ employees }: EmployeeTableProps) {
         </li>
         {employees.map((employee, idx) => (
           <li
-            key={employee.memberId}
+            key={employee.id}
             className={cn(
               "flex border-b border-gray-400 bg-gray-0 transition duration-200 h-14 items-center",
               employee.status === "ACTIVE"
@@ -77,7 +76,7 @@ export default function EmployeeTable({ employees }: EmployeeTableProps) {
             )}
             onClick={() => {
               if (employee.status === "ACTIVE") {
-                handleRowClick(employee.memberId);
+                handleRowClick(employee.id);
               }
             }}
           >
@@ -122,21 +121,21 @@ export default function EmployeeTable({ employees }: EmployeeTableProps) {
                         // onClick={() => openModal("employee-edit")}
                         onClick={() =>
                           openModal("employee-edit", {
-                            memberId: employee.memberId,
+                            memberId: employee.id,
                           })
                         }
                       >
-                        {"수정"}
+                        수정
                       </button>
                       <button
                         className="py-1 px-4 rounded border border-gray-800 body-1 font-medium text-gray-800"
                         onClick={() =>
                           openModal("delete-reason", {
-                            memberId: employee.memberId,
+                            memberId: employee.id,
                           })
                         }
                       >
-                        {"삭제"}
+                        삭제
                       </button>
                     </div>
                   ) : (
@@ -144,7 +143,7 @@ export default function EmployeeTable({ employees }: EmployeeTableProps) {
                       className="decoration-gray-800"
                       onClick={() => openModal("delete-reason")}
                     >
-                      {"삭제 완료"}
+                      삭제 완료
                     </button>
                   )
                 ) : (

@@ -29,7 +29,7 @@ export const ClubIndexSchema = z.object({
       }),
   ]),
   companyName: z.string().min(1, { message: "소속 기업명은 필수값입니다" }),
-  category: z.string(),
+  clubCategory: z.string(),
   detail: z
     .string()
     .max(300, { message: "상세 소개는 최대 300자까지 가능합니다" }),
@@ -39,7 +39,7 @@ export const ClubIndexSchema = z.object({
     .max(18, { message: "한줄 소개는 최대 18자까지 가능합니다" }),
   roadAddress: z.string(),
   placeName: z.string(),
-  clubName: z.string(),
+  name: z.string(),
   location: z.string(),
   activityPlan: z.string(),
 });
@@ -52,13 +52,13 @@ export const ClubIndexDefaultValues: ClubIndexSchemaType = {
   activityTime: "",
   clubImage: "",
   companyName: "",
-  category: "",
+  clubCategory: "",
   detail: "",
   goal: "",
   intro: "",
   roadAddress: "",
   placeName: "",
-  clubName: "",
+  name: "",
   location: "",
   activityPlan: "",
 };

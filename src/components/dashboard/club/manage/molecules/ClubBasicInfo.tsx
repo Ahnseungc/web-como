@@ -1,15 +1,13 @@
-// 기본 정보
 "use client";
 
 import RHFTextInput from "@/components/common/RHF/RHFTextInput";
 import { ClubIndexSchemaType } from "@/lib/types/schema";
 import { useEffect, useState } from "react";
-// import { getData } from "@/api/action";
+
 import { getData } from "@/lib/client-utils";
 import { ClubIndexData } from "@/api/types/club";
 
 export default function ClubBasicInfo({ clubId }: { clubId: string | null }) {
-  console.log("5. ClubBasicInfo 실행됨");
   const [clubBasicInfo, setClubBasicInfo] = useState<ClubIndexData | null>(
     null
   );
@@ -17,7 +15,7 @@ export default function ClubBasicInfo({ clubId }: { clubId: string | null }) {
   useEffect(() => {
     const fetchClubBasicInfo = async () => {
       try {
-        const res = await getData(`v1/manager/club/${clubId}`);
+        const res = await getData(`v1/club/${clubId}`);
         setClubBasicInfo(res.data);
       } catch (error) {
         console.error("동호회 기본 정보 로딩 오류:", error);
@@ -41,17 +39,17 @@ export default function ClubBasicInfo({ clubId }: { clubId: string | null }) {
 
       <RHFTextInput<ClubIndexSchemaType>
         id="clubName"
-        name="clubName"
+        name="name"
         labelText="동호회명"
         placeholder="예) 에너제틱 산악 동호회"
         autoComplete="off"
         readOnly
         inputStyle="pr-9"
       />
-      {/* 이 카테고리는 또 바꿔야함 */}
+
       <RHFTextInput<ClubIndexSchemaType>
         id="category"
-        name="category"
+        name="clubCategory"
         labelText="카테고리"
         autoComplete="off"
         readOnly
@@ -89,16 +87,6 @@ export default function ClubBasicInfo({ clubId }: { clubId: string | null }) {
         disabled
         inputStyle="resize-y"
       />
-
-      {/* <div className="flex items-center gap-3">
-        <h2 className="font-bold text-gray-900">동호회 정보</h2>
-        <button
-          type="button"
-          className="rounded border border-point-red px-4 py-1 text-base font-medium leading-7 text-point-red"
-        >
-          강제해체
-        </button>
-      </div> */}
     </div>
   );
 }

@@ -113,11 +113,7 @@ export const getData = async (
     ? endpoint.replace("{clubId}", clubId || "")
     : endpoint;
 
-  // ✅ /api/ 프리픽스 추가
   const url = `/api/${finalEndpoint}`;
-
-  console.log("🔍 getData URL:", url);
-
   const response = await fetch(url, {
     headers: {
       "Content-Type": "application/json",
