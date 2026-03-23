@@ -7,6 +7,6 @@ export interface ClubWebMemberDTO {
   name: string;
   department: string;
   position: string;
-  requestDate: string;
+  createdDate: string;
   status: string;
 }

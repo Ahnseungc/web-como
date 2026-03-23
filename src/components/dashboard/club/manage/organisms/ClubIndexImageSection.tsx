@@ -52,8 +52,6 @@ export default function ClubIndexImageSection<T extends FieldValues>({
   };
 
   const handleSave = async () => {
-    console.log("handleSave 실행됨");
-    console.log("file", file);
     if (!file) {
       // alert("이미지를 선택해주세요.");
       showToast("이미지를 선택해주세요.", "error");
@@ -65,8 +63,6 @@ export default function ClubIndexImageSection<T extends FieldValues>({
 
     try {
       const token = await getAccessToken();
-      console.log("clubId", clubId);
-      console.log("formData", formData);
 
       const response = await fetch(`/api/v1/executive/club/${clubId}`, {
         method: "PATCH",
@@ -79,14 +75,10 @@ export default function ClubIndexImageSection<T extends FieldValues>({
       const result = await response.json();
       console.log("result", result);
 
-      if (result.resultCode === "OK") {
-        // console.log("이미지가 성공적으로 저장되었습니다.");
-        // alert("이미지가 성공적으로 저장되었습니다.");
+      if (result.resultCode === 200) {
         showToast("이미지가 성공적으로 저장되었습니다.", "success");
         window.location.reload(); // 페이지 새로 고침
       } else {
-        // console.log("이미지 저장에 실패했습니다.");
-        // alert("이미지 저장에 실패했습니다.");
         showToast("이미지 저장에 실패했습니다.", "error");
       }
     } catch (error) {
@@ -98,7 +90,7 @@ export default function ClubIndexImageSection<T extends FieldValues>({
     <section className="space-y-6">
       <div className="space-y-6 rounded-xl bg-gray-0 p-5">
         <div className="flex items-center justify-between">
-          <h3 className="h2 font-bold text-gray-900">{"대표 이미지"}</h3>
+          <h3 className="h2 font-bold text-gray-900">대표 이미지</h3>
           <label htmlFor={name}>
             <Edit className="h-6 w-6 cursor-pointer text-gray-900" />
           </label>
@@ -148,7 +140,7 @@ export default function ClubIndexImageSection<T extends FieldValues>({
         className="h3 w-full rounded-md bg-gray-900 py-4 text-center font-bold text-gray-50"
         onClick={handleSave}
       >
-        {"저장하기"}
+        저장하기
       </button>
     </section>
   );

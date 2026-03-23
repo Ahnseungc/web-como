@@ -4,7 +4,6 @@ import { useState } from "react";
 import type { ClubWebMemberDTO } from "@/api/types/club/member";
 import { cn, formatDate, openModal } from "@/lib/utils";
 import NewMemberDetailModal from "@/components/dashboard/club/member/modals/NewMemberDetailModal";
-// import CancelApplicationModal from "@/components/dashboard/club/member/modals/CancelApplicationModal";
 
 interface Props {
   data: ClubWebMemberDTO[] | undefined;
@@ -13,7 +12,7 @@ interface Props {
 export default function MemberTable({ data }: Props) {
   const [selectedId, setSelectedId] = useState<number>();
   const [selectedName, setSelectedName] = useState<string>("");
-  console.log("memberTable data", data);
+  // console.log("memberTable data", data);
 
   return (
     <>
@@ -46,32 +45,20 @@ export default function MemberTable({ data }: Props) {
         </li>
         {data && data.length > 0 ? (
           data.map((item, idx) => (
-            // <li
-            //   key={idx}
-            //   className="flex py-0.5 border-b border-gray-400 bg-gray-0 hover:bg-gray-100 transition duration-200 cursor-pointer"
-            //   onClick={() => {
-            //     setSelectedId(item.id);
-            //     openModal("new-member-detail");
-            //   }}
-            // >
             <li
-              key={idx}
+              key={`row-${item.id}-${idx}`}
               className="flex py-0.5 border-b border-gray-400 bg-gray-0"
-              // onClick={() => {
-              //   setSelectedId(item.id);
-              //   openModal("new-member-detail");
-              // }}
             >
               {[
                 item.id,
                 item.name,
                 item.department,
                 item.position,
-                item.requestDate,
+                item.createdDate,
                 item.status,
               ].map((data, i) => (
                 <div
-                  key={data}
+                  key={`cell-${item.id}-${i}`}
                   className={cn(
                     "my-3 mx-6 body-1 font-bold text-gray-900",
                     i === 0 ? "w-[5%] pl-4" : "",
@@ -110,7 +97,7 @@ export default function MemberTable({ data }: Props) {
                     ) : data === "PENDING" ? (
                       <>
                         <button className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-point-blue">
-                          {"승인"}
+                          승인
                         </button>
                         <button
                           className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-gray-600"
@@ -119,7 +106,7 @@ export default function MemberTable({ data }: Props) {
                             openModal("cancel-application");
                           }}
                         >
-                          {"반려"}
+                          반려
                         </button>
                       </>
                     ) : (
@@ -139,4 +126,3 @@ export default function MemberTable({ data }: Props) {
     </>
   );
 }
-// 동호회 임원 - 동호회 회원 테이블 컴포넌트

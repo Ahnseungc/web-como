@@ -64,6 +64,7 @@ export default function PlaceSearchWithNaverMap<T extends FieldValues>({
     );
     setSearchRoadAddress(selectedPlace.roadAddress);
     setSearchPlaceName(selectedPlace.title);
+    setIsRoadAddressFocusing(false);
   };
 
   const queryClient = useQueryClient();
@@ -115,23 +116,28 @@ export default function PlaceSearchWithNaverMap<T extends FieldValues>({
           >
             <Remove className="pointer-events-none h-full w-full text-gray-500" />
           </button>
-          <ul className="absolute left-0 top-full z-[99999999] flex h-full min-w-full flex-col shadow-[0_4px_20px_0px_rgb(#00000014)]">
-            {placeSearchData?.items.map((place, i) => (
-              <li
-                key={i}
-                className="flex cursor-pointer flex-col gap-1 bg-gray-50 px-6 py-2 hover:bg-gray-200"
-                onClick={() => handleSelectActivityPlace(place)}
-              >
-                <h3
-                  className="text-base text-brand-orange"
-                  dangerouslySetInnerHTML={{ __html: place.title }}
-                />
-                <span className="text-sm text-gray-500">
-                  {place.roadAddress}
-                </span>
-              </li>
-            ))}
-          </ul>
+          {isRoadAddressFocusing &&
+            placeSearchData?.items &&
+            placeSearchData.items.length > 0 && (
+              <ul className="absolute left-0 top-full z-[99999999] flex min-w-full flex-col shadow-[0_4px_20px_0px_rgb(#00000014)]">
+                {placeSearchData.items.map((place, i) => (
+                  <li
+                    key={i}
+                    className="flex cursor-pointer flex-col gap-1 bg-gray-50 px-6 py-2 hover:bg-gray-200"
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={() => handleSelectActivityPlace(place)}
+                  >
+                    <h3
+                      className="text-base text-brand-orange"
+                      dangerouslySetInnerHTML={{ __html: place.title }}
+                    />
+                    <span className="text-sm text-gray-500">
+                      {place.roadAddress}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
         </div>
         {/* <input
           type="text"

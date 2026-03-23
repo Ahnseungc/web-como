@@ -30,7 +30,8 @@ export default function ClubPictureTab({ clubId }: { clubId: string | null }) {
   if (pictures.length === 0) {
     return (
       <div className="flex h-40 w-full items-center justify-center rounded-lg border border-dashed border-gray-300 text-gray-500">
-        등록된 활동 사진이 없습니다.
+        등록된 활동사진이 없습니다. 많은 회원이 볼 수 있게 어플에서 업로드 해
+        보세요!
       </div>
     );
   }
