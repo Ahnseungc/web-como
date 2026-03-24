@@ -102,7 +102,7 @@ const ResultReportPhotCard = () => {
         </button>
 
         <p className="text-sm text-gray-500">
-          활동사진 첨부 필수사항입니다. 최대 4장까지 첨부 가능합니다.
+          활동사진을 첨부해주세요. (최대 4장 / jpg, png 등 이미지 파일만 가능)
         </p>
 
         {errorMessage && (

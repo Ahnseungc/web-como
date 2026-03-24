@@ -28,7 +28,7 @@ export default function NewReportForm() {
   return (
     <form className="space-y-3 w-full" onSubmit={handleSubmit}>
       <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">
-        <h3 className="h2 font-bold text-gray-900">{"기본 정보"}</h3>
+        <h3 className="h2 font-bold text-gray-900">기본 정보</h3>
         <Input
           name="clubName"
           label="동호회명"
@@ -37,9 +37,7 @@ export default function NewReportForm() {
           readOnly
         />
         <div className="flex flex-col gap-2">
-          <span className="h3 font-semibold text-gray-900">
-            {"동호회 임원"}
-          </span>
+          <span className="h3 font-semibold text-gray-900">동호회 임원</span>
           <Input
             name="clubAdmin1"
             type="text"
@@ -72,8 +70,8 @@ export default function NewReportForm() {
           name="image"
           label="활동 사진"
           caption="활동사진 첨부 필수사항입니다."
-		  currentImages={currentImages}
-		  setCurrentImages={setCurrentImages}
+          currentImages={currentImages}
+          setCurrentImages={setCurrentImages}
         />
         <Input
           name="note"
@@ -84,9 +82,7 @@ export default function NewReportForm() {
         />
       </div>
       <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">
-        <h3 className="h2 font-bold text-gray-900">
-          {"활동 지출 내역 및 증빙"}
-        </h3>
+        <h3 className="h2 font-bold text-gray-900">활동 지출 내역 및 증빙</h3>
         <div className="flex flex-col gap-2">
           <span className="h3 font-semibold text-gray-900">{"전표 일자"}</span>
           <DatePicker
@@ -129,8 +125,8 @@ export default function NewReportForm() {
           name="expense-image"
           label="지출 증빙용 활동 사진 첨부"
           caption="활동사진 첨부 필수사항입니다."
-		  currentImages={currentImagesExpense}
-		  setCurrentImages={setCurrentImagesExpense}
+          currentImages={currentImagesExpense}
+          setCurrentImages={setCurrentImagesExpense}
         />
       </div>
       <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">

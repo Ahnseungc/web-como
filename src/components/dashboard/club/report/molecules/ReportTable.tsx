@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import type { IResponse } from "@/api/types/index"; // ✅ import 추가
+import type { IResponse } from "@/api/types/index";
 
 const tableHeadings = ["순번", "활동명", "활동일", "작성 상태", "반려 사유"];
 
@@ -15,7 +15,7 @@ interface ReportItem {
 }
 
 interface Props {
-  data?: IResponse[]; // ✅ 간단하게 변경
+  data?: IResponse[];
   clubId: string | undefined;
   currentPage: number;
 }
@@ -24,7 +24,6 @@ export default function ReportTable({ data, clubId, currentPage }: Props) {
   const pathname = usePathname();
   const { push } = useRouter();
 
-  // ✅ 타입 체크 추가
   const currentPageData = data?.find(
     (item) => item.data?.currentPage === currentPage
   )?.data?.list as ReportItem[] | undefined;
@@ -113,7 +112,7 @@ export default function ReportTable({ data, clubId, currentPage }: Props) {
         ))
       ) : (
         <li className="flex items-center justify-center h-[200px] text-gray-500">
-          조회된 보고서가 없습니다.
+          작성 및 제출 된 활동보고서가 없습니다.
         </li>
       )}
     </ul>

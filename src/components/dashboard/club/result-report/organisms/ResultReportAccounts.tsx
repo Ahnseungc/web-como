@@ -64,7 +64,7 @@ const ResultReportAccountsForm = () => {
             <div className="w-1/4 flex flex-col gap-2 h-full">
               <CustomLabel
                 htmlFor={`data.expenses.${idx}.category`}
-                labelText={"과목"}
+                labelText="과목"
                 required={true}
               />
               <DropdownSelect
@@ -145,7 +145,7 @@ const ResultReportAccountsForm = () => {
             <div className="flex flex-col gap-2">
               <CustomLabel
                 htmlFor={`data.expenses.${idx}.issuedDate`}
-                labelText={"일자"}
+                labelText="일자"
                 required={true}
               />
               <DatePicker
@@ -217,7 +217,7 @@ const ResultReportAccountsForm = () => {
         <span
           className={cn("h3 font-bold transition duration-200 text-orange-500")}
         >
-          + 정산서 추가하기
+          + 영수증 추가하기
         </span>
       </button>
       {/* </Card> */}

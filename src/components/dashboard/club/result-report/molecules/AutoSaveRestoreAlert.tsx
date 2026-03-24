@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useAutoSave } from "@/hooks/useAutoSave";
 import { UseFormReturn } from "react-hook-form";
 import { useToast } from "@/components/common/ToastContainer";
-import { Checked } from "@/assets/icons/checkbox";
 
 interface Props {
   form: UseFormReturn<any>;

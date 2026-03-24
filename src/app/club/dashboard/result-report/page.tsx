@@ -3,7 +3,7 @@ import ResultReportFormProvider from "@/components/dashboard/club/result-report/
 
 const ResultReportPage = async () => {
   return (
-    <main className="flex gap-3">
+    <main className="flex gap-3 justify-center">
       <ClubInfoCard />
       <ResultReportFormProvider />
     </main>

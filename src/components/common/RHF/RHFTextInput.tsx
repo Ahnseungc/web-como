@@ -21,7 +21,7 @@ type TextareaType = ComponentProps<"textarea">;
 
 type Props<T extends FieldValues> = Omit<
   LabelType & InputType & TextareaType,
-  "className"
+  "className" | "type"
 > & {
   labelText?: string;
   name: Path<T>;
@@ -30,6 +30,7 @@ type Props<T extends FieldValues> = Omit<
   labelStyle?: string;
   inputStyle?: string;
   rows?: number;
+  type?: React.HTMLInputTypeAttribute;
 };
 
 export default function RHFTextInput<T extends FieldValues>({
@@ -41,6 +42,7 @@ export default function RHFTextInput<T extends FieldValues>({
   rows,
   labelStyle,
   inputStyle,
+  type: propsType,
   ...props
 }: Props<T>) {
   const {
@@ -49,134 +51,137 @@ export default function RHFTextInput<T extends FieldValues>({
     formState: { errors },
   } = useFormContext<T>();
 
-  // console.log(errors);
-
-  const value = useWatch<T>({ name: name });
-
-  // CustomInput의 컴포넌트는 forwardRef를 사용하여 ref가 function으로 할당되었음
-  // 비제어 컴포넌트로 관리하기 때문에 focus, blur 이벤트를 부모에서 관리하여 props로 넘겨주도록 결정
+  const value = useWatch<T>({ name });
   const [isFocusing, setIsFocusing] = useState<boolean>(false);
 
-  const handleFocus = () => {
-    setIsFocusing(true);
+  const formatNumber = (val: unknown): string => {
+    if (val === undefined || val === null || val === "") return "";
+    const stringVal = String(val);
+    return stringVal.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
-  const handleBlur = () => {
-    setIsFocusing(false);
+  const unformatNumber = (val: string): string => {
+    return val.replace(/[^\d]/g, "");
   };
+
+  const handleFocus = () => setIsFocusing(true);
+  const handleBlur = () => setIsFocusing(false);
 
   const handleDelete = () => {
-    setValue(name, "" as PathValue<T, Path<T>>);
+    setValue(name, "" as PathValue<T, Path<T>>, { shouldValidate: true });
   };
 
-  // 에러 메시지 가져오기
   const getErrorMessage = () => {
     const nameParts = name.split(".");
     let currentErrors: any = errors;
 
     for (const part of nameParts) {
-      if (currentErrors && currentErrors[part]) {
+      if (currentErrors?.[part]) {
         currentErrors = currentErrors[part];
       } else {
         return undefined;
       }
     }
-
     return currentErrors?.message?.toString();
   };
 
   const errorMessage = getErrorMessage();
+  const isNumberType = propsType === "number";
 
   return (
     <Controller
       name={name}
       control={control}
-      render={({ field }) => (
-        <div className="flex flex-col gap-2">
-          {labelText && (
-            <div className="flex items-center justify-between">
-              <CustomLabel
-                htmlFor={id}
-                labelText={labelText}
-                required={required}
-                className={labelStyle}
-              />
-              {maxLength && (
-                <span className="text-base font-medium text-gray-600">
-                  {value?.length ?? 0}자/{maxLength}자
-                </span>
-              )}
-            </div>
-          )}
+      render={({ field: { onChange, value: fieldValue, ...fieldProps } }) => {
+        const handleValueChange = (
+          e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+        ) => {
+          if (isNumberType) {
+            const rawValue = unformatNumber(e.target.value);
+            onChange(rawValue);
+          } else {
+            onChange(e.target.value);
+          }
+        };
 
-          <div className="relative">
-            {/* 최대값이 있을 경우와 없을 경우로 나눔 */}
-            {/* 1. 최대값이 있을 경우 100자가 넘는다면 textarea로, 아니라면 input으로 */}
-            {/* 2. 최대값이 없을 경우 input으로 렌더링 */}
+        const displayValue = isNumberType
+          ? formatNumber(fieldValue)
+          : (fieldValue ?? "");
 
-            {maxLength ? (
-              maxLength >= 100 ? (
+        return (
+          <div className="flex flex-col gap-2">
+            {labelText && (
+              <div className="flex items-center justify-between">
+                <CustomLabel
+                  htmlFor={id}
+                  labelText={labelText}
+                  required={required}
+                  className={labelStyle}
+                />
+                {maxLength && (
+                  <span className="text-base font-medium text-gray-600">
+                    {String(fieldValue || "").length}자/{maxLength}자
+                  </span>
+                )}
+              </div>
+            )}
+
+            <div className="relative">
+              {maxLength && maxLength >= 100 ? (
                 <CustomTextarea
-                  className={inputStyle}
-                  id={name}
-                  rows={rows}
+                  {...fieldProps}
                   {...props}
-                  {...field}
+                  id={id}
+                  className={inputStyle}
+                  rows={rows}
                   maxLength={maxLength}
+                  value={displayValue as string}
+                  onChange={handleValueChange}
                   onFocus={handleFocus}
                   onBlur={handleBlur}
                 />
               ) : (
                 <CustomTextInput
-                  className={inputStyle}
-                  id={id}
-                  {...field}
+                  {...fieldProps}
                   {...props}
+                  id={id}
+                  className={cn(inputStyle, isNumberType && "text-right pr-10")}
                   required={required}
                   maxLength={maxLength}
+                  value={displayValue as string}
+                  onChange={handleValueChange}
                   onFocus={handleFocus}
                   onBlur={handleBlur}
+                  {...({
+                    type: isNumberType ? "text" : propsType,
+                    inputMode: isNumberType ? "numeric" : props.inputMode,
+                  } as any)}
                 />
-              )
-            ) : (
-              <CustomTextInput
-                className={inputStyle}
-                id={id}
-                {...field}
-                {...props}
-                required={required}
-                maxLength={maxLength}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-              />
-            )}
-            {!props.readOnly && (
-              <button
-                type="button"
-                className={cn(
-                  "absolute right-3 top-2/4 z-10 h-5 w-5 -translate-y-1/2",
-                  isFocusing ? "visible" : "hidden"
-                )}
-                onClick={handleDelete}
-                onMouseDown={(e) => e.preventDefault()}
-              >
-                <Remove className="h-full w-full text-gray-500" />
-              </button>
+              )}
+
+              {/* {!props.readOnly && (
+                <button
+                  type="button"
+                  className={cn(
+                    "absolute right-3 top-2/4 z-10 h-5 w-5 -translate-y-1/2",
+                    isFocusing ? "visible" : "hidden"
+                  )}
+                  onClick={handleDelete}
+                  onMouseDown={(e) => e.preventDefault()}
+                >
+                  <Remove className="h-full w-full text-gray-500" />
+                </button>
+              )} */}
+            </div>
+
+            {errorMessage && (
+              <div className="text-base font-medium text-point-red">
+                {errorMessage}
+              </div>
             )}
           </div>
-
-          {/* {errors[name] && (
-            <div className="text-base font-medium text-point-red">
-              {errors[name].message?.toString()}
-            </div>
-          )} */}
-          {!errors[name] && errorMessage && (
-            <div className="text-base font-medium text-point-red">
-              {errorMessage}
-            </div>
-          )}
-        </div>
-      )}
+        );
+      }}
     />
   );
 }

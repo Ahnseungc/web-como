@@ -43,6 +43,15 @@ const ResultReportMemberCount = () => {
     setValue("data.participantCount", memberCount, { shouldValidate: true });
   }, [memberCount]);
 
+  const participantCount = watch("data.participantCount");
+
+  useEffect(() => {
+    if (participantCount !== undefined && participantCount !== memberCount) {
+      setMemberCount(participantCount);
+      setInputValue(participantCount === 0 ? "" : participantCount.toString());
+    }
+  }, [participantCount]);
+
   // 에러 메시지 가져오기
   const getErrorMessage = () => {
     const nameParts = "data.participantCount".split(".");

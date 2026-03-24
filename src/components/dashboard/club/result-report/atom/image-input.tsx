@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import { File } from "@/assets/icons/action";
 import { CustomLabel } from "@/components/common/CustomLabel";
 import { useFormContext } from "react-hook-form";
-import { ResultReportSchemaType } from "@/lib/types/schema";
 
 const ImageInput = ({ idx }: { idx: number }) => {
   const { setValue, watch } = useFormContext();
@@ -18,7 +17,6 @@ const ImageInput = ({ idx }: { idx: number }) => {
     setFileName(e.target.files[0].name);
     const currentReceipts = watch("receipts") || [];
 
-    // setValue(`receipts`, [URL.createObjectURL(e.target.files[0])]);
     setValue("receipts", [...currentReceipts, e.target.files[0]]); // File 객체로 저장
   };
 
@@ -45,6 +43,9 @@ const ImageInput = ({ idx }: { idx: number }) => {
           <File className="text-gray-400" />
         </div>
       </div>
+      <p className="text-base font-medium text-gray-500 mt-1">
+        *jpg, png 등 이미지 파일만 가능
+      </p>
     </div>
   );
 };
