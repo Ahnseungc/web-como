@@ -59,7 +59,7 @@ export default function ExpenseTable({ data, currentPage }: Props) {
               push(`${pathname}/${item.id}?clubName=${item.clubName}`)
             }
             key={item.id}
-            className="flex py-0.5 border-b border-gray-400 bg-gray-0 hover:bg-gray-100 transition duration-200"
+            className="flex py-0.5 border-b border-gray-400 bg-gray-0 hover:bg-gray-100 transition duration-200 cursor-pointer"
           >
             {[
               item.id, // 0: 순번

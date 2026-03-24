@@ -86,15 +86,24 @@ export default function ExpenseList({ clubId }: Props) {
         <div className="space-y-10">
           {!isClient || isLoading ? (
             <ExpenseTableSkeleton />
+          ) : data?.pages && data.pages.length > 0 ? (
+            <>
+              <ExpenseTable data={data?.pages} currentPage={currentPage} />
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                handlePageChange={handlePageChange}
+              />
+            </>
           ) : (
-            <ExpenseTable data={data?.pages} currentPage={currentPage} />
+            <div className="flex flex-col items-center justify-center py-24 bg-gray-50 rounded-xl border border-dashed border-gray-200">
+              <p className="text-gray-500 text-lg font-medium">
+                활동지원비 신청을 한 이력이 없습니다.
+                <br />
+                우측 상단의 버튼을 통해 새로운 지원비를 신청해 보세요.
+              </p>
+            </div>
           )}
-
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            handlePageChange={handlePageChange}
-          />
         </div>
       </div>
     </div>

@@ -166,7 +166,7 @@ export default function NewExpenseReportForm({
     <FormProvider {...methods}>
       <form className="space-y-3 w-full" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">
-          <h3 className="h2 font-bold text-gray-900">{"활동 개요"}</h3>
+          <h3 className="h2 font-bold text-gray-900">활동 개요</h3>
           <Input
             required
             name="eventName"
@@ -212,7 +212,7 @@ export default function NewExpenseReportForm({
           />
         </div>
         <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">
-          <h3 className="h2 font-bold text-gray-900">{"신청 금액"}</h3>
+          <h3 className="h2 font-bold text-gray-900">신청 금액</h3>
           <Input
             required
             name="location"
@@ -294,6 +294,9 @@ export default function NewExpenseReportForm({
               />
               <File />
             </label>
+            <p className="text-base font-medium text-gray-500 mt-1">
+              * 한글, 워드, 엑셀, pdf 파일만 첨부 가능
+            </p>
           </div>
         </div>
         {isFormValid && (

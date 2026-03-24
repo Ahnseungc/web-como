@@ -168,19 +168,31 @@ export default function EmployeeList() {
             onPrintClick={handlePrint}
           />
         </div>
+
         <div className="space-y-10">
-          <EmployeeTable employees={employees} />
-          {employees && employees.length > 0 && (
-            <div className="flex justify-center mt-8">
-              <Pagination
-                currentPage={currentPage}
-                totalPages={maxPage}
-                handlePageChange={handlePageChange}
-              />
+          {employees && employees.length > 0 ? (
+            <>
+              <EmployeeTable employees={employees} />
+              <div className="flex justify-center mt-8">
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={maxPage}
+                  handlePageChange={handlePageChange}
+                />
+              </div>
+            </>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-24 bg-gray-50 rounded-xl border border-dashed border-gray-200">
+              <p className="text-gray-500 text-lg font-medium">
+                조회된 사용자가 없습니다.
+                <br />
+                검색 조건이나 날짜 범위를 다시 확인해 주세요.
+              </p>
             </div>
           )}
         </div>
       </div>
+
       <div className="printable-area">
         <h2>회원 목록</h2>
         <PrintableEmployeeTable employees={employeesForPrinting} />
