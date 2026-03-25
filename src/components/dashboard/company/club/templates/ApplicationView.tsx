@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { SearchValue } from "@/lib/types/search";
-import ApplicationSearch from "@/components/dashboard/company/club/molecules/ApplicationSearch";
+// import ApplicationSearch from "@/components/dashboard/company/club/molecules/ApplicationSearch";
 import ApplicationList from "@/components/dashboard/company/club/organisms/ApplicationList";
 
 export default function ApplicationView() {

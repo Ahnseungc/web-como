@@ -127,11 +127,11 @@ export default function LoginForm() {
         return;
       }
       const tokenPayload = JSON.parse(atob(accessToken.split(".")[1]));
-      const authorities = tokenPayload.role; // This might be an array or a single string
+      const authorities = tokenPayload.role;
       const userRoles = Array.isArray(authorities)
         ? authorities
         : [authorities];
-      console.log("실제 role:", userRoles);
+      // console.log("실제 role:", userRoles);
 
       // ADMIN인 경우 선택할 수 있도록 RadioSelect 표시
       if (userRoles.includes("ROLE_ADMIN")) {
