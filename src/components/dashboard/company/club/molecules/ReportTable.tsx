@@ -2,13 +2,7 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { PrintButton } from "@/components/dashboard/common/DocUtil";
-import {
-  cn,
-  formatDate,
-  formatDateArray,
-  formatDateFlexible,
-} from "@/lib/utils";
-
+import { cn, formatDate, formatDateFlexible } from "@/lib/utils";
 import { Activity } from "@/api/types/company/report";
 import { useRef, useState, useEffect } from "react";
 import { useReactToPrint } from "react-to-print";
@@ -31,7 +25,6 @@ export default function ReportTable({ activities }: Props) {
   const contentRef = useRef<HTMLDivElement>(null);
 
   const handleAfterPrint = () => {
-    // console.log("인쇄 완료 또는 취소. 상태를 초기화합니다.");
     setActivityDetail(null);
     setSelectedActivity(null);
   };
@@ -117,7 +110,12 @@ export default function ReportTable({ activities }: Props) {
         {activities.map((activity: Activity, idx: number) => (
           <li
             key={activity.id}
-            className="flex border-b border-gray-400 bg-gray-0 w-full"
+            onClick={() =>
+              push(
+                `${pathname}/${activity.id}?status=${activity.status}&createdAt=${activity.createdAt}`
+              )
+            }
+            className="flex border-b border-gray-400 bg-gray-0 w-full cursor-pointer"
           >
             <div className="flex-[0.5] min-w-[48px] my-3 mx-6 body-1 font-medium text-center text-gray-800">
               {idx + 1}
@@ -128,12 +126,7 @@ export default function ReportTable({ activities }: Props) {
             <div className="flex-[2] min-w-[180px] my-3 mx-6 body-1 font-medium text-center text-gray-800">
               {activity.clubName}
             </div>
-            <div
-              className="flex-[2] min-w-[250px] my-3 mx-6 body-1 font-medium text-left hover:decoration-gray-800 cursor-pointer underline-offset-2 underline decoration-transparent line-clamp-1 transition duration-300 text-gray-800"
-              onClick={() =>
-                push(`${pathname}/${activity.id}?status=${activity.status}&createdAt=${activity.createdAt}`)
-              }
-            >
+            <div className="flex-[2] min-w-[250px] my-3 mx-6 body-1 font-medium text-left hover:decoration-gray-800 underline-offset-2 underline decoration-transparent line-clamp-1 transition duration-300 text-gray-800">
               {activity.eventName}
             </div>
             <div className="flex-1 min-w-[100px] my-3 mx-6 body-1 font-medium text-center text-gray-800">

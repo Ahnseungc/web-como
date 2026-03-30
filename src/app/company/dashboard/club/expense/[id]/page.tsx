@@ -1,4 +1,5 @@
 "use client";
+
 import { getExpenseDetailClient } from "@/api/actions/company/expense/getExpenseDetailClient";
 import {
   CardInfo,
@@ -13,7 +14,6 @@ import BackButton from "@/components/dashboard/common/BackButton";
 import ApprovalButton from "@/components/dashboard/shared/molecules/ApprovalButton";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState, useRef } from "react";
-import { useParams } from "next/navigation";
 import ExpenseRejectReasonInputModal from "@/components/dashboard/company/club/modals/ExpenseRejectReasonInputModal";
 import { patchApprove } from "@/api/actions/company/expense/patchApprove";
 import { patchReject } from "@/api/actions/company/expense/patchReject";
@@ -80,17 +80,12 @@ const Page = ({ params }: { params: { id: string } }) => {
     id: string,
     newStatus: "APPROVED" | "REJECTED"
   ) => {
-    console.log("handleStatusChange 호출:", { id, newStatus });
-
+    // console.log("handleStatusChange 호출:", { id, newStatus });
     if (newStatus === "APPROVED") {
       try {
         setIsApproving(true);
-        // console.log("승인 처리 시작");
         const result = await patchApprove(id);
-        // console.log("승인 처리 결과:", result);
-        // console.log("setStatus 호출 전 status:", status);
         setStatus("APPROVED");
-        // console.log("setStatus 호출 후 status:", status);
       } catch (error) {
         console.error("승인 처리 실패:", error);
       } finally {
@@ -168,11 +163,9 @@ const Page = ({ params }: { params: { id: string } }) => {
       </div>
       {status === "REJECTED" && (
         <div className="flex items-start gap-3 bg-gray-0 rounded-xl px-6 py-5 my-4 shadow w-full min-h-[100px]">
-          {/* 아이콘 */}
           <div className="w-8 h-8 rounded-full bg-[#FD7E2D] text-white flex items-center justify-center font-bold text-lg mr-2 shrink-0">
             !
           </div>
-          {/* 내용 */}
           <div className="flex-1">
             <div className="text-[#FD7E2D] font-bold text-base mb-1">
               반려 사유
@@ -212,13 +205,9 @@ const Page = ({ params }: { params: { id: string } }) => {
           setApproveOpen(false);
         }}
         onConfirm={async () => {
-          console.log("승인 확인 버튼 클릭");
-          console.log("현재 status:", status);
           await handleStatusChange(params.id, "APPROVED");
-          console.log("handleStatusChange 완료 후 status:", status);
           setApproveOpen(false);
           setAlertOpen(true);
-          console.log("승인 완료 후 alertOpen 설정:", true);
         }}
         isProcessing={isApproving}
       />

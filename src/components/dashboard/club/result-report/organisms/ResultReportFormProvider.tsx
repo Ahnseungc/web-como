@@ -76,15 +76,15 @@ const ResultReportFormProvider = () => {
 
       try {
         setIsSubmitting(true);
-
+        const { expenses, ...restData } = data.data;
         const submitData = {
           ...data,
           data: {
-            ...data.data,
+            ...restData,
             activityDate: data.data.activityDate
               ? formatDateToString(data.data.activityDate)
               : "",
-            expenses: data.data.expenses.map((expense) => ({
+            receipts: expenses.map((expense) => ({
               ...expense,
               supportAmount: Number(expense.supportAmount),
               usedAmount: Number(expense.usedAmount),
@@ -106,7 +106,7 @@ const ResultReportFormProvider = () => {
         );
 
         (data.photos || []).forEach((file: File) => {
-          formData.append("photos", file);
+          formData.append("images", file);
         });
         (data.receipts || []).forEach((file: File) => {
           formData.append("receipts", file);

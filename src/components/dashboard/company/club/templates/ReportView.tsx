@@ -17,7 +17,7 @@ export default function ReportView() {
   }, [currentSearchValue.filter]);
 
   const handleSearch = () => {
-    console.log(currentSearchValue.field, currentSearchValue.term);
+    // console.log(currentSearchValue.field, currentSearchValue.term);
     setSearchTerm(currentSearchValue.term);
   };
 
