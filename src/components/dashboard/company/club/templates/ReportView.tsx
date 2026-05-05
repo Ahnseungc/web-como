@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { SearchValue } from "@/lib/types/search";
-import ReportSearch from "@/components/dashboard/company/club/molecules/ReportSearch";
+// import ReportSearch from "@/components/dashboard/company/club/molecules/ReportSearch";
 import ReportList from "@/components/dashboard/company/club/organisms/ReportList";
 
 export default function ReportView() {

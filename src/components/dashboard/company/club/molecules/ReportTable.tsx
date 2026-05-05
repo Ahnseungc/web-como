@@ -155,7 +155,10 @@ export default function ReportTable({ activities }: Props) {
                 "-"
               ) : (
                 <button
-                  onClick={() => handlePrintClick(activity)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handlePrintClick(activity);
+                  }}
                   disabled={isLoading}
                   className="disabled:opacity-50 disabled:cursor-not-allowed"
                 >
