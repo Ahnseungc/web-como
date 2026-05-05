@@ -1,32 +1,36 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import crypto from "crypto";
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     console.log(body);
+
+    const hashedPassword = crypto
+      .createHash("sha256")
+      .update(body.password)
+      .digest("hex");
+
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/login`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/backoffice/login`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(body),
+        body: JSON.stringify({ ...body, password: hashedPassword }),
         signal: AbortSignal.timeout(10000),
       }
     );
 
     console.log("📡 Backend login response:", response.status);
 
-    // Authorization 헤더 가져오기
     const authHeader = response.headers.get("Authorization");
     console.log("🔑 Authorization header:", authHeader ? "exists" : "missing");
 
-    // 응답 본문
     const responseText = await response.text();
 
-    // NextResponse 생성
     const nextResponse = new NextResponse(responseText, {
       status: response.status,
       headers: {
