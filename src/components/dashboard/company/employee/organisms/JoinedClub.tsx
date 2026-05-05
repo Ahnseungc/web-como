@@ -1,25 +1,15 @@
 import ClubCard from "@/components/dashboard/company/employee/molecules/ClubCard";
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { getData } from "@/lib/client-utils";
 
 export default function JoinedClub({ memberId }: { memberId: string }) {
-  console.log("memberId", memberId);
+  const { data: clubs = [] } = useQuery({
+    queryKey: ["member", memberId, "clubs"],
+    queryFn: () => getData(`v1/club/my`).then((res) => res.data ?? []),
+    enabled: !!memberId,
+  });
 
-  const [clubs, setClubs] = useState([]);
-
-  const fetchClubs = async () => {
-    try {
-      const response = await getData(`v1/manager/member/${memberId}/clubs`); // API 호출
-      console.log("response", response);
-      setClubs(response.data);
-    } catch (error) {
-      console.error("클럽 데이터 로딩 오류:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchClubs();
-  }, []);
+  console.log(clubs);
 
   return (
     <div className="space-y-6 p-8 rounded-xl bg-gray-0">

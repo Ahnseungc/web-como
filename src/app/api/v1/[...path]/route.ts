@@ -17,10 +17,12 @@ async function proxyToBackend(
   const contentType = request.headers.get("content-type");
   const isMultipart = contentType?.includes("multipart/form-data");
 
-  console.log(`🔍 ${method} Proxying to:`, fullUrl);
-  console.log("🔑 Token:", accessToken ? "exists" : "missing");
-  console.log("📦 Content-Type:", contentType);
-  console.log("🎯 Is Multipart:", isMultipart);
+  if (process.env.NODE_ENV === "development") {
+    console.log(`🔍 ${method} Proxying to:`, fullUrl);
+    console.log("🔑 Token:", accessToken ? "exists" : "missing");
+    console.log("📦 Content-Type:", contentType);
+    console.log("🎯 Is Multipart:", isMultipart);
+  }
 
   const headers: HeadersInit = {};
 
@@ -51,7 +53,9 @@ async function proxyToBackend(
       body,
     });
 
-    console.log("📡 Backend response:", response.status);
+    if (process.env.NODE_ENV === "development") {
+      console.log("📡 Backend response:", response.status);
+    }
 
     const responseContentType = response.headers.get("content-type");
     const data = await response.text();

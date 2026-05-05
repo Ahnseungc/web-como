@@ -20,7 +20,13 @@ export default function ClubPolicyTab({ clubId }: { clubId: string | null }) {
         <PrintButton />
       </div>
       {typeof data === "string" && (
-        <img src={data} alt="동호회 회칙 이미지" className="mt-4" />
+        <img
+          src={data}
+          alt="동호회 회칙 이미지"
+          className="mt-4"
+          width={24}
+          height={24}
+        />
       )}
     </div>
   );

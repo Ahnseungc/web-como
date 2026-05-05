@@ -42,7 +42,7 @@ function AnnouncementTable({ currentPage }: { currentPage: number }) {
       setIsLoading(false);
     };
     fetchNotices();
-  }, []);
+  }, [currentPage]);
 
   const formatDate = (dateArray: number[]) => {
     const [year, month, day, hour, minute, second] = dateArray;

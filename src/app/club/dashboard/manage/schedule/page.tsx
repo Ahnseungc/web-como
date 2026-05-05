@@ -1,47 +1,32 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { getClubId, getData } from "@/lib/client-utils";
 import ScheduleList from "@/components/dashboard/club/schedule/molecues/ScheduleList";
 import ScheduleTitle from "@/components/dashboard/club/schedule/molecues/ScheduleTitle";
+import { useQuery } from "@tanstack/react-query";
 
 export default function ManageSchedulePage() {
   const searchParams = useSearchParams();
   const page = searchParams.get("page") || "1";
-  const [schedulesList, setSchedulesList] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const clubId = getClubId();
 
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        setLoading(true);
-        const clubId = await getClubId();
-        const response = await getData(
-          `v1/executive/club/${clubId}/schedule/existence?page=${page}`,
-          true
-        );
+  const { data: schedulesList, isLoading } = useQuery({
+    queryKey: ["schedules", clubId, page],
+    queryFn: () =>
+      getData(
+        `v1/executive/club/${clubId}/schedule/existence?page=${page}`,
+        true
+      ).then((res) => res.data),
+    enabled: !!clubId,
+  });
 
-        setSchedulesList(response.data);
-      } catch (error) {
-        console.error("데이터 로딩 오류:", error);
-        setSchedulesList(false);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadData();
-  }, [page]);
-
-  if (loading) return null;
+  if (isLoading) return null;
 
   return (
     <div className="space-y-6">
       <ScheduleTitle />
-      {schedulesList === false ||
-      !schedulesList?.List ||
-      schedulesList.List.length === 0 ? (
+      {!schedulesList?.List || schedulesList.List.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-24 bg-gray-50 rounded-xl border border-dashed border-gray-200">
           <p className="text-gray-500 text-lg font-medium text-center">
             등록된 일정이 없습니다.

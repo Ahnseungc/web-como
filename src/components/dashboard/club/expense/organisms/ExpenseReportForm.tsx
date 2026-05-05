@@ -8,11 +8,9 @@ import {
   useImperativeHandle,
 } from "react";
 import { useReactToPrint } from "react-to-print";
-import { pdf, Font } from "@react-pdf/renderer";
 import Input from "@/components/common/Input";
 import { Document } from "@/assets/icons/util";
 import { ExpenseFormValues } from "@/api/types/company/expense";
-import { ExpenseReportPDF } from "./ExpenseReportPDF";
 
 const getDecodedFileName = (url: string) => {
   try {
@@ -87,20 +85,21 @@ const ExpenseReportForm = forwardRef<
   // PDF 다운로드 기능
   const handlePDFDownload = async () => {
     try {
-      console.log("PDF 생성 시작...");
+      const [{ pdf, Font }, { ExpenseReportPDF }] = await Promise.all([
+        import("@react-pdf/renderer"),
+        import("./ExpenseReportPDF"),
+      ]);
 
       // 폰트 등록이 완료될 때까지 대기
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      // 폰트 등록 상태 확인
       const registeredFonts = Font.getRegisteredFonts();
-      console.log("등록된 폰트:", registeredFonts);
+      if (process.env.NODE_ENV === "development") {
+        console.log("등록된 폰트:", registeredFonts);
+      }
 
       const pdfDoc = pdf(<ExpenseReportPDF expense={expense} />);
-      console.log("PDF 문서 생성 완료");
-
       const blob = await pdfDoc.toBlob();
-      console.log("PDF Blob 생성 완료:", blob);
 
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -110,14 +109,8 @@ const ExpenseReportForm = forwardRef<
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
-      console.log("PDF 다운로드 완료");
     } catch (error) {
       console.error("PDF 생성 중 오류 발생:", error);
-      console.error("오류 상세:", {
-        message: error instanceof Error ? error.message : String(error),
-        stack: error instanceof Error ? error.stack : undefined,
-        expense: expense,
-      });
       alert(
         `PDF 다운로드 중 오류가 발생했습니다: ${error instanceof Error ? error.message : String(error)}`
       );

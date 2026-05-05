@@ -1,72 +1,57 @@
 "use client";
-import { getExpenseDetail } from "@/api/actions/company/expense/getExpenseDetail";
+
 import { CardInfo, ExpenseFormValues } from "@/api/types/company/expense";
 import ClubInfoCardForExpense from "@/components/dashboard/club/expense/organisms/ClubInfoCardForExpense";
 import ExpenseReportForm from "@/components/dashboard/club/expense/organisms/ExpenseReportForm";
 import BackButton from "@/components/dashboard/common/BackButton";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { getClubId } from "@/lib/cookies";
-// import { getData } from "@/api/action";
-import { getData } from "@/lib/client-utils";
+import { getClubId, getData } from "@/lib/client-utils";
+import { useQuery } from "@tanstack/react-query";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const searchParams = useSearchParams();
   const clubName = searchParams.get("clubName");
-  const [cardInfo, setCardInfo] = useState<CardInfo | null>(null);
-  const [expense, setExpense] = useState<ExpenseFormValues | null>(null);
-  const [clubId, setClubId] = useState<number | null>(null);
+  const clubId = getClubId();
 
-  useEffect(() => {
-    const fetchClubId = async () => {
-      try {
-        const data = await getClubId();
-        setClubId(Number(data) || null);
-      } catch (error) {
-        console.error("클럽 ID를 가져오는 중 오류 발생:", error);
-      }
-    };
-    fetchClubId();
-  }, []);
+  const { data, isLoading } = useQuery({
+    queryKey: ["expense", clubId, params.id],
+    queryFn: () =>
+      getData(
+        `v1/executive/club/${clubId}/activity-expense/${params.id}`,
+        true
+      ).then((res) => res.data),
+    enabled: !!clubId,
+  });
 
-  useEffect(() => {
-    const fetchExpense = async () => {
-      if (clubId) {
-        const { data } = await getData(
-          `v1/executive/club/${clubId}/activity-expense/${params.id}`,
-          true
-        );
-
-        setExpense({
-          eventName: data.eventName,
-          description: data.description,
-          clubName: data.clubName,
-          content: data.content,
-          location: data.location,
-          participantCount: data.participantCount,
-          leadersSummary: data.leadersSummary,
-          amount: data.amount,
-          details: data.details,
-          createdAt: data.createdAt,
-          file: data.file,
-        });
-        setCardInfo({
-          clubId: data.clubId,
-          clubImage: data.clubImage,
-          leadersSummary: data.leadersSummary,
-          activityPlan: data.activityPlan,
-          memberCount: data.memberCount,
-          status: data.status,
-          createdAt: data.createdAt,
-          clubName: clubName || "",
-        });
-      }
-    };
-    fetchExpense();
-  }, [params.id, clubName, clubId]);
-  if (!cardInfo || !expense) {
+  if (isLoading || !data) {
     return <div>Loading...</div>;
   }
+
+  const expense: ExpenseFormValues = {
+    eventName: data.eventName,
+    description: data.description,
+    clubName: data.clubName,
+    content: data.content,
+    location: data.location,
+    participantCount: data.participantCount,
+    leadersSummary: data.leadersSummary,
+    amount: data.amount,
+    details: data.details,
+    createdAt: data.createdAt,
+    file: data.file,
+  };
+
+  const cardInfo: CardInfo = {
+    clubId: data.clubId,
+    clubImage: data.clubImage,
+    leadersSummary: data.leadersSummary,
+    activityPlan: data.activityPlan,
+    memberCount: data.memberCount,
+    status: data.status,
+    createdAt: data.createdAt,
+    clubName: clubName || "",
+  };
+
   return (
     <>
       <BackButton />

@@ -39,7 +39,7 @@ export default function ApplicationTable({
   const { push } = useRouter();
   const { showToast } = useToast();
 
-  console.log("applications", applications);
+  // console.log("applications", applications);
 
   const getStatus = (status: string): ApplicationStatus => {
     switch (status) {

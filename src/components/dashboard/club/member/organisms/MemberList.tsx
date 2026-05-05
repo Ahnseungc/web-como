@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getData } from "@/lib/client-utils";
 import { SaveButton } from "@/components/dashboard/common/DocUtil";
@@ -8,9 +8,6 @@ import Pagination from "@/components/dashboard/common/Pagination";
 import MemberTable from "@/components/dashboard/club/member/molecules/MemberTable";
 import MemberSearch from "./MemberSearch";
 import { SearchValue } from "@/lib/types/search";
-import { subYears } from "date-fns";
-import { startOfToday } from "date-fns";
-import { DateRange } from "@/components/dashboard/common/DateFilter";
 import * as XLSX from "xlsx";
 
 interface Props {
@@ -18,32 +15,24 @@ interface Props {
 }
 
 export default function MemberList({ clubId }: Props) {
-  const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
-    createdDate: subYears(startOfToday(), 1), // 1년 전 날짜
-    endDate: startOfToday(),
-  });
   const [currentPage, setCurrentPage] = useState(1);
-  const [maxPage, setMaxPage] = useState(1);
-  const [members, setMembers] = useState([]);
+  const [appliedSearch, setAppliedSearch] = useState<SearchValue>({ term: "" });
 
-  const loadMembers = async (searchValue: SearchValue = { term: "" }) => {
-    try {
-      const response = await getData(
-        `v1/executive/club/${clubId}/member/list?page=${currentPage - 1}&search=${searchValue.term}`,
+  const { data } = useQuery({
+    queryKey: ["members", clubId, currentPage, appliedSearch],
+    queryFn: () =>
+      getData(
+        `v1/executive/club/${clubId}/member/list?page=${currentPage - 1}&search=${appliedSearch.term}`,
         true
-      );
+      ).then((res) => res.data),
+    enabled: !!clubId,
+  });
 
-      const data = response.data;
-      // console.log("data", data);
-      setMembers(data.list);
-      setMaxPage(data.totalPages);
-    } catch (error) {
-      console.error("직원 목록 로딩 오류:", error);
-    }
-  };
+  const members = data?.list ?? [];
+  const maxPage = data?.totalPages ?? 1;
 
   const { refetch: getExcelData } = useQuery({
-    queryKey: [clubId],
+    queryKey: ["membersExcel", clubId],
     queryFn: () => getData(`v1/executive/club/${clubId}/members/excel`),
     enabled: false,
   });
@@ -59,8 +48,6 @@ export default function MemberList({ clubId }: Props) {
           if (item.createdDate) {
             formattedDate = item.createdDate.split("T")[0];
           }
-
-          // 2. 새로운 객체 생성 (순서가 엑셀의 컬럼 순서가 됩니다)
           return {
             순번: idx + 1,
             이름: item.name || "-",
@@ -74,16 +61,14 @@ export default function MemberList({ clubId }: Props) {
         const ws = XLSX.utils.json_to_sheet(newData);
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, "동호회 회원 목록");
-
         ws["!cols"] = [
-          { wch: 5 }, // 순번
-          { wch: 15 }, // 이름
-          { wch: 20 }, // 부서
-          { wch: 15 }, // 직급
-          { wch: 10 }, // 상태
-          { wch: 15 }, // 가입일
+          { wch: 5 },
+          { wch: 15 },
+          { wch: 20 },
+          { wch: 15 },
+          { wch: 10 },
+          { wch: 15 },
         ];
-
         XLSX.writeFile(
           wb,
           `club_members_${new Date().toISOString().slice(0, 10)}.xlsx`
@@ -97,16 +82,9 @@ export default function MemberList({ clubId }: Props) {
     }
   };
 
-  useEffect(() => {
-    loadMembers();
-  }, [currentPage, currentDateRange]);
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-
   const handleSearch = (searchValue: SearchValue) => {
-    loadMembers(searchValue);
+    setAppliedSearch(searchValue);
+    setCurrentPage(1);
   };
 
   return (
@@ -114,18 +92,17 @@ export default function MemberList({ clubId }: Props) {
       <div className="space-y-6">
         <div className="flex justify-between">
           <h3 className="h2 font-semibold text-gray-900">동호회원 조회</h3>
-          {/* <DocUtilButtons /> */}
-          <SaveButton onClick={() => handleExcelDownload()} />
+          <SaveButton onClick={handleExcelDownload} />
         </div>
         <MemberSearch onSearch={handleSearch} currentPage={currentPage} />
-        {members && members.length > 0 ? (
+        {members.length > 0 ? (
           <>
             <MemberTable data={members} />
             <div className="flex justify-center mt-8">
               <Pagination
                 currentPage={currentPage}
                 totalPages={maxPage}
-                handlePageChange={handlePageChange}
+                handlePageChange={(page) => setCurrentPage(page)}
               />
             </div>
           </>

@@ -4,7 +4,6 @@ import TerserPlugin from "terser-webpack-plugin";
 const nextConfig = {
   images: {
     remotePatterns: [{ protocol: "https", hostname: "*" }],
-    unoptimized: true,
   },
   webpack: (config) => {
     config.optimization.minimize = true;

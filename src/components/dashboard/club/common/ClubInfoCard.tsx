@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import ClubProfileInfo from "@/components/dashboard/club/common/ClubProfileInfo";
+import { useQuery } from "@tanstack/react-query";
 import { getData, getClubId } from "@/lib/client-utils";
 
 interface Props {
@@ -12,25 +12,13 @@ interface Props {
 
 export default function ClubInfoCard({ padding }: Props) {
   const clubId = getClubId();
-  const [data, setData] = useState<any>(null);
 
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const response = await getData(
-          `v1/executive/club/${clubId}/card`,
-          false
-        );
-        setData(response.data);
-      } catch (error) {
-        console.error("데이터 로딩 오류:", error);
-      }
-    };
-
-    if (clubId) {
-      loadData();
-    }
-  }, [clubId]);
+  const { data } = useQuery({
+    queryKey: ["club", "card", clubId],
+    queryFn: () =>
+      getData(`v1/executive/club/${clubId}/card`, false).then((res) => res.data),
+    enabled: !!clubId,
+  });
 
   if (!data) return null;
 

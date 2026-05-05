@@ -71,24 +71,27 @@ export const buildAbsoluteUrl = (path: string): string => {
 };
 
 /**
- * 클라이언트 사이드에서 프록시를 사용하는 getData 함수
+ * 클라이언트 사이드에서 백엔드를 직접 호출하는 getData 함수
  */
 export const getClientData = async (
   endpoint: string,
   useClubId?: boolean,
   params?: { [key: string]: string | number }
 ) => {
-  const clubId = getClubId(); // ✅ 위에서 정의한 함수 사용
+  const clubId = getClubId();
+  const accessToken = getAccessToken();
 
   const finalEndpoint = useClubId
     ? endpoint.replace("{clubId}", clubId || "")
     : endpoint;
 
-  const url = `/api/server/${finalEndpoint}`;
+  const serverUrl = (process.env.NEXT_PUBLIC_SERVER_URL || "").replace(/\/$/, "");
+  const url = `${serverUrl}/api/${finalEndpoint}`;
 
   const response = await fetch(url, {
     headers: {
       "Content-Type": "application/json",
+      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
     },
   });
 
@@ -100,7 +103,7 @@ export const getClientData = async (
 import type { IResponse } from "@/api/types/index";
 
 /**
- * 클라이언트에서 사용하는 getData 함수
+ * 클라이언트에서 백엔드를 직접 호출하는 getData 함수
  */
 export const getData = async (
   endpoint: string,
@@ -108,15 +111,19 @@ export const getData = async (
   params?: { [key: string]: string | number }
 ): Promise<IResponse> => {
   const clubId = getClubId();
+  const accessToken = getAccessToken();
 
   const finalEndpoint = useClubId
     ? endpoint.replace("{clubId}", clubId || "")
     : endpoint;
 
-  const url = `/api/${finalEndpoint}`;
+  const serverUrl = (process.env.NEXT_PUBLIC_SERVER_URL || "").replace(/\/$/, "");
+  const url = `${serverUrl}/api/${finalEndpoint}`;
+
   const response = await fetch(url, {
     headers: {
       "Content-Type": "application/json",
+      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
     },
   });
 
@@ -130,7 +137,7 @@ export const getData = async (
 };
 
 /**
- * 클라이언트에서 사용하는 patchData 함수
+ * 클라이언트에서 백엔드를 직접 호출하는 patchData 함수
  */
 export const patchData = async (
   endpoint: string,
@@ -138,17 +145,20 @@ export const patchData = async (
   useClubId?: boolean
 ): Promise<IResponse> => {
   const clubId = getClubId();
+  const accessToken = getAccessToken();
 
   const finalEndpoint = useClubId
     ? endpoint.replace("{clubId}", clubId || "")
     : endpoint;
 
-  const url = `/api/${finalEndpoint}`;
+  const serverUrl = (process.env.NEXT_PUBLIC_SERVER_URL || "").replace(/\/$/, "");
+  const url = `${serverUrl}/api/${finalEndpoint}`;
 
   const response = await fetch(url, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
+      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
     },
     body: data ? JSON.stringify(data) : undefined,
   });

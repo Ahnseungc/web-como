@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { IResponse } from "@/api/types";
 import type { LoginClubData, LoginClubDTO } from "@/api/types/member/login";
@@ -16,9 +16,9 @@ export default function ClubSelectForm() {
   const [clubOptions, setClubOptions] = useState<LoginClubDTO[]>();
   const [selectedClub, setSelectedClub] = useState<LoginClubDTO>();
 
-  let alertShown = false;
+  const alertShownRef = useRef(false);
 
-  const getClubOptions = async () => {
+  const getClubOptions = useCallback(async () => {
     const token = await getAccessToken();
 
     try {
@@ -29,39 +29,29 @@ export default function ClubSelectForm() {
           "Content-Type": "application/json",
         },
       });
-      console.log(response);
-      // API 응답 확인을 위한 콘솔 로그
-      // console.log("API 응답 상태:", response.status);
 
-      if (response.status === 400 && !alertShown) {
-        alertShown = true;
+      if (response.status === 400 && !alertShownRef.current) {
+        alertShownRef.current = true;
         alert("인증이 필요한 서비스입니다. 다시 로그인해 주세요.");
         window.location.replace(LOGIN_ENDPOINT);
-      }
-
-      // 다른 에러 처리
-      if (!response.ok) {
-        const errorData = await response.json();
-        // console.error('API 응답 에러:', errorData);
         return;
       }
 
-      // 정상 응답 처리
-      const res: IResponse = await response.json();
-      const clubList = res.data;
-      // console.log('클럽 목록 데이터:', clubList);
+      if (!response.ok) {
+        // 에러 처리 로직
+        return;
+      }
 
-      // 클럽 목록 설정
-      setClubOptions(clubList);
-      // setSelectedClub(clubList[0]);
+      const res: IResponse = await response.json();
+      setClubOptions(res.data);
     } catch (error) {
       console.error("관리 중인 동호회 목록 조회 에러:", error);
     }
-  };
+  }, []);
 
   useEffect(() => {
     getClubOptions();
-  }, []);
+  }, [getClubOptions]);
 
   // selectedClub 상태가 변경될 때마다 로그 출력
   // useEffect(() => {

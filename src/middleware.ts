@@ -1,5 +1,4 @@
 import { NextResponse, NextRequest } from "next/server";
-import { cookies } from "next/headers";
 import {
   CLUB_DASHBOARD_ENDPOINT,
   CLUB_ENDPOINT,
@@ -9,10 +8,19 @@ import {
 } from "./lib/constants";
 
 export function middleware(req: NextRequest) {
-  const refreshToken = cookies().get("refreshToken");
-  const type = cookies().get("type");
-  const clubId = cookies().get("clubId");
-  const role = cookies().get("role");
+  const refreshToken = req.cookies.get("refreshToken");
+  const type = req.cookies.get("type");
+  const clubId = req.cookies.get("clubId");
+  const role = req.cookies.get("role");
+
+  // 공개 경로는 인증 체크 없이 통과
+  const publicPaths = ["/club-apply"];
+  const isPublicPath = publicPaths.some((path) =>
+    req.nextUrl.pathname.startsWith(path)
+  );
+  if (isPublicPath) {
+    return NextResponse.next();
+  }
 
   if (req.nextUrl.pathname === "/") {
     if (refreshToken) {

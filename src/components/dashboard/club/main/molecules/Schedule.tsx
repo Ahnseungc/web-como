@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { getData } from "@/lib/client-utils";
 import { cn } from "@/lib/utils";
 
-// 이 파일에서만 사용할 API 응답 아이템 타입 정의
 interface ApiActivityItem {
   id: number;
   createdDate: string;
@@ -14,41 +13,22 @@ interface ApiActivityItem {
 }
 
 export default function DashboardSchedule() {
-  const [scheduleData, setScheduleData] = useState<ApiActivityItem[]>([]);
+  const { data: scheduleData = [] } = useQuery<ApiActivityItem[]>({
+    queryKey: ["club", "dashboard", "schedule"],
+    queryFn: () =>
+      getData("v1/executive/club/{clubId}/dashboard/activity/upcoming", true).then(
+        (res) => res.data ?? []
+      ),
+  });
 
-  useEffect(() => {
-    const loadSchedules = async () => {
-      try {
-        const res = await getData(
-          "v1/executive/club/{clubId}/dashboard/activity/upcoming",
-          true
-        );
-
-        if (
-          (String(res.resultCode) === "200" ||
-            String(res.resultCode) === "OK") &&
-          res.data
-        ) {
-          setScheduleData(res.data);
-        }
-      } catch (error) {
-        console.error("스케줄 로딩 오류:", error);
-      }
-    };
-
-    loadSchedules();
-  }, []);
-
-  // 데이터 변환
   const data = {
-    count: scheduleData?.length || 0,
-    contents:
-      scheduleData?.map((item, index) => ({
-        order: index + 1,
-        activityName: item.title || `활동 ${item.id}`,
-        memberCount: item.memberCount,
-        detail: item.detail,
-      })) || [],
+    count: scheduleData.length,
+    contents: scheduleData.map((item, index) => ({
+      order: index + 1,
+      activityName: item.title || `활동 ${item.id}`,
+      memberCount: item.memberCount,
+      detail: item.detail,
+    })),
   };
 
   return (
@@ -78,7 +58,7 @@ export default function DashboardSchedule() {
                 schedule.activityName,
                 schedule.memberCount,
                 schedule.detail,
-              ].map((data, i) => (
+              ].map((val, i) => (
                 <span
                   key={`${schedule.order}-${i}`}
                   className={cn(
@@ -89,7 +69,7 @@ export default function DashboardSchedule() {
                     i === 3 ? "text-gray-600" : ""
                   )}
                 >
-                  {i === 2 ? `${data}명` : data}
+                  {i === 2 ? `${val}명` : val}
                 </span>
               ))}
             </li>

@@ -8,9 +8,10 @@ import { useToast } from "@/components/common/ToastContainer";
 interface Props {
   form: UseFormReturn<any>;
   storageKey: string;
+  excludeFields?: string[];
 }
 
-export const AutoSaveRestoreAlert = ({ form, storageKey }: Props) => {
+export const AutoSaveRestoreAlert = ({ form, storageKey, excludeFields = ["photos", "receipts"] }: Props) => {
   const [showAlert, setShowAlert] = useState(false);
   const [savedData, setSavedData] = useState<any>(null);
   const { showToast } = useToast();
@@ -42,8 +43,7 @@ export const AutoSaveRestoreAlert = ({ form, storageKey }: Props) => {
         // 폼에 데이터 복원 (파일 필드 제외)
         Object.keys(savedData).forEach((fieldKey) => {
           if (savedData[fieldKey] !== undefined) {
-            // photos와 receipts는 파일 배열이므로 복원하지 않음
-            if (fieldKey !== "photos" && fieldKey !== "receipts") {
+            if (!excludeFields.includes(fieldKey)) {
               form.setValue(fieldKey as any, savedData[fieldKey], {
                 shouldValidate: false,
                 shouldDirty: false,

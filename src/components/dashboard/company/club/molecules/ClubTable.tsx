@@ -11,7 +11,7 @@ interface Club {
   department: string;
   clubId: number;
   clubName: string;
-  createdAt: string;
+  appliedDate: string;
   status: "APPROVED" | "SIGNOUT";
 }
 
@@ -106,7 +106,7 @@ export default function ClubTable({ clubs }: ClubTableProps) {
               club.applicantName,
               club.department,
               club.clubName,
-              formatAppliedDate(club.createdAt as unknown as number[]),
+              club.appliedDate,
               getStatus(club.status),
             ].map((data, i) => (
               <div

@@ -92,7 +92,7 @@ export default function DeletePictureModal() {
   };
 
   useEffect(() => {
-    console.log("이유 선택 : ", deleteReason);
+    // console.log("이유 선택 : ", deleteReason);
   }, [deleteReason]); // deleteReason이 변경될 때마다 실행
 
   useEffect(() => {

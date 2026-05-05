@@ -1,28 +1,20 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import { getData, getClubId } from "@/lib/client-utils";
 import type { ExpenseOverviewData } from "@/api/types/club/activityExpenses/requestStatus";
-import { useEffect, useState } from "react";
 
 export default function ExpenseOverview() {
-  const [requestData, setRequestData] = useState<ExpenseOverviewData | null>(
-    null
-  );
+  const clubId = getClubId();
 
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const clubId = getClubId();
-        const requestRes = await getData(
-          `v1/executive/club/${clubId}/reports/summary`,
-          false
-        );
-      } catch (error) {
-        console.error("데이터 로딩 오류:", error);
-      }
-    };
-    loadData();
-  }, []);
+  const { data: requestData } = useQuery<ExpenseOverviewData>({
+    queryKey: ["expense", "overview", clubId],
+    queryFn: () =>
+      getData(`v1/executive/club/${clubId}/reports/summary`, false).then(
+        (res) => res.data
+      ),
+    enabled: !!clubId,
+  });
 
   if (!requestData) return null;
 

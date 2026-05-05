@@ -8,9 +8,9 @@ import Button from "@/components/common/Button";
 import Chip from "@/components/common/Chip";
 import Counter from "@/components/common/Counter";
 import DatePicker from "@/components/common/DatePicker";
-import DropdownSelect from "@/components/common/DropdownSelect";
+// import DropdownSelect from "@/components/common/DropdownSelect";
 import Input from "@/components/common/Input";
-import ClubProfileInfo from "@/components/dashboard/club/common/ClubProfileInfo";
+// import ClubProfileInfo from "@/components/dashboard/club/common/ClubProfileInfo";
 import MapPlaceSearch from "@/components/dashboard/club/manage/organisms/MapPlaceSearch";
 import DateDropdownSelect from "@/components/dashboard/club/calendar/atoms/DateDropdownSelect";
 import { Close } from "@/assets/icons/action";
@@ -21,12 +21,12 @@ const image = null;
 const MIN_PEOPLE = 1;
 const MAX_PEOPLE = 10;
 
-const iterationOptions = [
-  { name: "반복선택 안함", value: "none" },
-  { name: "1개월", value: "one-month" },
-  { name: "3개월", value: "three-month" },
-  { name: "6개월", value: "six-month" },
-];
+// const iterationOptions = [
+//   { name: "반복선택 안함", value: "none" },
+//   { name: "1개월", value: "one-month" },
+//   { name: "3개월", value: "three-month" },
+//   { name: "6개월", value: "six-month" },
+// ];
 
 export default function NewScheduleFormModal() {
   const [maxPeople, setMaxPeople] = useState<number>(1);
@@ -55,7 +55,7 @@ export default function NewScheduleFormModal() {
       <div className="fixed bottom-1/2 right-1/2 translate-y-1/2 translate-x-1/2 z-40 w-full max-w-[1248px] p-4 rounded-xl bg-gray-0 shadow">
         <div className="h-full max-h-screen overflow-y-auto p-4 scrollbar-custom">
           <div className="flex justify-between">
-            <h2 className="font-bold text-gray-900">{"동호회 일정 등록"}</h2>
+            <h2 className="font-bold text-gray-900">동호회 일정 등록</h2>
             <button onClick={() => closeModal()}>
               <Close className="w-6 h-6 text-gray-600" />
             </button>
@@ -73,7 +73,7 @@ export default function NewScheduleFormModal() {
               </div>
               <div className="space-y-6 py-8 px-5">
                 <div className="space-y-3">
-                  <h3 className="h2 font-bold text-gray-900">{"동호회명"}</h3>
+                  <h3 className="h2 font-bold text-gray-900">동호회명</h3>
                   <div className="flex gap-2">
                     <Chip content="운영 중" orange />
                     <Chip content="카테고리" primary />
@@ -82,17 +82,17 @@ export default function NewScheduleFormModal() {
                 <div className="body-1 font-medium text-gray-500">
                   {/* <ClubProfileInfo /> */}
                   <div className="flex items-center gap-2 body-1 font-medium text-gray-500">
-                    <span>{"개설일자 2024.05.03"}</span>
+                    <span>개설일자 2024.05.03</span>
                     <div className="flex items-center gap-0.5">
                       <People className="w-5 h-5 text-gray-500" />
-                      {"23"}
+                      23
                     </div>
                     <div className="flex items-center gap-0.5">
-                      <Calendar className="w-[18px] h-[18px] text-gray-500" />
-                      {"주 1회"}
+                      <Calendar className="w-[18px] h-[18px] text-gray-500" />주
+                      1회
                     </div>
                   </div>
-                  <span>{"운영장_김오모 / 부운영장_김오모 / 총무_김오모"}</span>
+                  <span>운영장_김오모 / 부운영장_김오모 / 총무_김오모</span>
                 </div>
               </div>
             </div>
@@ -114,7 +114,7 @@ export default function NewScheduleFormModal() {
                   htmlFor="date"
                   className="h3 font-semibold text-gray-900"
                 >
-                  {"활동 일정 설정"}
+                  활동 일정 설정
                 </label>
                 <div className="flex gap-3">
                   <DatePicker
@@ -155,7 +155,7 @@ export default function NewScheduleFormModal() {
               </div>
               <div className="space-y-2">
                 <label htmlFor="max" className="h3 font-semibold text-gray-900">
-                  {"최대 인원수"}
+                  최대 인원수
                 </label>
                 <Counter
                   minValue={MIN_PEOPLE}

@@ -60,7 +60,7 @@ export default function EditEmployeeInfoModal() {
           `v1/manager/member/${modalParams.memberId}`,
           true
         );
-        // console.log("받아온 회원 데이터:", res.data);  // 데이터 확인용
+        console.log("받아온 회원 데이터:", res.data); // 데이터 확인용
         setMemberData(res.data);
         // role도 함께 설정
         setRole(res.data.role || "MEMBER");
@@ -122,9 +122,9 @@ export default function EditEmployeeInfoModal() {
         }
       );
       const result = await response.json();
-      // console.log("수정 결과:", result);  // API 응답 확인
+      // console.log("수정 결과:", result); // API 응답 확인
 
-      if (result.resultCode === "OK") {
+      if (result.resultCode === 200) {
         closeModal("employee-edit");
         openModal("edit-success");
       } else {
@@ -142,7 +142,7 @@ export default function EditEmployeeInfoModal() {
         <div className="space-y-6 h-full max-h-screen overflow-y-auto p-4 scrollbar-custom">
           <div className="flex items-center justify-between">
             <h2 className="text-center h1 font-bold text-gray-900">
-              {"회원 정보 수정"}
+              회원 정보 수정
             </h2>
             <button onClick={handleClose}>
               <Close className="w-8 h-8" />

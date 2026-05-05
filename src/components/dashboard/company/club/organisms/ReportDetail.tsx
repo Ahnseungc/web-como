@@ -4,10 +4,16 @@ import { formatDateArray, formatDateFlexible } from "@/lib/utils";
 import Image from "next/image";
 import { useRef, forwardRef, useImperativeHandle } from "react";
 import { useReactToPrint } from "react-to-print";
-import { pdf, Font } from "@react-pdf/renderer";
 import { Download, Print } from "@/assets/icons/util";
 import { usePathname } from "next/navigation";
-import { ReportPDF, expenseCategory } from "./ReportDetailPDF";
+
+const expenseCategory = {
+  activity: "정책사업: 인적자원운용",
+  welfare: "단위사업: 교직원 복지와 사기진작",
+  support: "세부사업: 교직원복지지원",
+  club: "사업 항목: 직장동호회지원",
+  benefit: "목(240) : 복리후생비",
+};
 
 interface Props {
   data: {
@@ -70,20 +76,21 @@ const ReportDetail = forwardRef<ReportDetailRef, Props>(({ data }, ref) => {
   // PDF 다운로드 기능
   const handlePDFDownload = async () => {
     try {
-      console.log("PDF 생성 시작...");
+      const [{ pdf, Font }, { ReportPDF }] = await Promise.all([
+        import("@react-pdf/renderer"),
+        import("./ReportDetailPDF"),
+      ]);
 
       // 폰트 등록이 완료될 때까지 대기
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      // 폰트 등록 상태 확인
       const registeredFonts = Font.getRegisteredFonts();
-      console.log("등록된 폰트:", registeredFonts);
+      if (process.env.NODE_ENV === "development") {
+        console.log("등록된 폰트:", registeredFonts);
+      }
 
       const pdfDoc = pdf(<ReportPDF reportData={reportData} />);
-      console.log("PDF 문서 생성 완료");
-
       const blob = await pdfDoc.toBlob();
-      console.log("PDF Blob 생성 완료:", blob);
 
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -93,14 +100,8 @@ const ReportDetail = forwardRef<ReportDetailRef, Props>(({ data }, ref) => {
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
-      console.log("PDF 다운로드 완료");
     } catch (error) {
       console.error("PDF 생성 중 오류 발생:", error);
-      console.error("오류 상세:", {
-        message: error instanceof Error ? error.message : String(error),
-        stack: error instanceof Error ? error.stack : undefined,
-        reportData: reportData,
-      });
       alert(
         `PDF 다운로드 중 오류가 발생했습니다: ${error instanceof Error ? error.message : String(error)}`
       );

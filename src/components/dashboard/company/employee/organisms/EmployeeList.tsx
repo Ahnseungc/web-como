@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { startOfToday, subYears } from "date-fns";
-// import { getData } from "@/api/action";
 import { getData } from "@/lib/client-utils";
 import DateFilter, {
   type DateRange,
@@ -23,57 +22,43 @@ type PrintableEmployee = {
   createdDate: string;
 };
 
+const formatDateToString = (date: Date | undefined) => {
+  if (!date) return "";
+  const koreaDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
+  return koreaDate.toISOString().split("T")[0];
+};
+
 export default function EmployeeList() {
   const [currentDateRange, setCurrentDateRange] = useState<DateRange>({
-    createdDate: subYears(startOfToday(), 1), // 1년 전 날짜
+    createdDate: subYears(startOfToday(), 1),
     endDate: startOfToday(),
   });
   const [currentPage, setCurrentPage] = useState(1);
-  const [maxPage, setMaxPage] = useState(1);
-  const [employees, setEmployees] = useState([]);
+  const [appliedSearch, setAppliedSearch] = useState<SearchValue>({
+    term: "",
+    field: "all",
+  });
   const [employeesForPrinting, setEmployeesForPrinting] = useState<
     PrintableEmployee[]
   >([]);
 
-  const formatDateToString = (date: Date | undefined) => {
-    if (!date) return "";
-    const koreaDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
-    return koreaDate.toISOString().split("T")[0];
-  };
-
-  const loadEmployees = async (
-    searchValue: SearchValue = { term: "", field: "all" }
-  ) => {
-    try {
-      console.log(searchValue.term);
-      const res = await getData(
-        `v1/manager/member/list?page=${currentPage}&search=${searchValue.term}&filter=${searchValue.field}&startDate=${formatDateToString(currentDateRange.createdDate)}&endDate=${formatDateToString(currentDateRange.endDate)}`,
+  const { data } = useQuery({
+    queryKey: ["employees", currentPage, currentDateRange, appliedSearch],
+    queryFn: () =>
+      getData(
+        `v1/manager/member/list?page=${currentPage}&search=${appliedSearch.term}&filter=${appliedSearch.field}&startDate=${formatDateToString(currentDateRange.createdDate)}&endDate=${formatDateToString(currentDateRange.endDate)}`,
         true
-      );
-      console.log(res);
-      if (
-        (String(res.resultCode) === "200" || String(res.resultCode) === "OK") &&
-        res.data
-      ) {
-        setEmployees(res.data.list);
-        setMaxPage(res.data.totalPages);
-      }
-    } catch (error) {
-      console.error("직원 목록 로딩 오류:", error);
-    }
-  };
+      ).then((res) => res.data),
+  });
 
-  useEffect(() => {
-    loadEmployees();
-  }, [currentPage, currentDateRange]);
+  const employees = data?.list ?? [];
+  const maxPage = data?.totalPages ?? 1;
 
   const { refetch: getExcelData } = useQuery({
     queryKey: ["employeesExcel", currentDateRange],
     queryFn: () =>
       getData(
-        `v1/manager/member/excel?startDate=${formatDateToString(
-          currentDateRange.createdDate
-        )}&endDate=${formatDateToString(currentDateRange.endDate)}`,
+        `v1/manager/member/excel?startDate=${formatDateToString(currentDateRange.createdDate)}&endDate=${formatDateToString(currentDateRange.endDate)}`,
         false
       ),
     enabled: false,
@@ -98,7 +83,6 @@ export default function EmployeeList() {
             const date = item.createdDate
               ? new Date(item.createdDate).toISOString().split("T")[0]
               : "";
-
             return {
               No: idx + 1,
               이름: item.name,
@@ -108,13 +92,10 @@ export default function EmployeeList() {
             };
           }
         );
-
         const wb = XLSX.utils.book_new();
         const ws = XLSX.utils.json_to_sheet(newData);
         XLSX.utils.book_append_sheet(wb, ws, "Employees");
         XLSX.writeFile(wb, "회원 조회.xlsx");
-      } else {
-        console.error("엑셀 데이터가 없습니다.");
       }
     } catch (error) {
       console.error("엑셀 다운로드 중 오류 발생:", error);
@@ -129,25 +110,15 @@ export default function EmployeeList() {
         setTimeout(() => {
           window.print();
         }, 100);
-      } else {
-        console.error("인쇄할 데이터가 없습니다.");
       }
     } catch (error) {
       console.error("인쇄 데이터 로딩 중 오류 발생:", error);
     }
   };
 
-  const handleDateRangeChange = (dateRange: DateRange) => {
-    setCurrentDateRange(dateRange);
-    setCurrentPage(1);
-  };
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-
   const handleSearch = (searchValue: SearchValue) => {
-    loadEmployees(searchValue);
+    setAppliedSearch(searchValue);
+    setCurrentPage(1);
   };
 
   return (
@@ -161,7 +132,10 @@ export default function EmployeeList() {
         <div className="flex items-center justify-between gap-6">
           <DateFilter
             currentDateRange={currentDateRange}
-            handleDateRangeChange={handleDateRangeChange}
+            handleDateRangeChange={(dateRange) => {
+              setCurrentDateRange(dateRange);
+              setCurrentPage(1);
+            }}
           />
           <DocUtilButtons
             onSaveClick={handleExcelDownload}
@@ -170,14 +144,14 @@ export default function EmployeeList() {
         </div>
 
         <div className="space-y-10">
-          {employees && employees.length > 0 ? (
+          {employees.length > 0 ? (
             <>
               <EmployeeTable employees={employees} />
               <div className="flex justify-center mt-8">
                 <Pagination
                   currentPage={currentPage}
                   totalPages={maxPage}
-                  handlePageChange={handlePageChange}
+                  handlePageChange={(page) => setCurrentPage(page)}
                 />
               </div>
             </>

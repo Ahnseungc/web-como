@@ -4,7 +4,7 @@ export const patchApprove = async (expenseId: string) => {
   const token = await getAccessToken();
   if (!token) throw new Error("토큰 정보가 없습니다.");
 
-  const url = `/api/v1/manager/activity-expenses/${expenseId}/approve`;
+  const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/manager/activity-expenses/${expenseId}/approve`;
 
   const response = await fetch(url, {
     method: "PATCH",

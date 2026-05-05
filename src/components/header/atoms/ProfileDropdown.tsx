@@ -4,7 +4,7 @@ import { openModal } from "@/lib/utils";
 import Avatar from "@/components/common/Avatar";
 import ProfileDropdownModal from "@/components/header/organisms/ProfileDropdownModal";
 import { ChevronDown } from "@/assets/icons/chevron";
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { getData, getRole } from "@/lib/client-utils";
 
 interface Props {
@@ -17,32 +17,14 @@ interface ProfileData {
 }
 
 export default function ProfileDropdown({ profileImage }: Props) {
-  const [profileData, setProfileData] = useState<ProfileData | null>(null);
+  const role = getRole();
 
-  useEffect(() => {
-    const loadProfileData = async () => {
-      try {
-        const role = getRole();
-
-        let res;
-        if (role === "club") {
-          // res = await getData(`v1/executive/club/{clubId}/my-profile`, true);
-          res = await getData(`v1/manager/member/my-profile`, true);
-        } else if (role === "company") {
-          res = await getData(`v1/manager/member/my-profile`, true);
-        }
-        if (res?.resultCode === "OK" && res.data) {
-          setProfileData(res.data);
-        } else {
-          console.error("API 오류:", res?.resultMessage);
-        }
-      } catch (error) {
-        console.error("API 호출 오류:", error);
-      }
-    };
-
-    loadProfileData();
-  }, []);
+  const { data: profileData } = useQuery<ProfileData>({
+    queryKey: ["profile", role],
+    queryFn: () =>
+      getData("v1/manager/member/my-profile", true).then((res) => res.data),
+    enabled: role === "club" || role === "company",
+  });
 
   return (
     <>

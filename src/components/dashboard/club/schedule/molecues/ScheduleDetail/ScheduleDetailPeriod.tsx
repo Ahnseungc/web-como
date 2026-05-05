@@ -37,7 +37,7 @@ const ScheduleDetailPeriod = ({ type }: { type: string }) => {
         setValue("recruitEndDate", startDate.toISOString());
       }
     }
-  }, [startDate, endDate, setValue, type]);
+  }, [startDate, endDate, setValue, type, recruitStartDate]);
 
   return (
     <div className="flex flex-col gap-2">

@@ -7,7 +7,7 @@ export const getNoticeDetail = async (noticeId: string) => {
   if (!token) throw new Error("토큰 정보가 없습니다.");
   if (!clubId) throw new Error("클럽 정보가 없습니다.");
 
-  const url = `/api/v1/executive/club/${clubId}/notices/${noticeId}`;
+  const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/executive/club/${clubId}/notices/${noticeId}`;
 
   const response = await fetch(url, {
     method: "GET",

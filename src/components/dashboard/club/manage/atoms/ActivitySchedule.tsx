@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { ClubIndexSchemaType } from "@/lib/types/schema";
 import ScheduleSelectModal from "../modals/ScheduleSelectModal";
 
-export default function ActivitySchedule() {
+export default function ActivitySchedule({ readOnly = false }: { readOnly?: boolean }) {
   const activityPlanDays = useWatch<ClubIndexSchemaType>({
     name: "activityPlanDays",
   }) as string[];
@@ -25,6 +25,7 @@ export default function ActivitySchedule() {
     useState<string>("활동 일정을 선택해주세요");
 
   const handleModalOpen = () => {
+    if (readOnly) return;
     setModalIsOpen((prev) => !prev);
   };
 
@@ -44,9 +45,10 @@ export default function ActivitySchedule() {
     <div className="space-y-4">
       <h3 className="text-xl font-medium text-gray-900">활동 일정</h3>
       <button
-        className="relative flex h-15 w-fit cursor-pointer items-center justify-between rounded-md bg-gray-100 px-4 py-4 text-lg font-medium text-gray-900"
+        className="relative flex h-15 w-fit items-center justify-between rounded-md bg-gray-100 px-4 py-4 text-lg font-medium text-gray-900 disabled:cursor-default"
         type="button"
         onClick={handleModalOpen}
+        disabled={readOnly}
       >
         <input
           type="text"

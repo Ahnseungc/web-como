@@ -20,6 +20,7 @@ import { PlaceSearchItemType } from "@/lib/types/placeSearch";
 type Props = {
   roadAddressDefaultValue?: string;
   placeNameDefaultValue?: string;
+  readOnly?: boolean;
 };
 
 // zod의 스키마 타입을 제네릭으로 줄 것.
@@ -28,6 +29,7 @@ type Props = {
 export default function PlaceSearchWithNaverMap<T extends FieldValues>({
   roadAddressDefaultValue,
   placeNameDefaultValue,
+  readOnly = false,
 }: Props) {
   const { setValue } = useFormContext<T>();
 
@@ -100,23 +102,26 @@ export default function PlaceSearchWithNaverMap<T extends FieldValues>({
             type="text"
             className="placeholer:font-medium h-full w-full truncate bg-transparent pr-7 text-lg placeholder:text-gray-400 outline-none"
             value={searchRoadAddress}
-            onChange={(e) => setSearchRoadAddress(e.target.value)}
-            onFocus={() => setIsRoadAddressFocusing(true)}
+            onChange={(e) => !readOnly && setSearchRoadAddress(e.target.value)}
+            onFocus={() => !readOnly && setIsRoadAddressFocusing(true)}
             onBlur={() => setIsRoadAddressFocusing(false)}
             placeholder={"활동 장소를 검색해주세요"}
+            readOnly={readOnly}
           />
           <button
             type="button"
             className={cn(
               "absolute right-3 top-1/2 h-5 w-5 -translate-y-1/2",
-              isRoadAddressFocusing ? "visible" : "hidden"
+              !readOnly && isRoadAddressFocusing ? "visible" : "hidden"
             )}
             onMouseDown={(e) => e.preventDefault()}
             onClick={handleResetPlaceInputField}
+            disabled={readOnly}
           >
             <Remove className="pointer-events-none h-full w-full text-gray-500" />
           </button>
-          {isRoadAddressFocusing &&
+          {!readOnly &&
+            isRoadAddressFocusing &&
             placeSearchData?.items &&
             placeSearchData.items.length > 0 && (
               <ul className="absolute left-0 top-full z-[99999999] flex min-w-full flex-col shadow-[0_4px_20px_0px_rgb(#00000014)]">

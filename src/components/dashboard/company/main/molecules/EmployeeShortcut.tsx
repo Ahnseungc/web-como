@@ -3,32 +3,19 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronRight } from "@/assets/icons/chevron";
-// import { getData } from "@/api/action";
 import { getData } from "@/lib/client-utils";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 export default function EmployeeShortcut() {
   const pathname = usePathname();
-  const [employeeCount, setEmployeeCount] = useState<number>(0);
 
-  useEffect(() => {
-    const loadEmployeeCount = async () => {
-      try {
-        const res = await getData("v1/manager/member/dashboard", true);
-        if (
-          (String(res.resultCode) === "200" ||
-            String(res.resultCode) === "OK") &&
-          res.data
-        ) {
-          setEmployeeCount(res.data.count || 0);
-        }
-      } catch (error) {
-        console.error("직원 수 로딩 오류:", error);
-      }
-    };
+  const { data } = useQuery({
+    queryKey: ["member", "dashboard"],
+    queryFn: () => getData("v1/manager/member/dashboard", true),
+    select: (res) => res.data,
+  });
 
-    loadEmployeeCount();
-  }, []);
+  const employeeCount = data?.count ?? 0;
 
   const Container = ({ children }: { children: React.ReactNode }) => {
     const style =

@@ -46,6 +46,7 @@ export const ExpenseReportPDF = ({ expense }: ExpenseFormProps) => {
           ©2024. (주)핀데브 Inc.all right reserved.
         </Text>
         <View style={{ paddingTop: 30 }}>
+          {/* eslint-disable-next-line jsx-a11y/alt-text */}
           <Image src={comoLogo} style={pdfStyles.logo} />
         </View>
 

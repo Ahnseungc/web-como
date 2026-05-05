@@ -13,7 +13,7 @@ export default function ClubIndexInfoSection({
       {/* 기본 정보 */}
       <ClubBasicInfo clubId={clubId} />
       {/* 활동 정보 */}
-      <ClubActivityInfo clubId={clubId} />
+      <ClubActivityInfo />
     </section>
   );
 }

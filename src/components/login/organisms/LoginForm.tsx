@@ -147,7 +147,7 @@ export default function LoginForm() {
       } else if (userRoles.includes("ROLE_MANAGER")) {
         dashboardType = "company";
       }
-      console.log("대시보드 타입:", dashboardType);
+      // console.log("대시보드 타입:", dashboardType);
 
       await saveAccessToken(accessToken);
       await saveRefreshToken(accessToken);

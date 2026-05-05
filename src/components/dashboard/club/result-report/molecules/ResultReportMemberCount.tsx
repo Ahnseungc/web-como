@@ -41,7 +41,7 @@ const ResultReportMemberCount = () => {
 
   useEffect(() => {
     setValue("data.participantCount", memberCount, { shouldValidate: true });
-  }, [memberCount]);
+  }, [memberCount, setValue]);
 
   const participantCount = watch("data.participantCount");
 
@@ -50,7 +50,7 @@ const ResultReportMemberCount = () => {
       setMemberCount(participantCount);
       setInputValue(participantCount === 0 ? "" : participantCount.toString());
     }
-  }, [participantCount]);
+  }, [participantCount, memberCount]);
 
   // 에러 메시지 가져오기
   const getErrorMessage = () => {

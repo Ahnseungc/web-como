@@ -38,13 +38,11 @@ export default function Footer() {
         </ul>
         <div className="flex justify-between">
           <div className="space-y-2">
-            <span className="body-1 font-bold text-gray-900">
-              {"(주) 핀데브"}
-            </span>
+            <span className="body-1 font-bold text-gray-900">(주) 핀데브</span>
             <p className="body-1 font-medium text-gray-700">{INFO}</p>
           </div>
           <div className="space-y-2">
-            <span className="body-1 font-bold text-gray-900">{"고객센터"}</span>
+            <span className="body-1 font-bold text-gray-900">고객센터</span>
             <p className="body-1 font-medium text-gray-700">{INQUIRY}</p>
           </div>
         </div>

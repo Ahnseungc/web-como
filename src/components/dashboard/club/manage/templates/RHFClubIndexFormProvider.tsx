@@ -1,14 +1,11 @@
 "use client";
 
-import {
-  ClubIndexDefaultValues,
-  ClubIndexSchema,
-  ClubIndexSchemaType,
-} from "@/lib/types/schema";
+import { ClubIndexSchema, ClubIndexSchemaType } from "@/lib/types/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import ClubInfoForm from "./ClubInfoForm";
 import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { getData } from "@/lib/client-utils";
 
 interface RHFClubIndexFormProviderProps {
@@ -30,27 +27,22 @@ export default function RHFClubIndexFormProvider({
   const method = useForm<ClubIndexSchemaType>({
     mode: "all",
     resolver: zodResolver(ClubIndexSchema),
-    // defaultValues: ClubIndexDefaultValues,
+  });
+
+  const { data } = useQuery({
+    queryKey: ["club", clubId],
+    queryFn: () => getData(`v1/club/${clubId}`, true).then((res) => res.data),
+    enabled: !!clubId,
   });
 
   useEffect(() => {
-    const loadClubData = async () => {
-      if (!clubId) return;
-
-      const res = await getData(`v1/club/${clubId}`, true);
-      const { data } = res;
-
-      // 📌 API 응답값을 폼에 주입
-      const transformedData = {
+    if (data) {
+      method.reset({
         ...data,
-        category: categoryObject[data.category], // 카테고리 변환
-      };
-
-      method.reset(transformedData);
-    };
-
-    loadClubData();
-  }, [clubId, method]);
+        category: categoryObject[data.category],
+      });
+    }
+  }, [data, method]);
 
   return (
     <FormProvider {...method}>

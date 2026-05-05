@@ -43,6 +43,7 @@ export const ReportPDF = ({
           ©2024. (주)핀데브 Inc.all right reserved.
         </Text>
         <View style={{ paddingTop: 30 }}>
+          {/* eslint-disable-next-line jsx-a11y/alt-text */}
           <Image src={comoLogo} style={pdfStyles.logo} />
         </View>
 
@@ -153,6 +154,7 @@ export const ReportPDF = ({
               reportData.images.map(
                 (photo: ActivityReportPhoto, index: number) => (
                   <View key={photo.id || index} style={pdfStyles.imageWrapper}>
+                    {/* eslint-disable-next-line jsx-a11y/alt-text */}
                     <Image src={photo.url} style={pdfStyles.gridImage} />
                   </View>
                 )
@@ -260,6 +262,7 @@ export const ReportPDF = ({
             {reportData.receipts &&
             reportData.receipts.length > 0 &&
             reportData.receipts[0].file ? (
+              /* eslint-disable-next-line jsx-a11y/alt-text */
               <Image
                 src={reportData.receipts[0].file}
                 style={pdfStyles.receiptImage}

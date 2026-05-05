@@ -1,42 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { getData } from "@/lib/client-utils";
 
-interface ApplicationStats {
-  pending: number;
-  approved: number;
-  rejected: number;
-}
-
 export default function ApplicationOverview() {
-  const [stats, setStats] = useState<ApplicationStats>({
-    pending: 0,
-    approved: 0,
-    rejected: 0,
+  const { data } = useQuery({
+    queryKey: ["club", "status-count"],
+    queryFn: () => getData("v1/manager/club/status-count", true),
+    select: (res) => res.data,
   });
 
-  useEffect(() => {
-    const loadStats = async () => {
-      try {
-        const response = await getData("v1/manager/club/status-count", true);
-
-        if (response && response.data) {
-          const { pendingCount, approvedCount, rejectedCount } = response.data;
-
-          setStats({
-            pending: pendingCount || 0,
-            approved: approvedCount || 0,
-            rejected: rejectedCount || 0,
-          });
-        }
-      } catch (error) {
-        console.error("신청 현황 로딩 오류:", error);
-      }
-    };
-
-    loadStats();
-  }, []);
+  const stats = {
+    pending: data?.pendingCount ?? 0,
+    approved: data?.approvedCount ?? 0,
+    rejected: data?.rejectedCount ?? 0,
+  };
 
   return (
     <div className="flex flex-col gap-6 h-fit p-8 rounded-xl bg-gray-800 select-none">

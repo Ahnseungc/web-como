@@ -4,8 +4,7 @@ import Image from "next/image";
 import { openModal } from "@/lib/utils";
 import Avatar from "@/components/common/Avatar";
 import Input from "@/components/common/Input";
-import { useState, useEffect } from "react";
-// import { getData } from "@/api/action";
+import { useQuery } from "@tanstack/react-query";
 import { getData } from "@/lib/client-utils";
 
 interface Props {
@@ -13,23 +12,23 @@ interface Props {
 }
 
 interface ClubDetailInfoDTO {
-  clubId: number; // 클럽 ID
-  name: string; // 동호회명
-  intro: string; // 한줄소개
-  location: string; // 위치
-  activityPlan: string; // 활동 계획
-  goal: string; // 목표
-  headId: number; // 회장 ID
-  headName: string; // 회장 이름
-  headDepartment: string; // 회장 소속
-  deputyId: number; // 부회장 ID
-  deputyName: string; // 부회장 이름
-  deputyDepartment: string; // 부회장 소속
-  affairsId: number; // 사무국 ID
-  affairsName: string; // 사무국 이름
-  affairsDepartment: string; // 사무국 소속
-  category: string; // 카테고리
-  clubImage: string; // 클럽 이미지
+  clubId: number;
+  name: string;
+  intro: string;
+  location: string;
+  activityPlan: string;
+  goal: string;
+  headId: number;
+  headName: string;
+  headDepartment: string;
+  deputyId: number;
+  deputyName: string;
+  deputyDepartment: string;
+  affairsId: number;
+  affairsName: string;
+  affairsDepartment: string;
+  category: string;
+  clubImage: string;
 }
 
 const categoryMapping = {
@@ -43,19 +42,12 @@ const categoryMapping = {
 };
 
 export default function ClubDetailInfo({ clubId }: Props) {
-  const [clubDetailInfo, setClubDetailInfo] =
-    useState<ClubDetailInfoDTO | null>(null);
-  const image = null;
-  console.log("ClubDetailInfo", clubId);
-
-  useEffect(() => {
-    const fetchClubDetailInfo = async () => {
-      const res = await getData(`v1/manager/club/${clubId}`, true);
-      setClubDetailInfo(res.data);
-      console.log("clubDetailInfo", res.data);
-    };
-    fetchClubDetailInfo();
-  }, [clubId]);
+  const { data: clubDetailInfo } = useQuery<ClubDetailInfoDTO>({
+    queryKey: ["manager", "club", clubId],
+    queryFn: () =>
+      getData(`v1/manager/club/${clubId}`, true).then((res) => res.data),
+    enabled: !!clubId,
+  });
 
   return (
     <>

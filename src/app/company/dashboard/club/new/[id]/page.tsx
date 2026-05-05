@@ -1,92 +1,74 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import { openModal } from "@/lib/utils";
+import { useSearchParams, useParams } from "next/navigation";
+// import { openModal } from "@/lib/utils";
 import BackButton from "@/components/dashboard/common/BackButton";
-import PDFViewer from "@/components/dashboard/club/common/PDFViewer";
 import RejectApplicationModal from "@/components/dashboard/company/club/modals/RejectApplicationModal";
 import RevertRejectionModal from "@/components/dashboard/company/club/modals/RevertRejectionModal";
-// import { getData } from "@/api/action";
 import { getData } from "@/lib/client-utils";
 import Image from "next/image";
+import { useQuery } from "@tanstack/react-query";
+
+const categoryMapping = {
+  ART_CULTURE: "문화/예술",
+  ACTIVITY: "액티비티",
+  CREATIVE: "크리에이티브",
+  FOODBEVERAGE: "F&B",
+  NETWORKING: "네트워킹",
+  STUDY: "스터디",
+  ETC: "기타",
+};
+
+const keyMapping = {
+  name: "동호회명",
+  intro: "동호회 한줄 소개",
+  clubCategory: "카테고리",
+  companyName: "회사명",
+  location: "활동 지역",
+  activityPlan: "활동 일정",
+  goal: "개설 목적",
+  operationPlan: "운영 방침",
+  detail: "주요 운영 계획",
+  duesPerMonth: "월회비",
+  duesPerYear: "연회비",
+  minMemberCount: "최소 인원",
+  maxMemberCount: "최대 인원",
+  currentMember: "현재 인원",
+  headName: "운영장 이름",
+  headPosition: "운영장 직책",
+  headDepartment: "운영장 부서",
+  subHeadName: "부운영장 이름",
+  subHeadDepartment: "부운영장 부서",
+  affairsName: "총무 이름",
+  affairsPosition: "총무 직책",
+  affairsDepartment: "총무 부서",
+  calculationBasis: "산출 기초",
+  businessItem: "사업 항목 및 내용",
+  bank: "은행",
+  clubImage: "동호회 이미지",
+  bankbookImage: "통장 사본",
+  signature: "서명 이미지",
+  latitude: "위도",
+  longitude: "경도",
+  createdAt: "생성일",
+  isJoined: "가입 여부",
+};
 
 export default function ApplicationDetailPage() {
-  const [registrationData, setRegistrationData] = useState(null);
-  const [loading, setLoading] = useState(true); // 로딩 상태 변수 추가
-  const status = useSearchParams().get("status");
   const params = useParams();
   const clubId = params.id as string;
 
-  const categoryMapping = {
-    ART_CULTURE: "문화/예술",
-    ACTIVITY: "액티비티",
-    CREATIVE: "크리에이티브",
-    FOODBEVERAGE: "F&B",
-    NETWORKING: "네트워킹",
-    STUDY: "스터디",
-    ETC: "기타",
-  };
+  const { data: registrationData, isLoading } = useQuery({
+    queryKey: ["club", clubId, "registration"],
+    queryFn: () =>
+      getData(`v1/manager/club/${clubId}/registration`).then(
+        (res) => res.data ?? null
+      ),
+    enabled: !!clubId,
+  });
 
-  const keyMapping = {
-    name: "동호회명",
-    intro: "동호회 한줄 소개",
-    clubCategory: "카테고리",
-    companyName: "회사명",
-    location: "활동 지역",
-    activityPlan: "활동 일정",
-    goal: "개설 목적",
-    operationPlan: "운영 방침",
-    detail: "주요 운영 계획",
-    duesPerMonth: "월회비",
-    duesPerYear: "연회비",
-    minMemberCount: "최소 인원",
-    maxMemberCount: "최대 인원",
-    currentMember: "현재 인원",
-    headName: "운영장 이름",
-    headPosition: "운영장 직책",
-    headDepartment: "운영장 부서",
-    subHeadName: "부운영장 이름",
-    subHeadDepartment: "부운영장 부서",
-    affairsName: "총무 이름",
-    affairsPosition: "총무 직책",
-    affairsDepartment: "총무 부서",
-    calculationBasis: "산출 기초",
-    businessItem: "사업 항목 및 내용",
-    bank: "은행",
-    clubImage: "동호회 이미지",
-    bankbookImage: "통장 사본",
-    signature: "서명 이미지",
-    latitude: "위도",
-    longitude: "경도",
-    createdAt: "생성일",
-    isJoined: "가입 여부",
-  };
-
-  useEffect(() => {
-    const fetchRegistrationData = async () => {
-      try {
-        const response = await getData(
-          `v1/manager/club/${clubId}/registration`
-        ); // API 호출
-        // console.log("response", response);
-        if (String(response.resultCode === "200")) {
-          setRegistrationData(response.data);
-        }
-      } catch (err) {
-        console.error("동호회 개설 신청서 로딩 오류:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRegistrationData();
-  }, [clubId]);
-
-  // 로딩 중일 때 처리
-  if (loading) {
-    return <div className="text-lg">로딩 중...</div>; // 로딩 메시지 또는 스피너 표시
+  if (isLoading) {
+    return <div className="text-lg">로딩 중...</div>;
   }
 
   return (
@@ -95,30 +77,7 @@ export default function ApplicationDetailPage() {
       <div className="space-y-3 p-8 rounded-xl bg-gray-0">
         <div className="flex items-center justify-between">
           <h2 className="h3 font-semibold text-gray-900">{"작성한 신청서"}</h2>
-          {/* {status === "new" ? (
-            <div className="flex gap-2">
-              <button className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-point-blue">
-                {"승인"}
-              </button>
-              <button
-                className="py-1 px-4 rounded body-1 font-medium text-gray-50 bg-gray-600"
-                onClick={() => openModal("reject-application")}
-              >
-                {"반려"}
-              </button>
-            </div>
-          ) : (
-            status === "reject" && (
-              <button
-                className="py-1 px-4 rounded border border-point-red body-1 font-medium text-point-red bg-gray-0"
-                onClick={() => openModal("revert-rejection")}
-              >
-                {"반려 취소"}
-              </button>
-            )
-          )} */}
         </div>
-        {/* <PDFViewer file="../../../../../sample.pdf" /> */}
 
         <div style={{ padding: "20px" }}>
           <div>
@@ -143,7 +102,7 @@ export default function ApplicationDetailPage() {
                         "rule",
                         "thumbnail",
                       ].includes(key)
-                  ) // 제외할 키 목록
+                  )
                   .map(([key, value]) => (
                     <div
                       key={key}
@@ -157,10 +116,9 @@ export default function ApplicationDetailPage() {
                         {keyMapping[key as keyof typeof keyMapping] || key} :
                       </strong>
 
-                      {/* 빈 값 처리: null, undefined, 빈 문자열 */}
                       {value === null ||
                       value === undefined ||
-                      value === "" ? null : typeof value === "string" && // 이미지 여부 먼저 확인
+                      value === "" ? null : typeof value === "string" &&
                         (value.startsWith("http") ||
                           value.startsWith("https")) ? (
                         <Image
@@ -173,7 +131,6 @@ export default function ApplicationDetailPage() {
                           }}
                         />
                       ) : (
-                        // 카테고리일 경우 한글로 변환하여 출력
                         <span style={{ fontSize: "16px" }}>
                           {key === "category" &&
                           typeof value === "string" &&

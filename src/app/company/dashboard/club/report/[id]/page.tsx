@@ -64,7 +64,7 @@ export default function Page({ params }: { params: { id: string } }) {
     };
 
     fetchData();
-  }, [params.id, currentStatus]);
+  }, [params.id, currentStatus, createdAt]);
 
   const handlePDFDownloadClick = () => {
     if (reportDetailRef.current) {

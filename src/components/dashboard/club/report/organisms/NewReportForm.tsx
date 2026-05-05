@@ -84,7 +84,7 @@ export default function NewReportForm() {
       <div className="flex flex-col gap-6 p-8 rounded-xl bg-gray-0">
         <h3 className="h2 font-bold text-gray-900">활동 지출 내역 및 증빙</h3>
         <div className="flex flex-col gap-2">
-          <span className="h3 font-semibold text-gray-900">{"전표 일자"}</span>
+          <span className="h3 font-semibold text-gray-900">전표 일자</span>
           <DatePicker
             id="receipt-date"
             size="w-[350px] min-h-[60px]"
