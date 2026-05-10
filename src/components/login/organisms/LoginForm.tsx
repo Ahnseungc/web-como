@@ -104,13 +104,13 @@ export default function LoginForm() {
     }
 
     try {
-      // const hashedPassword = SHA256(formData.password).toString(enc.Hex);
+      const hashedPassword = SHA256(formData.password).toString(enc.Hex);
       const response = await fetch(`/api/login`, {
         method: "POST",
         body: JSON.stringify({
           email: formData.id,
-          // password: hashedPassword,
-          password: formData.password,
+          password: hashedPassword,
+          // password: formData.password,
         }),
         headers: {
           "Content-Type": "application/json",

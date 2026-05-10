@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import ClubInfo from "./ClubInfo";
 import ActivityInfo from "./ActivityInfo";
 import MembershipFee from "./MembershipFee";
@@ -8,6 +10,7 @@ import OperationInfo from "./OperationInfo";
 import Terms from "./Terms";
 import { useAutoSave } from "@/hooks/useAutoSave";
 import { AutoSaveRestoreAlert } from "@/components/dashboard/club/result-report/molecules/AutoSaveRestoreAlert";
+import { createClub } from "@/api/actions/club/createClub";
 
 interface ClubApplyFormProps {
   activeTabId: string;
@@ -33,6 +36,9 @@ interface ClubApplyFormData {
   minMembers: string;
   maxMembers: string;
 
+  // 동호회 썸네일
+  thumbnailFile: File[];
+
   // 회비 정보
   monthlyFee: string;
   bankbookFile: File[];
@@ -52,6 +58,10 @@ interface ClubApplyFormData {
 }
 
 export default function ClubApplyForm({ activeTabId }: ClubApplyFormProps) {
+  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
   const methods = useForm<ClubApplyFormData>({
     defaultValues: {
       applicantName: "",
@@ -69,6 +79,7 @@ export default function ClubApplyForm({ activeTabId }: ClubApplyFormProps) {
       activityFrequency: "",
       minMembers: "",
       maxMembers: "",
+      thumbnailFile: [],
       monthlyFee: "",
       bankbookFile: [],
       presidentName: "",
@@ -97,48 +108,30 @@ export default function ClubApplyForm({ activeTabId }: ClubApplyFormProps) {
   };
 
   const onSubmit = async (data: ClubApplyFormData) => {
-    try {
-      const requestData = {
-        name: data.clubName,
-        intro: data.clubOneLine,
-        detail: data.clubDescription,
-        goal: data.clubPurpose,
-        category: data.category,
-        location: data.location,
-        latitude: data.latitude,
-        longitude: data.longitude,
-        minMemberCount: Number(data.minMembers),
-        maxMemberCount: Number(data.maxMembers),
-        monthlyFee: Number(data.monthlyFee),
-        activitySchedule: formatDateTime(data.activityDate, data.activityTime),
-        recruitStartDate: formatDateTime(data.startDate, data.startTime),
-        recruitEndDate: formatDateTime(data.endDate, data.endTime),
-        // TODO: headId, subHeadId, affairs (UserSearch ID 연동 후 추가)
-      };
+    setIsSubmitting(true);
+    setSubmitError(null);
 
-      const formData = new FormData();
-      formData.append(
-        "data",
-        new Blob([JSON.stringify(requestData)], { type: "application/json" })
+    try {
+      await createClub(
+        {
+          title: data.clubName,
+          content: data.clubDescription,
+          isPinned: "N",
+        },
+        data.bankbookFile?.[0],
+        data.signatureFile?.[0],
+        data.thumbnailFile?.[0]
       );
 
-      if (data.bankbookFile?.[0]) {
-        formData.append("bank", data.bankbookFile[0]);
-      }
-      if (data.signatureFile?.[0]) {
-        formData.append("signature", data.signatureFile[0]);
-      }
-
-      const response = await fetch("/api/v1/club", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) throw new Error("동호회 신청에 실패했습니다.");
-
       await clearSavedData();
+      router.push("/");
     } catch (error) {
       console.error(error);
+      setSubmitError(
+        error instanceof Error ? error.message : "동호회 신청에 실패했습니다."
+      );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -164,6 +157,10 @@ export default function ClubApplyForm({ activeTabId }: ClubApplyFormProps) {
       <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-8">
         {renderTabContent()}
 
+        {submitError && (
+          <p className="text-red-500 text-sm text-right">{submitError}</p>
+        )}
+
         <div className="flex justify-end gap-4 pt-6 border-t border-gray-200">
           <button
             type="button"
@@ -175,9 +172,10 @@ export default function ClubApplyForm({ activeTabId }: ClubApplyFormProps) {
           {activeTabId === "terms" && (
             <button
               type="submit"
-              className="px-6 py-4 bg-[#FF6B00] text-gray-0 rounded-lg font-bold text-[20px] animate-fadeIn"
+              disabled={isSubmitting}
+              className="px-6 py-4 bg-[#FF6B00] text-gray-0 rounded-lg font-bold text-[20px] animate-fadeIn disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              신청서 제출
+              {isSubmitting ? "제출 중..." : "신청서 제출"}
             </button>
           )}
         </div>

@@ -5,6 +5,7 @@ import { CustomTextarea } from "@/components/common/CustomTextarea";
 import Input from "@/components/common/Input";
 import UserSearchInput from "@/components/common/UserSearchInput";
 import CustomSelect from "@/components/common/CustomSelect";
+import FileUploadField from "@/components/common/FileUploadField";
 
 export default function ClubInfo() {
   const { register, watch, setValue } = useFormContext();
@@ -155,6 +156,17 @@ export default function ClubInfo() {
             </p>
           </div>
         </div>
+      </div>
+
+      <div className="border-t border-gray-100 pt-10">
+        <FileUploadField
+          label="동호회 썸네일"
+          id="thumbnailUpload"
+          files={watch("thumbnailFile") || []}
+          onFileChange={(files) => setValue("thumbnailFile", files)}
+          onFileRemove={() => setValue("thumbnailFile", [])}
+          placeholder="썸네일 이미지를 첨부하세요."
+        />
       </div>
     </div>
   );
