@@ -112,16 +112,19 @@ export default function ClubApplyForm({ activeTabId }: ClubApplyFormProps) {
     setSubmitError(null);
 
     try {
-      await createClub(
-        {
-          title: data.clubName,
-          content: data.clubDescription,
-          isPinned: "N",
-        },
-        data.bankbookFile?.[0],
-        data.signatureFile?.[0],
-        data.thumbnailFile?.[0]
+      const formData = new FormData();
+      formData.append(
+        "data",
+        new Blob(
+          [JSON.stringify({ title: data.clubName, content: data.clubDescription, isPinned: "N" })],
+          { type: "application/json" }
+        )
       );
+      if (data.bankbookFile?.[0]) formData.append("bank", data.bankbookFile[0]);
+      if (data.signatureFile?.[0]) formData.append("signature", data.signatureFile[0]);
+      if (data.thumbnailFile?.[0]) formData.append("thumbnail", data.thumbnailFile[0]);
+
+      await createClub(formData);
 
       await clearSavedData();
       router.push("/");
