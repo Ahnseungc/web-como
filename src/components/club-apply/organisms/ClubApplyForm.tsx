@@ -112,13 +112,44 @@ export default function ClubApplyForm({ activeTabId }: ClubApplyFormProps) {
     setSubmitError(null);
 
     try {
+      const payload = {
+        name: data.clubName,
+        intro: data.clubOneLine,
+        longitude: data.longitude,
+        latitude: data.latitude,
+        location: [data.location, data.locationDetail].filter(Boolean).join(" "),
+        activityPlan: "",
+        goal: data.clubPurpose,
+        headId: 1,
+        subHeadId: null,
+        affairs: null,
+        category: data.category,
+        maxMemberCount: Number(data.maxMembers) || 0,
+        minMemberCount: Number(data.minMembers) || 0,
+        duesPerYear: 0,
+        detail: data.clubDescription,
+        calculationBasis: "",
+        businessItem: "",
+        activitySchedule:
+          data.activityDate && data.activityTime
+            ? formatDateTime(data.activityDate, data.activityTime)
+            : "",
+        memberDescription: "",
+        monthlyFee: Number(data.monthlyFee) || 0,
+        recruitStartDate:
+          data.startDate && data.startTime
+            ? formatDateTime(data.startDate, data.startTime)
+            : "",
+        recruitEndDate:
+          data.endDate && data.endTime
+            ? formatDateTime(data.endDate, data.endTime)
+            : "",
+      };
+
       const formData = new FormData();
       formData.append(
         "data",
-        new Blob(
-          [JSON.stringify({ title: data.clubName, content: data.clubDescription, isPinned: "N" })],
-          { type: "application/json" }
-        )
+        new Blob([JSON.stringify(payload)], { type: "application/json" })
       );
       if (data.bankbookFile?.[0]) formData.append("bank", data.bankbookFile[0]);
       if (data.signatureFile?.[0]) formData.append("signature", data.signatureFile[0]);
