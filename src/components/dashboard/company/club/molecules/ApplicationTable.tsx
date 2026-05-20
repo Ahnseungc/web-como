@@ -82,7 +82,7 @@ export default function ApplicationTable({
 
   const handleApprove = async (clubId: number, applicantId: number) => {
     try {
-      const response = await fetch(`/api/v1/executive/club/accept`, {
+      const response = await fetch(`/api/v1/manager/club/${clubId}/approve`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
