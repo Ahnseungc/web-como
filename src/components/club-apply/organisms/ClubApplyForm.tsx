@@ -117,7 +117,9 @@ export default function ClubApplyForm({ activeTabId }: ClubApplyFormProps) {
         intro: data.clubOneLine,
         longitude: data.longitude,
         latitude: data.latitude,
-        location: [data.location, data.locationDetail].filter(Boolean).join(" "),
+        location: [data.location, data.locationDetail]
+          .filter(Boolean)
+          .join(" "),
         activityPlan: "",
         goal: data.clubPurpose,
         headId: 1,
@@ -152,13 +154,16 @@ export default function ClubApplyForm({ activeTabId }: ClubApplyFormProps) {
         new Blob([JSON.stringify(payload)], { type: "application/json" })
       );
       if (data.bankbookFile?.[0]) formData.append("bank", data.bankbookFile[0]);
-      if (data.signatureFile?.[0]) formData.append("signature", data.signatureFile[0]);
-      if (data.thumbnailFile?.[0]) formData.append("thumbnail", data.thumbnailFile[0]);
+      if (data.signatureFile?.[0])
+        formData.append("signature", data.signatureFile[0]);
+      if (data.thumbnailFile?.[0])
+        formData.append("thumbnail", data.thumbnailFile[0]);
 
       await createClub(formData);
 
       await clearSavedData();
-      router.push("/");
+      alert("동호회 신청이 완료되었습니다.");
+      router.push("/login");
     } catch (error) {
       console.error(error);
       setSubmitError(
@@ -214,7 +219,11 @@ export default function ClubApplyForm({ activeTabId }: ClubApplyFormProps) {
           )}
         </div>
       </form>
-      <AutoSaveRestoreAlert form={methods} storageKey="club-apply-form" excludeFields={["bankbookFile", "signatureFile"]} />
+      <AutoSaveRestoreAlert
+        form={methods}
+        storageKey="club-apply-form"
+        excludeFields={["bankbookFile", "signatureFile"]}
+      />
     </FormProvider>
   );
 }
