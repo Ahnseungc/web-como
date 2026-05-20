@@ -124,6 +124,8 @@ export default function ApplicationDetailPage() {
                         <Image
                           src={value}
                           alt={key}
+                          width={400}
+                          height={400}
                           style={{
                             maxWidth: "50%",
                             height: "auto",
