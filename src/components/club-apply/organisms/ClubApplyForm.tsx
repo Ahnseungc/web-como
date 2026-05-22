@@ -11,6 +11,7 @@ import Terms from "./Terms";
 import { useAutoSave } from "@/hooks/useAutoSave";
 import { AutoSaveRestoreAlert } from "@/components/dashboard/club/result-report/molecules/AutoSaveRestoreAlert";
 import { createClub } from "@/api/actions/club/createClub";
+import { useToast } from "@/components/common/ToastContainer";
 
 interface ClubApplyFormProps {
   activeTabId: string;
@@ -59,6 +60,7 @@ interface ClubApplyFormData {
 
 export default function ClubApplyForm({ activeTabId }: ClubApplyFormProps) {
   const router = useRouter();
+  const { showToast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -203,7 +205,15 @@ export default function ClubApplyForm({ activeTabId }: ClubApplyFormProps) {
         <div className="flex justify-end gap-4 pt-6 border-t border-gray-200">
           <button
             type="button"
-            onClick={() => saveData(methods.getValues())}
+            onClick={async () => {
+              try {
+                await saveData(methods.getValues());
+                showToast("임시저장이 완료되었습니다.", "success");
+              } catch (error) {
+                console.error(error);
+                showToast("임시저장에 실패했습니다.", "error");
+              }
+            }}
             className="px-6 py-4 bg-gray-600 rounded-lg text-gray-0 font-bold text-[20px]"
           >
             임시저장
