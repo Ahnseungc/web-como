@@ -8,16 +8,7 @@ import RevertRejectionModal from "@/components/dashboard/company/club/modals/Rev
 import { getData } from "@/lib/client-utils";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
-
-const categoryMapping = {
-  ART_CULTURE: "문화/예술",
-  ACTIVITY: "액티비티",
-  CREATIVE: "크리에이티브",
-  FOODBEVERAGE: "F&B",
-  NETWORKING: "네트워킹",
-  STUDY: "스터디",
-  ETC: "기타",
-};
+import { getCategoryLabel } from "@/lib/constants/category";
 
 const keyMapping = {
   name: "동호회명",
@@ -134,12 +125,8 @@ export default function ApplicationDetailPage() {
                         />
                       ) : (
                         <span style={{ fontSize: "16px" }}>
-                          {key === "category" &&
-                          typeof value === "string" &&
-                          value in categoryMapping
-                            ? categoryMapping[
-                                value as keyof typeof categoryMapping
-                              ]
+                          {key === "category" && typeof value === "string"
+                            ? getCategoryLabel(value) || String(value)
                             : String(value)}
                         </span>
                       )}

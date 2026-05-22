@@ -6,6 +6,7 @@ import Input from "@/components/common/Input";
 import UserSearchInput from "@/components/common/UserSearchInput";
 import CustomSelect from "@/components/common/CustomSelect";
 import FileUploadField from "@/components/common/FileUploadField";
+import { CATEGORY_OPTIONS } from "@/lib/constants/category";
 
 export default function ClubInfo() {
   const { register, watch, setValue } = useFormContext();
@@ -13,15 +14,6 @@ export default function ClubInfo() {
   const clubDescription = watch("clubDescription", "");
   const clubPurpose = watch("clubPurpose", "");
   const category = watch("category", "");
-
-  const categoryOptions = [
-    { label: "문화/예술", value: "ART_CULTURE" },
-    { label: "액티비티", value: "ACTIVITY" },
-    { label: "크리에이티브", value: "CREATIVE" },
-    { label: "F&B", value: "FOODBEVERAGE" },
-    { label: "네트워킹", value: "NETWORKING" },
-    { label: "스터디", value: "STUDY" },
-  ];
 
   return (
     <div className="space-y-12">
@@ -76,7 +68,7 @@ export default function ClubInfo() {
         </label>
         <div className="flex-1">
           <CustomSelect
-            options={categoryOptions}
+            options={CATEGORY_OPTIONS}
             currentValue={category}
             handleChange={(val) => setValue("category", val)}
             placeholder="카테고리를 선택해주세요."

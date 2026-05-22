@@ -6,6 +6,7 @@ import Avatar from "@/components/common/Avatar";
 import Input from "@/components/common/Input";
 import { useQuery } from "@tanstack/react-query";
 import { getData } from "@/lib/client-utils";
+import { getCategoryLabel } from "@/lib/constants/category";
 
 interface Props {
   clubId: string;
@@ -30,16 +31,6 @@ interface ClubDetailInfoDTO {
   category: string;
   clubImage: string;
 }
-
-const categoryMapping = {
-  ART_CULTURE: "문화/예술",
-  ACTIVITY: "액티비티",
-  CREATIVE: "크리에이티브",
-  FOODBEVERAGE: "F&B",
-  NETWORKING: "네트워킹",
-  STUDY: "스터디",
-  ETC: "기타",
-};
 
 export default function ClubDetailInfo({ clubId }: Props) {
   const { data: clubDetailInfo } = useQuery<ClubDetailInfoDTO>({
@@ -84,11 +75,7 @@ export default function ClubDetailInfo({ clubId }: Props) {
             readOnly
             name="category"
             label="카테고리"
-            value={
-              categoryMapping[
-                clubDetailInfo?.category as keyof typeof categoryMapping
-              ]
-            }
+            value={getCategoryLabel(clubDetailInfo?.category)}
           />
           <Input
             readOnly

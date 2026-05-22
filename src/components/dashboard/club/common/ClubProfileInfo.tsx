@@ -1,5 +1,6 @@
 import { Calendar, Category, People } from "@/assets/icons/info";
 import { formatDate } from "@/lib/utils";
+import { getCategoryLabel } from "@/lib/constants/category";
 
 const formatCreatedDate = (dateArray: number[]) => {
   if (!Array.isArray(dateArray) || dateArray.length < 6) {
@@ -30,16 +31,6 @@ const formatCreatedDate = (dateArray: number[]) => {
     return "";
   }
   return formatDate(new Date(year, month - 1, day, hour, minute, second));
-};
-
-const categoryMapping = {
-  ART_CULTURE: "문화/예술",
-  ACTIVITY: "액티비티",
-  CREATIVE: "크리에이티브",
-  FOODBEVERAGE: "F&B",
-  NETWORKING: "네트워킹",
-  STUDY: "스터디",
-  ETC: "기타",
 };
 
 interface ClubProfileInfoType {
@@ -89,8 +80,7 @@ export function ClubProfileCategoryInfo({ club }: { club: any }) {
       <div className="flex items-center gap-0.5">
         <Category className="w-4 h-4 text-gray-500" />
         <p className="tracking-tightest overflow-hidden text-ellipsis whitespace-nowrap">
-          {categoryMapping[club.category as keyof typeof categoryMapping] ||
-            "카테고리"}
+          {getCategoryLabel(club.category) || "카테고리"}
         </p>
       </div>
       <div className="flex items-center gap-0.5">
