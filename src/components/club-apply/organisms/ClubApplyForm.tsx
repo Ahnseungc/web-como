@@ -110,6 +110,15 @@ export default function ClubApplyForm({ activeTabId }: ClubApplyFormProps) {
   };
 
   const onSubmit = async (data: ClubApplyFormData) => {
+    if (
+      data.minMembers &&
+      data.maxMembers &&
+      Number(data.minMembers) > Number(data.maxMembers)
+    ) {
+      setSubmitError("최소 인원은 최대 인원보다 클 수 없습니다.");
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitError(null);
 

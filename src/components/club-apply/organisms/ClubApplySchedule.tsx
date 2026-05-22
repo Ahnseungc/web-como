@@ -17,6 +17,11 @@ export default function ClubApplySchedule() {
     maxMembers,
   } = watch();
 
+  const memberRangeError =
+    minMembers && maxMembers && Number(minMembers) > Number(maxMembers)
+      ? "최소 인원은 최대 인원보다 클 수 없습니다."
+      : "";
+
   const frequencyOptions = [
     { label: "반복선택 안함", value: "none" },
     { label: "1개월", value: "oneMonth" },
@@ -71,31 +76,48 @@ export default function ClubApplySchedule() {
           </p>
         </div>
 
-        <div className="flex-1 flex gap-6">
-          <div className="flex-1 space-y-3">
-            <span className="text-[16px] font-bold text-gray-700 block">
-              최소 인원
-            </span>
-            <Input
-              name="minMembers"
-              placeholder="인원을 입력해주세요."
-              inputStyle="w-full bg-gray-100 border-none h-[60px] text-[16px]"
-              value={minMembers || ""}
-              handleInputChange={(e) => setValue("minMembers", e.target.value)}
-            />
+        <div className="flex-1 space-y-2">
+          <div className="flex gap-6">
+            <div className="flex-1 space-y-3">
+              <span className="text-[16px] font-bold text-gray-700 block">
+                최소 인원
+              </span>
+              <Input
+                name="minMembers"
+                placeholder="최소 인원을 입력해주세요."
+                type="text"
+                inputMode="numeric"
+                inputStyle="w-full bg-gray-100 border-none h-[60px] text-[16px]"
+                value={minMembers ? Number(minMembers).toLocaleString() : ""}
+                handleInputChange={(e) => {
+                  const raw = e.target.value.replace(/,/g, "");
+                  if (/^\d*$/.test(raw)) setValue("minMembers", raw);
+                }}
+              />
+            </div>
+            <div className="flex-1 space-y-3">
+              <span className="text-[16px] font-bold text-gray-700 block">
+                최대 인원
+              </span>
+              <Input
+                name="maxMembers"
+                placeholder="최대 인원을 입력해주세요."
+                type="text"
+                inputMode="numeric"
+                inputStyle="w-full bg-gray-100 border-none h-[60px] text-[16px]"
+                value={maxMembers ? Number(maxMembers).toLocaleString() : ""}
+                handleInputChange={(e) => {
+                  const raw = e.target.value.replace(/,/g, "");
+                  if (/^\d*$/.test(raw)) setValue("maxMembers", raw);
+                }}
+              />
+            </div>
           </div>
-          <div className="flex-1 space-y-3">
-            <span className="text-[16px] font-bold text-gray-700 block">
-              최대 인원
-            </span>
-            <Input
-              name="maxMembers"
-              placeholder="인원을 입력해주세요."
-              inputStyle="w-full bg-gray-100 border-none h-[60px] text-[16px]"
-              value={maxMembers || ""}
-              handleInputChange={(e) => setValue("maxMembers", e.target.value)}
-            />
-          </div>
+          {memberRangeError && (
+            <p className="text-point-red text-base font-bold">
+              {memberRangeError}
+            </p>
+          )}
         </div>
       </div>
     </div>
