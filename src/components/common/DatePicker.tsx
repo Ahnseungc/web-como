@@ -31,9 +31,10 @@ export default function DatePicker({
 
   const disablePastDatesMatcher: Matcher = (date) => {
     if (!disablePastDates) return false;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return date < today;
+    const now = new Date();
+    const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const dateMidnight = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    return dateMidnight < todayMidnight;
   };
 
   return (
@@ -65,7 +66,7 @@ export default function DatePicker({
             selected={currentDate}
             defaultMonth={currentDate}
             onSelect={(selected) => {
-              handleDateChange(selected);
+              if (selected) handleDateChange(selected);
               closeModal(id);
             }}
             disabled={

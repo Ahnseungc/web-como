@@ -35,33 +35,28 @@ export default function ClubApplySchedule() {
         <label className="w-[240px] shrink-0 text-[18px] font-bold text-gray-800 pt-4">
           동호회 활동 일정
         </label>
-        <div className="flex-1 flex gap-2">
-          <div className="flex-[2.5]">
-            <DatePicker
-              id="date"
-              size="h-[60px]"
-              textStyle="h4 font-medium text-gray-900"
-              currentDate={activityDate}
-              handleDateChange={(newDate) => setValue("activityDate", newDate!)}
-            />
-          </div>
-
-          <div className="flex-1">
-            <TimeSelect
-              id="time"
-              width="w-full"
-              currentValue={activityTime || "00:00"}
-              handleChange={(newTime) => setValue("activityTime", newTime)}
-            />
-          </div>
-          <div className="flex-1">
-            <CustomSelect
-              options={frequencyOptions}
-              currentValue={activityFrequency}
-              handleChange={(val) => setValue("activityFrequency", val)}
-              placeholder="반복선택 안함"
-            />
-          </div>
+        <div className="flex items-center gap-2">
+          <DatePicker
+            id="date"
+            size="w-[250px] h-[60px] bg-gray-100 border-none"
+            textStyle="h4 font-medium text-gray-900"
+            currentDate={activityDate}
+            handleDateChange={(newDate) => setValue("activityDate", newDate!)}
+            disablePastDates
+          />
+          <TimeSelect
+            id="time"
+            width="w-[160px]"
+            currentValue={activityTime || "00:00"}
+            handleChange={(newTime) => setValue("activityTime", newTime)}
+          />
+          <CustomSelect
+            width="w-[180px]"
+            options={frequencyOptions}
+            currentValue={activityFrequency}
+            handleChange={(val) => setValue("activityFrequency", val)}
+            placeholder="반복선택 안함"
+          />
         </div>
       </div>
 

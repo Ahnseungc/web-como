@@ -18,7 +18,7 @@ export default function ClubApplyPage() {
         {/* 상단 헤더 카드 */}
         <ApplyHeader />
         {/* 메인 신청서 카드 */}
-        <div className="bg-gray-0 rounded-[20px] shadow-sm border border-gray-100 overflow-hidden">
+        <div className="bg-gray-0 rounded-[20px] shadow-sm border border-gray-100">
           <StepTabs activeTabId={activeTabId} onTabChange={setActiveTabId} />
 
           <div className="p-10">

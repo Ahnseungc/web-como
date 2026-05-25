@@ -73,6 +73,7 @@ export default function OperationInfo() {
                   textStyle="text-[16px] font-medium text-gray-900"
                   currentDate={startDate}
                   handleDateChange={(date) => setValue("startDate", date)}
+                  disablePastDates
                 />
                 <TimeSelect
                   id="recruitStartTime"
@@ -94,6 +95,7 @@ export default function OperationInfo() {
                   textStyle="text-[16px] font-medium text-gray-900"
                   currentDate={endDate}
                   handleDateChange={(date) => setValue("endDate", date)}
+                  disablePastDates
                 />
                 <TimeSelect
                   id="recruitEndTime"
