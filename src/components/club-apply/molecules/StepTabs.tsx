@@ -12,9 +12,14 @@ const TABS = [
 interface StepTabsProps {
   activeTabId: string;
   onTabChange: (tabId: string) => void;
+  maxUnlockedIndex: number;
 }
 
-export default function StepTabs({ activeTabId, onTabChange }: StepTabsProps) {
+export default function StepTabs({
+  activeTabId,
+  onTabChange,
+  maxUnlockedIndex,
+}: StepTabsProps) {
   return (
     <div className="w-full">
       <h2 className="text-[18px] font-bold text-gray-800 mb-6 px-8 pt-8">
@@ -22,20 +27,27 @@ export default function StepTabs({ activeTabId, onTabChange }: StepTabsProps) {
       </h2>
 
       <div className="flex border-b border-gray-100">
-        {TABS.map((tab) => {
+        {TABS.map((tab, index) => {
           const isActive = activeTabId === tab.id;
+          const isDisabled = index > maxUnlockedIndex;
 
           return (
             <div
               key={tab.id}
-              onClick={() => onTabChange(tab.id)}
-              className={`flex-1 flex flex-col items-center py-5 cursor-pointer relative transition-all ${
-                isActive ? "text-gray-900" : "text-gray-300"
+              onClick={() => !isDisabled && onTabChange(tab.id)}
+              className={`flex-1 flex flex-col items-center py-5 relative transition-all ${
+                isDisabled
+                  ? "cursor-not-allowed"
+                  : "cursor-pointer"
               }`}
             >
               <span
                 className={`text-[20px] font-bold ${
-                  isActive ? "text-gray-900" : "text-gray-400"
+                  isActive
+                    ? "text-gray-900"
+                    : isDisabled
+                    ? "text-gray-200"
+                    : "text-gray-400"
                 }`}
               >
                 {tab.label}

@@ -6,8 +6,15 @@ import ApplyHeader from "@/components/club-apply/molecules/ApplyHeader";
 import StepTabs from "@/components/club-apply/molecules/StepTabs";
 import ClubApplyForm from "@/components/club-apply/organisms/ClubApplyForm";
 
+const TOTAL_TABS = 5;
+
 export default function ClubApplyPage() {
   const [activeTabId, setActiveTabId] = useState("club-info");
+  const [maxUnlockedIndex, setMaxUnlockedIndex] = useState(0);
+
+  const handleUnlockNext = () => {
+    setMaxUnlockedIndex((prev) => Math.min(prev + 1, TOTAL_TABS - 1));
+  };
 
   return (
     <main className="min-h-screen bg-gray-200 py-12 px-4">
@@ -19,10 +26,18 @@ export default function ClubApplyPage() {
         <ApplyHeader />
         {/* 메인 신청서 카드 */}
         <div className="bg-gray-0 rounded-[20px] shadow-sm border border-gray-100">
-          <StepTabs activeTabId={activeTabId} onTabChange={setActiveTabId} />
+          <StepTabs
+            activeTabId={activeTabId}
+            onTabChange={setActiveTabId}
+            maxUnlockedIndex={maxUnlockedIndex}
+          />
 
           <div className="p-10">
-            <ClubApplyForm activeTabId={activeTabId} />
+            <ClubApplyForm
+              activeTabId={activeTabId}
+              onTabChange={setActiveTabId}
+              onUnlockNext={handleUnlockNext}
+            />
           </div>
         </div>
       </div>
