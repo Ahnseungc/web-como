@@ -31,6 +31,8 @@ export default function ClubInfo() {
         <div className="flex-1 space-y-2">
           <UserSearchInput
             name="applicantName"
+            idField="applicantId"
+            departmentField="applicantDepartment"
             placeholder="이름을 검색해주세요."
           />
           <p className="text-[16px] text-gray-500 font-medium">

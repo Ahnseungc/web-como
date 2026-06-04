@@ -44,7 +44,9 @@ interface ClubApplyFormProps {
 
 interface ClubApplyFormData {
   // 동호회 정보
+  applicantId: number | null;
   applicantName: string;
+  applicantDepartment: string;
   clubName: string;
   clubOneLine: string;
   clubDescription: string;
@@ -70,9 +72,15 @@ interface ClubApplyFormData {
   bankbookFile: File[];
 
   // 운영 정보
+  presidentId: number | null;
   presidentName: string;
+  presidentDepartment: string;
+  vicePresidentId: number | null;
   vicePresidentName: string;
+  vicePresidentDepartment: string;
+  managerId: number | null;
   managerName: string;
+  managerDepartment: string;
   startDate: Date;
   startTime: string;
   endDate: Date;
@@ -95,7 +103,9 @@ export default function ClubApplyForm({
 
   const methods = useForm<ClubApplyFormData>({
     defaultValues: {
+      applicantId: null,
       applicantName: "",
+      applicantDepartment: "",
       clubName: "",
       clubOneLine: "",
       clubDescription: "",
@@ -113,9 +123,15 @@ export default function ClubApplyForm({
       thumbnailFile: [],
       monthlyFee: "",
       bankbookFile: [],
+      presidentId: null,
       presidentName: "",
+      presidentDepartment: "",
+      vicePresidentId: null,
       vicePresidentName: "",
+      vicePresidentDepartment: "",
+      managerId: null,
       managerName: "",
+      managerDepartment: "",
       startDate: new Date(new Date().setHours(0, 0, 0, 0)),
       startTime: "",
       endDate: new Date(new Date().setHours(0, 0, 0, 0)),
@@ -192,9 +208,9 @@ export default function ClubApplyForm({
           .join(" "),
         activityPlan: "",
         goal: data.clubPurpose,
-        headId: 1,
-        subHeadId: null,
-        affairs: null,
+        headId: data.presidentId,
+        subHeadId: data.vicePresidentId,
+        affairs: data.managerId,
         category: data.category,
         maxMemberCount: Number(data.maxMembers) || 0,
         minMemberCount: Number(data.minMembers) || 0,

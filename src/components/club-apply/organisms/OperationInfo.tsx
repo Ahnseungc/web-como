@@ -36,16 +36,22 @@ export default function OperationInfo() {
           <div className="flex-1 space-y-8">
             <UserSearchInput
               name="presidentName"
+              idField="presidentId"
+              departmentField="presidentDepartment"
               label="운영장"
               placeholder="이름을 검색해주세요."
             />
             <UserSearchInput
               name="vicePresidentName"
+              idField="vicePresidentId"
+              departmentField="vicePresidentDepartment"
               label="부운영장"
               placeholder="이름을 검색해주세요."
             />
             <UserSearchInput
               name="managerName"
+              idField="managerId"
+              departmentField="managerDepartment"
               label="총무"
               placeholder="이름을 검색해주세요."
             />
