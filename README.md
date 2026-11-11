@@ -8,6 +8,7 @@
 동호회 운영진은 회원·일정·활동 보고서·지원비를 관리하고, 기업 담당자는 사내 동호회와 임직원을 한곳에서 관리합니다.
 
 **서울시교육청 시범 도입 (2025.04 ~ 2025.09)**
+<br/>Findev-omo 팀 프로젝트 · 원본 레포 [Findev-omo/web-como](https://github.com/Findev-omo/web-como)
 
 ![Next.js](https://img.shields.io/badge/Next.js_14-000000?logo=nextdotjs&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
