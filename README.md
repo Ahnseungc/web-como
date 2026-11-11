@@ -45,23 +45,6 @@
 <img src="docs/images/13-components-storybook.png" alt="아토믹 컴포넌트와 Storybook" />
 <img src="docs/images/14-quality-pipeline.png" alt="코드 품질 파이프라인" />
 
-## 로컬 실행
-
-<img src="docs/images/11-local-run.png" alt="목 데이터로 로컬 실행" />
-
-<details>
-<summary>명령어</summary>
-
-```bash
-npm ci
-npm run mock
-NEXT_PUBLIC_SERVER_URL=http://localhost:4010 npm run dev
-```
-
-로그인 화면에서 아무 아이디·비밀번호로 들어가면 동호회 운영진으로 로그인됩니다. 기업 담당자 화면은 `MOCK_ROLE=ROLE_MANAGER npm run mock` 으로 목 서버를 띄운 뒤 로그인합니다.
-
-</details>
-
 ## 함께 만든 사람들
 
 <img src="docs/images/08-contributors.png" alt="Contributors" />
