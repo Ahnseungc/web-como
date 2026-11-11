@@ -19,20 +19,7 @@
 
 </div>
 
-## 화면
-
-### 동호회 운영진
-
-<img src="docs/images/01-club-dashboard.png" alt="동호회 대시보드" />
-<img src="docs/images/02-club-member.png" alt="동호회원 관리" />
-<img src="docs/images/03-club-expense.png" alt="활동지원비 신청" />
-<img src="docs/images/04-club-report.png" alt="활동 보고서" />
-
-### 기업 담당자
-
-<img src="docs/images/05-company-club.png" alt="사내 동호회 관리" />
-<img src="docs/images/06-company-report.png" alt="보고서 검토" />
-<img src="docs/images/07-company-employee.png" alt="임직원 관리" />
+<img src="docs/images/00-showcase.png" alt="C'omo for business 관리센터 화면" />
 
 ## 기술 스택
 
