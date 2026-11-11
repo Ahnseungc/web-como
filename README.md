@@ -19,19 +19,4 @@
 
 </div>
 
-<img src="docs/images/00-showcase.png" alt="C'omo for business 관리센터 화면" />
-
-## 기술 스택
-
-<img src="docs/images/09-tech-stack.png" alt="기술 스택" />
-
-## 기술 구조
-
-<img src="docs/images/10-architecture.png" alt="폴더 구조" />
-<img src="docs/images/12-data-flow.png" alt="요청과 데이터 흐름" />
-<img src="docs/images/13-components-storybook.png" alt="아토믹 컴포넌트와 Storybook" />
-<img src="docs/images/14-quality-pipeline.png" alt="코드 품질 파이프라인" />
-
-## 함께 만든 사람들
-
-<img src="docs/images/08-contributors.png" alt="Contributors" />
+<img src="docs/images/readme-overview.png" alt="C'omo for business 관리센터 화면, 기술 스택, 폴더 구조, 아토믹 컴포넌트와 Storybook, 코드 품질 파이프라인, 함께 만든 사람들" />
