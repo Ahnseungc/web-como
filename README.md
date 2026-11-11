@@ -19,9 +19,6 @@
 
 </div>
 
-> 이 레포는 팀 프로젝트 [Findev-omo/web-como](https://github.com/Findev-omo/web-como)를 히스토리 그대로 옮긴 포트폴리오용 사본입니다.<br/>
-> 아래 화면은 실제 서버 대신 `mock/` 의 가상 데이터로 로컬 실행해 캡처했습니다. 인물·회사·동호회 이름은 모두 가상입니다.
-
 ## 화면
 
 ### 동호회 운영진
@@ -56,26 +53,21 @@
 
 ## 기술 스택
 
-- **Framework**: Next.js 14 (App Router), React 18, TypeScript
-- **State·Data**: TanStack Query, Zustand, React Hook Form + Zod
-- **UI**: Tailwind CSS, Framer Motion, Chart.js, react-day-picker
-- **문서·출력**: @react-pdf/renderer, react-to-print, xlsx
-- **품질**: Storybook + Chromatic, ESLint, Prettier, Husky + lint-staged, commitlint, GitHub Actions(PR lint)
+<img src="docs/images/09-tech-stack.png" alt="기술 스택" />
 
-## 폴더 구조
+## 기술 구조
 
-```
-src
-├── app            # 라우트 (club/ · company/ · login/ · club-apply/ · api/ 프록시)
-├── components     # atoms → molecules → organisms, 도메인별(dashboard/club, dashboard/company …)
-├── api            # 서버 액션·도메인 타입
-├── hooks          # 공용 훅 (useAutoSave 등)
-├── lib            # API 클라이언트, 쿠키, 상수, 스토어
-└── middleware.ts  # 로그인·역할별 접근 제어
-mock/              # 스크린샷용 목 API 서버
-```
+<img src="docs/images/10-architecture.png" alt="폴더 구조" />
+<img src="docs/images/12-data-flow.png" alt="요청과 데이터 흐름" />
+<img src="docs/images/13-components-storybook.png" alt="아토믹 컴포넌트와 Storybook" />
+<img src="docs/images/14-quality-pipeline.png" alt="코드 품질 파이프라인" />
 
-## 로컬 실행 (목 데이터)
+## 로컬 실행
+
+<img src="docs/images/11-local-run.png" alt="목 데이터로 로컬 실행" />
+
+<details>
+<summary>명령어</summary>
 
 ```bash
 npm ci
@@ -84,6 +76,8 @@ NEXT_PUBLIC_SERVER_URL=http://localhost:4010 npm run dev
 ```
 
 로그인 화면에서 아무 아이디·비밀번호로 들어가면 동호회 운영진으로 로그인됩니다. 기업 담당자 화면은 `MOCK_ROLE=ROLE_MANAGER npm run mock` 으로 목 서버를 띄운 뒤 로그인합니다.
+
+</details>
 
 ## 함께 만든 사람들
 
