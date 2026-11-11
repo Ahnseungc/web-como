@@ -7,7 +7,7 @@
 직장인 취미 복지 플랫폼 [C'omo(코모)](https://play.google.com/store/apps/details?id=com.findev.como&hl=ko)의 **웹 관리자 서비스**입니다.<br/>
 동호회 운영진은 회원·일정·활동 보고서·지원비를 관리하고, 기업 담당자는 사내 동호회와 임직원을 한곳에서 관리합니다.
 
-**서울시교육청 시범 도입**
+**서울시교육청 시범 도입 (2025.04 ~ 2025.09)**
 
 ![Next.js](https://img.shields.io/badge/Next.js_14-000000?logo=nextdotjs&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
