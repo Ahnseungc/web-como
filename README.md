@@ -20,4 +20,4 @@
 
 </div>
 
-<img src="docs/images/readme-overview.png" alt="C'omo for business 관리센터 화면, 기술 스택, 폴더 구조, 아토믹 컴포넌트와 Storybook, 코드 품질 파이프라인, 함께 만든 사람들" />
+<img src="docs/images/readme-overview.png" alt="MAIN CONTENTS(동호회 대시보드, 회원·일정 관리, 활동 보고서·지원비, 기업 담당자 관리센터, 임직원·사내 동호회), TECH STACK, ARCHITECTURE, TEAM" />
