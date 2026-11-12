@@ -20,4 +20,4 @@
 
 </div>
 
-<img src="docs/images/readme-overview.png" alt="MAIN CONTENTS(동호회 대시보드, 회원·일정 관리, 활동 보고서·지원비, 기업 담당자 관리센터, 임직원·사내 동호회), TECH STACK, ARCHITECTURE(폴더 구조 · Storybook · 배포 과정), TEAM" />
+<img src="docs/images/readme-overview.png" alt="MAIN CONTENTS(동호회 대시보드, 회원·일정 관리, 활동 보고서·지원비, 기업 담당자 관리센터, 임직원·사내 동호회), TECH STACK, ARCHITECTURE(Feature-Based Architecture · Storybook · 배포 과정), TEAM" />
