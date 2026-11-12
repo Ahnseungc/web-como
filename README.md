@@ -8,6 +8,7 @@
 동호회 운영진은 회원·일정·활동 보고서·지원비를 관리하고, 기업 담당자는 사내 동호회와 임직원을 한곳에서 관리합니다.
 
 **서울시교육청 시범 도입 (2025.04 ~ 2025.09)**
+<br/>도입 회고: [허용 도메인만 열린 교육청 망에서 S3 이미지를 nginx 리버스 프록시로 띄운 기록](https://blog.omnipo58-e94.workers.dev/posts/s3-image-reverse-proxy/)
 <br/>Findev-omo 팀 프로젝트 · 원본 레포 [Findev-omo/web-como](https://github.com/Findev-omo/web-como)
 
 ![Next.js](https://img.shields.io/badge/Next.js_14-000000?logo=nextdotjs&logoColor=white)
