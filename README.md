@@ -21,4 +21,4 @@
 
 </div>
 
-<img src="docs/images/readme-overview.png" alt="MAIN CONTENTS(동호회 대시보드, 회원·일정 관리, 활동 보고서·지원비, 기업 담당자 관리센터, 임직원·사내 동호회), TECH STACK, ARCHITECTURE(Feature-Based Architecture 폴더 기준 · 레이어 기준 · Storybook · 배포 과정), TEAM" />
+<img src="docs/images/readme-overview.png" alt="C'omo for business 웹 관리센터 소개. 동호회 대시보드, 회원·일정 관리, 활동 보고서·지원비 결재 흐름(작성 › 제출 › 검토 › 결과·PDF), 주무부서 관리센터, 역할별 경로 보호(ROLE_EXECUTIVE · ROLE_MANAGER · ROLE_ADMIN), 시스템 구조(브라우저 › Next.js Route Handler · Server Action › API 서버), 설계(Feature-Based Architecture · useAutoSave · API 프록시), 기술 스택, 배포 과정, 팀" />
